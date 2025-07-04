@@ -9,7 +9,7 @@ __pycache__/
 
 # Output files
 output/
-
+data/
 # IDE / OS specific
 .vscode/
 .idea/
