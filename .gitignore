@@ -1,0 +1,6 @@
+# Ignore environment files
+.env
+
+# Ignore the markdown data folder
+/markdown/
+
