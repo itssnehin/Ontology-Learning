@@ -5,16 +5,13 @@ import json
 import openai  # The official OpenAI Python library
 from dotenv import load_dotenv
 
-# --- Configuration ---
+# Configuration
 # This block sets up the environment and paths.
 
-# Load environment variables from the .env file located in the parent 'code/' directory.
-# This is a secure way to manage your API key without hardcoding it.
 dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path)
 
 # Initialize the OpenAI client.
-# The library will automatically find and use the 'OPENAI_API_KEY' from your environment.
 try:
     client = openai.OpenAI()
 except openai.OpenAIError as e:
@@ -28,7 +25,7 @@ RAW_DATA_DIR = os.path.join(BASE_DIR, "data", "raw_markdown")
 OUTPUT_DIR = os.path.join(BASE_DIR, "output", "structured_json_openai")
 
 
-# --- Helper Functions ---
+# Helper Functions
 # These small functions handle simple, repeatable tasks.
 
 def load_file(filepath):
