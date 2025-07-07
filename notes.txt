@@ -1,0 +1,36 @@
+from pydantic import BaseModel, Field
+
+class PropertyValue(BaseModel):
+  name: str = Field(..., description="...")
+  value: float = Field(..., description="...")
+  unit: str = Field(..., description="...")
+
+class ComponentModel(BaseModel):
+  component_type: str = Field(..., description="A general classification (e.g., "Resistor", "Inductor", "Flux Stabilizer").")
+  model_number: str = Field(..., description="The specific model number of the component.")
+  manufacturer: str = Field(..., description="The company that produces the component.")
+  properties: list[PropertyValue] = Field(..., description = "A list of property values for the component")
+  features: list[str] = Field(..., description = "...")
+
+  
+llm=init_chat_model(model="gpt-4o").with_structured_output(ComponentModel)
+
+for i,doc in enumerate(docs):
+   prompt = f"generic prompt text\n\n{doc}"
+   kg[i]=llm.invoke(prompt)
+
+
+   ontology[i]=extract_ontology(kg[i])
+
+merge_ontologies(ontologY)
+
+    The JSON object MUST have the following keys:
+    - "component_type": A general classification (e.g., "Resistor", "Inductor", "Flux Stabilizer").
+    - "model_number": The specific model number of the component.
+    - "manufacturer": The company that produces the component.
+    - "properties": A list of objects, where each object represents a technical property.
+      Each property object must have a "name" and a "value" (including units).
+    - "features": A list of key features as strings.
+
+
+To do: This ^^ and look at code from Ontology Learning Paper 

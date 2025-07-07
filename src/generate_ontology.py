@@ -16,7 +16,7 @@ ONTOLOGY_FILE_PATH = os.path.join(ONTOLOGY_OUTPUT_DIR, "master_ontology.ttl")
 # Define our custom ontology namespace
 EX = Namespace("http://eait.uq.edu.au/ontologies/electronics#")
 
-# --- Helper Functions ---
+
 
 def load_json_file(filepath):
     """Loads a single JSON file."""
@@ -27,7 +27,7 @@ def sanitize_for_uri(text):
     """Removes spaces and special characters to make a valid URI component."""
     return text.replace(" ", "").replace("/", "_").replace("(", "").replace(")", "")
 
-# --- Core Ontology Logic ---
+# Ontology Logic
 
 def create_base_ontology():
     """Initializes the graph with foundational classes and binds prefixes."""
@@ -48,7 +48,7 @@ def integrate_component_data(g, data):
     Integrates the data from a single JSON file into the master graph.
     This function is the heart of the integration process.
     """
-    # --- 1. Define the Component Class ---
+    # Define the Component Class
     comp_type_str = data.get("component_type", "GenericComponent")
     class_uri = EX[sanitize_for_uri(comp_type_str)]
     
