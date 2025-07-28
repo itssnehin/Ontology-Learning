@@ -1,34 +1,76 @@
-# Knowledge Graph Ontology Extraction & Schema Alignment
+# Ontology Extraction with LangChain and Pydantic
 
-## Project Overview
-This project proposes an automated pipeline for extracting ontologies from electrotechnical datasheets using a combination of classical Natural Language Processing (NLP) techniques and Large Language Models (LLMs). The primary objective is to convert unstructured, markdown-formatted documents into structured, machine-readable ontologies aligned with external standards, such as the International Electrotechnical Commission Common Data Dictionary (IEC CDD).
+This project demonstrates how to extract structured information from technical datasheets and build an ontology using LangChain and Pydantic.
 
-## Objective
-- Design and develop an automated pipeline for ontology extraction from electrotechnical datasheets.
-- Convert unstructured markdown documents into structured, machine-readable ontologies.
-- Align extracted ontologies with external standards (e.g., IEC CDD).
-- Reduce human intervention through automated evaluation, refinement, and alignment strategies.
+## Project Structure
 
-## Scope
-- Design and implement preprocessing workflows.
-- Implement entity and ontology extraction using NLP and LLMs.
-- Conduct performance evaluation using automated metrics and domain expert validation.
-- Develop a reusable, standards-compliant extraction method applicable to technical domains.
-- The dataset will be limited to electrotechnical documents written in English.
+```
+.
+├── data/
+│   └── raw_markdown/       # Raw markdown datasheets
+├── output/
+│   ├── structured_json_langchain/    # Extracted JSON data
+│   └── ontology_langchain/           # Generated ontology files
+└── src/
+    ├── extract_openai.py             # Original OpenAI extraction script
+    ├── generate_ontology.py          # Original ontology generation script
+    ├── langchain_ontology.py         # New LangChain + Pydantic script
+    └── openai_demo.py                # Simple OpenAI demo
+```
 
-## Methodology
-to do
+## Features
 
-## Technologies Used
--   **Programming Language:** Python
--   **NLP Libraries:** SpaCy
--   **LLM Integration:** OpenAI API (ChatGPT)
+- **Structured Data Extraction**: Uses Pydantic models to define the structure of the data to be extracted
+- **LangChain Integration**: Leverages LangChain for prompt templating and LLM interaction
+- **Ontology Generation**: Converts extracted data into RDF triples using rdflib
+- **Rich Relationship Modeling**: Captures component relationships, applications, and properties
 
-## Expected Results
--   A machine-readable ontology accurately representing knowledge of electronic components, aligned with IEC 61360 standards.
--   Ontologies expressed in OWL and serialized in Turtle/RDF/XML formats.
--   Performance metrics (precision, recall, F1 score, alignment accuracy) demonstrating the quality of the extraction process.
--   The ontology will capture core electrotechnical concepts (e.g., Resistor, Capacitor), properties (e.g., Rated Resistance, Tolerance), and relational structures (e.g., hasProperty, isSubtypeOf, alignedTo).
+## Pydantic Models
 
-## Ethical and Privacy Considerations
-This project does not involve any private, confidential, or personally identifiable information. All documents used are publicly available or generated for research purposes. Synthetic data is generated in accordance with OpenAI's terms of service and does not include or infer personal data. The project poses no ethical risk and does not require human participant involvement or ethical review.
+The project uses the following Pydantic models to structure the extracted data:
+
+- `Property`: Represents a technical property with name and value
+- `Relationship`: Defines relationships between components
+- `Application`: Describes application domains for components
+- `Component`: The main model representing an electronic component
+
+## Ontology Structure
+
+The generated ontology includes:
+
+- Classes for component types and applications
+- Properties for technical specifications
+- Relationships between components
+- Application domains
+- Features as literal values
+
+## Usage
+
+1. Place markdown datasheets in the `data/raw_markdown/` directory
+2. Set your OpenAI API key in the `.env` file
+3. Run the extraction script:
+
+```bash
+python src/langchain_ontology.py
+```
+
+4. View the extracted JSON data in `output/structured_json_langchain/`
+5. Explore the generated ontology in `output/ontology_langchain/langchain_ontology.ttl`
+
+## Requirements
+
+- Python 3.8+
+- langchain
+- langchain-openai
+- pydantic
+- rdflib
+- python-dotenv
+- openai
+
+## Future Improvements
+
+- Add support for more datasheet formats
+- Implement ontology visualization
+- Create a web interface for exploring the ontology
+- Add validation rules for extracted data
+- Support for batch processing of multiple datasheets

@@ -1,0 +1,15 @@
+[Markdown Documents]
+       ↓ (UnstructuredMarkdownLoader, RecursiveCharacterTextSplitter)
+[Chunks with Metadata]
+       ↓ (ChatOpenAI: gpt-4o, LLMChain)
+[Relation Triples, Themes]
+       ↓ (OpenAIEmbeddings: text-embedding-ada-002, FAISS)
+[Embedded Relations & Themes]
+       ↓ (Neo4jGraph)
+[Knowledge Graph]
+       ↓ (FAISS, ChatOpenAI, Neo4jGraph)
+[Aligned Relations & Themes]
+       ↓ (OpenAIEmbeddings, FAISS, scikit-learn)
+[Metric Scores: Fuzzy F1, Cluster Coherence]
+       ↓ (Neo4jGraph, JSON export)
+[JSON-LD Graph, Alignment Mappings]
