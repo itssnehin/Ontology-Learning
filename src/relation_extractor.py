@@ -1,115 +1,78 @@
-from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
-from langchain_community.callbacks.manager import get_openai_callback
-from langchain_core.runnables import RunnableSequence
 from config import LLM_MODEL, OPENAI_API_KEY
-from typing import List
+from tiktoken import get_encoding
 
-def extract_relations(chunks: List) -> List[str]:
+def extract_relations(chunks, model_name=LLM_MODEL):
     """
-    Extract implicit relations from document chunks using OpenAI LLM.
+    Extract relation triples for ontology construction from document chunks.
     
     Args:
-        chunks: List of document chunks (LangChain Document objects) with Markdown text and metadata.
+        chunks: List of document chunks (LangChain Document objects).
+        model_name: Name of the LLM model to use.
     
     Returns:
-        List of relation triples in the format "concept1 -> relation -> concept2".
+        List of relation triples in the format 'ClassA --relationship--> ClassB'.
     """
-    # Initialize OpenAI LLM
-    llm = ChatOpenAI(
-        model=LLM_MODEL,
-        temperature=0.7,
-        openai_api_key=OPENAI_API_KEY,
-        max_tokens=500
-    )
-    
-    # Define prompt with IoT-specific examples and Markdown handling
-    prompt = PromptTemplate(
-        input_variables=["text"],
-        template="""You are an expert in extracting implicit relations from Markdown text for IoT and antenna specifications. Extract relations in the format:
-{{concept1}} -> {{relation}} -> {{concept2}}
-Interpret Markdown headers (##), bullet points (·), and tables to infer technical relations. For introductory text, extract high-level relations. For feature lists or specs, infer feature-based relations.
-
-Examples:
-- WiFi 6E -> supports -> 6 GHz Band
-- FPC Antenna -> has-feature -> U.FL Connector
-- Dipole Antenna -> has-property -> Ground Plane Independent
-- Antenna -> has-VSWR -> 1.4
-- ANT-W63-FPC-LH -> operates-in -> 2.4 GHz Band
-
-Text:
-```
-{text}
-```
-
-Output exactly in this format, one relation per line starting with '-':
-- {{concept1}} -> {{relation}} -> {{concept2}}
-If no relations are found, output exactly:
-- None -> none -> None
-"""
-    )
-    
-    # Create RunnableSequence
-    chain = prompt | llm
+    llm = ChatOpenAI(model_name=model_name, openai_api_key=OPENAI_API_KEY)
+    tokenizer = get_encoding("cl100k_base")
+    LLM_COST_PER_1K_TOKENS = 0.00336  # $0.00336/1,000 tokens for gpt-4o (July 2025)
+    total_tokens = 0
+    total_cost = 0.0
     
     relations = []
     
-    # Process each chunk with cost tracking
-    with get_openai_callback() as cb:
-        for chunk in chunks:
-            try:
-                # Skip non-technical chunks (e.g., warranty, temperature)
-                if any(keyword in chunk.page_content.lower() for keyword in ["warranty", "©", "temperature"]):
-                    print(f"Skipping non-technical chunk: {chunk.page_content[:100]}...")
-                    continue
-                
-                # Log chunk content and metadata
-                print(f"Processing chunk: {chunk.page_content[:200]}...")
-                if hasattr(chunk, 'metadata'):
-                    print(f"Chunk metadata: {chunk.metadata}")
-                
-                # Ensure text is properly formatted
-                chunk_text = chunk.page_content.strip()
-                if not chunk_text:
-                    print("Skipping empty chunk")
-                    continue
-                
-                # Run chain with invoke
-                result = chain.invoke({"text": chunk_text})
-                
-                # Extract content from LLM response
-                result_text = result.content if hasattr(result, 'content') else str(result)
-                
-                # Parse output
-                found_relations = False
-                for line in result_text.strip().split("\n"):
-                    line = line.strip()
-                    if line.startswith("-"):
-                        triple = line[2:].strip()
-                        if " -> " in triple:
-                            parts = triple.split(" -> ")
-                            if len(parts) == 3 and all(parts) and parts != ["None", "none", "None"]:
-                                relations.append(triple)
-                                found_relations = True
-                
-                # Log results
-                print(f"Raw LLM output: {result_text}")
-                if not found_relations:
-                    print(f"No relations extracted from chunk: {chunk_text[:100]}...")
-            
-            except Exception as e:
-                print(f"Error extracting relations from chunk: {e}")
+    for chunk in chunks:
+        prompt = """
+        You are an expert in ontology engineering and knowledge graph construction.
+        Your task is to read the following technical document and extract an ontology subgraph that captures the main concepts and their relationships for IoT and antenna specifications.
         
-        print(f"OpenAI API Usage: Tokens={cb.total_tokens}, Cost=${cb.total_cost:.4f}")
+        1. Identify the key domain concepts (classes), including:
+           - Abstract categories (e.g., 'WiFi Compatibility', 'Frequency Range').
+           - Specific entities that represent unique classes (e.g., '2.4 GHz Band', 'FPC Antenna').
+           - Features and attributes (e.g., 'Adhesive Backing', 'Ground Plane Independence').
+        2. Extract semantic relationships between these concepts (e.g., operatesIn, hasFeature, supports).
+        3. Represent the ontology as a structured subgraph in the following format:
+        
+        OUTPUT FORMAT:
+        NODES (Classes): [List of concepts]
+        EDGES (Relationships): 
+        - ClassA --relationship--> ClassB
+        
+        Ensure the output is concise, domain-relevant, and avoids trivial words (e.g., "the", "system", "data").
+        Include frequency ranges (e.g., '2.4 GHz Band', '5 GHz Band') as subclasses of 'Frequency Range' and use them in relations (e.g., 'FPC Antenna --operatesIn--> 2.4 GHz Band').
+        
+        Document:
+        {chunk}
+        """
+        input_tokens = len(tokenizer.encode(prompt.format(chunk=chunk.page_content)))
+        response = llm.invoke(prompt.format(chunk=chunk.page_content))
+        output_tokens = len(tokenizer.encode(response.content))
+        chunk_tokens = input_tokens + output_tokens
+        chunk_cost = (chunk_tokens / 1000) * LLM_COST_PER_1K_TOKENS
+        total_tokens += chunk_tokens
+        total_cost += chunk_cost
+        print(f"Chunk Tokens: {chunk_tokens}, Cost: ${chunk_cost:.6f}")
+        
+        # Parse response
+        lines = response.content.split("\n")
+        edges_section = False
+        for line in lines:
+            line = line.strip()
+            if line.startswith("EDGES (Relationships):"):
+                edges_section = True
+                continue
+            if edges_section and line.startswith("- Class"):
+                relation = line.replace("Class", "").replace("--", " -> ").strip()
+                relations.append(relation)
+            if line == "":
+                edges_section = False
     
+    relations = list(set(relations))  # Deduplicate
+    print(f"Total OpenAI API Usage for Relations: Tokens={total_tokens}, Cost=${total_cost:.6f}")
     return relations
 
 if __name__ == "__main__":
     from data_loader import load_and_split_data
-    
-    # Load sample chunks
     chunks = load_and_split_data()
-    
-    # Extract relations (limit to 10 chunks for testing)
     relations = extract_relations(chunks[:10])
     print("Extracted Relations:", relations)

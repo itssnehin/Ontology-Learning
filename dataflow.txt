@@ -13,3 +13,22 @@
 [Metric Scores: Fuzzy F1, Cluster Coherence]
        ↓ (Neo4jGraph, JSON export)
 [JSON-LD Graph, Alignment Mappings]
+
+project/
+├── src/
+│   ├── __init__.py
+│   ├── data_loader.py        # Loads and splits Markdown documents
+│   ├── relation_extractor.py  # Extracts implicit relations
+│   ├── idea_extractor.py     # Extracts abstract ideas/themes
+│   ├── embedder.py           # Generates embeddings for relations and ideas
+│   ├── graph_builder.py      # Constructs knowledge graph
+│   ├── schema_aligner.py     # Aligns ontologies
+│   ├── evaluator.py          # Evaluates ontology and alignment quality
+│   ├── exporter.py           # Exports graph and alignments
+│   ├── config.py             # Configuration (API keys, model settings)
+│   ├── main.py               # Orchestrates the pipeline
+├── data/
+│   ├── ENG_DS_ant-w63-fpc2-ufl-100-ds_A.md  # Sample Markdown file
+|   ├── ... 
+├── requirements.txt           # Dependencies
+├── README.md                 # Project documentation

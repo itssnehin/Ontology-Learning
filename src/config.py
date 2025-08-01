@@ -16,10 +16,10 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LLM_MODEL = "gpt-4o"
 EMBEDDING_MODEL = "text-embedding-ada-002"
 
-# Neo4j settings
-NEO4J_URI = "bolt://localhost:7687"
+# Neo4j settings (Move to .env)
+NEO4J_URI = "neo4j://127.0.0.1:7687"
 NEO4J_USERNAME = "neo4j"
-NEO4J_PASSWORD = "password"
+NEO4J_PASSWORD = "ontology"
 
 # Data paths
 DATA_DIR = os.path.join(PROJECT_ROOT, "data/raw_markdown")

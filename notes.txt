@@ -34,3 +34,6 @@ merge_ontologies(ontologY)
 
 
 To do: This ^^ and look at code from Ontology Learning Paper 
+
+Experiment with chunk size, focus on taxonomy of ideas
+use formal definition in prompt
