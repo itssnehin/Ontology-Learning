@@ -2,7 +2,7 @@ import os
 import glob
 from dotenv import load_dotenv
 from pathlib import Path
-
+import sys
 # Add src/ to sys.path
 sys.path.append(str(Path(__file__).parent))
 
