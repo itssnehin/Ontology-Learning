@@ -1,7 +1,17 @@
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent))
+
 from neo4j import GraphDatabase
 from config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
 from typing import List, Tuple, Dict
 import numpy as np
+import re
+from utils import setup_logging
+from data_loader import load_and_split_data
+from relation_extractor import extract_relations
+from idea_extractor import extract_ideas
+from embedder import embed_data
 
 def build_subgraphs(embedded_data: Dict[str, Tuple[List[Tuple[str, np.ndarray]], List[Tuple[str, np.ndarray]]]], database: str = "neo4j"):
     """
@@ -11,16 +21,17 @@ def build_subgraphs(embedded_data: Dict[str, Tuple[List[Tuple[str, np.ndarray]],
         embedded_data: Dictionary mapping document source to (embedded_relations, embedded_themes) tuples.
         database: Name of the Neo4j database to use (default: 'neo4j').
     """
+    setup_logging("../logs", "graph_builder")
     driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
+    pattern = re.compile(r"(.+?) -> (.+?) -> (.+?)")
     
     try:
         with driver.session(database=database) as session:
             for source, (embedded_relations, embedded_themes) in embedded_data.items():
                 print(f"Building subgraph for document: {source}")
-                print("Themes:", [t[0] for t, _ in embedded_themes])
-                print("Relations:", [r[0] for r, _ in embedded_relations])
+                print(f"Themes: {list(t for t, _ in embedded_themes)}")
+                print(f"Relations: {list(r for r, _ in embedded_relations)}")
                 
-                # Create nodes for themes
                 for theme, _ in embedded_themes:
                     session.run(
                         """
@@ -30,11 +41,13 @@ def build_subgraphs(embedded_data: Dict[str, Tuple[List[Tuple[str, np.ndarray]],
                         name=theme.strip(), source=source
                     )
                 
-                # Create nodes and edges for relations
                 for relation, _ in embedded_relations:
                     try:
-                        concept1, rel, concept2 = relation.split(" -> ")
-                        # Create nodes for both concepts
+                        match = pattern.match(relation)
+                        if not match:
+                            print(f"Skipping invalid relation: {relation}")
+                            continue
+                        concept1, rel, concept2 = match.groups()
                         session.run(
                             """
                             MERGE (n:Theme {name: $name, source: $source})
@@ -45,11 +58,10 @@ def build_subgraphs(embedded_data: Dict[str, Tuple[List[Tuple[str, np.ndarray]],
                         session.run(
                             """
                             MERGE (n:Theme {name: $name, source: $source})
-                            SET n.type = 'Class'
+                            SET n.type = $type
                             """,
-                            name=concept2.strip(), source=source
+                            name=concept2.strip(), source=source, type='Property' if rel.lower() != "subclass_of" else 'Class'
                         )
-                        # Create edge
                         edge_type = "SUBCLASS_OF" if rel.lower() == "subclass_of" else "RELATION"
                         if edge_type == "SUBCLASS_OF":
                             session.run(
@@ -69,27 +81,15 @@ def build_subgraphs(embedded_data: Dict[str, Tuple[List[Tuple[str, np.ndarray]],
                                 """,
                                 concept1=concept1.strip(), concept2=concept2.strip(), rel=rel.strip(), source=source
                             )
-                    except ValueError as e:
-                        print(f"Skipping invalid relation: {relation} (Error: {e})")
+                    except Exception as e:
+                        print(f"Error processing relation: {relation} (Error: {e})")
     
     finally:
         driver.close()
 
 if __name__ == "__main__":
-    from data_loader import load_and_split_data
-    from relation_extractor import extract_relations
-    from idea_extractor import extract_ideas
-    from embedder import embed_data
-    
-    # Load chunks
     chunks = load_and_split_data()
-    
-    # Extract relations and themes
     relations = extract_relations(chunks[:10])
     themes = list(set(extract_ideas(chunks[:10])))
-    
-    # Embed data
     embedded_data = embed_data(chunks[:10], relations, themes)
-    
-    # Build subgraphs
-    build_subgraphs(embedded_data, database="neo4j")  # Change to "AntennaOntology" if using
+    build_subgraphs(embedded_data, database="neo4j")

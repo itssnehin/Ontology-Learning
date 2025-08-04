@@ -1,3 +1,7 @@
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent))
+
 from langchain_community.document_loaders import UnstructuredMarkdownLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
@@ -25,4 +29,3 @@ def load_and_split_data():
 if __name__ == "__main__":
     chunks = load_and_split_data()
     print(f"Loaded {len(chunks)} chunks")
-    #print(chunks[-1])
