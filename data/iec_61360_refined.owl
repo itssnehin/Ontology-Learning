@@ -1,0 +1,2858 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA097">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>NTC thermistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA096"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA066">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>charge coupled device IC</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA065"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA449">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>top hat package</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA448"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA586">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic isolator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA585"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA065">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>content addressable memory IC</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA064"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA513">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed thermostat resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA512"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA072">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>analogue/digital signal function</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA651">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>identification number</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA649"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA118">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA117"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA608">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>power rotary potentiometer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA607"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA148">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>connector</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA147"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA420">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>round pin</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA373"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA407">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA364"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA324">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>quad</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA305"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA220">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>magnetic material</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA219"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA509">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed precision resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA092"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA238">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>toleranced capacitance</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA235"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA140">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>colour display tube</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA139"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA603">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>antenna coil</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA228"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA644">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>impact from foreign body</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA643"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA393">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>formed lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA392"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA002">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>product part</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA001"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA008">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>operational amplifier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA007"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA239">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>toleranced resistance</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA238"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA071">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>statistics</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA056"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA142">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>gas filled tube</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA141"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA611">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>connector tool</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA525"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA528">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>terminal</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA565"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA440">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA387"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA230">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>printed wiring laminate</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA224"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA058">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>analogue signal function</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA057"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA388">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>gull-wing</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA350"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA607">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>rotary precision potentiometer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA517"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA525">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>connector accessory</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA524"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA652">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>internationally registered identification system</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA750"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA443">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA389"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA625">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>ambient air composition</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA624"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA083">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>power loss</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA080"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA062">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>microprocessor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA061"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA381">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>solder lug</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA346"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA132">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>after-sales-related durability issues</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA146"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA011">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>exemption</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA010"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA390">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>gull-wing</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA352"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA017">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>battery</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA016"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAB010">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>plasma display panel</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA131">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>trigger device</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA231">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>dielectric and insulating material</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA230"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA412">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>round pin</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA367"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>dated effectivity</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA100"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA036">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>electric power cable</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA035"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA021">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>integrated circuit for shunt regulator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA020"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA337">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>quad</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA417"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA042">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>diode device</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA041"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA547">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>dc power jack</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA546"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA023">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>integrated circuit for voltage detector</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA022"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA221">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>hard magnetic material</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA220"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA370">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>flat</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA336"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA235">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>toleranced value</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA237"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA075">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>lamp</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA602"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA079">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>photoemitter</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA078"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA229">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>measures for maintainability and maintenance support related concepts</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA219"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA578">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optics</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA232"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA219">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>maintenance support performance</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA218"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA141">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>monochrome display tube</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA140"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA596">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>resonator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA606"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA438">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>formed lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA437"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA314">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>long-form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA427"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA215">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>magnetic part</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA613"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA161">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>linear motor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA160"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA006">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>MHz band quartz crystal unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA005"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA391">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA353"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA320">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>small-outline</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA440"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA604">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>solenoid</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA603"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA100">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>effectivity</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA096"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA583">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic coupler/ splicer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA582"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA129">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>field-effect RF power transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA128"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA605">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>air spark gap</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA595"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA419">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>solder ball</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA372"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA666">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>torus</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA665"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA114">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>variable power transformer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA113"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA539">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>multiple concentric jacks</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA538"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA112">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>warranty</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA106"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA332">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bottom lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA309"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA445">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>non-bumped package</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA394"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA034">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>insulated conductor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA033"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA367">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>pin</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA333"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA070">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>read only memory IC</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA069"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA422">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>rectangular pin</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA421"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA380">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wire</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA345"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA009">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>AC-coupled amplifier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA008"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA025">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed class 2 ceramic capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA024"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA078">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>photocoupler</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA077"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA134">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fast turn-off thyristor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA133"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA158">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>magnetostrictive loudspeaker</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA157"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA446">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>non-cavity package (moulded)</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA395"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA333">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>double-row lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA411"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA001">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>product</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA030"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA171">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>relay</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA170"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA348">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bottom lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA436"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA664">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>right circular cone</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA663"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA431">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>one lead with tag</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA382"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA629">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>movement of surrounding medium</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA628"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA627">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>precipitation</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA626"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA063">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>programmable logic device</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA062"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA072">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>declaration of waste of electrical and electronic equipment</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA020"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA309">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>flange-mount</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA409"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA562">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>socket for quartz crystals</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA561"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA353">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wire</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA322"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA510">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed power resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA509"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA357">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wire</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA325"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA043">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bridge rectifier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA042"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA022">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed air capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA021"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA590">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic transmitter/ receiver</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA589"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA404">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA361"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA302">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>die device</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA301"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA546">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>dc power plug</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA545"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA024">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed class 1 ceramic capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA023"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA613">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>connector insert</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA612"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA591">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>optical waveguide</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA590"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA573">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>terminal rod</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA572"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA563">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>lighting socket</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA562"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA551">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>socket for tubes</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA527"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA663">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>right circular cylinder</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA662"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA346">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>upper connection</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA318"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA119">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bipolar transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA118"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA103">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>region based effectivity</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA102"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA215">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>reliability of an item</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA214"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA401">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>offset lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA400"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA074">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>inductor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA073"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA512">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed chip resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA511"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA086">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>visible light photosensor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA085"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA331">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bottom lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA407"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA576">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>thermally-activated fuse</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA575"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA102">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>potentiometer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA101"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAF525">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>signal</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA059">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>digital signal function</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA105">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>light sensor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA104"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA026">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed electrolytic capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA025"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA107">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>nuclear sensor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA106"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA115">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>signal transformer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA114"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA009">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>substance</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA008"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA428">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA380"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA104">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>humidity sensor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA103"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA144">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>space charge controlled tube</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA143"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA030">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed paper capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA029"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA592">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic cable</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA591"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA227">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>coil</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA226"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA039">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>RF cable</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA038"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA222">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>soft magnetic material</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA221"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA037">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>signal cable</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA036"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA427">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA379"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA363">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>screw, internal thread</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA451"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA392">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA354"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA423">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA375"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA027">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed film capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA504"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA750">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>person and organization address data</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA667"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA520">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PCB connector</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA519"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA668">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>constructive solid geometry primitive</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA651"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA518">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>circular connector</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA148"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA080">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>light emitting diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA079"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA002">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>SAW resonator</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA000">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>material declaration information</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA071"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA098">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PTC thermistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA097"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA365">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wire</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA331"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA223">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>optical material</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA222"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA624">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>pressure</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA622"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA083">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>photosensor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA082"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA405">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA362"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA218">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>material</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA217"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA414">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight v-section lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA413"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA648">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>soil</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA647"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA655">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>physical address</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA654"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA456">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>cavity down</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA455"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA229">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>microwave component</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA146"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA137">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>triac</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA136"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA174">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>mechanical switch</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA173"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA587">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic network</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA586"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA225">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>deflection unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA601"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA233">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>feature</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA231"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA410">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>offset lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA366"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA096">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>temperature dependent resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA095"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA019">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>supplementary information</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA011"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA430">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>two fixed tags</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA429"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA295">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bare die</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA302"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA397">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>lead on a circle</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA358"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA153">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>ionic loudspeaker</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA152"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA001">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>component</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA000"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA421">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>round pin</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA374"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA351">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>quad</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA442"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA454">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>non-bumped package</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA418"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA160">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>motor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA159"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA400">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>leads on a square grid</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA399"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA012">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wideband amplifier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA011"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA071">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>material declaration based on IEC 62474</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA070"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA360">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>solder lug</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA328"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA166">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>rotational motor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA165"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA111">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>transformer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA110"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA054">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>variable capacitance diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA053"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA325">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>axial lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA307"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA021">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA020"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA361">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wire</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA403"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA077">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>optoelectronic device</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA076"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA665">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>sphere</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA664"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA621">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>temperature</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA650"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA045">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>breakover diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA044"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA628">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>radiation</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA627"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA088">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>piezoelectric device</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA087"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA067">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>random access memory IC</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA066"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA020">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>unambiguous identification</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA019"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA103">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>sensor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA609"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA368">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>through-hole</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA334"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA130">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>field-effect small signal transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA129"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA632">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>pollution</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA630"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA395">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA356"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA448">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>plain cylindrical</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA396"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA637">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>explosive gazes and vapours</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA636"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA138">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>tube</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA137"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA452">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>clamp mount package</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA406"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA217">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>soft-magnetic part</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA216"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA385">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wire</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA348"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA565">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>socket for antenna feeders</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA564"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA339">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>perpendicular</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA419"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA156">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>piezoelectric loudspeaker</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA155"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA038">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>LF cable</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA037"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA341">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>quad</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA423"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA453">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>stud mount package</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA452"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA072">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>probability distribution characteristics</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA071"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA046">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>rectifier diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA045"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA028">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed glass capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA027"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA382">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>high current cable</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA430"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA073">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>declaration of restriction of the use of certain hazardous substances</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA072"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA334">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>single-row lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA412"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA082">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>laser</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA081"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA004">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>low-frequency amplifier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA003"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA070">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>material declaration</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA121">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bipolar LF power transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA120"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA226">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>choke</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA225"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA092">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>single linear resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA091"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA408">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA365"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA055">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>transportation conditions</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA046"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA044">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA043"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA439">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA386"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA113">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed power transformer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA112"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA543">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>multiple pin jacks</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA542"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA031">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>variable capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA505"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA092">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>conformity evaluation</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA083"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA219">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>acoustic material</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA218"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA175">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>thermostatic switch</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA174"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA441">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>multiple leads</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA388"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA016">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>comparator</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA303">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>package outline</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA299"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA595">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>spark gap</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA594"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA035">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>cable</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA034"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA643">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>seismic</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA642"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA327">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>end connection</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA401"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA146">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>tuner</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA145"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA216">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>hard-magnetic part</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA215"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA056">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>filter</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA055"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA657">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>postal address</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA656"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA424">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA376"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA169">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>rotational stepping motor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA168"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAF526">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>signal variant</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAF525"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA023">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed ceramic capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA022"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA435">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>strip lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA383"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA564">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fuse holder and socket</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA563"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA069">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>static RAM IC</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA068"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA051">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>voltage regulator diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA050"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA526">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>plug and jack</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA523"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA588">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic light source</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA587"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA417">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight flat lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA370"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA434">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>one lead no tag</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA433"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA634">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>biological condition</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA633"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA068">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>dynamic RAM IC</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA067"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA345">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>axial lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA314"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA162">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>linear ac motor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA161"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA398">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight leads in line</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA397"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA541">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>pin plug</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA540"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA383">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>solder lug</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA347"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA418">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA371"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA328">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>radial lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA402"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA010">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>exemptions</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA009"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA318">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>post-mount</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA428"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA635">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>chemically active substance</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA634"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA585">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic detector</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA584"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA323">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bottom lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA391"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA056">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>storage conditions</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA055"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA010">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>voltage controlled crystal oscillator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA009"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA335">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>zig-zag lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA414"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA104">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>organization based effectivity</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA103"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA159">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>microphone</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA158"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA106">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>date and time (of issue)</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA105"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA394">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA355"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA073">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>installation conditions</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA072"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA167">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>rotational ac motor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA166"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA566">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>small terminal</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA528"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA336">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>double-row lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA311"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA372">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>butt</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA338"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA375">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>through-hole</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA422"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA137">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>dependability of an item</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA112"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA073">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>periodic/dc function</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA072"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA005">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>kHz band quartz crystal unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA004"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA216">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>availability of an item</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA215"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA371">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>gull wing</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA337"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA232">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>printed wiring circuit</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA229"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA120">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bipolar power transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA119"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA524">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>connector contact</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA610"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA601">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed inductor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA074"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA003">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>product identification</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA002"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA005">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>power amplifier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA004"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA006">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>voltage amplifier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA005"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA378">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>through-hole</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA343"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA436">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>off-set lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA384"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA429">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>one fixed tag</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA381"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA504">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>non-solid aluminium electrolytic</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA503"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA662">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>right angular wedge</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA661"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA007">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>differential amplifier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA006"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA154">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>electromagnetic loudspeaker</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA153"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA646">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>noise</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA645"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA001">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>band pass filter</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA349">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>end connection</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA438"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA055">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>voltage multiplier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA054"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA151">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>moving conductor loudspeaker</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA150"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA366">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>pin</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA332"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA017">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>flash memory</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA654">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>named organization identification system</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA653"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA090">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA089"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA442">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>three leads</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA441"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA416">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight v-section lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA415"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA626">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>location</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA625"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA124">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bipolar LF small signal transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA123"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA064">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>storage function</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA063"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA007">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>quartz crystal oscillator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA006"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA236">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>impedance</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA234"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA234">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>complex number value</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA233"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA163">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>linear dc motor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA162"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA057">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>integrated circuit</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA020">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>integrated circuit for series regulator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA019"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA008">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>simple packaged crystal oscillator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA007"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA105">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>domain related effectivity</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA104"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA117">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>variable signal transformer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA116"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA550">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>complex jack board</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA549"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA218">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>maintainability of an item</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA217"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA536">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>concentric plugs and jacks</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA526"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA149">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fuse</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA573"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA554">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>transistor socket</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA551"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA387">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wrap-around</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA439"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA099">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>voltage dependent resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA098"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA011">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>oven controlled crystal oscillator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA010"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA376">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>through-hole</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA341"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA014">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>two-port SAW resonator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA013"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA645">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>electromagnetic compatibility</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA644"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA122">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bipolar RF power transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA121"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA589">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic modulator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA588"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA008">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>substance group</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA007"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA517">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>linear slide potentiometer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA516"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA544">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>shielded pin jack</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA543"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA170">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>rotational universal motor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA169"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA013">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>one-port SAW resonator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA002"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA633">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>corrosion</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA632"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA609">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>low-power rotary potentiometer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA608"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA231">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>predictive maintenance of an item</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA230"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA437">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA385"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA165">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>linear universal motor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA164"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA358">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wire</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA326"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA561">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>signal socket</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA557"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA582">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic branch</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA581"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA036">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>product discontinuation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA145">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>space charge wave tube</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA144"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA355">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>j-bend</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA324"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA384">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wire</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA435"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA173">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>reed switch</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA172"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA557">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>power socket</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA556"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA656">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>electronic address</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA655"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA426">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA378"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA343">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>triple row</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA425"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA237">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>admittance</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA236"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA356">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>no-lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA445"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA076">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>liquid crystal diplay</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA075"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA084">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>infrared light photosensor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA083"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA369">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>through-hole</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA335"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA110">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>temperature sensor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA109"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA660">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>rectangular block</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA668"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA093">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>linear resistor network</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA514"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA402">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA359"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA555">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>socket for integrated circuits</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA554"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA228">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>linearity control unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA227"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA128">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>field-effect LF power transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA127"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA100">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>variable resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA099"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA132">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>diac</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA131"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA399">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>formed leads in line</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA398"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA455">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>cavity up</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA420"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA013">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>antenna</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA012"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA364">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wire</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA330"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA168">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>rotational dc motor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA167"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA139">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>display tube</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA138"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA761">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>classification</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA760"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA003">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>amplifier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA002"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA521">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>RF connector</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA520"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA033">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bare conductor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA032"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA386">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>no lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA349"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA594">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic lense</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA593"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA569">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>terminal array</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA566"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA217">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>recoverability of an item</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA216"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA007">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>material</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA006"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA344">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>zig-zag lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA426"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA523">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>modular connector</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA522"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA230">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>measures for availability related concepts</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA229"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA602">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>variable inductor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA604"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA019">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>secondary battery</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA018"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA155">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>pneumatic loudspeaker</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA154"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA612">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>connector shell</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA611"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA622">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>humidity</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA621"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA308">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>disc-shaped</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA453"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA095">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>light dependent resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA094"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA519">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>rectangular connector</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA518"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA143">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>photo sensitive tube</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA142"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA095">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>conformity assessment body</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA094"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA040">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>insulated wire</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA039"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA540">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>pin plugs and jacks</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA539"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA650">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>environmental conditions</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA239"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA403">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA360"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA606">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>gas-filled spark gap</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA605"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA415">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight flat lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA369"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA433">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>three leads with tags</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA432"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA108">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>pressure sensor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA107"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA018">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>logic integrated circuit</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA017"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA359">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wrap-around</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA327"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA094">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed non-linear resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA093"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA514">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed fusing resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA513"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA053">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>transient suppressor diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA052"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA305">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>chip-carrier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA393"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA572">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>terminal board</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA569"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA150">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>loudspeaker</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA576"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA406">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA363"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA041">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>delay line</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA040"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA575">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>current-activated fuse</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA149"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA516">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>preset potentiometer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA102"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA311">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>flat-pack</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA416"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA354">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>wire</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA323"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA661">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>rectangular pyramid</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA660"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA542">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>pin jack</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA541"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA123">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bipolar small signal transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA122"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA556">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>socket for PCB</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA555"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA005">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>toleranced relative mass</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA004"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA538">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>concentric jacks</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA537"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA350">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>double-row lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA320"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA075">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>packing conditions</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA073"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA052">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>stabistor diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA051"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA610">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>connector part</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA175"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA658">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>person identification</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA657"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA319">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>rectangular</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA434"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA009">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>temperature compensated crystal oscillator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA008"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA537">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>concentric plugs</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA536"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA505">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed mixed-dielectric capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA030"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA653">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>nationally registered identification system</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA652"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA581">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic switch</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA580"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA047">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>signal diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA046"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA022">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>integrated circuit for switching regulator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA021"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA580">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic connector</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA579"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA152">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>magnetodynamic loudspeaker</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA151"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA760">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>terminal reference designatiion</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA759"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA071">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>register</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA070"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA579">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic link</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA578"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA030">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>material declaration blocks of properties</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA000"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA091">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed linear resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA090"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA638">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>combustible dust</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA637"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA214">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>measures for reliability related concepts</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA132"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA109">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>proximity sensor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA108"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA432">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>two leads with tags</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA431"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA127">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>field-effect power transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA126"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA015">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>insulated-gate bipolar transistor</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA106">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>magnetic field sensor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA105"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA296">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bumped die</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA295"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA313">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>in-line</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA456"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA444">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>two leads, stubs and tabs</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA390"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA060">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>combinational/ sequential/ interface</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA059"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA029">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed mica capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA028"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA667">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>cartesian point</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA666"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA050">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>voltage reference diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA049"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA014">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>capacitive antenna</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA013"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA048">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>stabilizer diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA047"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA447">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>cavity package (ceramic)</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA446"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA593">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic filter</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA592"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA549">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>plug assembly</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA548"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA004">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>toleranced mass</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA003"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA338">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bottom lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA312"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA301">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>geometry</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA032">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>conductor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA031"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA081">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>infrared light emitting diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA080"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA511">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed low-power resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA510"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA636">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>mechanically active substance</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA635"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA312">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>grid-array</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA454"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA307">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>cylindrical</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA447"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA094">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>registering organization</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA092"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA298">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>minimally-packaged die device</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA297"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA450">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>clamp mount package</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA405"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA340">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>double-row lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA313"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA330">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>axial lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA308"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA759">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>object reference designation</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA658"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA101">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>two-terminal variable resistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA100"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA641">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>condensation</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA639"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA136">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>reverse blocking thyristor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA135"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA373">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>pin</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA339"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA011">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>radio frequency amplifier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA010"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA077">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>object description</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA075"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA501">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>solid tantalum electrolytic</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA026"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA019">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>integrated circuit for power supply</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA016"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA061">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>microcontroller</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA060"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA020">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>capacitor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA019"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA018">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>primary battery</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA017"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA639">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>water from other sources than rain</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA638"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA126">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>field-effect transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA125"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA046">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>noise emission data</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA036"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA080">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>specification references</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA077"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA597">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>image pickup device</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA086"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA146">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>durability of an item</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA137"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA451">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>stud mount package</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA450"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA004">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>quartz crystal unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA003"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA649">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>potable and other types of water</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA648"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA347">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>axial lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA319"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA087">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>oscillator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA597"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA584">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fibre optic attenuator</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA583"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA389">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>gull-wing</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA351"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA299">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>two-sided bare die device</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA298"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA304">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bead-shaped</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA303"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA147">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>electromechanical component</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA102">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>time interval based effectivity</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA101"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA377">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>through-hole</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA342"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA002">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>electric/ electronic component</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA001"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA362">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>solder lug</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA329"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA374">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>pin</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA340"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA409">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>formed lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA408"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA352">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>single-row lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA443"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA016">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>resistive antenna</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA015"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA411">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>leads on a circle</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA410"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA015">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>inductive antenna</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA014"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA135">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>gate turn-off thyristor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA134"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA503">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>solid aluminium electrolytic</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA502"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA642">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>vibration</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA641"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA172">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>switch</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA171"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA379">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>through-hole</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA344"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA089">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>resistor</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA297">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>die with attached lead frame</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA296"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA074">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>declaration of registration, evaluation, authorisation and restriction of chemicals</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA073"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA000">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>electric/electronic components</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA342">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>single-row lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA424"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA125">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bipolar RF small signal transistor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA124"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ADA096">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>conformity attestation</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ADA095"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA545">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>plug and jack for dc power</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA544"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA085">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>ultraviolet light photosensor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA084"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA522">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>connector for IC cards</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA521"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA647">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>water protection</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA646"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA322">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>axial lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA304"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAF603">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>material declaration</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAF526"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA527">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>socket</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA550"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA116">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>fixed signal transformer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA115"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA630">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>isokeraunic condition</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA629"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA326">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>bottom lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA449"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA049">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>current regulator diode</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA048"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA425">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>standard form</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA377"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA224">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>thermal material</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA223"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA413">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight flat lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA368"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#ACA006">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>material class</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#ACA005"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA329">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>upper connection</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA404"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA396">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>straight lead</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA357"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA548">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>car plug</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA547"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA003">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>quartz crystal device</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA133">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>thyristor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA132"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AFA012">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>crystal filter</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AFA011"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA502">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>non-solid tantalum electrolytic</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA501"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA164">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>linear stepping motor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA163"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA112">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>power transformer</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA111"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA157">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>electrostatic loudspeaker</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA156"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/iec61360#AAA010">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>single-sided amplifier</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://example.org/iec61360#AAA009"/>
+  </rdf:Description>
+</rdf:RDF>

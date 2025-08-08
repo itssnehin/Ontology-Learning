@@ -1,0 +1,2274 @@
+@prefix iec: <http://example.org/iec61360#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+iec:AAA002 a owl:Class ;
+    rdfs:label "electric/ electronic component" ;
+    rdfs:subClassOf iec:AAA001 .
+
+iec:AAA034 a owl:Class ;
+    rdfs:label "insulated conductor" ;
+    rdfs:subClassOf iec:AAA033 .
+
+iec:AAA039 a owl:Class ;
+    rdfs:label "RF cable" ;
+    rdfs:subClassOf iec:AAA038 .
+
+iec:AAA056 a owl:Class ;
+    rdfs:label "filter" ;
+    rdfs:subClassOf iec:AAA055 .
+
+iec:AAA057 a owl:Class ;
+    rdfs:label "integrated circuit" .
+
+iec:AAA058 a owl:Class ;
+    rdfs:label "analogue signal function" .
+
+iec:AAA064 a owl:Class ;
+    rdfs:label "storage function" ;
+    rdfs:subClassOf iec:AAA063 .
+
+iec:AAA071 a owl:Class ;
+    rdfs:label "register" ;
+    rdfs:subClassOf iec:AAA070 .
+
+iec:AAA075 a owl:Class ;
+    rdfs:label "lamp" .
+
+iec:AAA081 a owl:Class ;
+    rdfs:label "infrared light emitting diode" ;
+    rdfs:subClassOf iec:AAA080 .
+
+iec:AAA088 a owl:Class ;
+    rdfs:label "piezoelectric device" ;
+    rdfs:subClassOf iec:AAA087 .
+
+iec:AAA101 a owl:Class ;
+    rdfs:label "two-terminal variable resistor" ;
+    rdfs:subClassOf iec:AAA100 .
+
+iec:AAA130 a owl:Class ;
+    rdfs:label "field-effect small signal transistor" ;
+    rdfs:subClassOf iec:AAA129 .
+
+iec:AAA132 a owl:Class ;
+    rdfs:label "diac" ;
+    rdfs:subClassOf iec:AAA131 .
+
+iec:AAA136 a owl:Class ;
+    rdfs:label "reverse blocking thyristor" ;
+    rdfs:subClassOf iec:AAA135 .
+
+iec:AAA146 a owl:Class ;
+    rdfs:label "tuner" ;
+    rdfs:subClassOf iec:AAA145 .
+
+iec:AAA170 a owl:Class ;
+    rdfs:label "rotational universal motor" ;
+    rdfs:subClassOf iec:AAA169 .
+
+iec:AAA229 a owl:Class ;
+    rdfs:label "microwave component" ;
+    rdfs:subClassOf iec:AAA145 .
+
+iec:AAA231 a owl:Class ;
+    rdfs:label "dielectric and insulating material" ;
+    rdfs:subClassOf iec:AAA230 .
+
+iec:AAA237 a owl:Class ;
+    rdfs:label "admittance" ;
+    rdfs:subClassOf iec:AAA236 .
+
+iec:AAA296 a owl:Class ;
+    rdfs:label "bumped die" ;
+    rdfs:subClassOf iec:AAA295 .
+
+iec:AAA302 a owl:Class ;
+    rdfs:label "die device" ;
+    rdfs:subClassOf iec:AAA301 .
+
+iec:AAA348 a owl:Class ;
+    rdfs:label "bottom lead" ;
+    rdfs:subClassOf iec:AAA347 .
+
+iec:AAA371 a owl:Class ;
+    rdfs:label "gull wing" ;
+    rdfs:subClassOf iec:AAA336 .
+
+iec:AAA372 a owl:Class ;
+    rdfs:label "butt" ;
+    rdfs:subClassOf iec:AAA338 .
+
+iec:AAA389 a owl:Class ;
+    rdfs:label "gull-wing" ;
+    rdfs:subClassOf iec:AAA388 .
+
+iec:AAA390 a owl:Class ;
+    rdfs:label "gull-wing" ;
+    rdfs:subClassOf iec:AAA352 .
+
+iec:AAA391 a owl:Class ;
+    rdfs:label "straight lead" ;
+    rdfs:subClassOf iec:AAA353 .
+
+iec:AAA393 a owl:Class ;
+    rdfs:label "formed lead" ;
+    rdfs:subClassOf iec:AAA392 .
+
+iec:AAA394 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA355 .
+
+iec:AAA395 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA356 .
+
+iec:AAA401 a owl:Class ;
+    rdfs:label "offset lead" ;
+    rdfs:subClassOf iec:AAA400 .
+
+iec:AAA402 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA359 .
+
+iec:AAA403 a owl:Class ;
+    rdfs:label "straight lead" ;
+    rdfs:subClassOf iec:AAA360 .
+
+iec:AAA404 a owl:Class ;
+    rdfs:label "straight lead" ;
+    rdfs:subClassOf iec:AAA361 .
+
+iec:AAA405 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA362 .
+
+iec:AAA406 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA363 .
+
+iec:AAA407 a owl:Class ;
+    rdfs:label "straight lead" ;
+    rdfs:subClassOf iec:AAA364 .
+
+iec:AAA409 a owl:Class ;
+    rdfs:label "formed lead" ;
+    rdfs:subClassOf iec:AAA408 .
+
+iec:AAA411 a owl:Class ;
+    rdfs:label "leads on a circle" ;
+    rdfs:subClassOf iec:AAA410 .
+
+iec:AAA412 a owl:Class ;
+    rdfs:label "round pin" ;
+    rdfs:subClassOf iec:AAA367 .
+
+iec:AAA414 a owl:Class ;
+    rdfs:label "straight v-section lead" ;
+    rdfs:subClassOf iec:AAA413 .
+
+iec:AAA416 a owl:Class ;
+    rdfs:label "straight v-section lead" ;
+    rdfs:subClassOf iec:AAA415 .
+
+iec:AAA417 a owl:Class ;
+    rdfs:label "straight flat lead" ;
+    rdfs:subClassOf iec:AAA370 .
+
+iec:AAA418 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA337 .
+
+iec:AAA419 a owl:Class ;
+    rdfs:label "solder ball" ;
+    rdfs:subClassOf iec:AAA338 .
+
+iec:AAA420 a owl:Class ;
+    rdfs:label "round pin" ;
+    rdfs:subClassOf iec:AAA373 .
+
+iec:AAA422 a owl:Class ;
+    rdfs:label "rectangular pin" ;
+    rdfs:subClassOf iec:AAA421 .
+
+iec:AAA423 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA375 .
+
+iec:AAA424 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA376 .
+
+iec:AAA425 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA377 .
+
+iec:AAA426 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA378 .
+
+iec:AAA427 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA379 .
+
+iec:AAA428 a owl:Class ;
+    rdfs:label "straight lead" ;
+    rdfs:subClassOf iec:AAA380 .
+
+iec:AAA430 a owl:Class ;
+    rdfs:label "two fixed tags" ;
+    rdfs:subClassOf iec:AAA429 .
+
+iec:AAA434 a owl:Class ;
+    rdfs:label "one lead no tag" ;
+    rdfs:subClassOf iec:AAA433 .
+
+iec:AAA436 a owl:Class ;
+    rdfs:label "off-set lead" ;
+    rdfs:subClassOf iec:AAA435 .
+
+iec:AAA438 a owl:Class ;
+    rdfs:label "formed lead" ;
+    rdfs:subClassOf iec:AAA437 .
+
+iec:AAA439 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA386 .
+
+iec:AAA440 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA387 .
+
+iec:AAA442 a owl:Class ;
+    rdfs:label "three leads" ;
+    rdfs:subClassOf iec:AAA441 .
+
+iec:AAA443 a owl:Class ;
+    rdfs:label "standard form" ;
+    rdfs:subClassOf iec:AAA351 .
+
+iec:AAA444 a owl:Class ;
+    rdfs:label "two leads, stubs and tabs" ;
+    rdfs:subClassOf iec:AAA352 .
+
+iec:AAA445 a owl:Class ;
+    rdfs:label "non-bumped package" ;
+    rdfs:subClassOf iec:AAA355 .
+
+iec:AAA447 a owl:Class ;
+    rdfs:label "cavity package (ceramic)" ;
+    rdfs:subClassOf iec:AAA446 .
+
+iec:AAA448 a owl:Class ;
+    rdfs:label "plain cylindrical" ;
+    rdfs:subClassOf iec:AAA396 .
+
+iec:AAA449 a owl:Class ;
+    rdfs:label "top hat package" ;
+    rdfs:subClassOf iec:AAA396 .
+
+iec:AAA451 a owl:Class ;
+    rdfs:label "stud mount package" ;
+    rdfs:subClassOf iec:AAA450 .
+
+iec:AAA453 a owl:Class ;
+    rdfs:label "stud mount package" ;
+    rdfs:subClassOf iec:AAA452 .
+
+iec:AAA454 a owl:Class ;
+    rdfs:label "non-bumped package" ;
+    rdfs:subClassOf iec:AAA336 .
+
+iec:AAA456 a owl:Class ;
+    rdfs:label "cavity down" ;
+    rdfs:subClassOf iec:AAA455 .
+
+iec:AAA504 a owl:Class ;
+    rdfs:label "non-solid aluminium electrolytic" ;
+    rdfs:subClassOf iec:AAA503 .
+
+iec:AAA505 a owl:Class ;
+    rdfs:label "fixed mixed-dielectric capacitor" ;
+    rdfs:subClassOf iec:AAA030 .
+
+iec:AAA514 a owl:Class ;
+    rdfs:label "fixed fusing resistor" ;
+    rdfs:subClassOf iec:AAA513 .
+
+iec:AAA550 a owl:Class ;
+    rdfs:label "complex jack board" ;
+    rdfs:subClassOf iec:AAA549 .
+
+iec:AAA565 a owl:Class ;
+    rdfs:label "socket for antenna feeders" ;
+    rdfs:subClassOf iec:AAA564 .
+
+iec:AAA573 a owl:Class ;
+    rdfs:label "terminal rod" ;
+    rdfs:subClassOf iec:AAA572 .
+
+iec:AAA576 a owl:Class ;
+    rdfs:label "thermally-activated fuse" ;
+    rdfs:subClassOf iec:AAA575 .
+
+iec:AAA594 a owl:Class ;
+    rdfs:label "fibre optic lense" ;
+    rdfs:subClassOf iec:AAA593 .
+
+iec:AAA596 a owl:Class ;
+    rdfs:label "resonator" ;
+    rdfs:subClassOf iec:AAA595 .
+
+iec:AAA597 a owl:Class ;
+    rdfs:label "image pickup device" ;
+    rdfs:subClassOf iec:AAA086 .
+
+iec:AAA601 a owl:Class ;
+    rdfs:label "fixed inductor" ;
+    rdfs:subClassOf iec:AAA074 .
+
+iec:AAA602 a owl:Class ;
+    rdfs:label "variable inductor" ;
+    rdfs:subClassOf iec:AAA228 .
+
+iec:AAA604 a owl:Class ;
+    rdfs:label "solenoid" ;
+    rdfs:subClassOf iec:AAA603 .
+
+iec:AAA606 a owl:Class ;
+    rdfs:label "gas-filled spark gap" ;
+    rdfs:subClassOf iec:AAA605 .
+
+iec:AAA609 a owl:Class ;
+    rdfs:label "low-power rotary potentiometer" ;
+    rdfs:subClassOf iec:AAA608 .
+
+iec:AAA610 a owl:Class ;
+    rdfs:label "connector part" ;
+    rdfs:subClassOf iec:AAA171 .
+
+iec:AAA613 a owl:Class ;
+    rdfs:label "connector insert" ;
+    rdfs:subClassOf iec:AAA612 .
+
+iec:AAA624 a owl:Class ;
+    rdfs:label "pressure" ;
+    rdfs:subClassOf iec:AAA621 .
+
+iec:AAA639 a owl:Class ;
+    rdfs:label "water from other sources than rain" ;
+    rdfs:subClassOf iec:AAA637 .
+
+iec:AAA646 a owl:Class ;
+    rdfs:label "noise" ;
+    rdfs:subClassOf iec:AAA643 .
+
+iec:AAA648 a owl:Class ;
+    rdfs:label "soil" ;
+    rdfs:subClassOf iec:AAA647 .
+
+iec:AAA650 a owl:Class ;
+    rdfs:label "environmental conditions" ;
+    rdfs:subClassOf iec:AAA239 .
+
+iec:AAA654 a owl:Class ;
+    rdfs:label "named organization identification system" ;
+    rdfs:subClassOf iec:AAA653 .
+
+iec:AAA657 a owl:Class ;
+    rdfs:label "postal address" ;
+    rdfs:subClassOf iec:AAA656 .
+
+iec:AAA664 a owl:Class ;
+    rdfs:label "right circular cone" ;
+    rdfs:subClassOf iec:AAA663 .
+
+iec:AAA665 a owl:Class ;
+    rdfs:label "sphere" ;
+    rdfs:subClassOf iec:AAA663 .
+
+iec:AAA668 a owl:Class ;
+    rdfs:label "constructive solid geometry primitive" ;
+    rdfs:subClassOf iec:AAA649 .
+
+iec:AAA750 a owl:Class ;
+    rdfs:label "person and organization address data" ;
+    rdfs:subClassOf iec:AAA667 .
+
+iec:AAA761 a owl:Class ;
+    rdfs:label "classification" ;
+    rdfs:subClassOf iec:AAA760 .
+
+iec:AAB010 a owl:Class ;
+    rdfs:label "plasma display panel" .
+
+iec:AAF603 a owl:Class ;
+    rdfs:label "material declaration" ;
+    rdfs:subClassOf iec:AAF526 .
+
+iec:ACA003 a owl:Class ;
+    rdfs:label "product identification" ;
+    rdfs:subClassOf iec:ACA002 .
+
+iec:ACA009 a owl:Class ;
+    rdfs:label "substance" ;
+    rdfs:subClassOf iec:ACA008 .
+
+iec:ACA020 a owl:Class ;
+    rdfs:label "unambiguous identification" ;
+    rdfs:subClassOf iec:ACA019 .
+
+iec:ACA030 a owl:Class ;
+    rdfs:label "material declaration blocks of properties" ;
+    rdfs:subClassOf iec:ACA000 .
+
+iec:ACA071 a owl:Class ;
+    rdfs:label "material declaration based on IEC 62474" ;
+    rdfs:subClassOf iec:ACA070 .
+
+iec:ACA074 a owl:Class ;
+    rdfs:label "declaration of registration, evaluation, authorisation and restriction of chemicals" ;
+    rdfs:subClassOf iec:ACA073 .
+
+iec:ADA083 a owl:Class ;
+    rdfs:label "power loss" ;
+    rdfs:subClassOf iec:ADA080 .
+
+iec:ADA094 a owl:Class ;
+    rdfs:label "registering organization" ;
+    rdfs:subClassOf iec:ADA092 .
+
+iec:ADA146 a owl:Class ;
+    rdfs:label "durability of an item" ;
+    rdfs:subClassOf iec:ADA137 .
+
+iec:ADA231 a owl:Class ;
+    rdfs:label "predictive maintenance of an item" ;
+    rdfs:subClassOf iec:ADA230 .
+
+iec:AFA001 a owl:Class ;
+    rdfs:label "band pass filter" .
+
+iec:AFA012 a owl:Class ;
+    rdfs:label "crystal filter" ;
+    rdfs:subClassOf iec:AFA011 .
+
+iec:AFA014 a owl:Class ;
+    rdfs:label "two-port SAW resonator" ;
+    rdfs:subClassOf iec:AFA013 .
+
+iec:AFA015 a owl:Class ;
+    rdfs:label "insulated-gate bipolar transistor" .
+
+iec:AFA017 a owl:Class ;
+    rdfs:label "flash memory" .
+
+iec:AFA018 a owl:Class ;
+    rdfs:label "logic integrated circuit" .
+
+iec:AFA023 a owl:Class ;
+    rdfs:label "integrated circuit for voltage detector" ;
+    rdfs:subClassOf iec:AFA022 .
+
+iec:AAA000 a owl:Class ;
+    rdfs:label "electric/electronic components" .
+
+iec:AAA003 a owl:Class ;
+    rdfs:label "amplifier" ;
+    rdfs:subClassOf iec:AAA001 .
+
+iec:AAA004 a owl:Class ;
+    rdfs:label "low-frequency amplifier" ;
+    rdfs:subClassOf iec:AAA003 .
+
+iec:AAA005 a owl:Class ;
+    rdfs:label "power amplifier" ;
+    rdfs:subClassOf iec:AAA004 .
+
+iec:AAA006 a owl:Class ;
+    rdfs:label "voltage amplifier" ;
+    rdfs:subClassOf iec:AAA005 .
+
+iec:AAA007 a owl:Class ;
+    rdfs:label "differential amplifier" ;
+    rdfs:subClassOf iec:AAA006 .
+
+iec:AAA008 a owl:Class ;
+    rdfs:label "operational amplifier" ;
+    rdfs:subClassOf iec:AAA007 .
+
+iec:AAA009 a owl:Class ;
+    rdfs:label "AC-coupled amplifier" ;
+    rdfs:subClassOf iec:AAA008 .
+
+iec:AAA010 a owl:Class ;
+    rdfs:label "single-sided amplifier" ;
+    rdfs:subClassOf iec:AAA009 .
+
+iec:AAA011 a owl:Class ;
+    rdfs:label "radio frequency amplifier" ;
+    rdfs:subClassOf iec:AAA010 .
+
+iec:AAA012 a owl:Class ;
+    rdfs:label "wideband amplifier" ;
+    rdfs:subClassOf iec:AAA011 .
+
+iec:AAA013 a owl:Class ;
+    rdfs:label "antenna" ;
+    rdfs:subClassOf iec:AAA012 .
+
+iec:AAA014 a owl:Class ;
+    rdfs:label "capacitive antenna" ;
+    rdfs:subClassOf iec:AAA013 .
+
+iec:AAA015 a owl:Class ;
+    rdfs:label "inductive antenna" ;
+    rdfs:subClassOf iec:AAA014 .
+
+iec:AAA016 a owl:Class ;
+    rdfs:label "resistive antenna" ;
+    rdfs:subClassOf iec:AAA015 .
+
+iec:AAA017 a owl:Class ;
+    rdfs:label "battery" ;
+    rdfs:subClassOf iec:AAA016 .
+
+iec:AAA018 a owl:Class ;
+    rdfs:label "primary battery" ;
+    rdfs:subClassOf iec:AAA017 .
+
+iec:AAA019 a owl:Class ;
+    rdfs:label "secondary battery" ;
+    rdfs:subClassOf iec:AAA018 .
+
+iec:AAA020 a owl:Class ;
+    rdfs:label "capacitor" ;
+    rdfs:subClassOf iec:AAA019 .
+
+iec:AAA021 a owl:Class ;
+    rdfs:label "fixed capacitor" ;
+    rdfs:subClassOf iec:AAA020 .
+
+iec:AAA022 a owl:Class ;
+    rdfs:label "fixed air capacitor" ;
+    rdfs:subClassOf iec:AAA021 .
+
+iec:AAA023 a owl:Class ;
+    rdfs:label "fixed ceramic capacitor" ;
+    rdfs:subClassOf iec:AAA022 .
+
+iec:AAA024 a owl:Class ;
+    rdfs:label "fixed class 1 ceramic capacitor" ;
+    rdfs:subClassOf iec:AAA023 .
+
+iec:AAA025 a owl:Class ;
+    rdfs:label "fixed class 2 ceramic capacitor" ;
+    rdfs:subClassOf iec:AAA024 .
+
+iec:AAA027 a owl:Class ;
+    rdfs:label "fixed film capacitor" ;
+    rdfs:subClassOf iec:AAA026 .
+
+iec:AAA028 a owl:Class ;
+    rdfs:label "fixed glass capacitor" ;
+    rdfs:subClassOf iec:AAA027 .
+
+iec:AAA029 a owl:Class ;
+    rdfs:label "fixed mica capacitor" ;
+    rdfs:subClassOf iec:AAA028 .
+
+iec:AAA032 a owl:Class ;
+    rdfs:label "conductor" ;
+    rdfs:subClassOf iec:AAA031 .
+
+iec:AAA033 a owl:Class ;
+    rdfs:label "bare conductor" ;
+    rdfs:subClassOf iec:AAA032 .
+
+iec:AAA035 a owl:Class ;
+    rdfs:label "cable" ;
+    rdfs:subClassOf iec:AAA031 .
+
+iec:AAA036 a owl:Class ;
+    rdfs:label "electric power cable" ;
+    rdfs:subClassOf iec:AAA035 .
+
+iec:AAA037 a owl:Class ;
+    rdfs:label "signal cable" ;
+    rdfs:subClassOf iec:AAA036 .
+
+iec:AAA040 a owl:Class ;
+    rdfs:label "insulated wire" ;
+    rdfs:subClassOf iec:AAA038 .
+
+iec:AAA041 a owl:Class ;
+    rdfs:label "delay line" ;
+    rdfs:subClassOf iec:AAA040 .
+
+iec:AAA042 a owl:Class ;
+    rdfs:label "diode device" ;
+    rdfs:subClassOf iec:AAA041 .
+
+iec:AAA043 a owl:Class ;
+    rdfs:label "bridge rectifier" ;
+    rdfs:subClassOf iec:AAA042 .
+
+iec:AAA044 a owl:Class ;
+    rdfs:label "diode" ;
+    rdfs:subClassOf iec:AAA043 .
+
+iec:AAA045 a owl:Class ;
+    rdfs:label "breakover diode" ;
+    rdfs:subClassOf iec:AAA044 .
+
+iec:AAA046 a owl:Class ;
+    rdfs:label "rectifier diode" ;
+    rdfs:subClassOf iec:AAA045 .
+
+iec:AAA047 a owl:Class ;
+    rdfs:label "signal diode" ;
+    rdfs:subClassOf iec:AAA046 .
+
+iec:AAA048 a owl:Class ;
+    rdfs:label "stabilizer diode" ;
+    rdfs:subClassOf iec:AAA047 .
+
+iec:AAA049 a owl:Class ;
+    rdfs:label "current regulator diode" ;
+    rdfs:subClassOf iec:AAA048 .
+
+iec:AAA050 a owl:Class ;
+    rdfs:label "voltage reference diode" ;
+    rdfs:subClassOf iec:AAA049 .
+
+iec:AAA051 a owl:Class ;
+    rdfs:label "voltage regulator diode" ;
+    rdfs:subClassOf iec:AAA050 .
+
+iec:AAA052 a owl:Class ;
+    rdfs:label "stabistor diode" ;
+    rdfs:subClassOf iec:AAA051 .
+
+iec:AAA053 a owl:Class ;
+    rdfs:label "transient suppressor diode" ;
+    rdfs:subClassOf iec:AAA052 .
+
+iec:AAA054 a owl:Class ;
+    rdfs:label "variable capacitance diode" ;
+    rdfs:subClassOf iec:AAA053 .
+
+iec:AAA055 a owl:Class ;
+    rdfs:label "voltage multiplier" ;
+    rdfs:subClassOf iec:AAA054 .
+
+iec:AAA059 a owl:Class ;
+    rdfs:label "digital signal function" .
+
+iec:AAA060 a owl:Class ;
+    rdfs:label "combinational/ sequential/ interface" ;
+    rdfs:subClassOf iec:AAA059 .
+
+iec:AAA061 a owl:Class ;
+    rdfs:label "microcontroller" ;
+    rdfs:subClassOf iec:AAA060 .
+
+iec:AAA062 a owl:Class ;
+    rdfs:label "microprocessor" ;
+    rdfs:subClassOf iec:AAA061 .
+
+iec:AAA065 a owl:Class ;
+    rdfs:label "content addressable memory IC" ;
+    rdfs:subClassOf iec:AAA063 .
+
+iec:AAA066 a owl:Class ;
+    rdfs:label "charge coupled device IC" ;
+    rdfs:subClassOf iec:AAA065 .
+
+iec:AAA067 a owl:Class ;
+    rdfs:label "random access memory IC" ;
+    rdfs:subClassOf iec:AAA066 .
+
+iec:AAA068 a owl:Class ;
+    rdfs:label "dynamic RAM IC" ;
+    rdfs:subClassOf iec:AAA067 .
+
+iec:AAA069 a owl:Class ;
+    rdfs:label "static RAM IC" ;
+    rdfs:subClassOf iec:AAA068 .
+
+iec:AAA070 a owl:Class ;
+    rdfs:label "read only memory IC" ;
+    rdfs:subClassOf iec:AAA069 .
+
+iec:AAA072 a owl:Class ;
+    rdfs:label "analogue/digital signal function" .
+
+iec:AAA073 a owl:Class ;
+    rdfs:label "periodic/dc function" ;
+    rdfs:subClassOf iec:AAA072 .
+
+iec:AAA076 a owl:Class ;
+    rdfs:label "liquid crystal diplay" ;
+    rdfs:subClassOf iec:AAA074 .
+
+iec:AAA077 a owl:Class ;
+    rdfs:label "optoelectronic device" ;
+    rdfs:subClassOf iec:AAA076 .
+
+iec:AAA078 a owl:Class ;
+    rdfs:label "photocoupler" ;
+    rdfs:subClassOf iec:AAA077 .
+
+iec:AAA080 a owl:Class ;
+    rdfs:label "light emitting diode" ;
+    rdfs:subClassOf iec:AAA079 .
+
+iec:AAA082 a owl:Class ;
+    rdfs:label "laser" ;
+    rdfs:subClassOf iec:AAA079 .
+
+iec:AAA083 a owl:Class ;
+    rdfs:label "photosensor" ;
+    rdfs:subClassOf iec:AAA082 .
+
+iec:AAA084 a owl:Class ;
+    rdfs:label "infrared light photosensor" ;
+    rdfs:subClassOf iec:AAA083 .
+
+iec:AAA085 a owl:Class ;
+    rdfs:label "ultraviolet light photosensor" ;
+    rdfs:subClassOf iec:AAA084 .
+
+iec:AAA087 a owl:Class ;
+    rdfs:label "oscillator" ;
+    rdfs:subClassOf iec:AAA086 .
+
+iec:AAA089 a owl:Class ;
+    rdfs:label "resistor" .
+
+iec:AAA090 a owl:Class ;
+    rdfs:label "fixed resistor" ;
+    rdfs:subClassOf iec:AAA089 .
+
+iec:AAA091 a owl:Class ;
+    rdfs:label "fixed linear resistor" ;
+    rdfs:subClassOf iec:AAA090 .
+
+iec:AAA093 a owl:Class ;
+    rdfs:label "linear resistor network" ;
+    rdfs:subClassOf iec:AAA092 .
+
+iec:AAA094 a owl:Class ;
+    rdfs:label "fixed non-linear resistor" ;
+    rdfs:subClassOf iec:AAA093 .
+
+iec:AAA095 a owl:Class ;
+    rdfs:label "light dependent resistor" ;
+    rdfs:subClassOf iec:AAA094 .
+
+iec:AAA096 a owl:Class ;
+    rdfs:label "temperature dependent resistor" ;
+    rdfs:subClassOf iec:AAA095 .
+
+iec:AAA097 a owl:Class ;
+    rdfs:label "NTC thermistor" ;
+    rdfs:subClassOf iec:AAA096 .
+
+iec:AAA098 a owl:Class ;
+    rdfs:label "PTC thermistor" ;
+    rdfs:subClassOf iec:AAA097 .
+
+iec:AAA100 a owl:Class ;
+    rdfs:label "variable resistor" ;
+    rdfs:subClassOf iec:AAA099 .
+
+iec:AAA103 a owl:Class ;
+    rdfs:label "sensor" ;
+    rdfs:subClassOf iec:AAA102 .
+
+iec:AAA104 a owl:Class ;
+    rdfs:label "humidity sensor" ;
+    rdfs:subClassOf iec:AAA103 .
+
+iec:AAA105 a owl:Class ;
+    rdfs:label "light sensor" ;
+    rdfs:subClassOf iec:AAA104 .
+
+iec:AAA106 a owl:Class ;
+    rdfs:label "magnetic field sensor" ;
+    rdfs:subClassOf iec:AAA105 .
+
+iec:AAA107 a owl:Class ;
+    rdfs:label "nuclear sensor" ;
+    rdfs:subClassOf iec:AAA106 .
+
+iec:AAA108 a owl:Class ;
+    rdfs:label "pressure sensor" ;
+    rdfs:subClassOf iec:AAA107 .
+
+iec:AAA109 a owl:Class ;
+    rdfs:label "proximity sensor" ;
+    rdfs:subClassOf iec:AAA108 .
+
+iec:AAA110 a owl:Class ;
+    rdfs:label "temperature sensor" ;
+    rdfs:subClassOf iec:AAA109 .
+
+iec:AAA111 a owl:Class ;
+    rdfs:label "transformer" ;
+    rdfs:subClassOf iec:AAA110 .
+
+iec:AAA112 a owl:Class ;
+    rdfs:label "power transformer" ;
+    rdfs:subClassOf iec:AAA111 .
+
+iec:AAA113 a owl:Class ;
+    rdfs:label "fixed power transformer" ;
+    rdfs:subClassOf iec:AAA112 .
+
+iec:AAA114 a owl:Class ;
+    rdfs:label "variable power transformer" ;
+    rdfs:subClassOf iec:AAA113 .
+
+iec:AAA115 a owl:Class ;
+    rdfs:label "signal transformer" ;
+    rdfs:subClassOf iec:AAA114 .
+
+iec:AAA116 a owl:Class ;
+    rdfs:label "fixed signal transformer" ;
+    rdfs:subClassOf iec:AAA115 .
+
+iec:AAA117 a owl:Class ;
+    rdfs:label "variable signal transformer" ;
+    rdfs:subClassOf iec:AAA116 .
+
+iec:AAA118 a owl:Class ;
+    rdfs:label "transistor" ;
+    rdfs:subClassOf iec:AAA117 .
+
+iec:AAA119 a owl:Class ;
+    rdfs:label "bipolar transistor" ;
+    rdfs:subClassOf iec:AAA118 .
+
+iec:AAA120 a owl:Class ;
+    rdfs:label "bipolar power transistor" ;
+    rdfs:subClassOf iec:AAA119 .
+
+iec:AAA121 a owl:Class ;
+    rdfs:label "bipolar LF power transistor" ;
+    rdfs:subClassOf iec:AAA120 .
+
+iec:AAA122 a owl:Class ;
+    rdfs:label "bipolar RF power transistor" ;
+    rdfs:subClassOf iec:AAA121 .
+
+iec:AAA123 a owl:Class ;
+    rdfs:label "bipolar small signal transistor" ;
+    rdfs:subClassOf iec:AAA122 .
+
+iec:AAA124 a owl:Class ;
+    rdfs:label "bipolar LF small signal transistor" ;
+    rdfs:subClassOf iec:AAA123 .
+
+iec:AAA125 a owl:Class ;
+    rdfs:label "bipolar RF small signal transistor" ;
+    rdfs:subClassOf iec:AAA124 .
+
+iec:AAA126 a owl:Class ;
+    rdfs:label "field-effect transistor" ;
+    rdfs:subClassOf iec:AAA125 .
+
+iec:AAA127 a owl:Class ;
+    rdfs:label "field-effect power transistor" ;
+    rdfs:subClassOf iec:AAA126 .
+
+iec:AAA128 a owl:Class ;
+    rdfs:label "field-effect LF power transistor" ;
+    rdfs:subClassOf iec:AAA127 .
+
+iec:AAA129 a owl:Class ;
+    rdfs:label "field-effect RF power transistor" ;
+    rdfs:subClassOf iec:AAA128 .
+
+iec:AAA133 a owl:Class ;
+    rdfs:label "thyristor" ;
+    rdfs:subClassOf iec:AAA131 .
+
+iec:AAA134 a owl:Class ;
+    rdfs:label "fast turn-off thyristor" ;
+    rdfs:subClassOf iec:AAA133 .
+
+iec:AAA137 a owl:Class ;
+    rdfs:label "triac" ;
+    rdfs:subClassOf iec:AAA135 .
+
+iec:AAA138 a owl:Class ;
+    rdfs:label "tube" ;
+    rdfs:subClassOf iec:AAA137 .
+
+iec:AAA139 a owl:Class ;
+    rdfs:label "display tube" ;
+    rdfs:subClassOf iec:AAA138 .
+
+iec:AAA140 a owl:Class ;
+    rdfs:label "colour display tube" ;
+    rdfs:subClassOf iec:AAA139 .
+
+iec:AAA141 a owl:Class ;
+    rdfs:label "monochrome display tube" ;
+    rdfs:subClassOf iec:AAA140 .
+
+iec:AAA142 a owl:Class ;
+    rdfs:label "gas filled tube" ;
+    rdfs:subClassOf iec:AAA141 .
+
+iec:AAA143 a owl:Class ;
+    rdfs:label "photo sensitive tube" ;
+    rdfs:subClassOf iec:AAA142 .
+
+iec:AAA144 a owl:Class ;
+    rdfs:label "space charge controlled tube" ;
+    rdfs:subClassOf iec:AAA143 .
+
+iec:AAA147 a owl:Class ;
+    rdfs:label "electromechanical component" .
+
+iec:AAA148 a owl:Class ;
+    rdfs:label "connector" ;
+    rdfs:subClassOf iec:AAA147 .
+
+iec:AAA150 a owl:Class ;
+    rdfs:label "loudspeaker" ;
+    rdfs:subClassOf iec:AAA149 .
+
+iec:AAA151 a owl:Class ;
+    rdfs:label "moving conductor loudspeaker" ;
+    rdfs:subClassOf iec:AAA150 .
+
+iec:AAA152 a owl:Class ;
+    rdfs:label "magnetodynamic loudspeaker" ;
+    rdfs:subClassOf iec:AAA151 .
+
+iec:AAA153 a owl:Class ;
+    rdfs:label "ionic loudspeaker" ;
+    rdfs:subClassOf iec:AAA152 .
+
+iec:AAA154 a owl:Class ;
+    rdfs:label "electromagnetic loudspeaker" ;
+    rdfs:subClassOf iec:AAA153 .
+
+iec:AAA155 a owl:Class ;
+    rdfs:label "pneumatic loudspeaker" ;
+    rdfs:subClassOf iec:AAA154 .
+
+iec:AAA156 a owl:Class ;
+    rdfs:label "piezoelectric loudspeaker" ;
+    rdfs:subClassOf iec:AAA155 .
+
+iec:AAA157 a owl:Class ;
+    rdfs:label "electrostatic loudspeaker" ;
+    rdfs:subClassOf iec:AAA156 .
+
+iec:AAA158 a owl:Class ;
+    rdfs:label "magnetostrictive loudspeaker" ;
+    rdfs:subClassOf iec:AAA157 .
+
+iec:AAA159 a owl:Class ;
+    rdfs:label "microphone" ;
+    rdfs:subClassOf iec:AAA158 .
+
+iec:AAA160 a owl:Class ;
+    rdfs:label "motor" ;
+    rdfs:subClassOf iec:AAA159 .
+
+iec:AAA161 a owl:Class ;
+    rdfs:label "linear motor" ;
+    rdfs:subClassOf iec:AAA160 .
+
+iec:AAA162 a owl:Class ;
+    rdfs:label "linear ac motor" ;
+    rdfs:subClassOf iec:AAA161 .
+
+iec:AAA163 a owl:Class ;
+    rdfs:label "linear dc motor" ;
+    rdfs:subClassOf iec:AAA162 .
+
+iec:AAA165 a owl:Class ;
+    rdfs:label "linear universal motor" ;
+    rdfs:subClassOf iec:AAA164 .
+
+iec:AAA166 a owl:Class ;
+    rdfs:label "rotational motor" ;
+    rdfs:subClassOf iec:AAA165 .
+
+iec:AAA168 a owl:Class ;
+    rdfs:label "rotational dc motor" ;
+    rdfs:subClassOf iec:AAA167 .
+
+iec:AAA169 a owl:Class ;
+    rdfs:label "rotational stepping motor" ;
+    rdfs:subClassOf iec:AAA168 .
+
+iec:AAA171 a owl:Class ;
+    rdfs:label "relay" ;
+    rdfs:subClassOf iec:AAA167 .
+
+iec:AAA172 a owl:Class ;
+    rdfs:label "switch" ;
+    rdfs:subClassOf iec:AAA164 .
+
+iec:AAA173 a owl:Class ;
+    rdfs:label "reed switch" ;
+    rdfs:subClassOf iec:AAA172 .
+
+iec:AAA174 a owl:Class ;
+    rdfs:label "mechanical switch" ;
+    rdfs:subClassOf iec:AAA173 .
+
+iec:AAA215 a owl:Class ;
+    rdfs:label "magnetic part" ;
+    rdfs:subClassOf iec:AAA175 .
+
+iec:AAA216 a owl:Class ;
+    rdfs:label "hard-magnetic part" ;
+    rdfs:subClassOf iec:AAA215 .
+
+iec:AAA217 a owl:Class ;
+    rdfs:label "soft-magnetic part" ;
+    rdfs:subClassOf iec:AAA216 .
+
+iec:AAA218 a owl:Class ;
+    rdfs:label "material" ;
+    rdfs:subClassOf iec:AAA217 .
+
+iec:AAA219 a owl:Class ;
+    rdfs:label "acoustic material" ;
+    rdfs:subClassOf iec:AAA218 .
+
+iec:AAA220 a owl:Class ;
+    rdfs:label "magnetic material" ;
+    rdfs:subClassOf iec:AAA219 .
+
+iec:AAA221 a owl:Class ;
+    rdfs:label "hard magnetic material" ;
+    rdfs:subClassOf iec:AAA220 .
+
+iec:AAA222 a owl:Class ;
+    rdfs:label "soft magnetic material" ;
+    rdfs:subClassOf iec:AAA221 .
+
+iec:AAA223 a owl:Class ;
+    rdfs:label "optical material" ;
+    rdfs:subClassOf iec:AAA222 .
+
+iec:AAA224 a owl:Class ;
+    rdfs:label "thermal material" ;
+    rdfs:subClassOf iec:AAA223 .
+
+iec:AAA225 a owl:Class ;
+    rdfs:label "deflection unit" ;
+    rdfs:subClassOf iec:AAA074 .
+
+iec:AAA226 a owl:Class ;
+    rdfs:label "choke" ;
+    rdfs:subClassOf iec:AAA225 .
+
+iec:AAA227 a owl:Class ;
+    rdfs:label "coil" ;
+    rdfs:subClassOf iec:AAA226 .
+
+iec:AAA232 a owl:Class ;
+    rdfs:label "printed wiring circuit" ;
+    rdfs:subClassOf iec:AAA145 .
+
+iec:AAA233 a owl:Class ;
+    rdfs:label "feature" ;
+    rdfs:subClassOf iec:AAA230 .
+
+iec:AAA235 a owl:Class ;
+    rdfs:label "toleranced value" ;
+    rdfs:subClassOf iec:AAA234 .
+
+iec:AAA236 a owl:Class ;
+    rdfs:label "impedance" ;
+    rdfs:subClassOf iec:AAA234 .
+
+iec:AAA295 a owl:Class ;
+    rdfs:label "bare die" .
+
+iec:AAA297 a owl:Class ;
+    rdfs:label "die with attached lead frame" .
+
+iec:AAA298 a owl:Class ;
+    rdfs:label "minimally-packaged die device" ;
+    rdfs:subClassOf iec:AAA297 .
+
+iec:AAA301 a owl:Class ;
+    rdfs:label "geometry" .
+
+iec:AAA303 a owl:Class ;
+    rdfs:label "package outline" ;
+    rdfs:subClassOf iec:AAA299 .
+
+iec:AAA305 a owl:Class ;
+    rdfs:label "chip-carrier" ;
+    rdfs:subClassOf iec:AAA304 .
+
+iec:AAA308 a owl:Class ;
+    rdfs:label "disc-shaped" ;
+    rdfs:subClassOf iec:AAA307 .
+
+iec:AAA309 a owl:Class ;
+    rdfs:label "flange-mount" ;
+    rdfs:subClassOf iec:AAA303 .
+
+iec:AAA319 a owl:Class ;
+    rdfs:label "rectangular" ;
+    rdfs:subClassOf iec:AAA314 .
+
+iec:AAA320 a owl:Class ;
+    rdfs:label "small-outline" ;
+    rdfs:subClassOf iec:AAA318 .
+
+iec:AAA323 a owl:Class ;
+    rdfs:label "bottom lead" ;
+    rdfs:subClassOf iec:AAA322 .
+
+iec:AAA324 a owl:Class ;
+    rdfs:label "quad" ;
+    rdfs:subClassOf iec:AAA323 .
+
+iec:AAA326 a owl:Class ;
+    rdfs:label "bottom lead" ;
+    rdfs:subClassOf iec:AAA325 .
+
+iec:AAA327 a owl:Class ;
+    rdfs:label "end connection" ;
+    rdfs:subClassOf iec:AAA307 .
+
+iec:AAA329 a owl:Class ;
+    rdfs:label "upper connection" ;
+    rdfs:subClassOf iec:AAA327 .
+
+iec:AAA331 a owl:Class ;
+    rdfs:label "bottom lead" ;
+    rdfs:subClassOf iec:AAA330 .
+
+iec:AAA333 a owl:Class ;
+    rdfs:label "double-row lead" ;
+    rdfs:subClassOf iec:AAA332 .
+
+iec:AAA335 a owl:Class ;
+    rdfs:label "zig-zag lead" ;
+    rdfs:subClassOf iec:AAA334 .
+
+iec:AAA341 a owl:Class ;
+    rdfs:label "quad" ;
+    rdfs:subClassOf iec:AAA340 .
+
+iec:AAA349 a owl:Class ;
+    rdfs:label "end connection" ;
+    rdfs:subClassOf iec:AAA319 .
+
+iec:AAA354 a owl:Class ;
+    rdfs:label "wire" ;
+    rdfs:subClassOf iec:AAA353 .
+
+iec:AAA359 a owl:Class ;
+    rdfs:label "wrap-around" ;
+    rdfs:subClassOf iec:AAA358 .
+
+iec:AAA360 a owl:Class ;
+    rdfs:label "solder lug" ;
+    rdfs:subClassOf iec:AAA328 .
+
+iec:AAA361 a owl:Class ;
+    rdfs:label "wire" ;
+    rdfs:subClassOf iec:AAA328 .
+
+iec:AAA366 a owl:Class ;
+    rdfs:label "pin" ;
+    rdfs:subClassOf iec:AAA365 .
+
+iec:AAA367 a owl:Class ;
+    rdfs:label "pin" ;
+    rdfs:subClassOf iec:AAA366 .
+
+iec:AAA368 a owl:Class ;
+    rdfs:label "through-hole" ;
+    rdfs:subClassOf iec:AAA334 .
+
+iec:AAA369 a owl:Class ;
+    rdfs:label "through-hole" ;
+    rdfs:subClassOf iec:AAA335 .
+
+iec:AAA370 a owl:Class ;
+    rdfs:label "flat" ;
+    rdfs:subClassOf iec:AAA336 .
+
+iec:AAA373 a owl:Class ;
+    rdfs:label "pin" ;
+    rdfs:subClassOf iec:AAA339 .
+
+iec:AAA374 a owl:Class ;
+    rdfs:label "pin" ;
+    rdfs:subClassOf iec:AAA313 .
+
+iec:AAA376 a owl:Class ;
+    rdfs:label "through-hole" ;
+    rdfs:subClassOf iec:AAA375 .
+
+iec:AAA377 a owl:Class ;
+    rdfs:label "through-hole" ;
+    rdfs:subClassOf iec:AAA342 .
+
+iec:AAA378 a owl:Class ;
+    rdfs:label "through-hole" ;
+    rdfs:subClassOf iec:AAA343 .
+
+iec:AAA379 a owl:Class ;
+    rdfs:label "through-hole" ;
+    rdfs:subClassOf iec:AAA344 .
+
+iec:AAA380 a owl:Class ;
+    rdfs:label "wire" ;
+    rdfs:subClassOf iec:AAA345 .
+
+iec:AAA381 a owl:Class ;
+    rdfs:label "solder lug" ;
+    rdfs:subClassOf iec:AAA346 .
+
+iec:AAA382 a owl:Class ;
+    rdfs:label "high current cable" ;
+    rdfs:subClassOf iec:AAA346 .
+
+iec:AAA383 a owl:Class ;
+    rdfs:label "solder lug" ;
+    rdfs:subClassOf iec:AAA347 .
+
+iec:AAA384 a owl:Class ;
+    rdfs:label "wire" ;
+    rdfs:subClassOf iec:AAA347 .
+
+iec:AAA385 a owl:Class ;
+    rdfs:label "wire" ;
+    rdfs:subClassOf iec:AAA384 .
+
+iec:AAA387 a owl:Class ;
+    rdfs:label "wrap-around" ;
+    rdfs:subClassOf iec:AAA386 .
+
+iec:AAA392 a owl:Class ;
+    rdfs:label "straight lead" ;
+    rdfs:subClassOf iec:AAA354 .
+
+iec:AAA397 a owl:Class ;
+    rdfs:label "lead on a circle" ;
+    rdfs:subClassOf iec:AAA358 .
+
+iec:AAA398 a owl:Class ;
+    rdfs:label "straight leads in line" ;
+    rdfs:subClassOf iec:AAA397 .
+
+iec:AAA399 a owl:Class ;
+    rdfs:label "formed leads in line" ;
+    rdfs:subClassOf iec:AAA398 .
+
+iec:AAA400 a owl:Class ;
+    rdfs:label "leads on a square grid" ;
+    rdfs:subClassOf iec:AAA399 .
+
+iec:AAA408 a owl:Class ;
+    rdfs:label "straight lead" ;
+    rdfs:subClassOf iec:AAA365 .
+
+iec:AAA410 a owl:Class ;
+    rdfs:label "offset lead" ;
+    rdfs:subClassOf iec:AAA332 .
+
+iec:AAA413 a owl:Class ;
+    rdfs:label "straight flat lead" ;
+    rdfs:subClassOf iec:AAA368 .
+
+iec:AAA415 a owl:Class ;
+    rdfs:label "straight flat lead" ;
+    rdfs:subClassOf iec:AAA369 .
+
+iec:AAA421 a owl:Class ;
+    rdfs:label "round pin" ;
+    rdfs:subClassOf iec:AAA374 .
+
+iec:AAA429 a owl:Class ;
+    rdfs:label "one fixed tag" ;
+    rdfs:subClassOf iec:AAA381 .
+
+iec:AAA431 a owl:Class ;
+    rdfs:label "one lead with tag" ;
+    rdfs:subClassOf iec:AAA382 .
+
+iec:AAA432 a owl:Class ;
+    rdfs:label "two leads with tags" ;
+    rdfs:subClassOf iec:AAA431 .
+
+iec:AAA433 a owl:Class ;
+    rdfs:label "three leads with tags" ;
+    rdfs:subClassOf iec:AAA432 .
+
+iec:AAA435 a owl:Class ;
+    rdfs:label "strip lead" ;
+    rdfs:subClassOf iec:AAA383 .
+
+iec:AAA437 a owl:Class ;
+    rdfs:label "straight lead" ;
+    rdfs:subClassOf iec:AAA385 .
+
+iec:AAA441 a owl:Class ;
+    rdfs:label "multiple leads" ;
+    rdfs:subClassOf iec:AAA388 .
+
+iec:AAA446 a owl:Class ;
+    rdfs:label "non-cavity package (moulded)" ;
+    rdfs:subClassOf iec:AAA356 .
+
+iec:AAA450 a owl:Class ;
+    rdfs:label "clamp mount package" ;
+    rdfs:subClassOf iec:AAA362 .
+
+iec:AAA452 a owl:Class ;
+    rdfs:label "clamp mount package" ;
+    rdfs:subClassOf iec:AAA363 .
+
+iec:AAA455 a owl:Class ;
+    rdfs:label "cavity up" ;
+    rdfs:subClassOf iec:AAA312 .
+
+iec:AAA501 a owl:Class ;
+    rdfs:label "solid tantalum electrolytic" ;
+    rdfs:subClassOf iec:AAA026 .
+
+iec:AAA502 a owl:Class ;
+    rdfs:label "non-solid tantalum electrolytic" ;
+    rdfs:subClassOf iec:AAA501 .
+
+iec:AAA503 a owl:Class ;
+    rdfs:label "solid aluminium electrolytic" ;
+    rdfs:subClassOf iec:AAA502 .
+
+iec:AAA509 a owl:Class ;
+    rdfs:label "fixed precision resistor" ;
+    rdfs:subClassOf iec:AAA092 .
+
+iec:AAA510 a owl:Class ;
+    rdfs:label "fixed power resistor" ;
+    rdfs:subClassOf iec:AAA509 .
+
+iec:AAA511 a owl:Class ;
+    rdfs:label "fixed low-power resistor" ;
+    rdfs:subClassOf iec:AAA510 .
+
+iec:AAA512 a owl:Class ;
+    rdfs:label "fixed chip resistor" ;
+    rdfs:subClassOf iec:AAA511 .
+
+iec:AAA513 a owl:Class ;
+    rdfs:label "fixed thermostat resistor" ;
+    rdfs:subClassOf iec:AAA512 .
+
+iec:AAA516 a owl:Class ;
+    rdfs:label "preset potentiometer" ;
+    rdfs:subClassOf iec:AAA102 .
+
+iec:AAA517 a owl:Class ;
+    rdfs:label "linear slide potentiometer" ;
+    rdfs:subClassOf iec:AAA516 .
+
+iec:AAA518 a owl:Class ;
+    rdfs:label "circular connector" ;
+    rdfs:subClassOf iec:AAA148 .
+
+iec:AAA519 a owl:Class ;
+    rdfs:label "rectangular connector" ;
+    rdfs:subClassOf iec:AAA518 .
+
+iec:AAA520 a owl:Class ;
+    rdfs:label "PCB connector" ;
+    rdfs:subClassOf iec:AAA519 .
+
+iec:AAA521 a owl:Class ;
+    rdfs:label "RF connector" ;
+    rdfs:subClassOf iec:AAA520 .
+
+iec:AAA523 a owl:Class ;
+    rdfs:label "modular connector" ;
+    rdfs:subClassOf iec:AAA522 .
+
+iec:AAA524 a owl:Class ;
+    rdfs:label "connector contact" ;
+    rdfs:subClassOf iec:AAA175 .
+
+iec:AAA525 a owl:Class ;
+    rdfs:label "connector accessory" ;
+    rdfs:subClassOf iec:AAA524 .
+
+iec:AAA527 a owl:Class ;
+    rdfs:label "socket" ;
+    rdfs:subClassOf iec:AAA526 .
+
+iec:AAA528 a owl:Class ;
+    rdfs:label "terminal" ;
+    rdfs:subClassOf iec:AAA522 .
+
+iec:AAA536 a owl:Class ;
+    rdfs:label "concentric plugs and jacks" ;
+    rdfs:subClassOf iec:AAA526 .
+
+iec:AAA537 a owl:Class ;
+    rdfs:label "concentric plugs" ;
+    rdfs:subClassOf iec:AAA536 .
+
+iec:AAA538 a owl:Class ;
+    rdfs:label "concentric jacks" ;
+    rdfs:subClassOf iec:AAA537 .
+
+iec:AAA539 a owl:Class ;
+    rdfs:label "multiple concentric jacks" ;
+    rdfs:subClassOf iec:AAA538 .
+
+iec:AAA540 a owl:Class ;
+    rdfs:label "pin plugs and jacks" ;
+    rdfs:subClassOf iec:AAA539 .
+
+iec:AAA541 a owl:Class ;
+    rdfs:label "pin plug" ;
+    rdfs:subClassOf iec:AAA540 .
+
+iec:AAA542 a owl:Class ;
+    rdfs:label "pin jack" ;
+    rdfs:subClassOf iec:AAA541 .
+
+iec:AAA543 a owl:Class ;
+    rdfs:label "multiple pin jacks" ;
+    rdfs:subClassOf iec:AAA542 .
+
+iec:AAA544 a owl:Class ;
+    rdfs:label "shielded pin jack" ;
+    rdfs:subClassOf iec:AAA543 .
+
+iec:AAA545 a owl:Class ;
+    rdfs:label "plug and jack for dc power" ;
+    rdfs:subClassOf iec:AAA544 .
+
+iec:AAA546 a owl:Class ;
+    rdfs:label "dc power plug" ;
+    rdfs:subClassOf iec:AAA545 .
+
+iec:AAA547 a owl:Class ;
+    rdfs:label "dc power jack" ;
+    rdfs:subClassOf iec:AAA546 .
+
+iec:AAA548 a owl:Class ;
+    rdfs:label "car plug" ;
+    rdfs:subClassOf iec:AAA547 .
+
+iec:AAA549 a owl:Class ;
+    rdfs:label "plug assembly" ;
+    rdfs:subClassOf iec:AAA548 .
+
+iec:AAA551 a owl:Class ;
+    rdfs:label "socket for tubes" ;
+    rdfs:subClassOf iec:AAA527 .
+
+iec:AAA554 a owl:Class ;
+    rdfs:label "transistor socket" ;
+    rdfs:subClassOf iec:AAA551 .
+
+iec:AAA555 a owl:Class ;
+    rdfs:label "socket for integrated circuits" ;
+    rdfs:subClassOf iec:AAA554 .
+
+iec:AAA556 a owl:Class ;
+    rdfs:label "socket for PCB" ;
+    rdfs:subClassOf iec:AAA555 .
+
+iec:AAA557 a owl:Class ;
+    rdfs:label "power socket" ;
+    rdfs:subClassOf iec:AAA556 .
+
+iec:AAA561 a owl:Class ;
+    rdfs:label "signal socket" ;
+    rdfs:subClassOf iec:AAA557 .
+
+iec:AAA562 a owl:Class ;
+    rdfs:label "socket for quartz crystals" ;
+    rdfs:subClassOf iec:AAA561 .
+
+iec:AAA563 a owl:Class ;
+    rdfs:label "lighting socket" ;
+    rdfs:subClassOf iec:AAA562 .
+
+iec:AAA564 a owl:Class ;
+    rdfs:label "fuse holder and socket" ;
+    rdfs:subClassOf iec:AAA563 .
+
+iec:AAA566 a owl:Class ;
+    rdfs:label "small terminal" ;
+    rdfs:subClassOf iec:AAA528 .
+
+iec:AAA569 a owl:Class ;
+    rdfs:label "terminal array" ;
+    rdfs:subClassOf iec:AAA566 .
+
+iec:AAA572 a owl:Class ;
+    rdfs:label "terminal board" ;
+    rdfs:subClassOf iec:AAA569 .
+
+iec:AAA575 a owl:Class ;
+    rdfs:label "current-activated fuse" ;
+    rdfs:subClassOf iec:AAA149 .
+
+iec:AAA578 a owl:Class ;
+    rdfs:label "fibre optics" ;
+    rdfs:subClassOf iec:AAA232 .
+
+iec:AAA579 a owl:Class ;
+    rdfs:label "fibre optic link" ;
+    rdfs:subClassOf iec:AAA578 .
+
+iec:AAA580 a owl:Class ;
+    rdfs:label "fibre optic connector" ;
+    rdfs:subClassOf iec:AAA579 .
+
+iec:AAA581 a owl:Class ;
+    rdfs:label "fibre optic switch" ;
+    rdfs:subClassOf iec:AAA580 .
+
+iec:AAA582 a owl:Class ;
+    rdfs:label "fibre optic branch" ;
+    rdfs:subClassOf iec:AAA581 .
+
+iec:AAA583 a owl:Class ;
+    rdfs:label "fibre optic coupler/ splicer" ;
+    rdfs:subClassOf iec:AAA582 .
+
+iec:AAA584 a owl:Class ;
+    rdfs:label "fibre optic attenuator" ;
+    rdfs:subClassOf iec:AAA583 .
+
+iec:AAA585 a owl:Class ;
+    rdfs:label "fibre optic detector" ;
+    rdfs:subClassOf iec:AAA584 .
+
+iec:AAA586 a owl:Class ;
+    rdfs:label "fibre optic isolator" ;
+    rdfs:subClassOf iec:AAA585 .
+
+iec:AAA587 a owl:Class ;
+    rdfs:label "fibre optic network" ;
+    rdfs:subClassOf iec:AAA586 .
+
+iec:AAA588 a owl:Class ;
+    rdfs:label "fibre optic light source" ;
+    rdfs:subClassOf iec:AAA587 .
+
+iec:AAA589 a owl:Class ;
+    rdfs:label "fibre optic modulator" ;
+    rdfs:subClassOf iec:AAA588 .
+
+iec:AAA590 a owl:Class ;
+    rdfs:label "fibre optic transmitter/ receiver" ;
+    rdfs:subClassOf iec:AAA589 .
+
+iec:AAA592 a owl:Class ;
+    rdfs:label "fibre optic cable" ;
+    rdfs:subClassOf iec:AAA591 .
+
+iec:AAA593 a owl:Class ;
+    rdfs:label "fibre optic filter" ;
+    rdfs:subClassOf iec:AAA592 .
+
+iec:AAA603 a owl:Class ;
+    rdfs:label "antenna coil" ;
+    rdfs:subClassOf iec:AAA228 .
+
+iec:AAA605 a owl:Class ;
+    rdfs:label "air spark gap" ;
+    rdfs:subClassOf iec:AAA595 .
+
+iec:AAA607 a owl:Class ;
+    rdfs:label "rotary precision potentiometer" ;
+    rdfs:subClassOf iec:AAA517 .
+
+iec:AAA608 a owl:Class ;
+    rdfs:label "power rotary potentiometer" ;
+    rdfs:subClassOf iec:AAA607 .
+
+iec:AAA611 a owl:Class ;
+    rdfs:label "connector tool" ;
+    rdfs:subClassOf iec:AAA525 .
+
+iec:AAA612 a owl:Class ;
+    rdfs:label "connector shell" ;
+    rdfs:subClassOf iec:AAA611 .
+
+iec:AAA621 a owl:Class ;
+    rdfs:label "temperature" ;
+    rdfs:subClassOf iec:AAA239 .
+
+iec:AAA622 a owl:Class ;
+    rdfs:label "humidity" ;
+    rdfs:subClassOf iec:AAA238 .
+
+iec:AAA625 a owl:Class ;
+    rdfs:label "ambient air composition" ;
+    rdfs:subClassOf iec:AAA622 .
+
+iec:AAA626 a owl:Class ;
+    rdfs:label "location" ;
+    rdfs:subClassOf iec:AAA625 .
+
+iec:AAA627 a owl:Class ;
+    rdfs:label "precipitation" ;
+    rdfs:subClassOf iec:AAA626 .
+
+iec:AAA628 a owl:Class ;
+    rdfs:label "radiation" ;
+    rdfs:subClassOf iec:AAA627 .
+
+iec:AAA629 a owl:Class ;
+    rdfs:label "movement of surrounding medium" ;
+    rdfs:subClassOf iec:AAA628 .
+
+iec:AAA630 a owl:Class ;
+    rdfs:label "isokeraunic condition" ;
+    rdfs:subClassOf iec:AAA629 .
+
+iec:AAA632 a owl:Class ;
+    rdfs:label "pollution" ;
+    rdfs:subClassOf iec:AAA630 .
+
+iec:AAA633 a owl:Class ;
+    rdfs:label "corrosion" ;
+    rdfs:subClassOf iec:AAA632 .
+
+iec:AAA634 a owl:Class ;
+    rdfs:label "biological condition" ;
+    rdfs:subClassOf iec:AAA633 .
+
+iec:AAA635 a owl:Class ;
+    rdfs:label "chemically active substance" ;
+    rdfs:subClassOf iec:AAA634 .
+
+iec:AAA636 a owl:Class ;
+    rdfs:label "mechanically active substance" ;
+    rdfs:subClassOf iec:AAA635 .
+
+iec:AAA638 a owl:Class ;
+    rdfs:label "combustible dust" ;
+    rdfs:subClassOf iec:AAA637 .
+
+iec:AAA641 a owl:Class ;
+    rdfs:label "condensation" ;
+    rdfs:subClassOf iec:AAA638 .
+
+iec:AAA643 a owl:Class ;
+    rdfs:label "seismic" ;
+    rdfs:subClassOf iec:AAA642 .
+
+iec:AAA644 a owl:Class ;
+    rdfs:label "impact from foreign body" ;
+    rdfs:subClassOf iec:AAA642 .
+
+iec:AAA645 a owl:Class ;
+    rdfs:label "electromagnetic compatibility" ;
+    rdfs:subClassOf iec:AAA644 .
+
+iec:AAA651 a owl:Class ;
+    rdfs:label "identification number" ;
+    rdfs:subClassOf iec:AAA649 .
+
+iec:AAA652 a owl:Class ;
+    rdfs:label "internationally registered identification system" ;
+    rdfs:subClassOf iec:AAA651 .
+
+iec:AAA655 a owl:Class ;
+    rdfs:label "physical address" ;
+    rdfs:subClassOf iec:AAA653 .
+
+iec:AAA658 a owl:Class ;
+    rdfs:label "person identification" ;
+    rdfs:subClassOf iec:AAA656 .
+
+iec:AAA660 a owl:Class ;
+    rdfs:label "rectangular block" ;
+    rdfs:subClassOf iec:AAA649 .
+
+iec:AAA661 a owl:Class ;
+    rdfs:label "rectangular pyramid" ;
+    rdfs:subClassOf iec:AAA660 .
+
+iec:AAA662 a owl:Class ;
+    rdfs:label "right angular wedge" ;
+    rdfs:subClassOf iec:AAA661 .
+
+iec:AAA666 a owl:Class ;
+    rdfs:label "torus" ;
+    rdfs:subClassOf iec:AAA663 .
+
+iec:AAA667 a owl:Class ;
+    rdfs:label "cartesian point" ;
+    rdfs:subClassOf iec:AAA666 .
+
+iec:AAA759 a owl:Class ;
+    rdfs:label "object reference designation" ;
+    rdfs:subClassOf iec:AAA658 .
+
+iec:AAA760 a owl:Class ;
+    rdfs:label "terminal reference designatiion" ;
+    rdfs:subClassOf iec:AAA759 .
+
+iec:AAF525 a owl:Class ;
+    rdfs:label "signal" .
+
+iec:AAF526 a owl:Class ;
+    rdfs:label "signal variant" ;
+    rdfs:subClassOf iec:AAF525 .
+
+iec:ACA001 a owl:Class ;
+    rdfs:label "product" .
+
+iec:ACA002 a owl:Class ;
+    rdfs:label "product part" ;
+    rdfs:subClassOf iec:ACA001 .
+
+iec:ACA004 a owl:Class ;
+    rdfs:label "toleranced mass" ;
+    rdfs:subClassOf iec:ACA000 .
+
+iec:ACA006 a owl:Class ;
+    rdfs:label "material class" ;
+    rdfs:subClassOf iec:ACA005 .
+
+iec:ACA007 a owl:Class ;
+    rdfs:label "material" ;
+    rdfs:subClassOf iec:ACA006 .
+
+iec:ACA010 a owl:Class ;
+    rdfs:label "exemptions" ;
+    rdfs:subClassOf iec:ACA007 .
+
+iec:ACA011 a owl:Class ;
+    rdfs:label "exemption" ;
+    rdfs:subClassOf iec:ACA010 .
+
+iec:ACA019 a owl:Class ;
+    rdfs:label "supplementary information" ;
+    rdfs:subClassOf iec:ACA011 .
+
+iec:ACA070 a owl:Class ;
+    rdfs:label "material declaration" .
+
+iec:ACA072 a owl:Class ;
+    rdfs:label "declaration of waste of electrical and electronic equipment" ;
+    rdfs:subClassOf iec:ACA008 .
+
+iec:ACA073 a owl:Class ;
+    rdfs:label "declaration of restriction of the use of certain hazardous substances" ;
+    rdfs:subClassOf iec:ACA072 .
+
+iec:ADA036 a owl:Class ;
+    rdfs:label "product discontinuation" .
+
+iec:ADA046 a owl:Class ;
+    rdfs:label "noise emission data" ;
+    rdfs:subClassOf iec:ADA036 .
+
+iec:ADA055 a owl:Class ;
+    rdfs:label "transportation conditions" ;
+    rdfs:subClassOf iec:ADA046 .
+
+iec:ADA056 a owl:Class ;
+    rdfs:label "storage conditions" ;
+    rdfs:subClassOf iec:ADA055 .
+
+iec:ADA071 a owl:Class ;
+    rdfs:label "statistics" ;
+    rdfs:subClassOf iec:ADA056 .
+
+iec:ADA072 a owl:Class ;
+    rdfs:label "probability distribution characteristics" ;
+    rdfs:subClassOf iec:ADA071 .
+
+iec:ADA073 a owl:Class ;
+    rdfs:label "installation conditions" ;
+    rdfs:subClassOf iec:ADA072 .
+
+iec:ADA075 a owl:Class ;
+    rdfs:label "packing conditions" ;
+    rdfs:subClassOf iec:ADA073 .
+
+iec:ADA077 a owl:Class ;
+    rdfs:label "object description" ;
+    rdfs:subClassOf iec:ADA075 .
+
+iec:ADA095 a owl:Class ;
+    rdfs:label "conformity assessment body" ;
+    rdfs:subClassOf iec:ADA092 .
+
+iec:ADA096 a owl:Class ;
+    rdfs:label "conformity attestation" ;
+    rdfs:subClassOf iec:ADA095 .
+
+iec:ADA100 a owl:Class ;
+    rdfs:label "effectivity" ;
+    rdfs:subClassOf iec:ADA096 .
+
+iec:ADA101 a owl:Class ;
+    rdfs:label "dated effectivity" ;
+    rdfs:subClassOf iec:ADA100 .
+
+iec:ADA102 a owl:Class ;
+    rdfs:label "time interval based effectivity" ;
+    rdfs:subClassOf iec:ADA101 .
+
+iec:ADA103 a owl:Class ;
+    rdfs:label "region based effectivity" ;
+    rdfs:subClassOf iec:ADA102 .
+
+iec:ADA104 a owl:Class ;
+    rdfs:label "organization based effectivity" ;
+    rdfs:subClassOf iec:ADA103 .
+
+iec:ADA105 a owl:Class ;
+    rdfs:label "domain related effectivity" ;
+    rdfs:subClassOf iec:ADA104 .
+
+iec:ADA112 a owl:Class ;
+    rdfs:label "warranty" ;
+    rdfs:subClassOf iec:ADA106 .
+
+iec:ADA132 a owl:Class ;
+    rdfs:label "after-sales-related durability issues" ;
+    rdfs:subClassOf iec:ADA112 .
+
+iec:ADA137 a owl:Class ;
+    rdfs:label "dependability of an item" ;
+    rdfs:subClassOf iec:ADA106 .
+
+iec:ADA214 a owl:Class ;
+    rdfs:label "measures for reliability related concepts" ;
+    rdfs:subClassOf iec:ADA132 .
+
+iec:ADA215 a owl:Class ;
+    rdfs:label "reliability of an item" ;
+    rdfs:subClassOf iec:ADA214 .
+
+iec:ADA216 a owl:Class ;
+    rdfs:label "availability of an item" ;
+    rdfs:subClassOf iec:ADA215 .
+
+iec:ADA217 a owl:Class ;
+    rdfs:label "recoverability of an item" ;
+    rdfs:subClassOf iec:ADA216 .
+
+iec:ADA218 a owl:Class ;
+    rdfs:label "maintainability of an item" ;
+    rdfs:subClassOf iec:ADA217 .
+
+iec:ADA219 a owl:Class ;
+    rdfs:label "maintenance support performance" ;
+    rdfs:subClassOf iec:ADA218 .
+
+iec:ADA229 a owl:Class ;
+    rdfs:label "measures for maintainability and maintenance support related concepts" ;
+    rdfs:subClassOf iec:ADA219 .
+
+iec:ADA230 a owl:Class ;
+    rdfs:label "measures for availability related concepts" ;
+    rdfs:subClassOf iec:ADA229 .
+
+iec:AFA002 a owl:Class ;
+    rdfs:label "SAW resonator" .
+
+iec:AFA003 a owl:Class ;
+    rdfs:label "quartz crystal device" .
+
+iec:AFA004 a owl:Class ;
+    rdfs:label "quartz crystal unit" ;
+    rdfs:subClassOf iec:AFA003 .
+
+iec:AFA005 a owl:Class ;
+    rdfs:label "kHz band quartz crystal unit" ;
+    rdfs:subClassOf iec:AFA004 .
+
+iec:AFA006 a owl:Class ;
+    rdfs:label "MHz band quartz crystal unit" ;
+    rdfs:subClassOf iec:AFA005 .
+
+iec:AFA007 a owl:Class ;
+    rdfs:label "quartz crystal oscillator" ;
+    rdfs:subClassOf iec:AFA006 .
+
+iec:AFA008 a owl:Class ;
+    rdfs:label "simple packaged crystal oscillator" ;
+    rdfs:subClassOf iec:AFA007 .
+
+iec:AFA009 a owl:Class ;
+    rdfs:label "temperature compensated crystal oscillator" ;
+    rdfs:subClassOf iec:AFA008 .
+
+iec:AFA010 a owl:Class ;
+    rdfs:label "voltage controlled crystal oscillator" ;
+    rdfs:subClassOf iec:AFA009 .
+
+iec:AFA011 a owl:Class ;
+    rdfs:label "oven controlled crystal oscillator" ;
+    rdfs:subClassOf iec:AFA010 .
+
+iec:AFA013 a owl:Class ;
+    rdfs:label "one-port SAW resonator" ;
+    rdfs:subClassOf iec:AFA002 .
+
+iec:AFA016 a owl:Class ;
+    rdfs:label "comparator" .
+
+iec:AFA019 a owl:Class ;
+    rdfs:label "integrated circuit for power supply" ;
+    rdfs:subClassOf iec:AFA016 .
+
+iec:AFA020 a owl:Class ;
+    rdfs:label "integrated circuit for series regulator" ;
+    rdfs:subClassOf iec:AFA019 .
+
+iec:AFA021 a owl:Class ;
+    rdfs:label "integrated circuit for shunt regulator" ;
+    rdfs:subClassOf iec:AFA020 .
+
+iec:AFA022 a owl:Class ;
+    rdfs:label "integrated circuit for switching regulator" ;
+    rdfs:subClassOf iec:AFA021 .
+
+iec:AAA001 a owl:Class ;
+    rdfs:label "component" ;
+    rdfs:subClassOf iec:AAA000 .
+
+iec:AAA026 a owl:Class ;
+    rdfs:label "fixed electrolytic capacitor" ;
+    rdfs:subClassOf iec:AAA025 .
+
+iec:AAA030 a owl:Class ;
+    rdfs:label "fixed paper capacitor" ;
+    rdfs:subClassOf iec:AAA029 .
+
+iec:AAA031 a owl:Class ;
+    rdfs:label "variable capacitor" ;
+    rdfs:subClassOf iec:AAA030 .
+
+iec:AAA038 a owl:Class ;
+    rdfs:label "LF cable" ;
+    rdfs:subClassOf iec:AAA037 .
+
+iec:AAA063 a owl:Class ;
+    rdfs:label "programmable logic device" ;
+    rdfs:subClassOf iec:AAA062 .
+
+iec:AAA079 a owl:Class ;
+    rdfs:label "photoemitter" ;
+    rdfs:subClassOf iec:AAA078 .
+
+iec:AAA086 a owl:Class ;
+    rdfs:label "visible light photosensor" ;
+    rdfs:subClassOf iec:AAA085 .
+
+iec:AAA092 a owl:Class ;
+    rdfs:label "single linear resistor" ;
+    rdfs:subClassOf iec:AAA091 .
+
+iec:AAA099 a owl:Class ;
+    rdfs:label "voltage dependent resistor" ;
+    rdfs:subClassOf iec:AAA098 .
+
+iec:AAA102 a owl:Class ;
+    rdfs:label "potentiometer" ;
+    rdfs:subClassOf iec:AAA099 .
+
+iec:AAA131 a owl:Class ;
+    rdfs:label "trigger device" .
+
+iec:AAA135 a owl:Class ;
+    rdfs:label "gate turn-off thyristor" ;
+    rdfs:subClassOf iec:AAA134 .
+
+iec:AAA149 a owl:Class ;
+    rdfs:label "fuse" .
+
+iec:AAA164 a owl:Class ;
+    rdfs:label "linear stepping motor" ;
+    rdfs:subClassOf iec:AAA163 .
+
+iec:AAA167 a owl:Class ;
+    rdfs:label "rotational ac motor" ;
+    rdfs:subClassOf iec:AAA166 .
+
+iec:AAA175 a owl:Class ;
+    rdfs:label "thermostatic switch" ;
+    rdfs:subClassOf iec:AAA174 .
+
+iec:AAA228 a owl:Class ;
+    rdfs:label "linearity control unit" ;
+    rdfs:subClassOf iec:AAA227 .
+
+iec:AAA230 a owl:Class ;
+    rdfs:label "printed wiring laminate" ;
+    rdfs:subClassOf iec:AAA224 .
+
+iec:AAA234 a owl:Class ;
+    rdfs:label "complex number value" ;
+    rdfs:subClassOf iec:AAA233 .
+
+iec:AAA238 a owl:Class ;
+    rdfs:label "toleranced capacitance" ;
+    rdfs:subClassOf iec:AAA235 .
+
+iec:AAA239 a owl:Class ;
+    rdfs:label "toleranced resistance" ;
+    rdfs:subClassOf iec:AAA238 .
+
+iec:AAA299 a owl:Class ;
+    rdfs:label "two-sided bare die device" ;
+    rdfs:subClassOf iec:AAA298 .
+
+iec:AAA304 a owl:Class ;
+    rdfs:label "bead-shaped" ;
+    rdfs:subClassOf iec:AAA299 .
+
+iec:AAA311 a owl:Class ;
+    rdfs:label "flat-pack" ;
+    rdfs:subClassOf iec:AAA309 .
+
+iec:AAA313 a owl:Class ;
+    rdfs:label "in-line" ;
+    rdfs:subClassOf iec:AAA312 .
+
+iec:AAA314 a owl:Class ;
+    rdfs:label "long-form" ;
+    rdfs:subClassOf iec:AAA313 .
+
+iec:AAA318 a owl:Class ;
+    rdfs:label "post-mount" ;
+    rdfs:subClassOf iec:AAA314 .
+
+iec:AAA322 a owl:Class ;
+    rdfs:label "axial lead" ;
+    rdfs:subClassOf iec:AAA304 .
+
+iec:AAA325 a owl:Class ;
+    rdfs:label "axial lead" ;
+    rdfs:subClassOf iec:AAA307 .
+
+iec:AAA328 a owl:Class ;
+    rdfs:label "radial lead" ;
+    rdfs:subClassOf iec:AAA326 .
+
+iec:AAA330 a owl:Class ;
+    rdfs:label "axial lead" ;
+    rdfs:subClassOf iec:AAA308 .
+
+iec:AAA332 a owl:Class ;
+    rdfs:label "bottom lead" ;
+    rdfs:subClassOf iec:AAA331 .
+
+iec:AAA334 a owl:Class ;
+    rdfs:label "single-row lead" ;
+    rdfs:subClassOf iec:AAA333 .
+
+iec:AAA337 a owl:Class ;
+    rdfs:label "quad" ;
+    rdfs:subClassOf iec:AAA336 .
+
+iec:AAA338 a owl:Class ;
+    rdfs:label "bottom lead" ;
+    rdfs:subClassOf iec:AAA337 .
+
+iec:AAA339 a owl:Class ;
+    rdfs:label "perpendicular" ;
+    rdfs:subClassOf iec:AAA312 .
+
+iec:AAA340 a owl:Class ;
+    rdfs:label "double-row lead" ;
+    rdfs:subClassOf iec:AAA339 .
+
+iec:AAA342 a owl:Class ;
+    rdfs:label "single-row lead" ;
+    rdfs:subClassOf iec:AAA341 .
+
+iec:AAA343 a owl:Class ;
+    rdfs:label "triple row" ;
+    rdfs:subClassOf iec:AAA342 .
+
+iec:AAA344 a owl:Class ;
+    rdfs:label "zig-zag lead" ;
+    rdfs:subClassOf iec:AAA343 .
+
+iec:AAA345 a owl:Class ;
+    rdfs:label "axial lead" ;
+    rdfs:subClassOf iec:AAA344 .
+
+iec:AAA346 a owl:Class ;
+    rdfs:label "upper connection" ;
+    rdfs:subClassOf iec:AAA318 .
+
+iec:AAA350 a owl:Class ;
+    rdfs:label "double-row lead" ;
+    rdfs:subClassOf iec:AAA320 .
+
+iec:AAA351 a owl:Class ;
+    rdfs:label "quad" ;
+    rdfs:subClassOf iec:AAA350 .
+
+iec:AAA352 a owl:Class ;
+    rdfs:label "single-row lead" ;
+    rdfs:subClassOf iec:AAA351 .
+
+iec:AAA353 a owl:Class ;
+    rdfs:label "wire" ;
+    rdfs:subClassOf iec:AAA322 .
+
+iec:AAA356 a owl:Class ;
+    rdfs:label "no-lead" ;
+    rdfs:subClassOf iec:AAA355 .
+
+iec:AAA357 a owl:Class ;
+    rdfs:label "wire" ;
+    rdfs:subClassOf iec:AAA325 .
+
+iec:AAA358 a owl:Class ;
+    rdfs:label "wire" ;
+    rdfs:subClassOf iec:AAA357 .
+
+iec:AAA363 a owl:Class ;
+    rdfs:label "screw, internal thread" ;
+    rdfs:subClassOf iec:AAA362 .
+
+iec:AAA364 a owl:Class ;
+    rdfs:label "wire" ;
+    rdfs:subClassOf iec:AAA330 .
+
+iec:AAA365 a owl:Class ;
+    rdfs:label "wire" ;
+    rdfs:subClassOf iec:AAA364 .
+
+iec:AAA375 a owl:Class ;
+    rdfs:label "through-hole" ;
+    rdfs:subClassOf iec:AAA340 .
+
+iec:AAA386 a owl:Class ;
+    rdfs:label "no lead" ;
+    rdfs:subClassOf iec:AAA349 .
+
+iec:AAA388 a owl:Class ;
+    rdfs:label "gull-wing" ;
+    rdfs:subClassOf iec:AAA350 .
+
+iec:AAA396 a owl:Class ;
+    rdfs:label "straight lead" ;
+    rdfs:subClassOf iec:AAA357 .
+
+iec:AAA522 a owl:Class ;
+    rdfs:label "connector for IC cards" ;
+    rdfs:subClassOf iec:AAA521 .
+
+iec:AAA526 a owl:Class ;
+    rdfs:label "plug and jack" ;
+    rdfs:subClassOf iec:AAA523 .
+
+iec:AAA591 a owl:Class ;
+    rdfs:label "optical waveguide" ;
+    rdfs:subClassOf iec:AAA590 .
+
+iec:AAA595 a owl:Class ;
+    rdfs:label "spark gap" ;
+    rdfs:subClassOf iec:AAA591 .
+
+iec:AAA637 a owl:Class ;
+    rdfs:label "explosive gazes and vapours" ;
+    rdfs:subClassOf iec:AAA636 .
+
+iec:AAA642 a owl:Class ;
+    rdfs:label "vibration" ;
+    rdfs:subClassOf iec:AAA641 .
+
+iec:AAA647 a owl:Class ;
+    rdfs:label "water protection" ;
+    rdfs:subClassOf iec:AAA645 .
+
+iec:AAA653 a owl:Class ;
+    rdfs:label "nationally registered identification system" ;
+    rdfs:subClassOf iec:AAA652 .
+
+iec:AAA656 a owl:Class ;
+    rdfs:label "electronic address" ;
+    rdfs:subClassOf iec:AAA655 .
+
+iec:ACA000 a owl:Class ;
+    rdfs:label "material declaration information" .
+
+iec:ACA005 a owl:Class ;
+    rdfs:label "toleranced relative mass" ;
+    rdfs:subClassOf iec:ACA004 .
+
+iec:ACA008 a owl:Class ;
+    rdfs:label "substance group" ;
+    rdfs:subClassOf iec:ACA005 .
+
+iec:ADA080 a owl:Class ;
+    rdfs:label "specification references" ;
+    rdfs:subClassOf iec:ADA077 .
+
+iec:ADA092 a owl:Class ;
+    rdfs:label "conformity evaluation" ;
+    rdfs:subClassOf iec:ADA080 .
+
+iec:ADA106 a owl:Class ;
+    rdfs:label "date and time (of issue)" ;
+    rdfs:subClassOf iec:ADA105 .
+
+iec:AAA074 a owl:Class ;
+    rdfs:label "inductor" ;
+    rdfs:subClassOf iec:AAA073 .
+
+iec:AAA145 a owl:Class ;
+    rdfs:label "space charge wave tube" ;
+    rdfs:subClassOf iec:AAA144 .
+
+iec:AAA307 a owl:Class ;
+    rdfs:label "cylindrical" ;
+    rdfs:subClassOf iec:AAA305 .
+
+iec:AAA312 a owl:Class ;
+    rdfs:label "grid-array" ;
+    rdfs:subClassOf iec:AAA311 .
+
+iec:AAA347 a owl:Class ;
+    rdfs:label "axial lead" ;
+    rdfs:subClassOf iec:AAA345 .
+
+iec:AAA355 a owl:Class ;
+    rdfs:label "j-bend" ;
+    rdfs:subClassOf iec:AAA324 .
+
+iec:AAA362 a owl:Class ;
+    rdfs:label "solder lug" ;
+    rdfs:subClassOf iec:AAA329 .
+
+iec:AAA649 a owl:Class ;
+    rdfs:label "potable and other types of water" ;
+    rdfs:subClassOf iec:AAA647 .
+
+iec:AAA663 a owl:Class ;
+    rdfs:label "right circular cylinder" ;
+    rdfs:subClassOf iec:AAA662 .
+
+iec:AAA336 a owl:Class ;
+    rdfs:label "double-row lead" ;
+    rdfs:subClassOf iec:AAA311 .
+
