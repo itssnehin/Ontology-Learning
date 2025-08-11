@@ -1,4 +1,4 @@
-# test_neo4j.py
+# prune_ontology.py
 from neo4j import GraphDatabase
 from rdflib import Graph, Namespace
 import os
@@ -23,7 +23,6 @@ def import_owl():
             print(f"OWL file not found at: {config.OWL_FILE}")
             return
 
-        # Load OWL file
         g = Graph()
         g.parse(config.OWL_FILE, format="xml")  # Adjust format if RDF/XML or Turtle
         print(f"Loaded OWL file: {config.OWL_FILE}")
@@ -38,7 +37,7 @@ def import_owl():
         RDFS = Namespace("http://www.w3.org/2000/01/rdf-schema#")
         OWL = Namespace("http://www.w3.org/2002/07/owl#")
 
-        # Identify classes based on subjects with rdfs:subClassOf or owl:Class
+        # Identify classes based on subjects with rdfs:subClassOf
         classes = set()
         for subj, pred, obj in g:
             if pred == RDFS.subClassOf or pred == OWL.Class:
@@ -47,11 +46,6 @@ def import_owl():
 
         # Transaction for importing data
         with driver.session(database="neo4j") as session:
-            # Optional: Clear existing data (uncomment if needed)
-            # session.run("MATCH (n) DETACH DELETE n")
-            # print("Existing data cleared.")
-
-            # Import classes
             tx = session.begin_transaction()
             for class_uri in classes:
                 class_name = class_uri.split("#")[-1] if "#" in class_uri else class_uri.split("/")[-1]
@@ -60,7 +54,6 @@ def import_owl():
                 print(f"Created node: {class_name}")
             tx.commit()
 
-            # Import subclass relationships
             tx = session.begin_transaction()
             subclass_rels = 0
             for subj, pred, obj in g:
@@ -78,17 +71,36 @@ def import_owl():
             print("Number of subclass relationships found:", subclass_rels)
 
         print("OWL ontology imported successfully.")
+    except Exception as e:
+        print(f"OWL import failed: {e}")
 
-        # Verify import
+def prune_ontology():
+    """Prune the ontology to electrotechnical ideas only (segment 27)."""
+    try:
         with driver.session(database="neo4j") as session:
+            # Verify initial state
+            result = session.run("MATCH (n:Class) RETURN count(n) AS node_count")
+            initial_node_count = result.single()[0]
+            result = session.run("MATCH ()-[r:SUBCLASS_OF]->() RETURN count(r) AS rel_count")
+            initial_rel_count = result.single()[0]
+            print(f"Initial state: {initial_node_count} nodes, {initial_rel_count} relationships")
+
+            # Prune non-segment 27 nodes (based on hierarchyCode or URI pattern)
+            session.run("""
+                MATCH (n:Class)
+                WHERE NOT n.uri CONTAINS '27' AND NOT n.name =~ 'C_27.*'
+                DETACH DELETE n
+            """)
+            print("Non-electrotechnical nodes pruned.")
+
+            # Verify pruned state
             result = session.run("MATCH (n:Class) RETURN count(n) AS node_count")
             node_count = result.single()[0]
             result = session.run("MATCH ()-[r:SUBCLASS_OF]->() RETURN count(r) AS rel_count")
             rel_count = result.single()[0]
-            print(f"Verification: {node_count} nodes, {rel_count} relationships imported.")
-
+            print(f"Verification: {node_count} nodes, {rel_count} relationships remain.")
     except Exception as e:
-        print(f"OWL import failed: {e}")
+        print(f"Pruning failed: {e}")
 
 def delete_data():
     """Delete all data from the Neo4j database."""
@@ -102,9 +114,9 @@ def delete_data():
 def main():
     """Main function to run tests and imports."""
     test_connection()
-    import_owl()
-    # Uncomment the next line to delete data (optional)
-    # delete_data()
+    import_owl()  # Ensure the ontology is imported before pruning
+    prune_ontology()
+    # delete_data()  # Uncomment to delete all data (optional)
 
 if __name__ == "__main__":
     try:

@@ -10,6 +10,7 @@ __pycache__/
 # Output files
 output/
 data/raw_markdown/
+data/
 # IDE / OS specific
 .vscode/
 .idea/
