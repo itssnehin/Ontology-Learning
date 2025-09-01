@@ -37,3 +37,10 @@ To do: This ^^ and look at code from Ontology Learning Paper
 
 Experiment with chunk size, focus on taxonomy of ideas
 use formal definition in prompt
+
+
+focus on quality of the prompts, even use LLMs to suggest prompts.
+
+Compare prompts and find best response..
+
+
