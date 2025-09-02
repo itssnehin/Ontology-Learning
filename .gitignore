@@ -11,10 +11,11 @@ __pycache__/
 output/
 data/raw_markdown/
 data/
+visualizations/
 # IDE / OS specific
 .vscode/
 .idea/
 .DS_Store
-
+capstone-venv/
 # research 
 *.pdf

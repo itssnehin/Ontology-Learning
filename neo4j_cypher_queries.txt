@@ -1,0 +1,250 @@
+// ==========================================
+// NEO4J CYPHER QUERIES FOR YOUR KNOWLEDGE GRAPH
+// ==========================================
+// Use these in Neo4j Browser (http://localhost:7474)
+// or Neo4j Desktop Query tab
+
+// 1. BASIC EXPLORATION QUERIES
+// ==========================================
+
+// See all node types and counts
+MATCH (n) 
+RETURN labels(n)[0] as NodeType, count(n) as Count 
+ORDER BY Count DESC;
+
+// See all relationship types and counts  
+MATCH ()-[r]->() 
+RETURN type(r) as RelationshipType, count(r) as Count 
+ORDER BY Count DESC;
+
+// Total graph statistics
+MATCH (n) 
+WITH count(n) as NodeCount
+MATCH ()-[r]->() 
+WITH NodeCount, count(r) as RelCount
+RETURN NodeCount as TotalNodes, RelCount as TotalRelationships;
+
+
+// 2. COMPONENT EXPLORATION
+// ==========================================
+
+// View all products with basic info
+MATCH (p:Product) 
+RETURN p.name as ComponentName, 
+       p.category as Category, 
+       p.manufacturer as Manufacturer 
+ORDER BY p.name 
+LIMIT 20;
+
+// Find all connectors
+MATCH (p:Product) 
+WHERE p.name CONTAINS "Connector" OR p.category CONTAINS "Connector"
+RETURN p.name as ConnectorName, 
+       p.category as Category,
+       p.manufacturer as Manufacturer
+ORDER BY p.name;
+
+// Find all antennas
+MATCH (p:Product) 
+WHERE p.name CONTAINS "Antenna" OR p.category CONTAINS "Antenna"
+RETURN p.name as AntennaName,
+       p.`elec:frequency` as Frequency,
+       p.manufacturer as Manufacturer
+ORDER BY p.name;
+
+
+// 3. RELATIONSHIP ANALYSIS
+// ==========================================
+
+// Most connected components (highest degree)
+MATCH (n)
+WITH n, size([(n)-[]-()] ) as degree
+WHERE degree > 0
+RETURN n.name as ComponentName, 
+       labels(n)[0] as Type,
+       degree as Connections
+ORDER BY degree DESC 
+LIMIT 15;
+
+// Find manufacturer relationships
+MATCH (p:Product)-[:MANUFACTURED_BY]->(m:Organization)
+RETURN m.name as Manufacturer, 
+       count(p) as ProductCount,
+       collect(p.name)[0..5] as SampleProducts
+ORDER BY ProductCount DESC;
+
+// Components in same categories
+MATCH (p1:Product)-[:SAME_CATEGORY]->(p2:Product)
+RETURN p1.category as Category,
+       p1.name as Component1,
+       p2.name as Component2
+ORDER BY Category
+LIMIT 20;
+
+
+// 4. TECHNICAL SPECIFICATIONS
+// ==========================================
+
+// Components with electrical properties
+MATCH (p:Product)
+WHERE p.`elec:frequency` IS NOT NULL 
+   OR p.`elec:impedance` IS NOT NULL 
+   OR p.`elec:voltage` IS NOT NULL
+RETURN p.name as Component,
+       p.`elec:frequency` as Frequency,
+       p.`elec:impedance` as Impedance, 
+       p.`elec:voltage` as Voltage
+ORDER BY p.name
+LIMIT 20;
+
+// Find components with specific frequency ranges
+MATCH (p:Product)
+WHERE p.`elec:frequency` CONTAINS "GHz"
+RETURN p.name as Component,
+       p.`elec:frequency` as FrequencyRange,
+       p.category as Category
+ORDER BY p.name;
+
+// Components with 50 ohm impedance (common RF)
+MATCH (p:Product)
+WHERE p.`elec:impedance` CONTAINS "50"
+RETURN p.name as Component,
+       p.`elec:impedance` as Impedance,
+       p.`elec:frequency` as Frequency
+ORDER BY p.name;
+
+
+// 5. COMPONENT COMPATIBILITY & RELATIONSHIPS
+// ==========================================
+
+// Find component relationships (works with, part of, etc.)
+MATCH (p1:Product)-[r]->(p2:Product)
+WHERE type(r) IN ['WORKS_WITH', 'PART_OF', 'ACCESSORY_FOR', 'COMPATIBLE_WITH']
+RETURN p1.name as Component1,
+       type(r) as Relationship,
+       p2.name as Component2
+ORDER BY p1.name
+LIMIT 20;
+
+// Components that require other components
+MATCH (p1:Product)-[:REQUIRES]->(p2:Product)
+RETURN p1.name as RequiringComponent,
+       p2.name as RequiredComponent
+ORDER BY p1.name;
+
+// Find similar components
+MATCH (p1:Product)-[:SIMILAR_TO]->(p2:Product)
+RETURN p1.name as Component1,
+       p2.name as SimilarComponent,
+       p1.category as Category
+ORDER BY p1.name;
+
+
+// 6. ADVANCED ANALYSIS QUERIES
+// ==========================================
+
+// Component categories with most relationships
+MATCH (p:Product)
+WHERE p.category IS NOT NULL
+WITH p.category as Category, count(p) as ComponentCount
+ORDER BY ComponentCount DESC
+RETURN Category, ComponentCount
+LIMIT 10;
+
+// Find highly interconnected component clusters
+MATCH (p:Product)
+WHERE size([(p)-[]-()] ) > 10
+WITH p
+MATCH (p)-[r]-(connected)
+RETURN p.name as CentralComponent,
+       count(r) as DirectConnections,
+       collect(DISTINCT labels(connected)[0])[0..5] as ConnectedTypes
+ORDER BY DirectConnections DESC
+LIMIT 10;
+
+// Electrical property statistics
+MATCH (p:Product)
+WHERE p.`elec:frequency` IS NOT NULL
+WITH p.`elec:frequency` as freq
+RETURN freq as FrequencyRange, 
+       count(*) as ComponentCount
+ORDER BY ComponentCount DESC;
+
+
+// 7. COMPONENT LOOKUP QUERIES (PRACTICAL DEMOS)
+// ==========================================
+
+// Find WiFi components
+MATCH (p:Product)
+WHERE p.name CONTAINS "WiFi" 
+   OR p.description CONTAINS "WiFi"
+   OR p.`elec:frequency` CONTAINS "2.4"
+RETURN p.name as Component,
+       p.category as Category,
+       p.`elec:frequency` as Frequency,
+       p.manufacturer as Manufacturer
+ORDER BY p.name;
+
+// Find high-frequency components (GHz range)
+MATCH (p:Product)
+WHERE p.`elec:frequency` CONTAINS "GHz"
+RETURN p.name as Component,
+       p.`elec:frequency` as Frequency,
+       p.category as Category
+ORDER BY p.name;
+
+// Components from specific manufacturer
+MATCH (p:Product)-[:MANUFACTURED_BY]->(m:Organization)
+WHERE m.name CONTAINS "Molex" OR m.name CONTAINS "Amphenol" OR m.name CONTAINS "TE"
+RETURN m.name as Manufacturer,
+       p.name as Component,
+       p.category as Category
+ORDER BY m.name, p.name;
+
+
+// 8. DEBUGGING & VALIDATION QUERIES
+// ==========================================
+
+// Check for nodes without relationships
+MATCH (n)
+WHERE NOT (n)-[]-()
+RETURN labels(n)[0] as NodeType, 
+       n.name as Name,
+       count(n) as IsolatedNodes;
+
+// Verify Schema.org structure
+MATCH (p:Product)
+WHERE p.name IS NULL OR p.name = ""
+RETURN count(p) as ProductsWithoutNames;
+
+// Check property completeness
+MATCH (p:Product)
+RETURN count(p) as TotalProducts,
+       count(p.category) as WithCategory,
+       count(p.manufacturer) as WithManufacturer,
+       count(p.description) as WithDescription,
+       count(p.`elec:frequency`) as WithFrequency,
+       count(p.`elec:impedance`) as WithImpedance;
+
+
+// 9. EXPORT QUERIES FOR ANALYSIS
+// ==========================================
+
+// Export all products with properties (for external analysis)
+MATCH (p:Product)
+RETURN p.name as name,
+       p.category as category,
+       p.manufacturer as manufacturer,
+       p.description as description,
+       p.`elec:frequency` as frequency,
+       p.`elec:impedance` as impedance,
+       p.`elec:voltage` as voltage,
+       p.`elec:power` as power
+ORDER BY p.name;
+
+// Export relationship summary
+MATCH (p1:Product)-[r]->(p2:Product)
+RETURN p1.name as source,
+       type(r) as relationship,
+       p2.name as target
+ORDER BY p1.name;
