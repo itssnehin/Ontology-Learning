@@ -1,0 +1,42 @@
+{
+  "ontology_statistics": {
+    "total_nodes": 294,
+    "total_relationships": 7135,
+    "product_concepts": 255,
+    "organizations": 39,
+    "avg_connectivity": 55.47,
+    "max_connectivity": 121
+  },
+  "quality_metrics": {
+    "description_coverage": "255/255 (100.0%)",
+    "category_coverage": "255/255 (100.0%)",
+    "technical_property_coverage": "0/255 (0.0%)"
+  },
+  "semantic_analysis": {
+    "embedding_dimension": 1536,
+    "embedded_concepts": 255
+  },
+  "relationship_types": {
+    "SAME_CATEGORY": 5628,
+    "SAME_MANUFACTURER": 881,
+    "WORKS_WITH": 141,
+    "HAS_PART": 110,
+    "RELATED_TO": 96,
+    "PART_OF": 78,
+    "SIMILAR_TO": 36,
+    "ACCESSORY_FOR": 20,
+    "REQUIRES": 19
+  },
+  "category_distribution": {
+    "Electronic Component": 100,
+    "Connector": 36,
+    "Electrical Connectors": 5,
+    "Electrical Connector": 4,
+    "Antenna": 4,
+    "Uncategorized": 4,
+    "Insulator": 3,
+    "Field-Programmable Gate Array": 3,
+    "Field-Programmable Gate Array (FPGA)": 3,
+    "FPGA": 3
+  }
+}
