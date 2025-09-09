@@ -1,0 +1,754 @@
+[
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Pin",
+    "sameAs": "#Pin",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Metal Shell Bayonet Coupling Circulars",
+    "sameAs": "#Metal Shell Bayonet Coupling Circular",
+    "mappingConfidence": 0.9866666666666667,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Electrical Engineering Component",
+    "sameAs": "#Electrical Component",
+    "mappingConfidence": 0.9519295035951312,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Plastic Shell Bayonet Coupling Circulars",
+    "sameAs": "#Plastic Shell Bayonet Coupling Circular",
+    "mappingConfidence": 0.9873417721518988,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Cable",
+    "sameAs": "#Cable",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Standard",
+    "sameAs": "#Test Standard",
+    "mappingConfidence": 0.9504961752355137,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Spring Washer",
+    "sameAs": "#Spring Washer",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Protocol Converters",
+    "sameAs": "#Protocol Converters",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "IoT Device",
+    "sameAs": "#IoT Components",
+    "mappingConfidence": 0.9602923925992687,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "DAC (Digital-to-Analog Converter)",
+    "sameAs": "#DAC (Digital-to-Analog Converter)",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Mating Ramp",
+    "sameAs": "#Mating Ramp",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Contacts",
+    "sameAs": "#Contacts",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Antenna",
+    "sameAs": "#Antenna",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "MIL-C-5015 Series",
+    "sameAs": "#MIL-C-5015 Series",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "ElectricalComponent",
+    "sameAs": "#Electrical Component",
+    "mappingConfidence": 0.9743589743589743,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Miniature Metal Shell Circulars",
+    "sameAs": "#Miniature Metal Shell Circular",
+    "mappingConfidence": 0.9836065573770492,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Grommet",
+    "sameAs": "#Grommet",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Polarization",
+    "sameAs": "#Polarization Methods",
+    "mappingConfidence": 0.9512104716792774,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Wire",
+    "sameAs": "#Wire",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Contact Types",
+    "sameAs": "#Contact Type",
+    "mappingConfidence": 0.96,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Reverse Bayonet Coupling Design",
+    "sameAs": "#Reverse Bayonet Coupling Design",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Mating Face",
+    "sameAs": "#Mating Face",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Pin Contact Insulator",
+    "sameAs": "#PinContactInsulator",
+    "mappingConfidence": 0.9584045990081698,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Sealed Circular Connectors",
+    "sameAs": "#Sealed Circular Connector",
+    "mappingConfidence": 0.9803921568627451,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Plating Solution",
+    "sameAs": "#Plating Solutions",
+    "mappingConfidence": 0.9696969696969697,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "PC Board Header Connectors",
+    "sameAs": "#PC Board Header Connector",
+    "mappingConfidence": 0.9803921568627451,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Plating Materials",
+    "sameAs": "#Plating Material",
+    "mappingConfidence": 0.9696969696969697,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "FPC Antenna (Flexible Printed Circuit Antenna)",
+    "sameAs": "#FPC_Antenna",
+    "mappingConfidence": 0.9729755619481464,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Crimp Contacts",
+    "sameAs": "#Crimp Contacts",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "MechanicalComponent",
+    "sameAs": "#Mechanical Component",
+    "mappingConfidence": 0.9743589743589743,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Insulator Material",
+    "sameAs": "#Insulator Material",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Electrical Component",
+    "sameAs": "#Electrical Component",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Electrical Connectors",
+    "sameAs": "#Electrical Connector",
+    "mappingConfidence": 0.975609756097561,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Insulator Position",
+    "sameAs": "#Insulator Position",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Cannon Trident Connector",
+    "sameAs": "#Cannon Trident Connector",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Mating Faces",
+    "sameAs": "#Mating Face",
+    "mappingConfidence": 0.9565217391304348,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Electrical Contacts",
+    "sameAs": "#Electrical Contacts",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Insulator",
+    "sameAs": "#Insulator",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Direct Device Connectors",
+    "sameAs": "#Direct Device Connector",
+    "mappingConfidence": 0.9787234042553191,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Solder Contacts",
+    "sameAs": "#Solder Contacts",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Service Rating",
+    "sameAs": "#Service Rating",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Digital Signal Processing",
+    "sameAs": "#Digital Signal Processing (DSP)",
+    "mappingConfidence": 0.9609213267347401,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "High-Density Contact Arrangement",
+    "sameAs": "#High Density Contact Arrangement",
+    "mappingConfidence": 0.96875,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Routing Resources",
+    "sameAs": "#Routing Resources",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Insulators",
+    "sameAs": "#Insulators",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "ContactArrangement",
+    "sameAs": "#Contact Arrangement",
+    "mappingConfidence": 0.972972972972973,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Sensor Connectors",
+    "sameAs": "#Sensor Connector",
+    "mappingConfidence": 0.9696969696969697,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Copper Alloy",
+    "sameAs": "#CopperAlloy",
+    "mappingConfidence": 0.9565217391304348,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Shell",
+    "sameAs": "#Shell",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "FrictionRing",
+    "sameAs": "#Friction Ring",
+    "mappingConfidence": 0.96,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Cannon Roller Bolt",
+    "sameAs": "#Cannon Roller Bolt",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "DAC",
+    "sameAs": "#DAC",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "PinInsulator",
+    "sameAs": "#Pin Insulator",
+    "mappingConfidence": 0.96,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Insert Position",
+    "sameAs": "#Insert Position",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "FPC Antenna",
+    "sameAs": "#FPC Antenna",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Pin Insulator",
+    "sameAs": "#Pin Insulator",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Material",
+    "sameAs": "#MaterialScience",
+    "mappingConfidence": 0.9612175577499166,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "CA VG/CA Bayonet",
+    "sameAs": "#CA VG/CA Bayonet",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "CA Bayonet Connectors",
+    "sameAs": "#CA Bayonet Connectors",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Socket Insulator",
+    "sameAs": "#SocketInsulator",
+    "mappingConfidence": 0.967741935483871,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "VG95234 Connector",
+    "sameAs": "#VG95234 Connector",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Coupling Mechanism",
+    "sameAs": "#Coupling Mechanism",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Contact",
+    "sameAs": "#ElectricalContacts",
+    "mappingConfidence": 0.9557002475923277,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Contact Arrangement",
+    "sameAs": "#Contact Arrangement",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Real-time Systems",
+    "sameAs": "#Real-Time Systems",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Cannon MIL-DTL-38999 Connector",
+    "sameAs": "#Cannon MIL-DTL-38999 Connector",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "FKM Insulator",
+    "sameAs": "#FKM Insulators",
+    "mappingConfidence": 0.9629629629629629,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Receptacle",
+    "sameAs": "#Receptacle",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Cannon KPT Connector",
+    "sameAs": "#Cannon KPT Connector",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Telecommunications Equipment",
+    "sameAs": "#Telecommunications Equipment",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "FPC_Antenna",
+    "sameAs": "#FPC_Antenna",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "CouplingNut",
+    "sameAs": "#Coupling Nut",
+    "mappingConfidence": 0.9565217391304348,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Interconnect Technologies",
+    "sameAs": "#Interconnect Technology",
+    "mappingConfidence": 0.9713745455486811,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Cable Cap",
+    "sameAs": "#Cable Cap",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "SpringWasher",
+    "sameAs": "#Spring Washer",
+    "mappingConfidence": 0.96,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "O-ring Seal",
+    "sameAs": "#O-Ring Seal",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Cannon KPSE Connector",
+    "sameAs": "#Cannon KPSE Connector",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Rear Release Crimp Snap-in Contact",
+    "sameAs": "#Rear Release Crimp Snap-In Contact",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "MIL-C-26482 Standard Connector",
+    "sameAs": "#MIL-C-26482 Standard",
+    "mappingConfidence": 0.9553523032678364,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Standards",
+    "sameAs": "#Test Standard",
+    "mappingConfidence": 0.9516612724813239,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Electrical Insulator",
+    "sameAs": "#Electrical Insulator",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Connector Components",
+    "sameAs": "#Connector Component",
+    "mappingConfidence": 0.9743589743589743,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Coating",
+    "sameAs": "#Coating",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Electrical Insulation",
+    "sameAs": "#Electrical Insulation",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Cannon CA-Bayonet Series",
+    "sameAs": "#Cannon CA-Bayonet Series",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Materials",
+    "sameAs": "#MaterialScience",
+    "mappingConfidence": 0.959763032393514,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Pin Insulators",
+    "sameAs": "#Pin Insulators",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "VG95234 Specification",
+    "sameAs": "#VG95234 Specification",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "PCB Contacts",
+    "sameAs": "#PCB Contacts",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Environmentally Sealed Connector",
+    "sameAs": "#Environmentally Sealed Connector",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Electrical Connector",
+    "sameAs": "#Electrical Connector",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Socket",
+    "sameAs": "#Socket",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "VibrationCompensation",
+    "sameAs": "#Vibration Compensation Component",
+    "mappingConfidence": 0.961290439057128,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "VG Connector",
+    "sameAs": "#VG Connector",
+    "mappingConfidence": 1.0,
+    "mappingReason": "Automatically mapped based on similarity analysis"
+  }
+]

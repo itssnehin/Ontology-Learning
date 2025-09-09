@@ -1,0 +1,2048 @@
+{
+  "timestamp": "2025-09-08T15:27:47.107477",
+  "chunks_processed": 50,
+  "concepts_extracted": [
+    "Dimensional Characteristics",
+    "Metal Plating",
+    "Pin",
+    "Metal Shell Bayonet Coupling Circulars",
+    "Sure Seal",
+    "Customer Accountability",
+    "VG 95328",
+    "Electrical Engineering Component",
+    "Types of Plating",
+    "Microprocessor Designs",
+    "Plastic Shell Bayonet Coupling Circulars",
+    "Cable",
+    "Standard",
+    "VG95234Standard",
+    "Spring Washer",
+    "CA-INDUSTRIAL",
+    "Protocol Converters",
+    "IoT Device",
+    "DAC (Digital-to-Analog Converter)",
+    "Connector Configuration",
+    "Intermateable and Intermountable Connector",
+    "Airborne Applications",
+    "Mating Ramp",
+    "Contacts",
+    "PV",
+    "KPTC",
+    "Antenna",
+    "KJ",
+    "ShortEndbell",
+    "Polarization Code",
+    "Pin Insulator Models",
+    "Trident Circular",
+    "MIL-C-5015 Series",
+    "Termination",
+    "ElectricalComponent",
+    "XC9500 CPLDs",
+    "Contact Termination",
+    "Miniature Metal Shell Circulars",
+    "Grommet",
+    "Polarization",
+    "Image Representation",
+    "USCar",
+    "Wire",
+    "Contact Types",
+    "Industrial Applications",
+    "Reverse Bayonet Coupling Design",
+    "EN 61984",
+    "Mating Face",
+    "IEC 512-25-1",
+    "Pin Contact Insulator",
+    "Sealed Circular Connectors",
+    "Insulation Component",
+    "Connector",
+    "Connector Test",
+    "Plating Solution",
+    "PC Board Header Connectors",
+    "Plating Materials",
+    "FPC Antenna (Flexible Printed Circuit Antenna)",
+    "Crimp Contacts",
+    "Contact Pin",
+    "VG95234 Standard",
+    "CA07A-B Jam Nut Receptacle",
+    "MechanicalComponent",
+    "Insulator Material",
+    "Insulator Component",
+    "Connection Methods",
+    "Electrical Component",
+    "MIL-DTL-26482",
+    "Electrical Connectors",
+    "Quick Coupling Design",
+    "Insulator Position",
+    "Cannon Trident Connector",
+    "Sealing Technique",
+    "Contact Size",
+    "AWG (American Wire Gauge)",
+    "Mechanical Standard",
+    "Mating Faces",
+    "Mating Face of Pin Insulator",
+    "APD",
+    "Cannon Connector",
+    "XC4000E Series Programming Tools",
+    "Technical Diagram",
+    "Grommet Sealing",
+    "CA Bayonet",
+    "Electrical Contacts",
+    "Material or Type Designations",
+    "Insulator",
+    "Endbell",
+    "Direct Device Connectors",
+    "Solder Contacts",
+    "KPT / KPSE",
+    "Service Rating",
+    "Digital Signal Processing",
+    "Adapter",
+    "Xilinx ISE Design Suite",
+    "High-Density Contact Arrangement",
+    "UL 1977",
+    "Routing Resources",
+    "Wavespring Coupling Nut",
+    "Insulators",
+    "ContactArrangement",
+    "Image View",
+    "CGL",
+    "Finishes",
+    "Sensor Connectors",
+    "VG95319",
+    "Copper Alloy",
+    "Shell",
+    "Connector Standards",
+    "SLC",
+    "FrictionRing",
+    "CA00EP-B-TL TINEL-LOCK Adapter",
+    "SAE J2030",
+    "DIN/VDE 0627",
+    "Cannon Roller Bolt",
+    "Accessory",
+    "DAC",
+    "PinInsulator",
+    "Insert Position",
+    "MIL-DTL-38999 Connectors",
+    "CA3100F-B-08/09 90° Endbell",
+    "Wire Harness",
+    "Mating System",
+    "FPC Antenna",
+    "VG 95342",
+    "Shell Style",
+    "Electrical Standard",
+    "Pin Insulator",
+    "Shielded Circular",
+    "Circuit Assemblies",
+    "Material",
+    "Connector Series",
+    "CA VG/CA Bayonet",
+    "CA Bayonet Connectors",
+    "Current_Limiter",
+    "Non-Intermateable Connectors",
+    "Socket Insulator",
+    "VG95234 Connector",
+    "90° Endbell",
+    "Coupling Mechanism",
+    "Hard Silver Finish",
+    "EndbellWithCableAndBushing",
+    "Contact",
+    "Contact Arrangement",
+    "Connector Systems",
+    "Code",
+    "VG95210",
+    "Connection Technologies",
+    "Real-time Systems",
+    "Cannon MIL-DTL-38999 Connector",
+    "ISO 15170",
+    "CA3100E-B-08/09 90° Endbell",
+    "FKM Insulator",
+    "Receptacle",
+    "Voltage Ratings",
+    "EndbellForFlexTube",
+    "VG 95234",
+    "Cannon KPT Connector",
+    "KJL",
+    "MIL-DTL-38999",
+    "Aircraft Applications",
+    "Configuration Codes and Measurements",
+    "Telecommunications Equipment",
+    "FPC_Antenna",
+    "CouplingNut",
+    "PG and Metric Gland Adaptor",
+    "Industrial Grade Circular",
+    "Interconnect Technologies",
+    "Accessories",
+    "SLE",
+    "Cable Cap",
+    "SpringWasher",
+    "O-ring Seal",
+    "CA02L-B Receptacle",
+    "CA3100E-B-02/03/06 Adapter",
+    "MIL-DTL-5015",
+    "CA20L-B Receptacle",
+    "Bayonet Design",
+    "Cannon KPSE Connector",
+    "MS E/F/R",
+    "Rear Release Crimp Snap-in Contact",
+    "MIL-C-26482 Standard Connector",
+    "Specific Technologies",
+    "Standards",
+    "Component",
+    "Electrical Insulator",
+    "Connector Components",
+    "ITT Cannon Component",
+    "High-performance Computing",
+    "Electrical_System",
+    "CA06EW-B-TLXX TINEL-LOCK Adapter",
+    "Trident Rectangular",
+    "VG95234 Standard Component",
+    "PerformanceClassInsert",
+    "TINEL-LOCK Adapter",
+    "EMI/RFI_Shield",
+    "Insert Alteration",
+    "CA Triple Thread",
+    "Coating",
+    "Plug",
+    "Electrical Insulation",
+    "ROHS Compliance",
+    "Cannon CA-Bayonet Series",
+    "Programmable Logic Devices",
+    "Configuration",
+    "Contact Socket",
+    "Materials",
+    "CLC",
+    "Pin Insulators",
+    "Technical Specifications",
+    "VG95234 Specification",
+    "Mechanical Alignment",
+    "KJA",
+    "PCB Contacts",
+    "Environmentally Sealed Connector",
+    "Electrical Connector",
+    "High_Voltage_System",
+    "Bushing",
+    "IP Rating",
+    "Socket",
+    "NinetyDegreeEndbell",
+    "VibrationCompensation",
+    "VG Connector",
+    "Equipment"
+  ],
+  "extension_decisions": [
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Material Specification",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Plating Material",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Pin",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Metal Shell Bayonet Coupling Circular",
+      "confidence": 0.9866666666666667,
+      "reasoning": "High similarity match: High lexical similarity: 0.987",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Sealing Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Product Customization",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Shell Style VG95234",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Electrical Component",
+      "confidence": 0.9519295035951312,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.952",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Plating Material",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Digital Circuit Design",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Plastic Shell Bayonet Coupling Circular",
+      "confidence": 0.9873417721518988,
+      "reasoning": "High similarity match: High lexical similarity: 0.987",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Cable",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Test Standard",
+      "confidence": 0.9504961752355137,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.950",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "TestStandard",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Spring Washer",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electronic Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Protocol Converters",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "IoT Components",
+      "confidence": 0.9602923925992687,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.960",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "DAC (Digital-to-Analog Converter)",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Socket Configurations",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Industrial Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electronic Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Mating Ramp",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Contacts",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electrical Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Cannon KPT Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Antenna",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electronic Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Endbell Configuration",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Polarization Methods",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Pin Insulators",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Cannon Trident",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "MIL-C-5015 Series",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "SolderTermination",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Electrical Component",
+      "confidence": 0.9743589743589743,
+      "reasoning": "High similarity match: High lexical similarity: 0.974",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "FPGA Components",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "ElectricalContacts",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Miniature Metal Shell Circular",
+      "confidence": 0.9836065573770492,
+      "reasoning": "High similarity match: High lexical similarity: 0.984",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Grommet",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Polarization Methods",
+      "confidence": 0.9512104716792774,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.951",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electronic Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "MaterialScience",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Wire",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Contact Type",
+      "confidence": 0.96,
+      "reasoning": "High similarity match: High lexical similarity: 0.960",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electronic Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Reverse Bayonet Coupling Design",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Test Standard",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Mating Face",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Industry Specification",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "PinContactInsulator",
+      "confidence": 0.9584045990081698,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.958",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Sealed Circular Connector",
+      "confidence": 0.9803921568627451,
+      "reasoning": "High similarity match: High lexical similarity: 0.980",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electrical Insulation",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Connector Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Test Standard",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Plating Solutions",
+      "confidence": 0.9696969696969697,
+      "reasoning": "High similarity match: High lexical similarity: 0.970",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "PC Board Header Connector",
+      "confidence": 0.9803921568627451,
+      "reasoning": "High similarity match: High lexical similarity: 0.980",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Plating Material",
+      "confidence": 0.9696969696969697,
+      "reasoning": "High similarity match: High lexical similarity: 0.970",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "FPC_Antenna",
+      "confidence": 0.9729755619481464,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.973",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Crimp Contacts",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "ElectricalContacts",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Test Standard",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "CA06EW Connector",
+      "confidence": 0.5,
+      "reasoning": "Medium similarity requires review: Semantic embedding similarity: 0.845",
+      "matches_count": 5
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Mechanical Component",
+      "confidence": 0.9743589743589743,
+      "reasoning": "High similarity match: High lexical similarity: 0.974",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Insulator Material",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electrical Insulator",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electrical and electronic connectivity solutions",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Electrical Component",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "MIL-C-26482 Standard",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Electrical Connector",
+      "confidence": 0.975609756097561,
+      "reasoning": "High similarity match: High lexical similarity: 0.976",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Fastening Design",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Insulator Position",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Cannon Trident Connector",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "TerminationTechniques",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "ElectricalContacts",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "American Wire Gauge (AWG)",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Test Standard",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Mating Face",
+      "confidence": 0.9565217391304348,
+      "reasoning": "High similarity match: High lexical similarity: 0.957",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Mating Face",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electrical Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Cannon Trident Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "XC4000 Series FPGA - XC4010E",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "EngineeringDocumentation",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Fastening Design",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "CA VG/CA Bayonet",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Electrical Contacts",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Material Specification",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Insulator",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Endbell Configuration",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Direct Device Connector",
+      "confidence": 0.9787234042553191,
+      "reasoning": "High similarity match: High lexical similarity: 0.979",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Solder Contacts",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Cannon KPT / KPSE Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Service Rating",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Digital Signal Processing (DSP)",
+      "confidence": 0.9609213267347401,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.961",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "InsertType",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "FPGA Components",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "High Density Contact Arrangement",
+      "confidence": 0.96875,
+      "reasoning": "High similarity match: High lexical similarity: 0.969",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electrical Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Routing Resources",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Coupling Mechanism",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Insulators",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Contact Arrangement",
+      "confidence": 0.972972972972973,
+      "reasoning": "High similarity match: High lexical similarity: 0.973",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "MaterialScience",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electrical Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "ElectricalContacts",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Sensor Connector",
+      "confidence": 0.9696969696969697,
+      "reasoning": "High similarity match: High lexical similarity: 0.970",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Shell Style VG95234",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "CopperAlloy",
+      "confidence": 0.9565217391304348,
+      "reasoning": "High similarity match: High lexical similarity: 0.957",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Shell",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Connector Manufacturer",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "MaterialScience",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Friction Ring",
+      "confidence": 0.96,
+      "reasoning": "High similarity match: High lexical similarity: 0.960",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Aluminium Alloy Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Test Standard",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Test Standard",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Cannon Roller Bolt",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electronic Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "DAC",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Pin Insulator",
+      "confidence": 0.96,
+      "reasoning": "High similarity match: High lexical similarity: 0.960",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Insert Position",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Cannon MIL-DTL-38999 Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Angular Endbell",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Wiring and Harnessing",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "MatingSide",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "FPC Antenna",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Shell Style VG95234",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Shell Style VG95234",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Test Standard",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Pin Insulator",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Shielded Circular Electrical Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Printed circuit connections",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "MaterialScience",
+      "confidence": 0.9612175577499166,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.961",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Connector Manufacturer",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "CA VG/CA Bayonet",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "CA Bayonet Connectors",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "MaterialScience",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "ElectricalConnector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "SocketInsulator",
+      "confidence": 0.967741935483871,
+      "reasoning": "High similarity match: High lexical similarity: 0.968",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "VG95234 Connector",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Endbell Configuration",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Coupling Mechanism",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "HardSilverFinish",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Endbell Configuration",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "ElectricalContacts",
+      "confidence": 0.9557002475923277,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.956",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Contact Arrangement",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Connector Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "MaterialScience",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Shell Style VG95234",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Interconnect Technology",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Real-Time Systems",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Cannon MIL-DTL-38999 Connector",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Industry Specification",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Angular Endbell",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "FKM Insulators",
+      "confidence": 0.9629629629629629,
+      "reasoning": "High similarity match: High lexical similarity: 0.963",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Receptacle",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electrical Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Endbell Configuration",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Shell Style VG95234",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Cannon KPT Connector",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electronic Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Cannon MIL-DTL-38999",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electronic Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Engineering Design Specifications",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Telecommunications Equipment",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "FPC_Antenna",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Coupling Nut",
+      "confidence": 0.9565217391304348,
+      "reasoning": "High similarity match: High lexical similarity: 0.957",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Gland Adaptor",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Industrial Grade Circular Electrical Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Interconnect Technology",
+      "confidence": 0.9713745455486811,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.971",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electronic Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "MaterialScience",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Cable Cap",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Spring Washer",
+      "confidence": 0.96,
+      "reasoning": "High similarity match: High lexical similarity: 0.960",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "O-Ring Seal",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "CA06EW Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "CA06EW Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "MIL-C-26482 Standard",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "CA IP69K",
+      "confidence": 0.5,
+      "reasoning": "Medium similarity requires review: Semantic embedding similarity: 0.846",
+      "matches_count": 5
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Bayonet Design Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Cannon KPSE Connector",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "MaterialScience",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Rear Release Crimp Snap-In Contact",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "MIL-C-26482 Standard",
+      "confidence": 0.9553523032678364,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.955",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Industry Specification",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Test Standard",
+      "confidence": 0.9516612724813239,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.952",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electrical Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Electrical Insulator",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Connector Component",
+      "confidence": 0.9743589743589743,
+      "reasoning": "High similarity match: High lexical similarity: 0.974",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Cannon Trident Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "High-Performance Computing Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electrical Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "CA06EW Connector",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Cannon Trident",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Test Standard",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "InsertType",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Fastener",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "EMI/RFI Shielding",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "InsertType",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "SpecialInsertAlterations",
+      "confidence": 0.5,
+      "reasoning": "Medium similarity requires review: Semantic embedding similarity: 0.850",
+      "matches_count": 5
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Coating",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Connector Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Electrical Insulation",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "EnvironmentalCompliance",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Cannon CA-Bayonet Series",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Programmable Hardware",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Flange Configuration",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "ElectricalContacts",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "MaterialScience",
+      "confidence": 0.959763032393514,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.960",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electronic Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Pin Insulators",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Industry Specification",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "VG95234 Specification",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Mechanical Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electronic Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "PCB Contacts",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Environmentally Sealed Connector",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Electrical Connector",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Feedback System",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Bushing VG95234 KT",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Waterproof Specification",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Socket",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Endbell Configuration",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "Vibration Compensation Component",
+      "confidence": 0.961290439057128,
+      "reasoning": "High similarity match: Semantic embedding similarity: 0.961",
+      "matches_count": 3
+    },
+    {
+      "decision": "map_to_existing_exact",
+      "target_concept": "VG Connector",
+      "confidence": 1.0,
+      "reasoning": "High similarity match: Exact name match",
+      "matches_count": 3
+    },
+    {
+      "decision": "requires_manual_review",
+      "target_concept": "Electronic Component",
+      "confidence": 0.5,
+      "reasoning": "LLM validation failed, requires manual review",
+      "matches_count": 3
+    }
+  ],
+  "schema_objects_created": 130,
+  "schema_objects_mapped": 94,
+  "integration_stats": {
+    "decision_counts": {
+      "extend": 0,
+      "map_exact": 94,
+      "map_similar": 0,
+      "merge": 0,
+      "uncertain": 130
+    },
+    "confidence_by_decision": {
+      "extend_ontology": [],
+      "map_to_existing_exact": [
+        1.0,
+        0.9866666666666667,
+        0.9519295035951312,
+        0.9873417721518988,
+        1.0,
+        0.9504961752355137,
+        1.0,
+        1.0,
+        0.9602923925992687,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.9743589743589743,
+        0.9836065573770492,
+        1.0,
+        0.9512104716792774,
+        1.0,
+        0.96,
+        1.0,
+        1.0,
+        0.9584045990081698,
+        0.9803921568627451,
+        0.9696969696969697,
+        0.9803921568627451,
+        0.9696969696969697,
+        0.9729755619481464,
+        1.0,
+        0.9743589743589743,
+        1.0,
+        1.0,
+        0.975609756097561,
+        1.0,
+        1.0,
+        0.9565217391304348,
+        1.0,
+        1.0,
+        0.9787234042553191,
+        1.0,
+        1.0,
+        0.9609213267347401,
+        0.96875,
+        1.0,
+        1.0,
+        0.972972972972973,
+        0.9696969696969697,
+        0.9565217391304348,
+        1.0,
+        0.96,
+        1.0,
+        1.0,
+        0.96,
+        1.0,
+        1.0,
+        1.0,
+        0.9612175577499166,
+        1.0,
+        1.0,
+        0.967741935483871,
+        1.0,
+        1.0,
+        0.9557002475923277,
+        1.0,
+        1.0,
+        1.0,
+        0.9629629629629629,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.9565217391304348,
+        0.9713745455486811,
+        1.0,
+        0.96,
+        1.0,
+        1.0,
+        1.0,
+        0.9553523032678364,
+        0.9516612724813239,
+        1.0,
+        0.9743589743589743,
+        1.0,
+        1.0,
+        1.0,
+        0.959763032393514,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.961290439057128,
+        1.0
+      ],
+      "map_to_existing_similar": [],
+      "merge_concepts": [],
+      "requires_manual_review": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "total_decisions": 224,
+    "automated_decisions": 94,
+    "uncertain_count": 130,
+    "average_confidence": 0.7040601911613568
+  }
+}

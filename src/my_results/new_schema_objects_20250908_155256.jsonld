@@ -1,0 +1,1699 @@
+{
+  "@context": "https://schema.org/",
+  "@graph": [
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Dimensional Characteristics",
+      "description": "Electronic component: Dimensional Characteristics",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Dimensional_characteristics",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Metal Plating",
+      "description": "Electronic component: Metal Plating",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Metal_plating",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Sure Seal",
+      "description": "Electronic component: Sure Seal",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Customer Accountability",
+      "description": "Electronic component: Customer Accountability",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Customer_Accountability",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "VG 95328",
+      "description": "Electronic component: VG 95328",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "elec:frequency": "value if available",
+      "elec:impedance": "value if available",
+      "elec:dimensions": "value if available",
+      "model": "VG 95328",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Types of Plating",
+      "description": "Electronic component: Types of Plating",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Microprocessor Designs",
+      "description": "Electronic component: Microprocessor Designs",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Microprocessor",
+      "worksWith": "Component",
+      "requires": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "VG95234Standard",
+      "description": "Electronic component: VG95234Standard",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA-INDUSTRIAL",
+      "description": "Electronic component: CA-INDUSTRIAL",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Connector Configuration",
+      "description": "Electronic component: Connector Configuration",
+      "category": "Connector",
+      "additionalType": "http://www.productontology.org/id/Connector",
+      "isPartOf": "Connector",
+      "isRelatedTo": [
+        "Component",
+        "Configuration"
+      ]
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Intermateable and Intermountable Connector",
+      "description": "Electronic component: Intermateable and Intermountable Connector",
+      "category": "Connector",
+      "additionalType": "http://www.productontology.org/id/Connector",
+      "isPartOf": "Connector",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Airborne Applications",
+      "description": "Electronic component: Airborne Applications",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "PV",
+      "description": "Electronic component: PV",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "KPTC",
+      "description": "Electronic component: KPTC",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "KJ",
+      "description": "Electronic component: KJ",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "KJL"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "ShortEndbell",
+      "description": "Electronic component: ShortEndbell",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isPartOf": "Endbell"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Polarization Code",
+      "description": "Electronic component: Polarization Code",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Polarization_code",
+      "isPartOf": "Component",
+      "isRelatedTo": "Code"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Pin Insulator Models",
+      "description": "Electronic component: Pin Insulator Models",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Pin_insulator",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Trident Circular",
+      "description": "Electronic component: Trident Circular",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Termination",
+      "description": "Electronic component: Termination",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Termination",
+      "isPartOf": "Contact Termination"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "XC9500 CPLDs",
+      "description": "Electronic component: XC9500 CPLDs",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Contact Termination",
+      "description": "Electronic component: Contact Termination",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Connector_Termination",
+      "isSimilarTo": [
+        "Termination",
+        "Component"
+      ]
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Image Representation",
+      "description": "Electronic component: Image Representation",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Image_Representation",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "USCar",
+      "description": "Electronic component: USCar",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Industrial Applications",
+      "description": "Electronic component: Industrial Applications",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "EN 61984",
+      "description": "Electronic component: EN 61984",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "IEC 512-25-1",
+      "description": "Electronic component: IEC 512-25-1",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "model": "IEC 512-25-1",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Insulation Component",
+      "description": "Electronic component: Insulation Component",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Insulation_material",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Connector Configuration",
+      "description": "Electronic component: Connector Configuration",
+      "category": "Connector",
+      "additionalType": "http://www.productontology.org/id/Connector",
+      "isPartOf": "Connector",
+      "isRelatedTo": [
+        "Component",
+        "Configuration"
+      ]
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Connector Test",
+      "description": "Electronic component: Connector Test",
+      "category": "Connector",
+      "additionalType": "http://www.productontology.org/id/Connector",
+      "isSimilarTo": "Connector",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Contact Pin",
+      "description": "Electronic component: Contact Pin",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Contact_pin",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "VG95234 Standard",
+      "description": "Electronic component: VG95234 Standard",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isSimilarTo": "VG95234 Standard"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA07A-B Jam Nut Receptacle",
+      "description": "Electronic component: CA07A-B Jam Nut Receptacle",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isAccessoryOrSparePartFor": "Component",
+      "isPartOf": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Insulator Component",
+      "description": "Electronic component: Insulator Component",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Insulator",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Connection Methods",
+      "description": "Electronic component: Connection Methods",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Connection_Methods",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "MIL-DTL-26482",
+      "description": "Electronic component: MIL-DTL-26482",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Quick Coupling Design",
+      "description": "Electronic component: Quick Coupling Design",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Sealing Technique",
+      "description": "Electronic component: Sealing Technique",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isPartOf": "Component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Contact Size",
+      "description": "Electronic component: Contact Size",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "AWG (American Wire Gauge)",
+      "description": "Electronic component: AWG (American Wire Gauge)",
+      "category": "Cable",
+      "additionalType": "http://www.productontology.org/id/Wire_gauge",
+      "isPartOf": "Component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Mechanical Standard",
+      "description": "Electronic component: Mechanical Standard",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Mechanical_Standard",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Mating Face of Pin Insulator",
+      "description": "Electronic component: Mating Face of Pin Insulator",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isPartOf": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "APD",
+      "description": "Electronic component: APD",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Avalanche_photodiode",
+      "isRelatedTo": "Component",
+      "worksWith": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Cannon Connector",
+      "description": "Electronic component: Cannon Connector",
+      "category": "Connector",
+      "additionalType": "http://www.productontology.org/id/Cannon_connector",
+      "isRelatedTo": "Connector",
+      "isSimilarTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "XC4000E Series Programming Tools",
+      "description": "Electronic component: XC4000E Series Programming Tools",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Technical Diagram",
+      "description": "Electronic component: Technical Diagram",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Technical_Diagram",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Grommet Sealing",
+      "description": "Electronic component: Grommet Sealing",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Grommet_Sealing",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA Bayonet",
+      "description": "Electronic component: CA Bayonet",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isPartOf": "Component",
+      "worksWith": "Component",
+      "isSimilarTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Material or Type Designations",
+      "description": "Electronic component: Material or Type Designations",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Material_or_Type_Designations",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA3100F-B-08/09 90° Endbell",
+      "description": "Electronic component: CA3100F-B-08/09 90° Endbell",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Endbell",
+      "isSimilarTo": [
+        "Endbell",
+        "90° Endbell"
+      ],
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "KPT / KPSE",
+      "description": "Electronic component: KPT / KPSE",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Adapter",
+      "description": "Electronic component: Adapter",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Adapter",
+      "isPartOf": "CA00EP-B-TL TINEL-LOCK Adapter",
+      "isSimilarTo": "TINEL-LOCK Adapter",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Xilinx ISE Design Suite",
+      "description": "Electronic component: Xilinx ISE Design Suite",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_design_automation",
+      "manufacturer": "Xilinx",
+      "isRelatedTo": "Related Components"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "UL 1977",
+      "description": "Electronic component: UL 1977",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Wavespring Coupling Nut",
+      "description": "Electronic component: Wavespring Coupling Nut",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Wavespring_Coupling_Nut",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Image View",
+      "description": "Electronic component: Image View",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CGL",
+      "description": "Electronic component: CGL",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Finishes",
+      "description": "Electronic component: Finishes",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "VG95319",
+      "description": "Electronic component: VG95319",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Connector Standards",
+      "description": "Electronic component: Connector Standards",
+      "category": "Connector",
+      "additionalType": "http://www.productontology.org/id/Connector",
+      "isRelatedTo": "Connector",
+      "isSimilarTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "SLC",
+      "description": "Electronic component: SLC",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/SLC",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA00EP-B-TL TINEL-LOCK Adapter",
+      "description": "Electronic component: CA00EP-B-TL TINEL-LOCK Adapter",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isSimilarTo": [
+        "Adapter",
+        "TINEL-LOCK Adapter"
+      ],
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "SAE J2030",
+      "description": "Electronic component: SAE J2030",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "DIN/VDE 0627",
+      "description": "Electronic component: DIN/VDE 0627",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Accessory",
+      "description": "Electronic component: Accessory",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "MIL-DTL-38999 Connectors",
+      "description": "Electronic component: MIL-DTL-38999 Connectors",
+      "category": "Connector",
+      "additionalType": "http://www.productontology.org/id/MIL-DTL-38999_Connector",
+      "isRelatedTo": "Connector",
+      "isSimilarTo": "MIL-DTL-38999"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA3100F-B-08/09 90° Endbell",
+      "description": "Electronic component: CA3100F-B-08/09 90° Endbell",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isSimilarTo": [
+        "Endbell",
+        "90° Endbell"
+      ],
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Wire Harness",
+      "description": "Electronic component: Wire Harness",
+      "category": "Cable",
+      "additionalType": "http://www.productontology.org/id/Wire_harness",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Mating System",
+      "description": "Electronic component: Mating System",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "VG 95342",
+      "description": "Electronic component: VG 95342",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_Component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Shell Style",
+      "description": "Electronic component: Shell Style",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Electrical Standard",
+      "description": "Electronic component: Electrical Standard",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electrical_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Shielded Circular",
+      "description": "Electronic component: Shielded Circular",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Shielded_Circular",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Circuit Assemblies",
+      "description": "Electronic component: Circuit Assemblies",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Circuit_Assembly",
+      "hasPart": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Connector Series",
+      "description": "Electronic component: Connector Series",
+      "category": "Connector",
+      "additionalType": "http://www.productontology.org/id/Connector",
+      "isRelatedTo": "Connector",
+      "isPartOf": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Current_Limiter",
+      "description": "Electronic component: Current_Limiter",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Current_limiter",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Non-Intermateable Connectors",
+      "description": "Electronic component: Non-Intermateable Connectors",
+      "category": "Connector",
+      "additionalType": "http://www.productontology.org/id/Non-Intermateable_Connector",
+      "elec:technicalProperty": "No specific technical properties provided",
+      "isSimilarTo": "Connector",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA3100F-B-08/09 90° Endbell",
+      "description": "Electronic component: CA3100F-B-08/09 90° Endbell",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_Component",
+      "isSimilarTo": [
+        "Endbell",
+        "90° Endbell"
+      ],
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Hard Silver Finish",
+      "description": "Electronic component: Hard Silver Finish",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Hard_Silver_Finish",
+      "isPartOf": "Component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "EndbellWithCableAndBushing",
+      "description": "Electronic component: EndbellWithCableAndBushing",
+      "category": "Cable",
+      "additionalType": "http://www.productontology.org/id/Cable",
+      "hasPart": [
+        "Endbell",
+        "Bushing"
+      ],
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Connector Systems",
+      "description": "Electronic component: Connector Systems",
+      "category": "Connector",
+      "additionalType": "http://www.productontology.org/id/Connector",
+      "isRelatedTo": [
+        "Connector",
+        "Component"
+      ]
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Code",
+      "description": "Electronic component: Code",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Polarization Code"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "VG95210",
+      "description": "Electronic component: VG95210",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "model": "VG95210"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Connection Technologies",
+      "description": "Electronic component: Connection Technologies",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "ISO 15170",
+      "description": "Electronic component: ISO 15170",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA3100E-B-08/09 90° Endbell",
+      "description": "Electronic component: CA3100E-B-08/09 90° Endbell",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "model": "CA3100E-B-08/09 90° Endbell",
+      "isSimilarTo": [
+        "90° Endbell",
+        "Endbell"
+      ],
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Voltage Ratings",
+      "description": "Electronic component: Voltage Ratings",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "worksWith": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "EndbellForFlexTube",
+      "description": "Electronic component: EndbellForFlexTube",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isPartOf": "Endbell",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "VG 95234",
+      "description": "Electronic component: VG 95234",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isSimilarTo": [
+        "VG95234Standard",
+        "VG95234 Standard"
+      ],
+      "isRelatedTo": [
+        "VG95234Standard",
+        "VG95234 Standard"
+      ]
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "KJL",
+      "description": "Electronic component: KJL",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": [
+        "KJ",
+        "Component"
+      ]
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "MIL-DTL-38999",
+      "description": "Electronic component: MIL-DTL-38999 Connectors",
+      "category": "Connector",
+      "additionalType": "http://www.productontology.org/id/MIL-DTL-38999_Connector",
+      "isSimilarTo": "MIL-DTL-38999 Connectors",
+      "isRelatedTo": "Connector"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Aircraft Applications",
+      "description": "Electronic component: Aircraft Applications",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Aircraft_Electronic_Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Configuration Codes and Measurements",
+      "description": "Electronic component: Configuration Codes and Measurements",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Configuration_codes_and_measurements",
+      "elec:frequency": "value if available",
+      "elec:impedance": "value if available",
+      "elec:dimensions": "value if available",
+      "isPartOf": "Configuration",
+      "isRelatedTo": [
+        "Code",
+        "Component"
+      ]
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "PG and Metric Gland Adaptor",
+      "description": "Electronic component: PG and Metric Gland Adaptor",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electrical_conduit_fitting",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Industrial Grade Circular",
+      "description": "Electronic component: Industrial Grade Circular",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Circular_connector",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Accessories",
+      "description": "Electronic component: Accessories",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isAccessoryOrSparePartFor": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "SLE",
+      "description": "Electronic component: SLE",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA02L-B Receptacle",
+      "description": "Electronic component: CA02L-B Receptacle",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Connector",
+      "model": "CA02L-B Receptacle",
+      "isPartOf": "Component",
+      "worksWith": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA3100E-B-02/03/06 Adapter",
+      "description": "Electronic component: CA3100E-B-02/03/06 Adapter",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Adapter",
+      "isRelatedTo": "Adapter",
+      "isSimilarTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "MIL-DTL-5015",
+      "description": "Electronic component: MIL-DTL-5015",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/MIL-DTL-5015",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA20L-B Receptacle",
+      "description": "Electronic component: CA20L-B Receptacle",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Receptacle",
+      "model": "CA20L-B Receptacle",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Bayonet Design",
+      "description": "Electronic component: Bayonet Design",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "MS E/F/R",
+      "description": "Electronic component: MS E/F/R",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Specific Technologies",
+      "description": "Electronic component: Specific Technologies",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Specific_Technologies",
+      "manufacturer": "",
+      "model": "",
+      "material": "",
+      "weight": "",
+      "dimensions": "",
+      "elec:frequency": "",
+      "elec:impedance": "",
+      "elec:voltage": "",
+      "elec:power": "",
+      "elec:gain": "",
+      "elec:connector": "",
+      "elec:mounting": "",
+      "elec:temperature": "",
+      "elec:protocol": "",
+      "elec:standard": "",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Dimensional Characteristics",
+      "description": "Electronic component: Dimensional Characteristics",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "ITT Cannon Component",
+      "description": "Electronic component: ITT Cannon Component",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "manufacturer": "ITT Cannon",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "High-performance Computing",
+      "description": "Electronic component: High-performance Computing",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/High-performance_computing",
+      "isSimilarTo": "Component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Electrical_System",
+      "description": "Electronic component: Electrical_System",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA06EW-B-TLXX TINEL-LOCK Adapter",
+      "description": "Electronic component: CA06EW-B-TLXX TINEL-LOCK Adapter",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": [
+        "Adapter",
+        "Component"
+      ],
+      "isSimilarTo": "TINEL-LOCK Adapter"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Trident Rectangular",
+      "description": "Electronic component: Trident Rectangular",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "VG95234 Standard Component",
+      "description": "Electronic component: VG95234 Standard Component",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isSimilarTo": "VG95234 Standard",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "PerformanceClassInsert",
+      "description": "Electronic component: PerformanceClassInsert",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "TINEL-LOCK Adapter",
+      "description": "Electronic component: TINEL-LOCK Adapter",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/TINEL-LOCK_Adapter",
+      "isSimilarTo": [
+        "CA00EP-B-TL TINEL-LOCK Adapter",
+        "CA06EW-B-TLXX TINEL-LOCK Adapter"
+      ],
+      "isRelatedTo": "Adapter"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "EMI/RFI_Shield",
+      "description": "Electronic component: EMI/RFI_Shield",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/EMI_RFI_shield",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Insert Alteration",
+      "description": "Electronic component: Insert Alteration",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CA Triple Thread",
+      "description": "Electronic component: CA Triple Thread",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Plug",
+      "description": "Electronic component: Plug",
+      "category": "Connector",
+      "additionalType": "http://www.productontology.org/id/Plug",
+      "isRelatedTo": [
+        "Connector",
+        "Component"
+      ]
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "ROHS Compliance",
+      "description": "Electronic component: ROHS Compliance",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/RoHS_Compliant",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Programmable Logic Devices",
+      "description": "Electronic component: Programmable Logic Devices",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Programmable_logic_device",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Configuration",
+      "description": "Electronic component: Configuration",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Configuration",
+      "isRelatedTo": [
+        "Connector Configuration",
+        "Configuration Codes and Measurements"
+      ]
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Contact Socket",
+      "description": "Electronic component: Contact Socket",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Contact_socket",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "CLC",
+      "description": "Electronic component: CLC",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "manufacturer": "",
+      "model": "",
+      "material": "",
+      "weight": "",
+      "dimensions": "",
+      "elec:frequency": "",
+      "elec:impedance": "",
+      "elec:voltage": "",
+      "elec:power": "",
+      "elec:gain": "",
+      "elec:connector": "",
+      "elec:mounting": "",
+      "elec:temperature": "",
+      "elec:protocol": "",
+      "elec:standard": "",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Technical Specifications",
+      "description": "Electronic component: Technical Specifications",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Mechanical Alignment",
+      "description": "Electronic component: Mechanical Alignment",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Mechanical_alignment",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "KJA",
+      "description": "Electronic component: KJA",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/KJA",
+      "isRelatedTo": "KJ",
+      "isSimilarTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "High_Voltage_System",
+      "description": "Electronic component: High_Voltage_System",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "worksWith": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Bushing",
+      "description": "Electronic component: Bushing",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Bushing",
+      "isPartOf": "EndbellWithCableAndBushing",
+      "isRelatedTo": "Endbell"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "IP Rating",
+      "description": "Electronic component: IP Rating",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "NinetyDegreeEndbell",
+      "description": "Electronic component: NinetyDegreeEndbell",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isPartOf": "Endbell",
+      "isRelatedTo": "Component"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/",
+        "elec": "https://example.org/electrical/"
+      },
+      "@type": "Product",
+      "name": "Equipment",
+      "description": "Electronic component: Equipment",
+      "category": "Electronic Component",
+      "additionalType": "http://www.productontology.org/id/Electronic_component",
+      "isRelatedTo": "Component"
+    }
+  ]
+}
