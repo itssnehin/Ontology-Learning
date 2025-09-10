@@ -1,0 +1,19 @@
+# Backend Update Instructions
+
+## Update ontology_management_backend.py:
+
+1. Change the Flask app initialization:
+app = Flask(__name__, 
+           template_folder='../frontend/templates',
+           static_folder='../frontend/static')
+
+2. Update imports:
+from flask import Flask, jsonify, request, render_template
+
+3. Update the dashboard route:
+@app.route('/')
+def dashboard():
+    return render_template('dashboard.html')
+
+## Then run:
+python ontology_management_backend.py

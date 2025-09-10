@@ -1,0 +1,124 @@
+{
+  "total_nodes": 422,
+  "label_distribution": [
+    {
+      "count": 1,
+      "label": "Product"
+    }
+  ],
+  "total_relationships": 25077,
+  "relationship_types": [
+    "SAME_CATEGORY",
+    "SIMILAR_TO",
+    "PART_OF",
+    "WORKS_WITH",
+    "REQUIRES",
+    "MANUFACTURED_BY",
+    "RELATED_TO",
+    "HAS_PART",
+    "SAME_MANUFACTURER",
+    "ACCESSORY_FOR"
+  ],
+  "sample_concepts": [
+    {
+      "name": "APD",
+      "category": "Electronic Component",
+      "description": "Electronic component: APD"
+    },
+    {
+      "name": "AWG (American Wire Gauge)",
+      "category": "Cable",
+      "description": "Electronic component: AWG (American Wire Gauge)"
+    },
+    {
+      "name": "AWG Crimp Contact",
+      "category": "AWG Crimp Contact",
+      "description": "Electronic component with modifications for various mounting and sealing methods. Includes versions for metric and AWG crimp contacts, and shielded versions."
+    },
+    {
+      "name": "Accessories",
+      "category": "Electronic Component",
+      "description": "Electronic component: Accessories"
+    },
+    {
+      "name": "Accessory",
+      "category": "Electronic Component",
+      "description": "Electronic component: Accessory"
+    },
+    {
+      "name": "Adapter",
+      "category": "Electronic Component",
+      "description": "Electronic component: Adapter"
+    },
+    {
+      "name": "Airborne Applications",
+      "category": "Electronic Component",
+      "description": "Electronic component: Airborne Applications"
+    },
+    {
+      "name": "Aircraft Applications",
+      "category": "Electronic Component",
+      "description": "Electronic component: Aircraft Applications"
+    },
+    {
+      "name": "Alternate Positions",
+      "category": "Electronic Component",
+      "description": "Alternate positions of contact arrangements with a tendency to overmate. Mates easily with '0' positive. Customer responsible for using insert positions."
+    },
+    {
+      "name": "Aluminium Alloy Connector",
+      "category": "Electronic Component",
+      "description": "This aluminium alloy connector features a rugged shell design ideal for severe conditions. It provides environmental protection with a bayonet coupling for easy mating and unmating, is vibration proof, and waterproof up to IP68 (10 meters / 35 feet or 1 bar for 16 hours) and IP69k (Jet water)."
+    },
+    {
+      "name": "American Wire Gauge (AWG)",
+      "category": "Wire Gauge",
+      "description": "American Wire Gauge (AWG) is a standard method used to denote the diameter of electrically conducting wire."
+    },
+    {
+      "name": "Angular Endbell",
+      "category": "Angular Endbell",
+      "description": "Angular endbell with through holes in flange for CA3100, compatible with various mounting configurations and contact types."
+    },
+    {
+      "name": "Antenna",
+      "category": "Electronic Component",
+      "description": "A device used to transmit or receive electromagnetic waves."
+    },
+    {
+      "name": "Antenna Specifications",
+      "category": "Antenna",
+      "description": "This is an electronic component specifically an antenna with various specifications including frequency and impedance."
+    },
+    {
+      "name": "Application",
+      "category": "Interconnect Technologies & Solutions",
+      "description": "Multiple programmable I/O standards with hierarchical memory architecture and flexible routing resources, suitable for digital signal processing, custom microprocessor designs, protocol converters, real-time systems, high-performance computing, and telecommunications equipment."
+    },
+    {
+      "name": "Bayonet Coupling",
+      "category": "Connector",
+      "description": "CA Bayonet Connectors in accordance with VG95234 specification, IP69K Compliant. Engineered for use in harsh environments with a proven reverse bayonet coupling design."
+    },
+    {
+      "name": "Bayonet Coupling Mechanism",
+      "category": "Coupling Mechanism",
+      "description": "A component used for making secure electrical connections through a bayonet assembly mechanism."
+    },
+    {
+      "name": "Bayonet Design",
+      "category": "Electronic Component",
+      "description": "Electronic component: Bayonet Design"
+    },
+    {
+      "name": "Bayonet Design Connector",
+      "category": "Electronic Component",
+      "description": "The bayonet design features Cannon roller bolts made of stainless steel, reducing coupling force. Offers two coupling nut versions for different applications, with one version ensuring perfect sealing and the other excelling under high vibration. Provides fast coupling/uncoupling with audible and visual coupling indicators."
+    },
+    {
+      "name": "Boundary Scan XC4000 Series FPGA",
+      "category": "Electronic Component",
+      "description": "The XC4000 Series FPGA by Xilinx is a high-performance, general-purpose logic device with boundary scan (JTAG) support, offering a flexible platform for implementing digital circuits."
+    }
+  ]
+}

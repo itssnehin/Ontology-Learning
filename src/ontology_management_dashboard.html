@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schema.org Ontology Management Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🧠 Schema.org Ontology Management Dashboard</h1>
+            <div class="status-bar">
+                <div class="status-item" id="neo4j-status">
+                    <span>🗄️</span>
+                    <span>Neo4j: <span id="neo4j-connection">Checking...</span></span>
+                </div>
+                <div class="status-item" id="pipeline-status">
+                    <span>⚙️</span>
+                    <span>Pipeline: <span id="pipeline-state">Ready</span></span>
+                </div>
+                <div class="status-item" id="ontology-status">
+                    <span>🌐</span>
+                    <span>Ontology: <span id="ontology-version">v1.0.0</span></span>
+                </div>
+                <div class="status-item">
+                    <span>📅</span>
+                    <span>Last Updated: <span id="last-updated">Loading...</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid">
+            <!-- Process Control -->
+            <div class="card">
+                <h3>⚙️ Pipeline Process Control</h3>
+                <div class="alert alert-info">
+                    <strong>Process Lock System:</strong> Prevents duplicate ontology creation processes.
+                </div>
+                <div class="process-control">
+                    <div class="process-step" id="step-load" data-step="load">
+                        <div>
+                            <strong>1. Load Documents</strong>
+                            <div style="font-size: 0.9em; color: #666;">Load and chunk datasheet documents</div>
+                        </div>
+                        <button class="btn btn-secondary" onclick="runPipelineStep('load')">Run</button>
+                    </div>
+                    <div class="process-step" id="step-extract" data-step="extract">
+                        <div>
+                            <strong>2. Extract Concepts</strong>
+                            <div style="font-size: 0.9em; color: #666;">Extract concepts and relations using LLM</div>
+                        </div>
+                        <button class="btn btn-secondary" onclick="runPipelineStep('extract')">Run</button>
+                    </div>
+                    <div class="process-step" id="step-analyze" data-step="analyze">
+                        <div>
+                            <strong>3. Similarity Analysis</strong>
+                            <div style="font-size: 0.9em; color: #666;">Analyze similarity and make extension decisions</div>
+                        </div>
+                        <button class="btn btn-secondary" onclick="runPipelineStep('analyze')">Run</button>
+                    </div>
+                    <div class="process-step" id="step-integrate" data-step="integrate">
+                        <div>
+                            <strong>4. Integrate Ontology</strong>
+                            <div style="font-size: 0.9em; color: #666;">Create Schema.org objects and update graph</div>
+                        </div>
+                        <button class="btn btn-secondary" onclick="runPipelineStep('integrate')">Run</button>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button class="btn btn-success" onclick="runFullPipeline()">🚀 Run Full Pipeline</button>
+                    <button class="btn btn-warning" onclick="resetPipeline()">🔄 Reset Pipeline</button>
+                </div>
+            </div>
+
+            <!-- Ontology Statistics -->
+            <div class="card">
+                <h3>📊 Current Ontology Statistics</h3>
+                <div class="ontology-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="total-nodes">0</span>
+                        <span class="stat-label">Total Nodes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="total-relations">0</span>
+                        <span class="stat-label">Relations</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="product-nodes">0</span>
+                        <span class="stat-label">Products</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="categories">0</span>
+                        <span class="stat-label">Categories</span>
+                    </div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <button class="btn btn-secondary" onclick="refreshOntologyStats()">🔄 Refresh Stats</button>
+                    <button class="btn" onclick="exportOntology()">📤 Export Ontology</button>
+                </div>
+            </div>
+
+            <!-- Ontology Management -->
+            <div class="card">
+                <h3>🗂️ Ontology Version Management</h3>
+                <div class="alert alert-warning">
+                    <strong>Warning:</strong> Resetting will permanently delete all custom ontology data.
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <button class="btn btn-success" onclick="createSnapshot()">📸 Create Snapshot</button>
+                    <button class="btn btn-danger" onclick="confirmReset()">🔄 Reset to Schema.org Default</button>
+                </div>
+                <div id="version-list">
+                    <div class="version-item current">
+                        <div class="version-info">
+                            <strong>Current Version</strong>
+                            <div style="font-size: 0.9em; color: #666;">Extended with custom concepts</div>
+                            <div style="font-size: 0.8em; color: #999;">2024-09-09 15:30:00</div>
+                        </div>
+                        <div class="version-actions">
+                            <button class="btn btn-secondary">Current</button>
+                        </div>
+                    </div>
+                    <div class="version-item">
+                        <div class="version-info">
+                            <strong>Schema.org Baseline</strong>
+                            <div style="font-size: 0.9em; color: #666;">Original Schema.org ontology</div>
+                            <div style="font-size: 0.8em; color: #999;">2024-09-08 10:00:00</div>
+                        </div>
+                        <div class="version-actions">
+                            <button class="btn btn-warning" onclick="restoreVersion('baseline')">Restore</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Neo4j Graph Visualization -->
+            <div class="card full-width">
+                <h3>🌐 Neo4j Ontology Graph Visualization</h3>
+                <div style="margin-bottom: 15px;">
+                    <button class="btn" onclick="refreshGraph()">🔄 Refresh Graph</button>
+                    <button class="btn btn-secondary" onclick="toggleGraphLayout()">🔀 Change Layout</button>
+                    <button class="btn btn-secondary" onclick="exportGraphData()">📊 Export Graph Data</button>
+                </div>
+                <div class="graph-container">
+                    <svg id="neo4j-graph"></svg>
+                    <div id="graph-loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none;">
+                        <div style="text-align: center;">
+                            <div>🔄 Loading graph data...</div>
+                            <div class="progress-bar" style="width: 200px; margin-top: 10px;">
+                                <div class="progress-fill" id="graph-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Charts -->
+            <div class="card">
+                <h3>📈 Ontology Growth Analytics</h3>
+                <div class="chart-container">
+                    <canvas id="growth-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Activity Log -->
+            <div class="card">
+                <h3>📋 Activity Log</h3>
+                <div class="log-container" id="activity-log">
+                    <div class="log-entry info">[INFO] Dashboard initialized</div>
+                    <div class="log-entry info">[INFO] Checking Neo4j connection...</div>
+                    <div class="log-entry success">[SUCCESS] Connected to Neo4j database</div>
+                    <div class="log-entry info">[INFO] Loading ontology statistics...</div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <button class="btn btn-secondary" onclick="clearLog()">🗑️ Clear Log</button>
+                    <button class="btn btn-secondary" onclick="downloadLog()">📥 Download Log</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Confirmation Modal -->
+    <div id="reset-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('reset-modal')">&times;</span>
+            <h2 style="color: #e74c3c; margin-bottom: 20px;">⚠️ Confirm Ontology Reset</h2>
+            <p>This action will permanently delete all custom concepts and relations, reverting to the original Schema.org baseline ontology.</p>
+            <div style="margin: 20px 0;">
+                <strong>This action cannot be undone!</strong>
+            </div>
+            <p>Current ontology contains:</p>
+            <ul style="margin: 15px 0; padding-left: 20px;">
+                <li><span id="reset-stats-nodes">0</span> total nodes</li>
+                <li><span id="reset-stats-relations">0</span> relationships</li>
+                <li><span id="reset-stats-products">0</span> product concepts</li>
+            </ul>
+            <div style="margin-top: 30px; text-align: right;">
+                <button class="btn btn-secondary" onclick="closeModal('reset-modal')">Cancel</button>
+                <button class="btn btn-danger" onclick="executeReset()">Reset Ontology</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pipeline Progress Modal -->
+    <div id="pipeline-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 20px;">🚀 Pipeline Execution</h2>
+            <div id="pipeline-progress-container">
+                <div>Processing step: <span id="current-step">Initializing...</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="pipeline-progress"></div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <div id="pipeline-details">Starting pipeline execution...</div>
+                </div>
+            </div>
+            <div style="margin-top: 30px; text-align: right;">
+                <button class="btn btn-secondary" onclick="cancelPipeline()" id="cancel-pipeline-btn">Cancel</button>
+                <button class="btn" onclick="closeModal('pipeline-modal')" id="close-pipeline-btn" style="display: none;">Close</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
