@@ -1,50 +1,81 @@
-import os
-import glob
-from dotenv import load_dotenv
-from pathlib import Path
-import sys
-# Add src/ to sys.path
-sys.path.append(str(Path(__file__).parent))
+"""
+Centralized configuration management for the ontology learning system.
+"""
 
-# Load environment variables from .env
-dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
-load_dotenv(dotenv_path)
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+import os
+import logging
+from pathlib import Path
+from dotenv import load_dotenv
 
 # Define project root (directory containing src/)
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = Path(__file__).parent.parent
 
-# OpenAI API settings
+# Load environment variables from .env
+dotenv_path = PROJECT_ROOT / '.env'
+load_dotenv(dotenv_path)
+
+# --- Environment-loaded variables ---
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+NEO4J_URI = os.getenv("NEO4J_URI")
+NEO4J_USERNAME = os.getenv("NEO4J_USERNAME")
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
+
+# --- Validation ---
+if not OPENAI_API_KEY:
+    raise ValueError("OPENAI_API_KEY not found in environment variables. Please set it in your .env file.")
+if not NEO4J_URI:
+    raise ValueError("NEO4J_URI not found in environment variables. Please set it in your .env file.")
+
+# --- Base directories ---
+BASE_DIR = PROJECT_ROOT
+DATA_DIR = BASE_DIR / "data"
+LOGS_DIR = BASE_DIR / "logs"
+MARKDOWN_DIR = DATA_DIR / "raw_markdown"
+
+# --- Create directories if they don't exist ---
+DATA_DIR.mkdir(exist_ok=True)
+MARKDOWN_DIR.mkdir(exist_ok=True)
+LOGS_DIR.mkdir(exist_ok=True)
+
+# --- OpenAI API settings ---
 LLM_MODEL = "gpt-4o"
 EMBEDDING_MODEL = "text-embedding-ada-002"
 
-# Neo4j settings
-NEO4J_URI = "bolt://127.0.0.1:7687"  # Changed from neo4j:// to bolt://
-NEO4J_USERNAME = "neo4j"
-NEO4J_PASSWORD = "ontology"
-OWL_FILE = ""
-# Base directory for the project
-BASE_DIR = Path(__file__).parent.parent  # Assumes config.py is in src/, points to code/
-
-# Data directory
-DATA_DIR = BASE_DIR / "data"
-
-# Dynamically find OWL files in data directory
-OWL_FILES = list(DATA_DIR.glob("*.owl"))
-if not OWL_FILES:
-    raise FileNotFoundError(f"No OWL files found in {DATA_DIR}")
-
-# Use the first OWL file (or specify a particular one if multiple)
-OWL_FILE = OWL_FILES[0]
-
-MARKDOWN_DIR = DATA_DIR / "raw_markdown"
-# Other config settings (example, adjust as per your project)
-MARKDOWN_FILES = list(MARKDOWN_DIR.glob("*.md"))
-NEO4J_URI = "bolt://127.0.0.1:7687"
-NEO4J_USERNAME = "neo4j"
-NEO4J_PASSWORD = "ontology"
-
-print(f"Config loaded: OWL_FILE = {OWL_FILE}, found {len(OWL_FILES)} OWL files")
-# Pipeline settings
+# --- Pipeline settings ---
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 100
+
+# --- Similarity thresholds ---
+SIMILARITY_THRESHOLDS = {
+    'exact_match': 0.95,
+    'high_similarity': 0.85,
+    'medium_similarity': 0.70,
+    'low_similarity': 0.50
+}
+
+# --- Dynamically find files ---
+OWL_FILES = list(DATA_DIR.glob("*.owl"))
+MARKDOWN_FILES = list(MARKDOWN_DIR.glob("*.md"))
+
+# Get primary OWL file
+OWL_FILE = OWL_FILES[0] if OWL_FILES else None
+
+# --- Logging setup ---
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] [%(name)s] - %(message)s",
+    handlers=[
+        logging.FileHandler(LOGS_DIR / "pipeline.log"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
+# --- Initial configuration logging ---
+if not OWL_FILES:
+    logger.warning(f"No OWL files found in {DATA_DIR}")
+
+if not MARKDOWN_FILES:
+    logger.warning(f"No markdown files found in {MARKDOWN_DIR}")
+
+logger.info(f"Config loaded: OWL_FILE = {OWL_FILE}, found {len(OWL_FILES)} OWL files")

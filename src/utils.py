@@ -1,20 +1,12 @@
 import logging
-from pathlib import Path
+from .config import LOGS_DIR
 
-def setup_logging(output_dir: str, log_name: str):
+def setup_logging():
     """
-    Set up logging to file and console.
-    
-    Args:
-        output_dir: Directory to store log files.
-        log_name: Name of the log file.
+    Sets up the root logger configuration.
+    This is now handled centrally in config.py, but this function can be kept
+    for modules that might need to ensure logging is configured.
     """
-    Path(output_dir).mkdir(parents=True, exist_ok=True)
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(message)s",
-        handlers=[
-            logging.FileHandler(Path(output_dir) / f"{log_name}.log"),
-            logging.StreamHandler()
-        ]
-    )
+    # Configuration is now done in config.py to avoid multiple handlers.
+    # This function can be used for module-specific logger setup if needed.
+    pass
