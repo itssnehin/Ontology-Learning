@@ -5,8 +5,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
 from tiktoken import get_encoding
 
-from .config import LLM_MODEL, OPENAI_API_KEY
-from .utils import setup_logging
+from src.config import LLM_MODEL, OPENAI_API_KEY
 
 logger = logging.getLogger(__name__)
 

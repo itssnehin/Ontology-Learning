@@ -26,8 +26,11 @@ from src.schema_org_extractor import extract_schema_org_markup
 from src.schema_org_relation_extractor import extract_schema_org_relations, SchemaOrgRelationExtractor
 from src.schema_org_graph_builder import build_schema_org_knowledge_graph
 from src.ontology_extension_manager import OntologyExtensionManager, ExtensionDecision, ExtensionResult
-from src.utils import setup_logging
 from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+
+
+logger = logging.getLogger(__name__)
+
 @dataclass
 class PipelineConfig:
     """Configuration for the integrated pipeline."""
@@ -78,7 +81,7 @@ class IntegratedSchemaOrgPipeline:
     vs. ontology extension.
     """
     
-    def __init__(self, config: PipelineConfig = None):
+    def __init__(self, config: Optional[PipelineConfig] = None):
         """
         Initialize the integrated pipeline.
         
@@ -88,9 +91,7 @@ class IntegratedSchemaOrgPipeline:
         self.config = config or PipelineConfig()
         self.output_dir = Path(self.config.output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        
-        setup_logging("../logs", "integrated_schema_pipeline")
-        
+                
         # Initialize extension manager
         self.extension_manager = OntologyExtensionManager()
         
@@ -105,8 +106,9 @@ class IntegratedSchemaOrgPipeline:
             "integration_stats": {}
         }
         
-        print("🔧 Integrated Schema.org Pipeline initialized")
-        print(f"📁 Output directory: {self.output_dir}")
+        logger.info("🔧 Integrated Schema.org Pipeline initialized")
+        logger.info(f"📁 Output directory: {self.output_dir}")
+
     
     def run_integrated_pipeline(self) -> IntegrationResults:
         """

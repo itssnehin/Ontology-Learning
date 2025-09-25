@@ -6,13 +6,12 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
 from src.config import DATA_DIR, MARKDOWN_FILES, CHUNK_SIZE, CHUNK_OVERLAP
-from src.utils import setup_logging
 
 logger = logging.getLogger(__name__)
 
 def load_and_split_data() -> List[Document]:
     """Load Markdown files and split into chunks."""
-    setup_logging()
+    
     logger.info(f"Loading Markdown files from: {DATA_DIR}")
     logger.info(f"Available Markdown files: {MARKDOWN_FILES}")
     

@@ -5,6 +5,7 @@ sys.path.append(str(Path(__file__).parent))
 from neo4j import GraphDatabase
 import json
 import logging
+from typing import List, Dict, Any 
 
 # --- CORRECTED IMPORTS ---
 from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD

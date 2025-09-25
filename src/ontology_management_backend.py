@@ -24,7 +24,6 @@ import pickle
 
 from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
 from src.integrated_schema_pipeline import run_integrated_pipeline, PipelineConfig
-from src.utils import setup_logging
 
 class ProcessStatus(Enum):
     IDLE = "idle"
