@@ -19,6 +19,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from neo4j import GraphDatabase
 import re
 from difflib import SequenceMatcher
+import logging
 
 from src.data_loader import load_and_split_data
 from src.idea_extractor import extract_ideas

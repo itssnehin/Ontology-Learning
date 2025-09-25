@@ -9,13 +9,11 @@ from typing import List, Dict, Any
 
 # --- CORRECTED IMPORTS ---
 from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
-from src.utils import setup_logging
 
 class SchemaOrgGraphBuilder:
     """Build Neo4j knowledge graph from Schema.org JSON-LD data."""
     
     def __init__(self, database: str = "neo4j"):
-        setup_logging("../logs", "schema_org_graph_builder")
         self.driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
         self.database = database
         
@@ -47,7 +45,7 @@ class SchemaOrgGraphBuilder:
         try:
             with self.driver.session(database=self.database) as session:
                 # Clear existing Schema.org data (optional)
-                # session.run("MATCH (n:Product)-[r]-() DELETE r, n")
+                session.run("MATCH (n:Product)-[r]-() DELETE r, n")
                 
                 # Create nodes for each Schema.org object
                 for obj in schema_objects:

@@ -20,7 +20,6 @@ def extract_ideas(chunks: List[Document], model_name: str = LLM_MODEL) -> List[s
     Returns:
         List of component-based concepts.
     """
-    setup_logging()
     llm = ChatOpenAI(model_name=model_name, openai_api_key=OPENAI_API_KEY)
     tokenizer = get_encoding("cl100k_base")
     LLM_COST_PER_1K_TOKENS = 0.00336

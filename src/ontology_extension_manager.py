@@ -81,6 +81,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from neo4j import GraphDatabase
 import re
 from difflib import SequenceMatcher
+import logging
 
 from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
 
@@ -111,8 +112,7 @@ class OntologyExtensionManager:
     """Intelligent manager for deciding ontology extensions vs mappings."""
     
     def __init__(self):
-        setup_logging("../logs", "ontology_extension_manager")
-        
+
         # Initialize components
         self.embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
         self.llm = ChatOpenAI(model_name="gpt-4o", openai_api_key=OPENAI_API_KEY)

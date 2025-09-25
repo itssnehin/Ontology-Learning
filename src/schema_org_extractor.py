@@ -7,6 +7,7 @@ import re
 from typing import Dict, List, Optional, Tuple
 from langchain_openai import ChatOpenAI
 from tiktoken import get_encoding
+import logging
 
 from src.config import LLM_MODEL, OPENAI_API_KEY
 

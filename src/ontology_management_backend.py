@@ -21,6 +21,7 @@ from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from neo4j import GraphDatabase
 import pickle
+import logging
 
 from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
 from src.integrated_schema_pipeline import run_integrated_pipeline, PipelineConfig

@@ -26,6 +26,7 @@ from neo4j import GraphDatabase
 from typing import Dict, List, Tuple, Any
 import warnings
 warnings.filterwarnings('ignore')
+import logging
 
 # Import your existing modules
 from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, OPENAI_API_KEY

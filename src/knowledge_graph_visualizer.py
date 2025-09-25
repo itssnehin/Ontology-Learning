@@ -23,6 +23,7 @@ from typing import Dict, List, Tuple, Any
 import numpy as np
 from collections import Counter
 import warnings
+import logging
 warnings.filterwarnings('ignore')
 
 class KnowledgeGraphVisualizer:

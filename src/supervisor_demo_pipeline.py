@@ -18,6 +18,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from neo4j import GraphDatabase
+import logging
 
 # Import pipeline modules
 from src.data_loader import load_and_split_data
