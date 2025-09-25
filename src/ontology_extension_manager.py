@@ -82,9 +82,8 @@ from neo4j import GraphDatabase
 import re
 from difflib import SequenceMatcher
 
-# --- CORRECTED IMPORTS ---
-from .utils import setup_logging
-from .config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+from src.utils import setup_logging
+from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
 
 class ExtensionDecision(Enum):
     EXTEND = "extend_ontology"

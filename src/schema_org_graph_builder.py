@@ -7,8 +7,8 @@ import json
 import logging
 
 # --- CORRECTED IMPORTS ---
-from .config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
-from .utils import setup_logging
+from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+from src.utils import setup_logging
 
 class SchemaOrgGraphBuilder:
     """Build Neo4j knowledge graph from Schema.org JSON-LD data."""

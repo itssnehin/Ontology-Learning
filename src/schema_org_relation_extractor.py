@@ -1,14 +1,15 @@
 import sys
 from pathlib import Path
-sys.path.append(str(Path(__file__).parent))
+#sys.path.append(str(Path(__file__).parent))
 
 import json
 import re
 from typing import Dict, List, Tuple, Optional
 from langchain_openai import ChatOpenAI
-from config import LLM_MODEL, OPENAI_API_KEY
 from tiktoken import get_encoding
-from utils import setup_logging
+
+from src.utils import setup_logging
+from src.config import LLM_MODEL, OPENAI_API_KEY
 
 class SchemaOrgRelationExtractor:
     """Extract Schema.org relationships and properties from document chunks."""

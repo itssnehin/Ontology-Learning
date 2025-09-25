@@ -18,7 +18,7 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.offline as pyo
 from neo4j import GraphDatabase
-from config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
 from typing import Dict, List, Tuple, Any
 import numpy as np
 from collections import Counter

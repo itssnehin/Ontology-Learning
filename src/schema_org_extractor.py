@@ -6,9 +6,10 @@ import json
 import re
 from typing import Dict, List, Optional, Tuple
 from langchain_openai import ChatOpenAI
-from .config import LLM_MODEL, OPENAI_API_KEY
 from tiktoken import get_encoding
-from .utils import setup_logging
+
+from src.config import LLM_MODEL, OPENAI_API_KEY
+from src.utils import setup_logging
 
 class SchemaOrgExtractor:
     """Extract Schema.org JSON-LD markup from document chunks for electronic components."""

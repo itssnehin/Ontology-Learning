@@ -4,8 +4,8 @@ from typing import List, Tuple, Dict
 import numpy as np
 from neo4j import GraphDatabase, Driver, Transaction
 
-from .config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
-from .utils import setup_logging
+from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+from src.utils import setup_logging
 
 logger = logging.getLogger(__name__)
 

@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 from langchain_openai import OpenAIEmbeddings
 
-from .config import OPENAI_API_KEY, EMBEDDING_MODEL
-from .utils import setup_logging
+from src.config import OPENAI_API_KEY, EMBEDDING_MODEL
+from src.utils import setup_logging
 
 logger = logging.getLogger(__name__)
 

@@ -28,7 +28,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Import your existing modules
-from config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, OPENAI_API_KEY
+from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, OPENAI_API_KEY
 
 class SchemaOrgOntologyVisualizer:
     """Visualize Schema.org ontology embeddings and graph structure for academic presentation."""

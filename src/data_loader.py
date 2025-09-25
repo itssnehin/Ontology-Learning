@@ -5,8 +5,8 @@ from langchain_community.document_loaders import UnstructuredMarkdownLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
-from .config import DATA_DIR, MARKDOWN_FILES, CHUNK_SIZE, CHUNK_OVERLAP
-from .utils import setup_logging
+from src.config import DATA_DIR, MARKDOWN_FILES, CHUNK_SIZE, CHUNK_OVERLAP
+from src.utils import setup_logging
 
 logger = logging.getLogger(__name__)
 
