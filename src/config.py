@@ -6,6 +6,7 @@ import os
 import logging
 from pathlib import Path
 from dotenv import load_dotenv
+import json
 
 # Define project root (directory containing src/)
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -59,6 +60,22 @@ MARKDOWN_FILES = list(MARKDOWN_DIR.glob("*.md"))
 
 # Get primary OWL file
 OWL_FILE = OWL_FILES[0] if OWL_FILES else None
+
+# PROMPTS
+PROMPTS_PATH = BASE_DIR / "src" / "prompts.json"
+PROMPTS = {}
+
+try:
+    with open(PROMPTS_PATH, 'r', encoding='utf-8') as f:
+        PROMPTS = json.load(f)
+    logger.info("✅ Successfully loaded configurable prompts from prompts.json")
+except FileNotFoundError:
+    logger.error(f"FATAL: prompts.json not found at {PROMPTS_PATH}. The application cannot continue.")
+    sys.exit("FATAL: prompts.json not found at {PROMPTS_PATH}. The application cannot continue.")
+except json.JSONDecodeError:
+    logger.error(f"FATAL: Could not parse prompts.json. Please check for JSON syntax errors.")
+    sys.exit(f"FATAL: Could not parse prompts.json. Please check for JSON syntax errors.")
+
 
 # --- Logging setup ---
 logging.basicConfig(

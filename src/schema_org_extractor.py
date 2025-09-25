@@ -9,7 +9,7 @@ from langchain_openai import ChatOpenAI
 from tiktoken import get_encoding
 import logging
 
-from src.config import LLM_MODEL, OPENAI_API_KEY
+from src.config import LLM_MODEL, OPENAI_API_KEY, PROMPTS
 
 class SchemaOrgExtractor:
     """Extract Schema.org JSON-LD markup from document chunks for electronic components."""
@@ -87,36 +87,9 @@ class SchemaOrgExtractor:
     def _generate_schema_markup(self, concept: str, context: str) -> Optional[Dict]:
         """Generate Schema.org JSON-LD markup for a concept."""
         
-        prompt = f"""
-        Create Schema.org JSON-LD markup for this electronic component based on the context provided.
-        
-        Component: {concept}
-        Context: {context}
-        
-        Requirements:
-        1. Use "Product" as the base @type
-        2. Include standard Schema.org properties: name, description, category
-        3. Add "additionalType" from Product Types Ontology when applicable
-        4. Include technical properties as custom properties with "elec:" prefix
-        5. Extract specifications like frequency, impedance, dimensions where available
-        6. Format as valid JSON-LD
-        
-        Example format:
-        {{
-          "@context": {{
-            "@vocab": "https://schema.org/",
-            "elec": "https://example.org/electrical/"
-          }},
-          "@type": "Product",
-          "name": "{concept}",
-          "description": "Technical description from context",
-          "category": "Electronic Component",
-          "additionalType": "http://www.productontology.org/id/Appropriate_Type",
-          "elec:technicalProperty": "value if available"
-        }}
-        
-        OUTPUT: Valid JSON-LD only, no other text.
-        """
+        prompt_template = PROMPTS["schema_org_extractor"]["main_prompt"]
+
+        prompt = prompt_template.format(concept=concept, context=context)
         
         try:
             input_tokens = len(self.tokenizer.encode(prompt))

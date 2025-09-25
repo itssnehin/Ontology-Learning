@@ -4,8 +4,9 @@ from typing import List
 from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
 from tiktoken import get_encoding
+from tqdm import tqdm
 
-from src.config import LLM_MODEL, OPENAI_API_KEY
+from src.config import LLM_MODEL, OPENAI_API_KEY, PROMPTS
 
 logger = logging.getLogger(__name__)
 
@@ -27,20 +28,12 @@ def extract_ideas(chunks: List[Document], model_name: str = LLM_MODEL) -> List[s
     total_cost = 0.0
     
     concepts = []
-    
-    for chunk in chunks:
+    prompt_template_r1 = PROMPTS["idea_extractor"]["round_one"]
+    prompt_template_r2 = PROMPTS["idea_extractor"]["round_two"]
+
+    for chunk in tqdm(chunks, desc="Extracting Concepts"):
         # Round 1: Break down topics
-        cot_round_one_prompt = f"""
-        The following is a technical document segment. Briefly break down the topics (both specific and general concepts) relevant to this document. Explain your reasoning step by step.
-        
-        Document:
-        {chunk.page_content}
-        
-        ### OUTPUT FORMAT:
-        - General concepts: [List]
-        - Specific concepts: [List]
-        - Reasoning: [Explanation]
-        """
+        cot_round_one_prompt = prompt_template_r1.format(chunk_content=chunk.page_content)
         input_tokens_r1 = len(tokenizer.encode(cot_round_one_prompt))
         cot_round_one_response = llm.invoke(cot_round_one_prompt)
         output_tokens_r1 = len(tokenizer.encode(cot_round_one_response.content))
@@ -53,17 +46,7 @@ def extract_ideas(chunks: List[Document], model_name: str = LLM_MODEL) -> List[s
         logger.debug(f"Raw LLM Response (Round 1):\n{cot_round_one_response.content}")
         
         # Round 2: Extract taxonomy in JSON format
-        cot_round_two_prompt = f"""
-        Based on the following topic breakdown, extract a taxonomy of component-based concepts for an ontology in IoT and antenna specifications. 
-        Only include physical or abstract components (e.g., 'Antenna', 'FPC Antenna', 'DAC'), excluding properties (e.g., 'Frequency Range', 'Adhesive Backing').
-        
-        Topic Breakdown:
-        {cot_round_one_response.content}
-        
-        OUTPUT FORMAT:
-        Respond with a single JSON object containing one key: "nodes". The value of "nodes" should be a list of component-based concept strings.
-        Example: {{"nodes": ["Antenna", "FPC Antenna", "DAC"]}}
-        """
+        cot_round_two_prompt = prompt_template_r2.format(cot_round_one_response=cot_round_one_response.content)
         input_tokens_r2 = len(tokenizer.encode(cot_round_two_prompt))
         response = llm.invoke(cot_round_two_prompt)
         output_tokens_r2 = len(tokenizer.encode(response.content))

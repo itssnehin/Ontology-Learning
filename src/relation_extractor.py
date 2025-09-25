@@ -6,7 +6,8 @@ from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
 from tiktoken import get_encoding
 import logging
-from src.config import LLM_MODEL, OPENAI_API_KEY
+from src.config import LLM_MODEL, OPENAI_API_KEY, PROMPTS
+from tqdm import tqdm
 
 logger = logging.getLogger(__name__)
 
@@ -27,30 +28,13 @@ def extract_relations(chunks: List[Document], model_name: str = LLM_MODEL) -> Li
     LLM_COST_PER_1K_TOKENS = 0.00336
     total_tokens = 0
     total_cost = 0.0
-    
+    prompt_template = PROMPTS["relation_extractor"]["main_prompt"]
+
     all_relations = []
     
-    for chunk in chunks:
-        prompt = f"""
-        You are an expert in ontology engineering. Your task is to extract an ontology subgraph from the following technical document, focusing on component-based concepts and their relations.
+    for chunk in tqdm(chunks, desc="Extracting Relations"):
+        prompt = prompt_template.format(chunk_content=chunk.page_content)
         
-        1. Identify key domain concepts (classes) and their properties.
-        2. Extract semantic relationships between them using relations like 'operatesIn', 'hasFeature', 'subclass_of'.
-        
-        OUTPUT FORMAT:
-        Respond with a single JSON object with one key: "relations". The value should be a list of objects, where each object represents a single relation with "source", "type", and "target" keys.
-        
-        Example:
-        {{
-            "relations": [
-                {{"source": "FPC Antenna", "type": "subclass_of", "target": "Antenna"}},
-                {{"source": "Antenna", "type": "hasFeature", "target": "Adhesive Backing"}}
-            ]
-        }}
-        
-        Document:
-        {chunk.page_content}
-        """
         input_tokens = len(tokenizer.encode(prompt))
         response = llm.invoke(prompt)
         output_tokens = len(tokenizer.encode(response.content))
