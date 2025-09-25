@@ -1,26 +1,50 @@
-# Python
+# Byte-compiled / optimized / C extensions
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Environment
+# Virtual Environment
+capstone-venv/
+.venv/
+venv/
+
+# Distribution / Installation
+*.egg-info/
+*.pdf
+
+# Environment variables
 .env
 
-# Output files
-output/
-data/raw_markdown/
-data/
-visualizations/
-ontology_visualizations/
-logs/
-plots/
-ontology_visualizations/
-ontology_pipleline.egg-info/
 # IDE / OS specific
 .vscode/
 .idea/
 .DS_Store
-capstone-venv/
-# research 
-*.pdf
+
+# --- Project-Specific Ignores ---
+
+# Generated data, logs, and outputs
+# NOTE: We make exceptions for files we WANT to track below
+cache/
+data/
+logs/
+ontology_management/
+ontology_visualizations/
+plots/
+supervisor_demo/
+output/
+visualizations/
+
+# --- EXCEPTIONS ---
+# Keep specific files inside the ignored 'data' directory.
+# Add any other data files you want to keep in the repo here.
+!data/gold_standard.json
+
+# If you want to keep your input markdown files, add these lines:
+#!data/raw_markdown/
+#!data/raw_markdown/*.md
+
+# Keep the README and other essential project files
+!README.md
+!requirements.txt
+!setup.py
