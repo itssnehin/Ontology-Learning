@@ -8,7 +8,6 @@ from sklearn.manifold import TSNE
 from langchain_openai import OpenAIEmbeddings
 
 from src.config import OPENAI_API_KEY, EMBEDDING_MODEL
-from src.utils import setup_logging
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +62,7 @@ def embed_data(
     visualize: bool = True
 ) -> Dict[str, Tuple[List[Tuple[str, np.ndarray]], List[Tuple[str, np.ndarray]]]]:
     """Embed relations and themes per document using OpenAI embeddings."""
-    setup_logging()
+    
     embeddings = OpenAIEmbeddings(model=model_name, openai_api_key=OPENAI_API_KEY)
     tokenizer = get_encoding("cl100k_base")
     EMBEDDING_COST_PER_1K_TOKENS = 0.0001

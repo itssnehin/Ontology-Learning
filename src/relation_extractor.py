@@ -5,7 +5,7 @@ from typing import List, Dict, Any
 from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
 from tiktoken import get_encoding
-
+import logging
 from src.config import LLM_MODEL, OPENAI_API_KEY
 
 logger = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ def extract_relations(chunks: List[Document], model_name: str = LLM_MODEL) -> Li
     Returns:
         List of relation dictionaries, e.g., [{"source": "ClassA", "type": "relationship", "target": "ClassB"}].
     """
-    setup_logging()
+    
     llm = ChatOpenAI(model_name=model_name, openai_api_key=OPENAI_API_KEY)
     tokenizer = get_encoding("cl100k_base")
     LLM_COST_PER_1K_TOKENS = 0.00336

@@ -5,7 +5,6 @@ from typing import Dict, Any, Set, Tuple, List
 
 # Use the central logging configuration
 from src.config import logger
-from src.utils import setup_logging
 
 def _normalize_string(s: str) -> str:
     """Normalizes a string by making it lowercase and stripping whitespace."""
@@ -72,7 +71,7 @@ def evaluate_ontology(generated_path: Path, gold_standard_path: Path) -> Dict[st
     Returns:
         A dictionary containing the evaluation results.
     """
-    setup_logging()
+    
     logger.info(f"Starting evaluation of '{generated_path.name}' against '{gold_standard_path.name}'")
 
     try:

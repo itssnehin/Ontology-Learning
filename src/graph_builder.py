@@ -5,7 +5,6 @@ import numpy as np
 from neo4j import GraphDatabase, Driver, Transaction
 
 from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
-from src.utils import setup_logging
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +69,7 @@ def build_subgraphs(
     database: str = "neo4j"
 ):
     """Build Neo4j subgraphs per document using embedded relations and themes."""
-    setup_logging()
+    
     driver = None
     try:
         driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
