@@ -81,8 +81,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 from neo4j import GraphDatabase
 import re
 from difflib import SequenceMatcher
-from utils import setup_logging
-from config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+
+# --- CORRECTED IMPORTS ---
+from .utils import setup_logging
+from .config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
 
 class ExtensionDecision(Enum):
     EXTEND = "extend_ontology"

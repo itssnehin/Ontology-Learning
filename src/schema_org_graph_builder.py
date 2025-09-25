@@ -3,10 +3,12 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent))
 
 from neo4j import GraphDatabase
-from config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
-from typing import List, Dict, Optional, Any
 import json
-from utils import setup_logging
+import logging
+
+# --- CORRECTED IMPORTS ---
+from .config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+from .utils import setup_logging
 
 class SchemaOrgGraphBuilder:
     """Build Neo4j knowledge graph from Schema.org JSON-LD data."""

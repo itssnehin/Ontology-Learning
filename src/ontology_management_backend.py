@@ -22,9 +22,9 @@ from flask_cors import CORS
 from neo4j import GraphDatabase
 import pickle
 
-from config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
-from integrated_schema_pipeline import run_integrated_pipeline, PipelineConfig
-from utils import setup_logging
+from .config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+from .integrated_schema_pipeline import run_integrated_pipeline, PipelineConfig
+from .utils import setup_logging
 
 class ProcessStatus(Enum):
     IDLE = "idle"

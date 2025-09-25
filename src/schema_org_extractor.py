@@ -6,9 +6,9 @@ import json
 import re
 from typing import Dict, List, Optional, Tuple
 from langchain_openai import ChatOpenAI
-from config import LLM_MODEL, OPENAI_API_KEY
+from .config import LLM_MODEL, OPENAI_API_KEY
 from tiktoken import get_encoding
-from utils import setup_logging
+from .utils import setup_logging
 
 class SchemaOrgExtractor:
     """Extract Schema.org JSON-LD markup from document chunks for electronic components."""
@@ -224,8 +224,8 @@ def extract_schema_org_markup(chunks: List, concepts: List[str]) -> List[Dict]:
     return extractor.extract_schema_org_data(chunks, concepts)
 
 if __name__ == "__main__":
-    from data_loader import load_and_split_data
-    from idea_extractor import extract_ideas
+    from .data_loader import load_and_split_data
+    from .idea_extractor import extract_ideas
     
     # Test with sample data
     chunks = load_and_split_data()

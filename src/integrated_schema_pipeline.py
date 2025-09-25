@@ -20,15 +20,15 @@ from neo4j import GraphDatabase
 import re
 from difflib import SequenceMatcher
 
-# Import existing pipeline modules
-from data_loader import load_and_split_data
-from idea_extractor import extract_ideas
-from schema_org_extractor import extract_schema_org_markup
-from schema_org_relation_extractor import extract_schema_org_relations, SchemaOrgRelationExtractor
-from schema_org_graph_builder import build_schema_org_knowledge_graph
-from ontology_extension_manager import OntologyExtensionManager, ExtensionDecision, ExtensionResult
-from utils import setup_logging
-from config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+# --- CORRECTED IMPORTS ---
+from .data_loader import load_and_split_data
+from .idea_extractor import extract_ideas
+from .schema_org_extractor import extract_schema_org_markup
+from .schema_org_relation_extractor import extract_schema_org_relations, SchemaOrgRelationExtractor
+from .schema_org_graph_builder import build_schema_org_knowledge_graph
+from .ontology_extension_manager import OntologyExtensionManager, ExtensionDecision, ExtensionResult
+from .utils import setup_logging
+from .config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
 
 @dataclass
 class PipelineConfig:

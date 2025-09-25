@@ -20,16 +20,16 @@ import seaborn as sns
 from neo4j import GraphDatabase
 
 # Import pipeline modules
-from data_loader import load_and_split_data
-from idea_extractor import extract_ideas
-from relation_extractor import extract_relations
-from ontology_extension_manager import OntologyExtensionManager, ExtensionDecision
-from schema_org_extractor import extract_schema_org_markup
-from schema_org_relation_extractor import extract_schema_org_relations, SchemaOrgRelationExtractor
-from schema_org_graph_builder import build_schema_org_knowledge_graph
-from schema_ontology_visualizer import SchemaOrgOntologyVisualizer
-from config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
-from utils import setup_logging
+from .data_loader import load_and_split_data
+from .idea_extractor import extract_ideas
+from .relation_extractor import extract_relations
+from .ontology_extension_manager import OntologyExtensionManager, ExtensionDecision
+from .schema_org_extractor import extract_schema_org_markup
+from .schema_org_relation_extractor import extract_schema_org_relations, SchemaOrgRelationExtractor
+from .schema_org_graph_builder import build_schema_org_knowledge_graph
+from .schema_ontology_visualizer import SchemaOrgOntologyVisualizer
+from .config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+from .utils import setup_logging
 
 # ===== EXTRACTED COMMON PATTERN (removes duplication across your files) =====
 def process_document_corpus():
