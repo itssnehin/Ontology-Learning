@@ -4,9 +4,25 @@ Centralized configuration management for the ontology learning system.
 
 import os
 import logging
+import json
 from pathlib import Path
 from dotenv import load_dotenv
-import json
+
+# --- 1. LOGGING SETUP MOVED TO THE TOP ---
+# This ensures the logger is available for the rest of the file to use.
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] [%(name)s] - %(message)s",
+    # Note: LOGS_DIR is defined later, so we build the path here.
+    handlers=[
+        logging.FileHandler(Path(__file__).parent.parent / "logs" / "pipeline.log"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
+
+# --- 2. THE REST OF THE CONFIGURATION ---
 
 # Define project root (directory containing src/)
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -17,9 +33,9 @@ load_dotenv(dotenv_path)
 
 # --- Environment-loaded variables ---
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-NEO4J_URI = os.getenv("NEO4J_URI")
-NEO4J_USERNAME = os.getenv("NEO4J_USERNAME")
-NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
+NEO4J_URI = os.getenv("NEO4J_URI", "bolt://127.0.0.1:7687")
+NEO4J_USERNAME = os.getenv("NEO4J_USERNAME", "neo4j")
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "ontology")
 
 # --- Validation ---
 if not OPENAI_API_KEY:
@@ -30,7 +46,7 @@ if not NEO4J_URI:
 # --- Base directories ---
 BASE_DIR = PROJECT_ROOT
 DATA_DIR = BASE_DIR / "data"
-LOGS_DIR = BASE_DIR / "logs"
+LOGS_DIR = BASE_DIR / "logs" # This is still useful to have as a variable
 MARKDOWN_DIR = DATA_DIR / "raw_markdown"
 
 # --- Create directories if they don't exist ---
@@ -61,32 +77,19 @@ MARKDOWN_FILES = list(MARKDOWN_DIR.glob("*.md"))
 # Get primary OWL file
 OWL_FILE = OWL_FILES[0] if OWL_FILES else None
 
-# PROMPTS
+# --- Load Prompts from JSON ---
 PROMPTS_PATH = BASE_DIR / "src" / "prompts.json"
 PROMPTS = {}
-
 try:
     with open(PROMPTS_PATH, 'r', encoding='utf-8') as f:
         PROMPTS = json.load(f)
     logger.info("✅ Successfully loaded configurable prompts from prompts.json")
 except FileNotFoundError:
     logger.error(f"FATAL: prompts.json not found at {PROMPTS_PATH}. The application cannot continue.")
-    sys.exit("FATAL: prompts.json not found at {PROMPTS_PATH}. The application cannot continue.")
+    raise
 except json.JSONDecodeError:
     logger.error(f"FATAL: Could not parse prompts.json. Please check for JSON syntax errors.")
-    sys.exit(f"FATAL: Could not parse prompts.json. Please check for JSON syntax errors.")
-
-
-# --- Logging setup ---
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] [%(name)s] - %(message)s",
-    handlers=[
-        logging.FileHandler(LOGS_DIR / "pipeline.log"),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger(__name__)
+    raise
 
 # --- Initial configuration logging ---
 if not OWL_FILES:
