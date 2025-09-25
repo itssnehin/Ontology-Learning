@@ -1,10 +1,10 @@
 # Schema.org Ontology Extraction & Intelligent Extension Pipeline
 
-## 🎯 Project Overview
+## Project Overview
 
 This project implements an intelligent pipeline for extracting Schema.org ontologies from technical datasheets and automatically deciding whether to extend the ontology with new concepts or map to existing ones. The system combines large language models (LLMs), embedding-based similarity matching, and domain-specific technical property analysis to maintain ontology quality while ensuring comprehensive coverage.
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```
 Datasheets (Markdown) → Concept Extraction → Ontology Decision Engine → Schema.org Objects → Neo4j Knowledge Graph
@@ -13,7 +13,7 @@ Datasheets (Markdown) → Concept Extraction → Ontology Decision Engine → Sc
                                          + LLM Validation
 ```
 
-## 🔬 Academic Contributions
+## Academic Contributions
 
 ### Novel Methodology
 - **Hybrid Similarity Matching**: Combines semantic embeddings with domain-specific technical property matching.
@@ -53,7 +53,7 @@ code/
 └── cache/                          # Cached LLM results
 ```
 
-## 🚀 Key Features
+## Key Features
 
 ### 1. Intelligent Ontology Extension Management
 - **Multi-Method Similarity**: Embedding, lexical, technical specification, and category-based matching.
@@ -80,9 +80,33 @@ code/
 - **Ontology Growth Tracking**: Monitoring healthy vs. explosive expansion.
 - **Manual Review Queue**: Systematic handling of uncertain decisions.
 
-## 🚀 Streamlining the Pipeline for Efficiency
+## Streamlining the Pipeline for Efficiency
 
 Ontology extraction, especially with large language models, can be time-consuming and expensive. This project includes several features and best practices to streamline the process for both development and production runs.
+ ### Subgraphs:
+ [Document Chunks]
+       |
+       v
+[Extractors: idea_extractor, relation_extractor]
+       |
+       +--> "Subgraph A" (in memory as lists of concepts/relations)
+       +--> "Subgraph B"
+       +--> "Subgraph C"
+       |
+       v
+[Graph Builder: schema_org_graph_builder]
+       |
+       |  (Takes Subgraph A)
+       v
+[Neo4j Database] --- MERGE node "Concept 1" --> (Node created)
+       |
+       |  (Takes Subgraph B, which also has "Concept 1")
+       v
+[Neo4j Database] --- MERGE node "Concept 1" --> (Node already exists, do nothing)
+       |
+       |  (Takes Subgraph C)
+       v
+[Neo4j Database] --- MERGE edge "C1 -> C2"  --> (Edge created)
 
 ### 1. Caching LLM and Embedding Results
 The most significant bottleneck is repeatedly calling the OpenAI API. The `cached_schema_org_pipeline.py` script implements a caching mechanism to avoid this.
@@ -112,7 +136,7 @@ The backend server (`ontology_management_backend.py`) is designed to support a w
     -   Track pipeline runs and manage ontology versions.
     -   Quickly identify and correct errors without needing to inspect raw files or databases.
 
-## 📊 Pipeline Performance
+## Pipeline Performance
 
 ### Quantitative Results
 - **255 concepts** extracted from technical datasheets
@@ -127,7 +151,7 @@ The backend server (`ontology_management_backend.py`) is designed to support a w
 - **Schema.org compliance** for web semantic integration
 - **Academic reproducibility** with detailed logging
 
-## 🔧 Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 - Python 3.9+
@@ -158,7 +182,7 @@ cp .env.example .env
 3. Start the database service.
 4. Verify the connection at http://localhost:7474.
 
-## 🚀 Usage
+## Usage
 
 ### Recommended Development Workflow
 For iterative development, always use the cached pipeline to save on API costs and time.
@@ -188,7 +212,7 @@ python -m src.knowledge_graph_visualizer
 python -m src.schema_org_validator data/schema_objects/your_output_file.jsonld
 ```
 
-## 📈 Output Files
+## Output Files
 
 ### Primary Outputs
 - **`schema_org_objects_TIMESTAMP.jsonld`** - Complete Schema.org ontology in JSON-LD format.
@@ -202,7 +226,7 @@ python -m src.schema_org_validator data/schema_objects/your_output_file.jsonld
 - **`interactive_ontology_embeddings.html`** - Explorable embedding space.
 - **`academic_dashboard.html`** - Comprehensive metrics dashboard.
 
-## 🎓 Academic Applications
+## Academic Applications
 
 ### For Research Papers
 - **Methodology**: Novel hybrid approach to ontology extension.
@@ -222,7 +246,7 @@ python -m src.schema_org_validator data/schema_objects/your_output_file.jsonld
 - **Visual Evidence**: Publication-ready figures and comprehensive dashboards.
 - **Case Studies**: Specific examples of intelligent extension decisions.
 
-## 🔍 Key Algorithms
+## Key Algorithms
 
 ### Ontology Extension Decision Algorithm
 ```python
@@ -263,7 +287,7 @@ def match_frequency_ranges(freq1, freq2):
     return overlap / total_span if total_span > 0 else 0.0
 ```
 
-## 📚 Configuration
+## Configuration
 
 ### Similarity Thresholds (`config.py`)
 ```python
@@ -275,18 +299,18 @@ SIMILARITY_THRESHOLDS = {
 }
 ```
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **OpenAI**: GPT-4 and embedding models for LLM-powered reasoning.
 - **Neo4j**: Graph database for ontology storage and relationship management.
 - **Schema.org**: Structured data vocabulary for web semantic integration.
 - **University of Queensland**: Academic support and research framework.
 
-## 📞 Contact
+## Contact
 
 For questions about this research or collaboration opportunities:
 - **Project Lead**: Snehin Kukreja
