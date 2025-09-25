@@ -13,6 +13,7 @@ data/raw_markdown/
 data/
 visualizations/
 ontology_visualizations/
+logs/
 # IDE / OS specific
 .vscode/
 .idea/
