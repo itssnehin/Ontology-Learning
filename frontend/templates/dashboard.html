@@ -3,227 +3,1787 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schema.org Ontology Management Dashboard</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <title>Ontology Pipeline Management Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --dark: #1e293b;
+            --medium: #475569;
+            --light: #94a3b8;
+            --lighter: #e2e8f0;
+            --white: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--bg-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .status-bar {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.connected {
+            background: var(--success);
+        }
+
+        .status-indicator.disconnected {
+            background: var(--danger);
+        }
+
+        .status-indicator.running {
+            background: var(--warning);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 968px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--lighter);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--medium);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--lighter);
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 16px;
+            border: 2px solid var(--lighter);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .radio-label:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        input[type="radio"] {
+            accent-color: var(--primary);
+        }
+
+        input[type="radio"]:checked + .radio-label {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 12px;
+            border: 2px solid var(--lighter);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-label:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--lighter);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%);
+            padding: 16px;
+            border-radius: 12px;
+            border: 2px solid var(--lighter);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--medium);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--lighter);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .log-container {
+            background: var(--dark);
+            color: var(--lighter);
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 16px;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .log-time {
+            color: var(--light);
+        }
+
+        .log-message {
+            color: var(--white);
+        }
+
+        .log-message.error {
+            color: var(--danger);
+        }
+
+        .log-message.success {
+            color: var(--success);
+        }
+
+        .log-message.warning {
+            color: var(--warning);
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .results-table th {
+            background: var(--lighter);
+            padding: 12px;
+            text-align: left;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--medium);
+            border-bottom: 2px solid var(--light);
+        }
+
+        .results-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--lighter);
+        }
+
+        .results-table tbody tr:hover {
+            background: rgba(99, 102, 241, 0.03);
+        }
+
+        .decision-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .decision-badge.extend {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .decision-badge.map {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+        }
+
+        .decision-badge.review {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .confidence-meter {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .confidence-bar {
+            width: 60px;
+            height: 6px;
+            background: var(--lighter);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .confidence-fill.high {
+            background: var(--success);
+        }
+
+        .confidence-fill.medium {
+            background: var(--warning);
+        }
+
+        .confidence-fill.low {
+            background: var(--danger);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--lighter);
+            border-radius: 6px;
+            background: var(--white);
+            color: var(--medium);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .action-btn.accept {
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .action-btn.accept:hover {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .action-btn.reject {
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .action-btn.reject:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--lighter);
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--medium);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: -2px;
+        }
+
+        .tab:hover {
+            color: var(--dark);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px;
+            color: var(--light);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .similarity-matches {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 13px;
+        }
+
+        .similarity-matches div {
+            padding: 4px 8px;
+            background: var(--lighter);
+            border-radius: 4px;
+        }
+
+        .similarity-scores {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .results-view h3 {
+            font-size: 18px;
+            font-weight: 600;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--lighter);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 16px;
+            width: 80%;
+            max-width: 700px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 2px solid var(--lighter);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--dark);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--light);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--dark);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .similarity-breakdown {
+            margin-bottom: 24px;
+        }
+
+        .similarity-breakdown h4 {
+            font-size: 16px;
+            color: var(--dark);
+            margin-bottom: 12px;
+        }
+
+        .breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .breakdown-table tr {
+            border-bottom: 1px solid var(--lighter);
+        }
+
+        .breakdown-table td {
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .breakdown-table td:first-child {
+            color: var(--medium);
+        }
+
+        .breakdown-table td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .breakdown-table .total-row {
+            border-top: 2px solid var(--primary);
+            border-bottom: none;
+            font-weight: 600;
+        }
+
+        .llm-reasoning {
+            margin-bottom: 24px;
+            padding: 16px;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .llm-reasoning h4 {
+            font-size: 16px;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .llm-reasoning p {
+            color: var(--medium);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            padding-top: 16px;
+            border-top: 1px solid var(--lighter);
+        }
+
+        .similarity-filter {
+            padding: 16px;
+            background: var(--lighter);
+            border-radius: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--lighter);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+    </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Header -->
-        <div class="header">
-            <h1>🧠 Schema.org Ontology Management Dashboard</h1>
-            <div class="status-bar">
-                <div class="status-item" id="neo4j-status">
-                    <span>🗄️</span>
-                    <span>Neo4j: <span id="neo4j-connection">Checking...</span></span>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>🔬 Ontology Pipeline Management</h1>
+                <div class="status-bar">
+                    <div class="status-item">
+                        <span class="status-indicator connected" id="neo4j-status"></span>
+                        <span>Neo4j Connected</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-indicator disconnected" id="pipeline-status"></span>
+                        <span id="pipeline-status-text">Pipeline Idle</span>
+                    </div>
                 </div>
-                <div class="status-item" id="pipeline-status">
-                    <span>⚙️</span>
-                    <span>Pipeline: <span id="pipeline-state">Ready</span></span>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('pipeline')">Pipeline Configuration</button>
+            <button class="tab" onclick="switchTab('review')">Concept Review</button>
+            <button class="tab" onclick="switchTab('results')">Integration Results</button>
+        </div>
+
+        <div id="pipeline-tab" class="tab-content active">
+            <div class="main-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">⚙️ Pipeline Configuration</h2>
+                    </div>
+                    
+                    <form id="pipeline-form">
+                        <div class="form-section">
+                            <label class="form-label">Ontology Mode</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="ontology-mode" value="generate" checked>
+                                    <span>Generate New Ontology</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="ontology-mode" value="use-existing">
+                                    <span>Use Existing Ontology</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <label class="form-label">Maximum Chunks to Process</label>
+                            <input type="number" class="form-control" id="max-chunks" value="50" min="1" max="500">
+                        </div>
+
+                        <div class="form-section">
+                            <label class="form-label">Similarity Thresholds</label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                <div>
+                                    <label class="form-label" style="font-size: 12px;">Exact Match</label>
+                                    <input type="number" class="form-control" id="threshold-exact" value="0.95" min="0" max="1" step="0.01">
+                                </div>
+                                <div>
+                                    <label class="form-label" style="font-size: 12px;">High Similarity</label>
+                                    <input type="number" class="form-control" id="threshold-high" value="0.85" min="0" max="1" step="0.01">
+                                </div>
+                                <div>
+                                    <label class="form-label" style="font-size: 12px;">Medium Similarity</label>
+                                    <input type="number" class="form-control" id="threshold-medium" value="0.70" min="0" max="1" step="0.01">
+                                </div>
+                                <div>
+                                    <label class="form-label" style="font-size: 12px;">Low Similarity</label>
+                                    <input type="number" class="form-control" id="threshold-low" value="0.50" min="0" max="1" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="enable-llm" checked>
+                                <span>Enable LLM Validation</span>
+                            </label>
+                        </div>
+
+                        <div class="form-section">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="enable-technical" checked>
+                                <span>Enable Technical Property Matching</span>
+                            </label>
+                        </div>
+
+                        <div class="form-section">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="run-evaluations" checked>
+                                <span>Run Evaluations After Pipeline</span>
+                            </label>
+                        </div>
+
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-primary" id="run-pipeline-btn">
+                                <span>🚀</span> Run Pipeline
+                            </button>
+                            <button type="button" class="btn btn-danger" id="cancel-pipeline-btn" disabled>
+                                <span>⏹️</span> Cancel
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="status-item" id="ontology-status">
-                    <span>🌐</span>
-                    <span>Ontology: <span id="ontology-version">v1.0.0</span></span>
-                </div>
-                <div class="status-item">
-                    <span>📅</span>
-                    <span>Last Updated: <span id="last-updated">Loading...</span></span>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📊 Current Statistics</h2>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-concepts">224</div>
+                            <div class="stat-label">Total Concepts</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-relations">7,009</div>
+                            <div class="stat-label">Relations</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-automated">85%</div>
+                            <div class="stat-label">Automation Rate</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-pending">130</div>
+                            <div class="stat-label">Pending Review</div>
+                        </div>
+                    </div>
+
+                    <div class="form-section" style="margin-top: 24px;">
+                        <label class="form-label">Pipeline Progress</label>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="pipeline-progress" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="log-container" id="log-container">
+                        <div class="log-entry">
+                            <span class="log-time">15:52:47</span>
+                            <span class="log-message">Pipeline ready. Configure settings and click 'Run Pipeline' to start.</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Main Grid -->
-        <div class="grid">
-            <!-- Process Control -->
+        <div id="review-tab" class="tab-content">
             <div class="card">
-                <h3>⚙️ Pipeline Process Control</h3>
-                <div class="alert alert-info">
-                    <strong>Process Lock System:</strong> Prevents duplicate ontology creation processes.
-                </div>
-                <div class="process-control">
-                    <div class="process-step" id="step-load" data-step="load">
-                        <div>
-                            <strong>1. Load Documents</strong>
-                            <div style="font-size: 0.9em; color: #666;">Load and chunk datasheet documents</div>
-                        </div>
-                        <button class="btn btn-secondary" onclick="runPipelineStep('load')">Run</button>
-                    </div>
-                    <div class="process-step" id="step-extract" data-step="extract">
-                        <div>
-                            <strong>2. Extract Concepts</strong>
-                            <div style="font-size: 0.9em; color: #666;">Extract concepts and relations using LLM</div>
-                        </div>
-                        <button class="btn btn-secondary" onclick="runPipelineStep('extract')">Run</button>
-                    </div>
-                    <div class="process-step" id="step-analyze" data-step="analyze">
-                        <div>
-                            <strong>3. Similarity Analysis</strong>
-                            <div style="font-size: 0.9em; color: #666;">Analyze similarity and make extension decisions</div>
-                        </div>
-                        <button class="btn btn-secondary" onclick="runPipelineStep('analyze')">Run</button>
-                    </div>
-                    <div class="process-step" id="step-integrate" data-step="integrate">
-                        <div>
-                            <strong>4. Integrate Ontology</strong>
-                            <div style="font-size: 0.9em; color: #666;">Create Schema.org objects and update graph</div>
-                        </div>
-                        <button class="btn btn-secondary" onclick="runPipelineStep('integrate')">Run</button>
+                <div class="card-header">
+                    <h2 class="card-title">🔍 Concept Review Queue</h2>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="filterConcepts('all')">All (130)</button>
+                        <button class="btn btn-secondary" onclick="filterConcepts('uncertain')">Uncertain (130)</button>
+                        <button class="btn btn-secondary" onclick="filterConcepts('approved')">Approved (0)</button>
+                        <button class="btn btn-secondary" onclick="filterConcepts('rejected')">Rejected (0)</button>
                     </div>
                 </div>
-                <div style="margin-top: 15px; display: flex; gap: 10px;">
-                    <button class="btn btn-success" onclick="runFullPipeline()">🚀 Run Full Pipeline</button>
-                    <button class="btn btn-warning" onclick="resetPipeline()">🔄 Reset Pipeline</button>
-                </div>
-            </div>
 
-            <!-- Ontology Statistics -->
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Decision</th>
+                            <th>Target</th>
+                            <th>Confidence</th>
+                            <th>Reasoning</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="review-table-body">
+                        <tr>
+                            <td><strong>Dimensional Characteristics</strong></td>
+                            <td><span class="decision-badge review">Review</span></td>
+                            <td>Material Specification</td>
+                            <td>
+                                <div class="confidence-meter">
+                                    <div class="confidence-bar">
+                                        <div class="confidence-fill low" style="width: 50%"></div>
+                                    </div>
+                                    <span>0.50</span>
+                                </div>
+                            </td>
+                            <td>LLM validation failed, requires manual review</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn accept">Accept</button>
+                                    <button class="action-btn reject">Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Metal Plating</strong></td>
+                            <td><span class="decision-badge review">Review</span></td>
+                            <td>Plating Material</td>
+                            <td>
+                                <div class="confidence-meter">
+                                    <div class="confidence-bar">
+                                        <div class="confidence-fill low" style="width: 50%"></div>
+                                    </div>
+                                    <span>0.50</span>
+                                </div>
+                            </td>
+                            <td>LLM validation failed, requires manual review</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn accept">Accept</button>
+                                    <button class="action-btn reject">Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sure Seal</strong></td>
+                            <td><span class="decision-badge review">Review</span></td>
+                            <td>Sealing Component</td>
+                            <td>
+                                <div class="confidence-meter">
+                                    <div class="confidence-bar">
+                                        <div class="confidence-fill low" style="width: 50%"></div>
+                                    </div>
+                                    <span>0.50</span>
+                                </div>
+                            </td>
+                            <td>LLM validation failed, requires manual review</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn accept">Accept</button>
+                                    <button class="action-btn reject">Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="results-tab" class="tab-content">
             <div class="card">
-                <h3>📊 Current Ontology Statistics</h3>
-                <div class="ontology-stats">
-                    <div class="stat-item">
-                        <span class="stat-value" id="total-nodes">0</span>
-                        <span class="stat-label">Total Nodes</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-value" id="total-relations">0</span>
-                        <span class="stat-label">Relations</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-value" id="product-nodes">0</span>
-                        <span class="stat-label">Products</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-value" id="categories">0</span>
-                        <span class="stat-label">Categories</span>
+                <div class="card-header">
+                    <h2 class="card-title">📈 Integration Results</h2>
+                    <div style="display: flex; gap: 16px; align-items: center;">
+                        <select class="form-control" style="width: 200px;" id="results-selector">
+                            <option>2025-09-08_15:52:56</option>
+                            <option>2025-09-08_14:23:12</option>
+                            <option>2025-09-08_10:15:33</option>
+                        </select>
+                        <div class="btn-group">
+                            <button class="btn btn-secondary active" onclick="showResultsView('summary')">Summary</button>
+                            <button class="btn btn-secondary" onclick="showResultsView('accepted')">Accepted</button>
+                            <button class="btn btn-secondary" onclick="showResultsView('discarded')">Discarded</button>
+                            <button class="btn btn-secondary" onclick="showResultsView('similarity')">Similarity Analysis</button>
+                        </div>
                     </div>
                 </div>
-                <div style="margin-top: 15px;">
-                    <button class="btn btn-secondary" onclick="refreshOntologyStats()">🔄 Refresh Stats</button>
-                    <button class="btn" onclick="exportOntology()">📤 Export Ontology</button>
-                </div>
-            </div>
 
-            <!-- Ontology Management -->
-            <div class="card">
-                <h3>🗂️ Ontology Version Management</h3>
-                <div class="alert alert-warning">
-                    <strong>Warning:</strong> Resetting will permanently delete all custom ontology data.
-                </div>
-                <div style="margin-bottom: 15px;">
-                    <button class="btn btn-success" onclick="createSnapshot()">📸 Create Snapshot</button>
-                    <button class="btn btn-danger" onclick="confirmReset()">🔄 Reset to Schema.org Default</button>
-                </div>
-                <div id="version-list">
-                    <div class="version-item current">
-                        <div class="version-info">
-                            <strong>Current Version</strong>
-                            <div style="font-size: 0.9em; color: #666;">Extended with custom concepts</div>
-                            <div style="font-size: 0.8em; color: #999;">2024-09-09 15:30:00</div>
-                        </div>
-                        <div class="version-actions">
-                            <button class="btn btn-secondary">Current</button>
-                        </div>
+                <div class="stats-grid" style="margin-bottom: 24px;">
+                    <div class="stat-card">
+                        <div class="stat-value">224</div>
+                        <div class="stat-label">Concepts Extracted</div>
                     </div>
-                    <div class="version-item">
-                        <div class="version-info">
-                            <strong>Schema.org Baseline</strong>
-                            <div style="font-size: 0.9em; color: #666;">Original Schema.org ontology</div>
-                            <div style="font-size: 0.8em; color: #999;">2024-09-08 10:00:00</div>
-                        </div>
-                        <div class="version-actions">
-                            <button class="btn btn-warning" onclick="restoreVersion('baseline')">Restore</button>
-                        </div>
+                    <div class="stat-card">
+                        <div class="stat-value">94</div>
+                        <div class="stat-label">Mapped to Existing</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Extended Ontology</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">130</div>
+                        <div class="stat-label">Manual Review</div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Neo4j Graph Visualization -->
-            <div class="card full-width">
-                <h3>🌐 Neo4j Ontology Graph Visualization</h3>
-                <div style="margin-bottom: 15px;">
-                    <button class="btn" onclick="refreshGraph()">🔄 Refresh Graph</button>
-                    <button class="btn btn-secondary" onclick="toggleGraphLayout()">🔀 Change Layout</button>
-                    <button class="btn btn-secondary" onclick="exportGraphData()">📊 Export Graph Data</button>
+                <!-- Summary View -->
+                <div id="summary-view" class="results-view">
+                    <h3 style="margin-bottom: 16px; color: var(--dark);">✅ Accepted Mappings</h3>
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Concept</th>
+                                <th>Decision</th>
+                                <th>Target</th>
+                                <th>Confidence</th>
+                                <th>Match Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Pin</strong></td>
+                                <td><span class="decision-badge map">Mapped</span></td>
+                                <td>Pin</td>
+                                <td>
+                                    <div class="confidence-meter">
+                                        <div class="confidence-bar">
+                                            <div class="confidence-fill high" style="width: 100%"></div>
+                                        </div>
+                                        <span>1.00</span>
+                                    </div>
+                                </td>
+                                <td>Exact name match</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Metal Shell Bayonet Coupling Circulars</strong></td>
+                                <td><span class="decision-badge map">Mapped</span></td>
+                                <td>Metal Shell Bayonet Coupling Circular</td>
+                                <td>
+                                    <div class="confidence-meter">
+                                        <div class="confidence-bar">
+                                            <div class="confidence-fill high" style="width: 99%"></div>
+                                        </div>
+                                        <span>0.99</span>
+                                    </div>
+                                </td>
+                                <td>High lexical similarity</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cable</strong></td>
+                                <td><span class="decision-badge map">Mapped</span></td>
+                                <td>Cable</td>
+                                <td>
+                                    <div class="confidence-meter">
+                                        <div class="confidence-bar">
+                                            <div class="confidence-fill high" style="width: 100%"></div>
+                                        </div>
+                                        <span>1.00</span>
+                                    </div>
+                                </td>
+                                <td>Exact name match</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="graph-container">
-                    <svg id="neo4j-graph"></svg>
-                    <div id="graph-loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none;">
-                        <div style="text-align: center;">
-                            <div>🔄 Loading graph data...</div>
-                            <div class="progress-bar" style="width: 200px; margin-top: 10px;">
-                                <div class="progress-fill" id="graph-progress"></div>
+
+                <!-- Discarded View -->
+                <div id="discarded-view" class="results-view" style="display: none;">
+                    <h3 style="margin-bottom: 16px; color: var(--danger);">❌ Discarded Due to Low Similarity</h3>
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Discarded Concept</th>
+                                <th>Most Similar Existing</th>
+                                <th>Similarity Score</th>
+                                <th>Similarity Type</th>
+                                <th>Threshold</th>
+                                <th>Reason</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="discarded-table-body">
+                            <tr>
+                                <td><strong>Digital Signal Processing Unit</strong></td>
+                                <td>Digital Circuit Design</td>
+                                <td>
+                                    <div class="confidence-meter">
+                                        <div class="confidence-bar">
+                                            <div class="confidence-fill low" style="width: 45%"></div>
+                                        </div>
+                                        <span>0.45</span>
+                                    </div>
+                                </td>
+                                <td>Semantic embedding</td>
+                                <td>0.50</td>
+                                <td>Below minimum threshold</td>
+                                <td>
+                                    <button class="action-btn" onclick="reviewDiscarded('Digital Signal Processing Unit')">Review</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Thermal Management System</strong></td>
+                                <td>Cooling Component</td>
+                                <td>
+                                    <div class="confidence-meter">
+                                        <div class="confidence-bar">
+                                            <div class="confidence-fill low" style="width: 48%"></div>
+                                        </div>
+                                        <span>0.48</span>
+                                    </div>
+                                </td>
+                                <td>Lexical similarity</td>
+                                <td>0.50</td>
+                                <td>Below minimum threshold</td>
+                                <td>
+                                    <button class="action-btn" onclick="reviewDiscarded('Thermal Management System')">Review</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>RF Shielding Enclosure</strong></td>
+                                <td>EMI Shield</td>
+                                <td>
+                                    <div class="confidence-meter">
+                                        <div class="confidence-bar">
+                                            <div class="confidence-fill low" style="width: 42%"></div>
+                                        </div>
+                                        <span>0.42</span>
+                                    </div>
+                                </td>
+                                <td>Technical property</td>
+                                <td>0.50</td>
+                                <td>Insufficient technical match</td>
+                                <td>
+                                    <button class="action-btn" onclick="reviewDiscarded('RF Shielding Enclosure')">Review</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Similarity Analysis View -->
+                <div id="similarity-view" class="results-view" style="display: none;">
+                    <h3 style="margin-bottom: 16px; color: var(--primary);">🔍 Detailed Similarity Analysis</h3>
+                    
+                    <div class="similarity-filter" style="margin-bottom: 16px;">
+                        <label class="form-label">Filter by Similarity Range:</label>
+                        <div class="btn-group">
+                            <button class="btn btn-secondary active" onclick="filterSimilarity('all')">All</button>
+                            <button class="btn btn-secondary" onclick="filterSimilarity('high')">High (>0.85)</button>
+                            <button class="btn btn-secondary" onclick="filterSimilarity('medium')">Medium (0.70-0.85)</button>
+                            <button class="btn btn-secondary" onclick="filterSimilarity('low')">Low (0.50-0.70)</button>
+                            <button class="btn btn-secondary" onclick="filterSimilarity('rejected')">Rejected (<0.50)</button>
+                        </div>
+                    </div>
+
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>New Concept</th>
+                                <th>Top 3 Similar Concepts</th>
+                                <th>Scores</th>
+                                <th>Decision</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="similarity-table-body">
+                            <tr>
+                                <td><strong>Power Supply Module</strong></td>
+                                <td>
+                                    <div class="similarity-matches">
+                                        <div>1. Power Supply Unit</div>
+                                        <div>2. Voltage Regulator</div>
+                                        <div>3. Power Management IC</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="similarity-scores">
+                                        <div class="confidence-meter">
+                                            <div class="confidence-bar">
+                                                <div class="confidence-fill high" style="width: 92%"></div>
+                                            </div>
+                                            <span>0.92</span>
+                                        </div>
+                                        <div class="confidence-meter">
+                                            <div class="confidence-bar">
+                                                <div class="confidence-fill medium" style="width: 78%"></div>
+                                            </div>
+                                            <span>0.78</span>
+                                        </div>
+                                        <div class="confidence-meter">
+                                            <div class="confidence-bar">
+                                                <div class="confidence-fill medium" style="width: 65%"></div>
+                                            </div>
+                                            <span>0.65</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="decision-badge map">Mapped to #1</span></td>
+                                <td>
+                                    <button class="action-btn" onclick="showSimilarityDetails('Power Supply Module')">View Details</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Connector Assembly</strong></td>
+                                <td>
+                                    <div class="similarity-matches">
+                                        <div>1. Electrical Connector</div>
+                                        <div>2. Cable Assembly</div>
+                                        <div>3. Pin Connector</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="similarity-scores">
+                                        <div class="confidence-meter">
+                                            <div class="confidence-bar">
+                                                <div class="confidence-fill medium" style="width: 68%"></div>
+                                            </div>
+                                            <span>0.68</span>
+                                        </div>
+                                        <div class="confidence-meter">
+                                            <div class="confidence-bar">
+                                                <div class="confidence-fill medium" style="width: 62%"></div>
+                                            </div>
+                                            <span>0.62</span>
+                                        </div>
+                                        <div class="confidence-meter">
+                                            <div class="confidence-bar">
+                                                <div class="confidence-fill low" style="width: 55%"></div>
+                                            </div>
+                                            <span>0.55</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="decision-badge review">Under Review</span></td>
+                                <td>
+                                    <button class="action-btn" onclick="showSimilarityDetails('Connector Assembly')">View Details</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Impedance Matching Network</strong></td>
+                                <td>
+                                    <div class="similarity-matches">
+                                        <div>1. Impedance Controller</div>
+                                        <div>2. RF Matching Circuit</div>
+                                        <div>3. Network Analyzer</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="similarity-scores">
+                                        <div class="confidence-meter">
+                                            <div class="confidence-bar">
+                                                <div class="confidence-fill low" style="width: 48%"></div>
+                                            </div>
+                                            <span>0.48</span>
+                                        </div>
+                                        <div class="confidence-meter">
+                                            <div class="confidence-bar">
+                                                <div class="confidence-fill low" style="width: 41%"></div>
+                                            </div>
+                                            <span>0.41</span>
+                                        </div>
+                                        <div class="confidence-meter">
+                                            <div class="confidence-bar">
+                                                <div class="confidence-fill low" style="width: 35%"></div>
+                                            </div>
+                                            <span>0.35</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="decision-badge extend">New Concept</span></td>
+                                <td>
+                                    <button class="action-btn" onclick="showSimilarityDetails('Impedance Matching Network')">View Details</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Similarity Details Modal -->
+                <div id="similarity-modal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="modal-concept-name">Concept Similarity Details</h3>
+                            <button class="close-btn" onclick="closeSimilarityModal()">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="similarity-breakdown">
+                                <h4>Similarity Score Breakdown</h4>
+                                <table class="breakdown-table">
+                                    <tr>
+                                        <td>Embedding Similarity:</td>
+                                        <td><strong>0.85</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lexical Similarity:</td>
+                                        <td><strong>0.72</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Technical Property Match:</td>
+                                        <td><strong>0.91</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Category Similarity:</td>
+                                        <td><strong>0.88</strong></td>
+                                    </tr>
+                                    <tr class="total-row">
+                                        <td>Weighted Average:</td>
+                                        <td><strong>0.84</strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="llm-reasoning">
+                                <h4>LLM Reasoning</h4>
+                                <p id="modal-llm-reasoning">The concepts share similar technical specifications and functional characteristics. Both operate in the same frequency range and have compatible impedance values.</p>
+                            </div>
+                            <div class="modal-actions">
+                                <button class="btn btn-primary" onclick="acceptSimilarityMapping()">Accept Mapping</button>
+                                <button class="btn btn-secondary" onclick="createNewConcept()">Create New Concept</button>
+                                <button class="btn btn-secondary" onclick="requestManualReview()">Request Manual Review</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Analytics Charts -->
-            <div class="card">
-                <h3>📈 Ontology Growth Analytics</h3>
-                <div class="chart-container">
-                    <canvas id="growth-chart"></canvas>
-                </div>
-            </div>
-
-            <!-- Activity Log -->
-            <div class="card">
-                <h3>📋 Activity Log</h3>
-                <div class="log-container" id="activity-log">
-                    <div class="log-entry info">[INFO] Dashboard initialized</div>
-                    <div class="log-entry info">[INFO] Checking Neo4j connection...</div>
-                    <div class="log-entry success">[SUCCESS] Connected to Neo4j database</div>
-                    <div class="log-entry info">[INFO] Loading ontology statistics...</div>
-                </div>
-                <div style="margin-top: 10px;">
-                    <button class="btn btn-secondary" onclick="clearLog()">🗑️ Clear Log</button>
-                    <button class="btn btn-secondary" onclick="downloadLog()">📥 Download Log</button>
-                </div>
-            </div>
         </div>
     </div>
 
-    <!-- Reset Confirmation Modal -->
-    <div id="reset-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('reset-modal')">&times;</span>
-            <h2 style="color: #e74c3c; margin-bottom: 20px;">⚠️ Confirm Ontology Reset</h2>
-            <p>This action will permanently delete all custom concepts and relations, reverting to the original Schema.org baseline ontology.</p>
-            <div style="margin: 20px 0;">
-                <strong>This action cannot be undone!</strong>
-            </div>
-            <p>Current ontology contains:</p>
-            <ul style="margin: 15px 0; padding-left: 20px;">
-                <li><span id="reset-stats-nodes">0</span> total nodes</li>
-                <li><span id="reset-stats-relations">0</span> relationships</li>
-                <li><span id="reset-stats-products">0</span> product concepts</li>
-            </ul>
-            <div style="margin-top: 30px; text-align: right;">
-                <button class="btn btn-secondary" onclick="closeModal('reset-modal')">Cancel</button>
-                <button class="btn btn-danger" onclick="executeReset()">Reset Ontology</button>
-            </div>
-        </div>
-    </div>
+    <script>
+        // API Base URL - update this if your backend server runs on a different address
+        const API_BASE = 'http://localhost:5000';
 
-    <!-- Pipeline Progress Modal -->
-    <div id="pipeline-modal" class="modal">
-        <div class="modal-content">
-            <h2 style="margin-bottom: 20px;">🚀 Pipeline Execution</h2>
-            <div id="pipeline-progress-container">
-                <div>Processing step: <span id="current-step">Initializing...</span></div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="pipeline-progress"></div>
-                </div>
-                <div style="margin-top: 15px;">
-                    <div id="pipeline-details">Starting pipeline execution...</div>
-                </div>
-            </div>
-            <div style="margin-top: 30px; text-align: right;">
-                <button class="btn btn-secondary" onclick="cancelPipeline()" id="cancel-pipeline-btn">Cancel</button>
-                <button class="btn" onclick="closeModal('pipeline-modal')" id="close-pipeline-btn" style="display: none;">Close</button>
-            </div>
-        </div>
-    </div>
+        // --- GLOBAL STATE MANAGEMENT ---
+        let currentPipelineStatus = 'idle';
+        let currentFilter = 'all';
+        let reviewedConcepts = new Map();
 
-</body>
-</html>
+        // --- INITIALIZATION ---
+        // This runs once the entire HTML page has loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDashboard();
+            setInterval(updateStatus, 5000); // Poll status every 5 seconds
+        });
+
+        /**
+        * Initializes the dashboard by loading initial data and setting up event listeners.
+        */
+        async function initializeDashboard() {
+            await checkNeo4jConnection();
+            await loadStatistics();
+            await loadPendingReviews();
+            setupEventListeners();
+            addLogEntry('Dashboard initialized. Ready for operations.', 'info');
+        }
+
+        /**
+        * Sets up all the interactive event listeners for the page.
+        */
+        function setupEventListeners() {
+            // Pipeline form submission
+            document.getElementById('pipeline-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await runPipeline();
+            });
+
+            // Cancel pipeline button
+            document.getElementById('cancel-pipeline-btn').addEventListener('click', async () => {
+                await cancelPipeline();
+            });
+
+            // Results file selector
+            document.getElementById('results-selector').addEventListener('change', async (e) => {
+                await loadResultsFile(e.target.value);
+            });
+            
+            // Close modal button
+            document.querySelector('.close-btn').addEventListener('click', closeSimilarityModal);
+            
+            // Close modal when clicking outside of it
+            window.addEventListener('click', (event) => {
+                const modal = document.getElementById('similarity-modal');
+                if (event.target === modal) {
+                    closeSimilarityModal();
+                }
+            });
+        }
+
+
+        // --- TAB AND VIEW MANAGEMENT ---
+
+        /**
+        * Switches between the main tabs (Pipeline, Review, Results).
+        * @param {string} tabName - The name of the tab to switch to.
+        * @param {Event} event - The click event object.
+        */
+        function switchTab(tabName, event) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Update tab content visibility
+            document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+            document.getElementById(`${tabName}-tab`).style.display = 'block';
+
+            // Load data for the newly activated tab
+            if (tabName === 'review') {
+                loadPendingReviews();
+            } else if (tabName === 'results') {
+                loadIntegrationResults();
+            }
+        }
+
+        /**
+        * Shows a specific view within the "Integration Results" tab.
+        * @param {string} view - The name of the results view to show (e.g., 'summary', 'discarded').
+        * @param {Event} event - The click event object.
+        */
+        function showResultsView(view, event) {
+            // Hide all results views
+            document.querySelectorAll('.results-view').forEach(v => v.style.display = 'none');
+            
+            // Show the selected view
+            const viewElement = document.getElementById(`${view}-view`);
+            if (viewElement) {
+                viewElement.style.display = 'block';
+            }
+            
+            // Update active state of the view buttons
+            document.querySelectorAll('#results-tab .btn-group .btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            // Load data specifically for that view if needed
+            if (view === 'discarded') {
+                loadDiscardedConcepts();
+            } else if (view === 'similarity') {
+                loadSimilarityAnalysis();
+            }
+        }
+
+
+        // --- API CALLS & DATA FETCHING ---
+
+        /**
+        * Checks the connection status of the Neo4j database.
+        */
+        async function checkNeo4jConnection() {
+            try {
+                const response = await fetch(`${API_BASE}/api/neo4j/status`);
+                const data = await response.json();
+                const indicator = document.getElementById('neo4j-status');
+                
+                indicator.classList.toggle('connected', data.connected);
+                indicator.classList.toggle('disconnected', !data.connected);
+
+            } catch (error) {
+                console.error('Failed to check Neo4j connection:', error);
+                document.getElementById('neo4j-status').className = 'status-indicator disconnected';
+            }
+        }
+
+        /**
+        * Fetches and displays the latest ontology statistics.
+        */
+        async function loadStatistics() {
+            try {
+                const response = await fetch(`${API_BASE}/api/stats`);
+                if (!response.ok) throw new Error('Failed to fetch stats');
+                const stats = await response.json();
+                
+                document.getElementById('stat-concepts').textContent = formatNumber(stats.product_nodes || 0);
+                document.getElementById('stat-relations').textContent = formatNumber(stats.total_relationships || 0);
+                // These will be dynamic in a real application
+                // document.getElementById('stat-automated').textContent = `${stats.automation_rate || 0}%`;
+                // document.getElementById('stat-pending').textContent = stats.pending_review || '0';
+            } catch (error) {
+                console.error('Failed to load statistics:', error);
+                addLogEntry('Failed to load statistics', 'error');
+            }
+        }
+
+        /**
+        * Fetches and displays the list of concepts pending manual review.
+        */
+        async function loadPendingReviews() {
+            // In a real application, this would fetch from an API endpoint like /api/reviews
+            const sampleReviews = [
+                { concept: 'Dimensional Characteristics', target: 'Material Specification', confidence: 0.68, reasoning: 'Medium confidence match requires expert validation.' },
+                { concept: 'Metal Plating', target: 'Plating Material', confidence: 0.72, reasoning: 'Lexical similarity is high, but technical context is ambiguous.' },
+                { concept: 'Sure Seal', target: 'Sealing Component', confidence: 0.65, reasoning: 'Potential synonym, but could also be a brand name.' }
+            ];
+            renderReviewTable(sampleReviews);
+        }
+
+        /**
+        * Loads data for the "Discarded Concepts" view.
+        */
+        async function loadDiscardedConcepts() {
+            // In a real application, fetch from /api/results/discarded
+            const discardedConcepts = [
+                { concept: 'Digital Signal Processing Unit', most_similar: 'Digital Circuit Design', score: 0.45, similarity_type: 'Semantic', threshold: 0.50, reason: 'Below threshold' },
+                { concept: 'Thermal Management System', most_similar: 'Cooling Component', score: 0.48, similarity_type: 'Lexical', threshold: 0.50, reason: 'Below threshold' },
+                { concept: 'RF Shielding Enclosure', most_similar: 'EMI Shield', score: 0.42, similarity_type: 'Technical', threshold: 0.50, reason: 'Insufficient match' }
+            ];
+            renderDiscardedTable(discardedConcepts);
+        }
+
+        /**
+        * Loads data for the "Similarity Analysis" view.
+        */
+        async function loadSimilarityAnalysis() {
+            // In a real application, fetch from /api/results/similarity
+            const similarityData = [
+                { concept: 'Power Supply Module', similar_concepts: [{ name: 'Power Supply Unit', score: 0.92 }, { name: 'Voltage Regulator', score: 0.78 }], decision: 'mapped' },
+                { concept: 'Connector Assembly', similar_concepts: [{ name: 'Electrical Connector', score: 0.68 }, { name: 'Cable Assembly', score: 0.62 }], decision: 'review' },
+                { concept: 'Impedance Matching Network', similar_concepts: [{ name: 'Impedance Controller', score: 0.48 }, { name: 'RF Matching Circuit', score: 0.41 }], decision: 'extend' }
+            ];
+            renderSimilarityTable(similarityData);
+        }
+
+        /**
+        * Starts the ontology pipeline execution via the backend.
+        */
+        async function runPipeline() {
+            const config = {
+                max_chunks: parseInt(document.getElementById('max-chunks').value),
+                similarity_thresholds: {
+                    exact_match: parseFloat(document.getElementById('threshold-exact').value),
+                    high_similarity: parseFloat(document.getElementById('threshold-high').value),
+                    medium_similarity: parseFloat(document.getElementById('threshold-medium').value),
+                    low_similarity: parseFloat(document.getElementById('threshold-low').value)
+                },
+                enable_llm_validation: document.getElementById('enable-llm').checked,
+                enable_technical_matching: document.getElementById('enable-technical').checked,
+            };
+
+            try {
+                addLogEntry('Starting pipeline with new configuration...', 'info');
+                const response = await fetch(`${API_BASE}/api/pipeline/start`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
+                });
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    updatePipelineStatus('running', 'Pipeline Running');
+                    document.getElementById('run-pipeline-btn').disabled = true;
+                    document.getElementById('cancel-pipeline-btn').disabled = false;
+                    addLogEntry(`Pipeline started with ID: ${result.process.process_id}`, 'success');
+                    monitorPipelineProgress();
+                } else {
+                    addLogEntry(result.message || 'Failed to start pipeline', 'error');
+                }
+            } catch (error) {
+                console.error('Failed to start pipeline:', error);
+                addLogEntry(`Error starting pipeline: ${error.message}`, 'error');
+            }
+        }
+
+        /**
+        * Monitors the progress of a running pipeline.
+        */
+        function monitorPipelineProgress() {
+            const progressInterval = setInterval(async () => {
+                if (currentPipelineStatus !== 'running') {
+                    clearInterval(progressInterval);
+                    return;
+                }
+                try {
+                    const response = await fetch(`${API_BASE}/api/pipeline/status`);
+                    const status = await response.json();
+
+                    if (status.status !== 'running') {
+                        clearInterval(progressInterval);
+                        updatePipelineStatus(status.status, status.message);
+                        document.getElementById('run-pipeline-btn').disabled = false;
+                        document.getElementById('cancel-pipeline-btn').disabled = true;
+                        
+                        if (status.status === 'completed') {
+                            document.getElementById('pipeline-progress').style.width = '100%';
+                            addLogEntry('Pipeline completed successfully!', 'success');
+                            showNotification('Pipeline completed!', 'success');
+                            await loadStatistics(); // Refresh stats on completion
+                        } else if (status.status === 'error') {
+                            addLogEntry(`Pipeline failed: ${status.message}`, 'error');
+                            showNotification('Pipeline failed!', 'error');
+                        }
+                    } else {
+                        const progress = status.progress || 0;
+                        document.getElementById('pipeline-progress').style.width = `${progress}%`;
+                        document.getElementById('pipeline-status-text').textContent = `Running: ${status.step || '...'}`;
+                    }
+                } catch (error) {
+                    console.error('Status check failed:', error);
+                    addLogEntry('Could not get pipeline status.', 'error');
+                    clearInterval(progressInterval);
+                }
+            }, 2000);
+        }
+
+        /**
+        * Cancels a running pipeline.
+        */
+        async function cancelPipeline() {
+            try {
+                addLogEntry('Attempting to cancel pipeline...', 'warning');
+                const response = await fetch(`${API_BASE}/api/pipeline/cancel`, { method: 'POST' });
+                const result = await response.json();
+                
+                if (result.success) {
+                    updatePipelineStatus('cancelled', 'Pipeline Cancelled');
+                    addLogEntry('Pipeline cancelled successfully', 'warning');
+                    showNotification('Pipeline cancelled', 'info');
+                }
+            } catch (error) {
+                console.error('Failed to cancel pipeline:', error);
+                addLogEntry('Error cancelling pipeline.', 'error');
+            }
+        }
+
+        // --- RENDERING FUNCTIONS (Populating Tables) ---
+
+        function renderReviewTable(reviews) {
+            const tbody = document.getElementById('review-table-body');
+            tbody.innerHTML = '';
+            if (reviews.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No items to review.</td></tr>';
+                return;
+            }
+            reviews.forEach(item => {
+                const row = document.createElement('tr');
+                const scoreClass = item.confidence > 0.8 ? 'high' : item.confidence > 0.5 ? 'medium' : 'low';
+                row.innerHTML = `
+                    <td><strong>${item.concept}</strong></td>
+                    <td><span class="decision-badge review">Review</span></td>
+                    <td>${item.target}</td>
+                    <td>
+                        <div class="confidence-meter">
+                            <div class="confidence-bar"><div class="confidence-fill ${scoreClass}" style="width: ${item.confidence * 100}%"></div></div>
+                            <span>${item.confidence.toFixed(2)}</span>
+                        </div>
+                    </td>
+                    <td>${item.reasoning}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn accept" onclick="acceptConcept('${item.concept}')">Accept</button>
+                            <button class="action-btn reject" onclick="rejectConcept('${item.concept}')">Reject</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderDiscardedTable(concepts) {
+            const tbody = document.getElementById('discarded-table-body');
+            tbody.innerHTML = '';
+            concepts.forEach(item => {
+                const row = document.createElement('tr');
+                const scoreClass = item.score > 0.8 ? 'high' : item.score > 0.5 ? 'medium' : 'low';
+                row.innerHTML = `
+                    <td><strong>${item.concept}</strong></td>
+                    <td>${item.most_similar}</td>
+                    <td>
+                        <div class="confidence-meter">
+                            <div class="confidence-bar"><div class="confidence-fill ${scoreClass}" style="width: ${item.score * 100}%"></div></div>
+                            <span>${item.score.toFixed(2)}</span>
+                        </div>
+                    </td>
+                    <td>${item.similarity_type}</td>
+                    <td>${item.threshold.toFixed(2)}</td>
+                    <td>${item.reason}</td>
+                    <td><button class="action-btn" onclick="reviewDiscarded('${item.concept}')">Review</button></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderSimilarityTable(data) {
+            const tbody = document.getElementById('similarity-table-body');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                const matchesHtml = item.similar_concepts.map((c, i) => `<div>${i + 1}. ${c.name}</div>`).join('');
+                const scoresHtml = item.similar_concepts.map(c => {
+                    const scoreClass = c.score > 0.8 ? 'high' : c.score > 0.5 ? 'medium' : 'low';
+                    return `<div class="confidence-meter"><div class="confidence-bar"><div class="confidence-fill ${scoreClass}" style="width: ${c.score * 100}%"></div></div><span>${c.score.toFixed(2)}</span></div>`;
+                }).join('');
+                
+                let decisionBadge = '';
+                if (item.decision === 'mapped') {
+                    decisionBadge = `<span class="decision-badge map">Mapped to #1</span>`;
+                } else if (item.decision === 'review') {
+                    decisionBadge = `<span class="decision-badge review">Under Review</span>`;
+                } else if (item.decision === 'extend') {
+                    decisionBadge = `<span class="decision-badge extend">New Concept</span>`;
+                }
+                
+                row.innerHTML = `
+                    <td><strong>${item.concept}</strong></td>
+                    <td><div class="similarity-matches">${matchesHtml}</div></td>
+                    <td><div class="similarity-scores">${scoresHtml}</div></td>
+                    <td>${decisionBadge}</td>
+                    <td><button class="action-btn" onclick="showSimilarityDetails('${item.concept}')">View Details</button></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // --- MODAL AND INTERACTIVITY ---
+
+        function showSimilarityDetails(concept, isDiscarded = false) {
+            const modal = document.getElementById('similarity-modal');
+            document.getElementById('modal-concept-name').textContent = `${concept} - Similarity Analysis`;
+
+            const reasoningTexts = {
+                'Power Supply Module': 'The concepts share similar technical specifications. Embedding similarity is very high (0.92) indicating strong semantic relationship.',
+                'Connector Assembly': 'While sharing some similarity, "Electrical Connector" is more general. Medium confidence suggests manual review.',
+                'Impedance Matching Network': 'This appears to be a specialized concept not well represented. Recommend creating as new concept.',
+                'Digital Signal Processing Unit': 'Low similarity. "Digital Circuit Design" is a methodology, not a component. The functional difference is significant.',
+                'default': 'Similarity analysis reflects semantic, lexical, and technical property similarities.'
+            };
+            document.getElementById('modal-llm-reasoning').textContent = reasoningTexts[concept] || reasoningTexts['default'];
+
+            updateSimilarityBreakdown(concept);
+            modal.style.display = 'block';
+            modal.dataset.currentConcept = concept;
+            modal.dataset.isDiscarded = isDiscarded;
+        }
+
+        function updateSimilarityBreakdown(concept) {
+            const breakdowns = {
+                'Power Supply Module': { embedding: 0.92, lexical: 0.88, technical: 0.95, category: 0.90, weighted: 0.91 },
+                'Connector Assembly': { embedding: 0.68, lexical: 0.72, technical: 0.65, category: 0.70, weighted: 0.69 },
+                'Impedance Matching Network': { embedding: 0.48, lexical: 0.42, technical: 0.45, category: 0.50, weighted: 0.46 },
+                'default': { embedding: 0.50, lexical: 0.50, technical: 0.50, category: 0.50, weighted: 0.50 }
+            };
+            const breakdown = breakdowns[concept] || breakdowns['default'];
+            
+            const table = document.querySelector('.breakdown-table');
+            table.innerHTML = `
+                <tr><td>Embedding Similarity:</td><td><strong>${breakdown.embedding.toFixed(2)}</strong></td></tr>
+                <tr><td>Lexical Similarity:</td><td><strong>${breakdown.lexical.toFixed(2)}</strong></td></tr>
+                <tr><td>Technical Property Match:</td><td><strong>${breakdown.technical.toFixed(2)}</strong></td></tr>
+                <tr><td>Category Similarity:</td><td><strong>${breakdown.category.toFixed(2)}</strong></td></tr>
+                <tr class="total-row"><td>Weighted Average:</td><td><strong>${breakdown.weighted.toFixed(2)}</strong></td></tr>
+            `;
+        }
+
+        function closeSimilarityModal() {
+            document.getElementById('similarity-modal').style.display = 'none';
+        }
+
+        // --- UTILITY FUNCTIONS ---
+
+        function updatePipelineStatus(status, text) {
+            const indicator = document.getElementById('pipeline-status');
+            const statusText = document.getElementById('pipeline-status-text');
+            
+            indicator.className = 'status-indicator'; // Reset classes
+            currentPipelineStatus = status;
+
+            if (status === 'running') {
+                indicator.classList.add('running');
+                statusText.textContent = text || 'Pipeline Running';
+            } else {
+                indicator.classList.add('disconnected'); // Default to idle/disconnected
+                statusText.textContent = text || 'Pipeline Idle';
+            }
+        }
+
+        function addLogEntry(message, type = 'info') {
+            const container = document.getElementById('log-container');
+            const time = new Date().toTimeString().split(' ')[0];
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `<span class="log-time">${time}</span> <span class="log-message ${type}">${message}</span>`;
+            container.appendChild(entry);
+            container.scrollTop = container.scrollHeight;
+            if (container.children.length > 100) container.removeChild(container.firstChild);
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            const color = type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--danger)' : 'var(--info)';
+            notification.style.cssText = `position: fixed; top: 20px; right: 20px; padding: 16px; background: ${color}; color: white; border-radius: 8px; z-index: 1001;`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => { document.body.removeChild(notification); }, 3000);
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+    </script>

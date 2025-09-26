@@ -13,10 +13,10 @@ from dotenv import load_dotenv
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] [%(name)s] - %(message)s",
-    # Note: LOGS_DIR is defined later, so we build the path here.
     handlers=[
-        logging.FileHandler(Path(__file__).parent.parent / "logs" / "pipeline.log"),
-        logging.StreamHandler()
+        # Add encoding='utf-8' to both handlers
+        logging.FileHandler(Path(__file__).parent.parent / "logs" / "pipeline.log", encoding='utf-8'),
+        logging.StreamHandler() # The stream handler will pick up the system's encoding, but we can be explicit if needed.
     ]
 )
 # Set the log level for noisy libraries to WARNING to clean up the console output.

@@ -25,7 +25,6 @@ import logging
 
 from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
 from src.integrated_schema_pipeline import run_integrated_pipeline, PipelineConfig
-
 class ProcessStatus(Enum):
     IDLE = "idle"
     RUNNING = "running"
@@ -57,7 +56,6 @@ class OntologyManager:
     """Manages ontology state, versions, and pipeline execution."""
     
     def __init__(self):
-        setup_logging("../logs", "ontology_manager")
         
         self.driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
         self.current_process: Optional[ProcessLock] = None
