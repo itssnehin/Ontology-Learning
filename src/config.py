@@ -19,6 +19,10 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
+# Set the log level for noisy libraries to WARNING to clean up the console output.
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("openai").setLevel(logging.WARNING)
+
 logger = logging.getLogger(__name__)
 
 
