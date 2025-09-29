@@ -193,21 +193,10 @@ class IntegratedSchemaOrgPipeline:
         self.results["extension_decisions"] = extension_decisions
         
         # Step 6: Create Schema.org objects for new concepts
-        print(f"\n🌐 Step 6: Creating Schema.org objects for {len(concepts_for_schema_creation)} new concepts...")
-        schema_objects = []
-        for concept in concepts_for_schema_creation:
-            # Extract Schema.org markup using existing pipeline
-            try:
-                # Create a simple text representation for the schema extractor
-                concept_text = f"{concept['name']}: {concept['description']}"
-                markup = extract_schema_org_markup([concept_text])
-                if markup:
-                    schema_objects.extend(markup)
-            except Exception as e:
-                print(f"      ⚠️ Failed to create Schema.org object for {concept['name']}: {e}")
-        
-        self.results["schema_objects_created"] = schema_objects
-        print(f"   ✅ Created {len(schema_objects)} Schema.org objects")
+
+        new_schema_objects = self._create_schema_org_objects(concepts_for_schema_creation, chunks)
+        self.results["schema_objects_created"] = new_schema_objects
+
         
         # Step 7: Process mappings to existing concepts
         print(f"\n🔗 Step 7: Processing {len(concepts_for_mapping)} concept mappings...")
@@ -258,36 +247,7 @@ class IntegratedSchemaOrgPipeline:
     
     # ===== CLEANED DECISION ANALYSIS (replaces your verbose if/elif blocks) =====
     def _analyze_decisions_clean(self, decisions):
-        """
-        CLEAN VERSION: Replaces the original verbose decision counting logic.
-        
-        ORIGINAL (your existing code):
-        decision_counts = {
-            'extend': 0,
-            'map_exact': 0,
-            'map_similar': 0,
-            'merge': 0,
-            'uncertain': 0
-        }
-        
-        confidence_by_decision = {decision.value: [] for decision in ExtensionDecision}
-        
-        for decision in decisions:
-            confidence_by_decision[decision.decision.value].append(decision.confidence)
-            
-            if decision.decision == ExtensionDecision.EXTEND:
-                decision_counts['extend'] += 1
-            elif decision.decision == ExtensionDecision.MAP_EXACT:
-                decision_counts['map_exact'] += 1
-            elif decision.decision == ExtensionDecision.MAP_SIMILAR:
-                decision_counts['map_similar'] += 1
-            elif decision.decision == ExtensionDecision.MERGE_CONCEPTS:
-                decision_counts['merge'] += 1
-            else:
-                decision_counts['uncertain'] += 1
-        
-        CLEANED VERSION (below):
-        """
+
         # Clean decision mapping - no more verbose if/elif blocks!
         decision_mapping = {
             ExtensionDecision.EXTEND: 'extend',
@@ -331,14 +291,72 @@ class IntegratedSchemaOrgPipeline:
         else:
             return 'General Electronics'
     
+    def _create_schema_org_objects(self, concepts_for_creation: List[Dict], all_chunks: List) -> List[Dict]:
+        """
+        Generates Schema.org objects for a list of new concepts.
+        """
+        logger.info(f"\n🌐 Step 6: Creating Schema.org objects for {len(concepts_for_creation)} new concepts...")
+        if not concepts_for_creation:
+            logger.info("   ℹ️ No new concepts to create Schema.org objects for.")
+            return []
+
+        # Create pseudo-chunks with concept information for schema generation
+        concept_chunks = self._create_concept_chunks(concepts_for_creation, all_chunks)
+        concept_names = [c['name'] for c in concepts_for_creation]
+        
+        # --- THIS IS THE FIX ---
+        # Call the extractor ONCE with all chunks and all concept names
+        try:
+            # Generate base Schema.org markup
+            base_schema_objects = extract_schema_org_markup(concept_chunks, concept_names)
+            
+            # Extract detailed properties and relations to enhance the base objects
+            relations_data = extract_schema_org_relations(concept_chunks, concept_names)
+            
+            # Enhance the objects
+            extractor = SchemaOrgRelationExtractor()
+            enhanced_objects = extractor.generate_enhanced_schema_objects(base_schema_objects, relations_data)
+            
+            logger.info(f"   ✅ Created {len(enhanced_objects)} new Schema.org objects.")
+            return enhanced_objects
+            
+        except Exception as e:
+            logger.error(f"   ⚠️ An error occurred during Schema.org object creation: {e}", exc_info=True)
+            return []
+
+    
     def _save_integration_results(self):
         """Save comprehensive integration results to files."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
+        
+        serializable_decisions = []
+        for d in self.results["extension_decisions"]:
+            serializable_decisions.append({
+                "concept": d.concept_name, # Assuming concept_name is an attribute
+                "decision": d.decision.value,
+                "target_concept": d.target_concept,
+                "confidence": d.confidence,
+                "reasoning": d.reasoning,
+                "matches_count": len(d.matches)
+            })
+            
+        # Create a new dictionary with the serializable data
+        serializable_results = {
+            "timestamp": self.results["timestamp"],
+            "chunks_processed": self.results["chunks_processed"],
+            "concepts_extracted": self.results["concepts_extracted"],
+            "extension_decisions": serializable_decisions, # Use the converted list
+            "schema_objects_created": len(self.results["schema_objects_created"]),
+            "schema_objects_mapped": len(self.results["schema_objects_mapped"]),
+            "integration_stats": self.results["integration_stats"]
+        }
+        
         # Save main results JSON
         results_file = self.output_dir / f"integration_results_{timestamp}.json"
         with open(results_file, 'w', encoding='utf-8') as f:
-            json.dump(self.results, f, indent=2, ensure_ascii=False)
+            # Save the new serializable dictionary
+            json.dump(serializable_results, f, indent=2, ensure_ascii=False)
         
         print(f"   ✅ Saved integration results: {results_file.name}")
         

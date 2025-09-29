@@ -68,7 +68,7 @@ CHUNK_OVERLAP = 100
 
 # --- Similarity thresholds ---
 SIMILARITY_THRESHOLDS = {
-    'exact_match': 0.95,
+    'exact_match': 0.96,
     'high_similarity': 0.85,
     'medium_similarity': 0.70,
     'low_similarity': 0.50
