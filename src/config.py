@@ -65,6 +65,8 @@ EMBEDDING_MODEL = "text-embedding-ada-002"
 # --- Pipeline settings ---
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 100
+MAX_WORKERS = 4 #Parallelisation
+
 
 # --- Similarity thresholds ---
 SIMILARITY_THRESHOLDS = {

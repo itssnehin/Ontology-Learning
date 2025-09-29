@@ -1,80 +1,73 @@
 import logging
 import json
-import re
-from typing import List, Dict, Any
+from typing import List, Dict, Optional
 from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
-from tiktoken import get_encoding
-import logging
-from src.config import LLM_MODEL, OPENAI_API_KEY, PROMPTS
 from tqdm import tqdm
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+from src.config import LLM_MODEL, OPENAI_API_KEY, PROMPTS, MAX_WORKERS
 
 logger = logging.getLogger(__name__)
 
-def extract_relations(chunks: List[Document], model_name: str = LLM_MODEL) -> List[Dict[str, str]]:
-    """
-    Extract relation triples for ontology construction from document chunks.
-    
-    Args:
-        chunks: List of document chunks.
-        model_name: Name of the LLM model to use.
-    
-    Returns:
-        List of relation dictionaries, e.g., [{"source": "ClassA", "type": "relationship", "target": "ClassB"}].
-    """
-    
-    llm = ChatOpenAI(model_name=model_name, openai_api_key=OPENAI_API_KEY)
-    tokenizer = get_encoding("cl100k_base")
-    LLM_COST_PER_1K_TOKENS = 0.00336
-    total_tokens = 0
-    total_cost = 0.0
-    prompt_template = PROMPTS["relation_extractor"]["main_prompt"]
 
-    all_relations = []
-    
-    for chunk in tqdm(chunks, desc="Extracting Relations"):
+def _extract_relations_from_chunk(chunk: Document, model_name: str) -> Optional[List[Dict]]:
+    """
+    Processes a single document chunk to extract relations.
+    Designed to be run in a separate thread.
+    """
+    try:
+        llm = ChatOpenAI(model_name=model_name, openai_api_key=OPENAI_API_KEY)
+        prompt_template = PROMPTS["relation_extractor"]["main_prompt"]
         prompt = prompt_template.format(chunk_content=chunk.page_content)
         
-        input_tokens = len(tokenizer.encode(prompt))
         response = llm.invoke(prompt)
-        output_tokens = len(tokenizer.encode(response.content))
         
-        chunk_tokens = input_tokens + output_tokens
-        chunk_cost = (chunk_tokens / 1000) * LLM_COST_PER_1K_TOKENS
-        total_tokens += chunk_tokens
-        total_cost += chunk_cost
-        logger.debug(f"Chunk Tokens: {chunk_tokens}, Cost: ${chunk_cost:.6f}")
-        logger.debug(f"Raw LLM Response for Relations:\n{response.content}")
+        json_str = response.content.split('```json')[-1].split('```')[0].strip()
+        data = json.loads(json_str)
         
-        try:
-            json_str = response.content.split('```json')[-1].split('```')[0].strip()
-            data = json.loads(json_str)
-            if "relations" in data and isinstance(data["relations"], list):
-                all_relations.extend(data["relations"])
-            else:
-                logger.warning(f"Invalid JSON format from LLM: 'relations' key missing or not a list. Response: {response.content}")
+        if "relations" in data and isinstance(data["relations"], list):
+            return data["relations"]
+        else:
+            logger.warning(f"Invalid JSON format for relations: 'relations' key missing or not a list.")
+            return []
 
-        except json.JSONDecodeError:
-            logger.error(f"Failed to decode JSON from LLM response: {response.content}")
+    except json.JSONDecodeError:
+        logger.error(f"Failed to decode JSON for relations: {response.content}")
+    except Exception as e:
+        source_info = chunk.metadata.get('source', 'unknown_source')
+        logger.error(f"An error occurred while processing relations for a chunk from {source_info}: {e}", exc_info=True)
+
+    return None
+
+
+def extract_relations(chunks: List[Document], model_name: str = LLM_MODEL, max_workers: int = MAX_WORKERS) -> List[str]:
+    """
+    Extracts relation triples from document chunks concurrently.
     
-    # Deduplicate relations
-    unique_relations = [dict(t) for t in {tuple(d.items()) for d in all_relations}]
+    Args:
+        chunks: A list of document chunks to process.
+        model_name: The name of the LLM to use.
+        max_workers: The number of concurrent threads for API calls.
+        
+    Returns:
+        A list of relation triples in string format.
+    """
+    all_relations = []
     
-    logger.info(f"Extracted Relations: {unique_relations}")
-    logger.info(f"Total OpenAI API Usage for Relations: Tokens={total_tokens}, Cost=${total_cost:.6f}")
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_chunk = {executor.submit(_extract_relations_from_chunk, chunk, model_name): chunk for chunk in chunks}
+        
+        for future in tqdm(as_completed(future_to_chunk), total=len(chunks), desc="Extracting Relations (Parallel)"):
+            result = future.result()
+            if result is not None:
+                all_relations.extend(result)
+
+    # Deduplicate the list of dictionaries
+    unique_relations = [dict(t) for t in {tuple(sorted(d.items())) for d in all_relations}]
+    logger.info(f"Extracted {len(unique_relations)} unique relations from {len(chunks)} chunks.")
     
-    # Convert to string format for compatibility with old graph builder if needed
-    # This is now handled by the new graph builder that accepts dicts.
+    # Convert back to the string format expected by the graph builder
     relation_strings = [f"{r['source']} -> {r['type']} -> {r['target']}" for r in unique_relations]
-    return relation_strings
-
-
-if __name__ == "__main__":
-    from .data_loader import load_and_split_data
     
-    sample_chunks = load_and_split_data()
-    if sample_chunks:
-        final_relations = extract_relations(sample_chunks[:2])
-        logger.info(f"Final Extracted Relations: {final_relations}")
-    else:
-        logger.warning("No chunks found to run relation extractor example.")
+    return relation_strings

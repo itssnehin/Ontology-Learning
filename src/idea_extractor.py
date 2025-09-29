@@ -1,90 +1,85 @@
 import logging
 import json
-from typing import List
+from typing import List, Optional
 from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
 from tiktoken import get_encoding
 from tqdm import tqdm
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from src.config import LLM_MODEL, OPENAI_API_KEY, PROMPTS
+from src.config import LLM_MODEL, OPENAI_API_KEY, PROMPTS, MAX_WORKERS
 
 logger = logging.getLogger(__name__)
 
-def extract_ideas(chunks: List[Document], model_name: str = LLM_MODEL) -> List[str]:
+
+def _extract_concepts_from_chunk(chunk: Document, model_name: str) -> Optional[List[str]]:
     """
-    Extract a taxonomy of component-based concepts from document chunks.
+    Processes a single document chunk to extract concepts using a two-step prompt.
+    This function is designed to be run in a separate thread.
+    """
+    try:
+        llm = ChatOpenAI(model_name=model_name, openai_api_key=OPENAI_API_KEY)
+        
+        # Get prompt templates from the centralized config
+        prompt_template_r1 = PROMPTS["idea_extractor"]["round_one"]
+        prompt_template_r2 = PROMPTS["idea_extractor"]["round_two"]
+
+        # Round 1: Break down topics to prime the model
+        cot_round_one_prompt = prompt_template_r1.format(chunk_content=chunk.page_content)
+        cot_round_one_response = llm.invoke(cot_round_one_prompt)
+        
+        # Round 2: Extract the structured taxonomy
+        cot_round_two_prompt = prompt_template_r2.format(cot_round_one_response=cot_round_one_response.content)
+        response = llm.invoke(cot_round_two_prompt)
+
+        # Parse the JSON response
+        json_str = response.content.split('```json')[-1].split('```')[0].strip()
+        data = json.loads(json_str)
+        
+        chunk_concepts = []
+        if "nodes" in data and isinstance(data["nodes"], list):
+            for concept in data["nodes"]:
+                # Filter out property-like concepts to keep the ontology clean
+                if concept and not any(p in concept.lower() for p in ["frequency", "adhesive", "dimensions", "ground plane", "vswr", "gain", "radiation", "return loss"]):
+                    chunk_concepts.append(concept)
+        else:
+            logger.warning(f"Invalid JSON format from LLM: 'nodes' key missing or not a list. Response: {response.content}")
+            
+        return chunk_concepts
+
+    except json.JSONDecodeError:
+        logger.error(f"Failed to decode JSON from LLM response: {response.content}")
+    except Exception as e:
+        source_info = chunk.metadata.get('source', 'unknown_source')
+        logger.error(f"An error occurred while processing a chunk from {source_info}: {e}", exc_info=True)
+    
+    return None
+
+
+def extract_ideas(chunks: List[Document], model_name: str = LLM_MODEL, max_workers: int = MAX_WORKERS) -> List[str]:
+    """
+    Extracts a taxonomy of component-based concepts from document chunks concurrently.
     
     Args:
-        chunks: List of document chunks.
-        model_name: Name of the LLM model to use.
+        chunks: A list of document chunks to process.
+        model_name: The name of the LLM to use.
+        max_workers: The number of concurrent threads to use for API calls.
     
     Returns:
-        List of component-based concepts.
+        A deduplicated and sorted list of extracted concepts.
     """
-    llm = ChatOpenAI(model_name=model_name, openai_api_key=OPENAI_API_KEY)
-    tokenizer = get_encoding("cl100k_base")
-    LLM_COST_PER_1K_TOKENS = 0.00336
-    total_tokens = 0
-    total_cost = 0.0
+    all_concepts = []
     
-    concepts = []
-    prompt_template_r1 = PROMPTS["idea_extractor"]["round_one"]
-    prompt_template_r2 = PROMPTS["idea_extractor"]["round_two"]
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        # Submit all chunk processing tasks to the thread pool
+        future_to_chunk = {executor.submit(_extract_concepts_from_chunk, chunk, model_name): chunk for chunk in chunks}
+        
+        # Use tqdm to create a progress bar that updates as tasks are completed
+        for future in tqdm(as_completed(future_to_chunk), total=len(chunks), desc="Extracting Concepts (Parallel)"):
+            result = future.result()
+            if result is not None:  # Check for errors (which return None)
+                all_concepts.extend(result)
 
-    for chunk in tqdm(chunks, desc="Extracting Concepts"):
-        # Round 1: Break down topics
-        cot_round_one_prompt = prompt_template_r1.format(chunk_content=chunk.page_content)
-        input_tokens_r1 = len(tokenizer.encode(cot_round_one_prompt))
-        cot_round_one_response = llm.invoke(cot_round_one_prompt)
-        output_tokens_r1 = len(tokenizer.encode(cot_round_one_response.content))
-        
-        chunk_tokens_r1 = input_tokens_r1 + output_tokens_r1
-        chunk_cost_r1 = (chunk_tokens_r1 / 1000) * LLM_COST_PER_1K_TOKENS
-        total_tokens += chunk_tokens_r1
-        total_cost += chunk_cost_r1
-        logger.debug(f"Chunk Tokens (Round 1): {chunk_tokens_r1}, Cost: ${chunk_cost_r1:.6f}")
-        logger.debug(f"Raw LLM Response (Round 1):\n{cot_round_one_response.content}")
-        
-        # Round 2: Extract taxonomy in JSON format
-        cot_round_two_prompt = prompt_template_r2.format(cot_round_one_response=cot_round_one_response.content)
-        input_tokens_r2 = len(tokenizer.encode(cot_round_two_prompt))
-        response = llm.invoke(cot_round_two_prompt)
-        output_tokens_r2 = len(tokenizer.encode(response.content))
-        
-        chunk_tokens_r2 = input_tokens_r2 + output_tokens_r2
-        chunk_cost_r2 = (chunk_tokens_r2 / 1000) * LLM_COST_PER_1K_TOKENS
-        total_tokens += chunk_tokens_r2
-        total_cost += chunk_cost_r2
-        logger.debug(f"Chunk Tokens (Round 2): {chunk_tokens_r2}, Cost: ${chunk_cost_r2:.6f}")
-        logger.debug(f"Raw LLM Response (Round 2):\n{response.content}")
-        
-        # Parse JSON response
-        try:
-            # The response might be wrapped in ```json ... ```
-            json_str = response.content.split('```json')[-1].split('```')[0].strip()
-            data = json.loads(json_str)
-            if "nodes" in data and isinstance(data["nodes"], list):
-                # Filter out property-like concepts
-                for concept in data["nodes"]:
-                    if concept and not any(p in concept.lower() for p in ["frequency", "adhesive", "dimensions", "ground plane", "vswr", "gain", "radiation", "return loss"]):
-                        concepts.append(concept)
-            else:
-                logger.warning(f"Invalid JSON format from LLM: 'nodes' key missing or not a list. Response: {response.content}")
-
-        except json.JSONDecodeError:
-            logger.error(f"Failed to decode JSON from LLM response: {response.content}")
-
-    deduplicated_concepts = sorted(list(set(concepts)))
-    logger.info(f"Extracted Concepts: {deduplicated_concepts}")
-    logger.info(f"Total OpenAI API Usage for Concepts: Tokens={total_tokens}, Cost=${total_cost:.6f}")
+    deduplicated_concepts = sorted(list(set(all_concepts)))
+    logger.info(f"Extracted {len(deduplicated_concepts)} unique concepts from {len(chunks)} chunks.")
     return deduplicated_concepts
-
-if __name__ == "__main__":
-    from .data_loader import load_and_split_data
-    
-    sample_chunks = load_and_split_data()
-    if sample_chunks:
-        final_concepts = extract_ideas(sample_chunks[:2])
-        logger.info(f"Final Extracted Concepts: {final_concepts}")
-    else:
-        logger.warning("No chunks found to run idea extractor example.")
