@@ -82,6 +82,7 @@ from neo4j import GraphDatabase
 import re
 from difflib import SequenceMatcher
 import logging
+from dataclasses import dataclass, asdict
 
 from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
 
@@ -100,13 +101,27 @@ class ConceptMatch:
     confidence: float
     reasoning: str
 
+    def to_dict(self):
+        return asdict(self)
+
 @dataclass
 class ExtensionResult:
+    concept_name: str
     decision: ExtensionDecision
     target_concept: Optional[str]
     confidence: float
     reasoning: str
     matches: List[ConceptMatch]
+
+    def to_dict(self):
+        return {
+            "concept_name": self.concept_name,
+            "decision": self.decision.value,
+            "target_concept": self.target_concept,
+            "confidence": self.confidence,
+            "reasoning": self.reasoning,
+            "matches": [m.to_dict() for m in self.matches]
+        }
 
 class OntologyExtensionManager:
     """Intelligent manager for deciding ontology extensions vs mappings."""
