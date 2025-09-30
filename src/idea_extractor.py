@@ -1,6 +1,7 @@
 import logging
 import json
-from typing import List, Optional, Tuple
+import re
+from typing import List, Optional, Tuple, Dict, Any  # <-- THIS IS THE FIX
 from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
 from tiktoken import get_encoding
@@ -14,7 +15,8 @@ from src.config import (
 
 logger = logging.getLogger(__name__)
 
-def _extract_json_from_response(text: str) -> Optional[Dict]:
+
+def _extract_json_from_response(text: str) -> Optional[Dict[str, Any]]:
     """
     More robustly extracts a JSON object from a string that might contain other text.
     Handles markdown code blocks and looks for the first valid JSON object.
@@ -36,7 +38,6 @@ def _extract_json_from_response(text: str) -> Optional[Dict]:
             potential_json = text[start:end+1]
             return json.loads(potential_json)
     except json.JSONDecodeError as e:
-        # The error from the original traceback would be caught here
         logger.error(f"JSON parsing failed: {e}. Raw text was: {text}")
         return None
         
@@ -50,30 +51,19 @@ def _extract_concepts_from_chunk(chunk: Document, model_name: str) -> Tuple[Opti
         llm = ChatOpenAI(model_name=model_name, openai_api_key=OPENAI_API_KEY)
         tokenizer = get_encoding("cl100k_base")
         
-        prompt_template_r1 = PROMPTS["idea_extractor"]["round_one"]
-        prompt_template_r2 = PROMPTS["idea_extractor"]["round_two"]
-
-        # Round 1
-        cot_round_one_prompt = prompt_template_r1.format(chunk_content=chunk.page_content)
-        input_tokens_r1 = len(tokenizer.encode(cot_round_one_prompt))
-        cot_round_one_response = llm.invoke(cot_round_one_prompt)
-        output_tokens_r1 = len(tokenizer.encode(cot_round_one_response.content))
-        cost += (input_tokens_r1 / 1000 * LLM_COST_PER_1K_TOKENS_INPUT) + (output_tokens_r1 / 1000 * LLM_COST_PER_1K_TOKENS_OUTPUT)
+        prompt_template = PROMPTS["idea_extractor"]["main_prompt"]
+        prompt = prompt_template.format(chunk_content=chunk.page_content)
         
-        # Round 2
-        cot_round_two_prompt = prompt_template_r2.format(cot_round_one_response=cot_round_one_response.content)
-        input_tokens_r2 = len(tokenizer.encode(cot_round_two_prompt))
-        response = llm.invoke(cot_round_two_prompt)
-        output_tokens_r2 = len(tokenizer.encode(response.content))
-        cost += (input_tokens_r2 / 1000 * LLM_COST_PER_1K_TOKENS_INPUT) + (output_tokens_r2 / 1000 * LLM_COST_PER_1K_TOKENS_OUTPUT)
-
-        #json_str = response.content.split('```json')[-1].split('```')[0].strip()
-        #data = json.loads(json_str)
+        input_tokens = len(tokenizer.encode(prompt))
+        response = llm.invoke(prompt)
+        output_tokens = len(tokenizer.encode(response.content))
         
+        cost = (input_tokens / 1000 * LLM_COST_PER_1K_TOKENS_INPUT) + \
+               (output_tokens / 1000 * LLM_COST_PER_1K_TOKENS_OUTPUT)
+
         data = _extract_json_from_response(response.content)
-
+        
         if data is None:
-            # The robust parser failed and already logged the error.
             return None, cost
 
         chunk_concepts = []
@@ -83,11 +73,13 @@ def _extract_concepts_from_chunk(chunk: Document, model_name: str) -> Tuple[Opti
                     chunk_concepts.append(concept)
         else:
             logger.warning(f"Valid JSON parsed, but 'nodes' key is missing or not a list. Data: {data}")
+            
         return chunk_concepts, cost
 
     except Exception as e:
-        logger.error(f"Error processing chunk: {e}", exc_info=True)
+        logger.error(f"An unhandled error occurred while processing chunk: {e}", exc_info=True)
         return None, cost
+
 
 def extract_ideas(chunks: List[Document], model_name: str = LLM_MODEL, max_workers: int = MAX_WORKERS) -> List[str]:
     """Extracts concepts concurrently and tracks total cost."""

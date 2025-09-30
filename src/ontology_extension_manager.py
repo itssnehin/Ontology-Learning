@@ -107,8 +107,10 @@ class OntologyExtensionManager:
         
         self.technical_matchers = {
             'frequency': self._match_frequency_specs,
-            'impedance': self._match_impedance_specs
-            # ... add other matchers here
+            'impedance': self._match_impedance_specs,
+            'voltage': self._match_voltage_specs,
+            'connector': self._match_connector_types,
+            'mounting': self._match_mounting_types   
         }
         
         # Cached ontology data
@@ -194,20 +196,18 @@ class OntologyExtensionManager:
     
     def analyze_new_concept(self, new_concept: Dict[str, Any]) -> ExtensionResult:
         """Analyze whether a new concept should extend the ontology or map to existing."""
-        print(f"🔍 Analyzing new concept: {new_concept.get('name', 'Unknown')}")
+        concept_name = new_concept.get('name', 'Unknown')
+        logger.debug(f"🔍 Analyzing new concept: {concept_name}")
         
         if self._existing_concepts is None:
             self.load_existing_ontology()
-            self.create_concept_embeddings(self._existing_concepts)
+            if self._existing_concepts:
+                self.create_concept_embeddings(self._existing_concepts)
         
-        # Step 1: Multi-level similarity analysis
         matches = self._find_concept_matches(new_concept)
+        decision_result = self._make_extension_decision(new_concept, matches) # Pass the full new_concept dict
         
-        # Step 2: Apply decision logic
-        decision_result = self._make_extension_decision(new_concept, matches)
-        
-        print(f"   🎯 Decision: {decision_result.decision.value}")
-        print(f"   🎯 Confidence: {decision_result.confidence:.2f}")
+        logger.debug(f"   🎯 Decision for '{concept_name}': {decision_result.decision.value} (Confidence: {decision_result.confidence:.2f})")
         
         return decision_result
     
@@ -363,11 +363,14 @@ class OntologyExtensionManager:
         return matches
     
     def _make_extension_decision(self, new_concept: Dict[str, Any], 
-                               matches: List[ConceptMatch]) -> ExtensionResult:
+                                matches: List[ConceptMatch]) -> ExtensionResult:
         """Make the final decision on whether to extend or map."""
         
+        concept_name = new_concept.get('name', 'Unknown')
+
         if not matches:
             return ExtensionResult(
+                concept_name=concept_name, # <-- ADD THIS
                 decision=ExtensionDecision.EXTEND,
                 target_concept=None,
                 confidence=0.9,
@@ -377,9 +380,9 @@ class OntologyExtensionManager:
         
         best_match = matches[0]
         
-        # High confidence exact/near-exact match
         if best_match.similarity_score >= self.similarity_thresholds['exact_match']:
             return ExtensionResult(
+                concept_name=concept_name, # <-- ADD THIS
                 decision=ExtensionDecision.MAP_EXACT,
                 target_concept=best_match.existing_concept,
                 confidence=best_match.confidence,
@@ -387,14 +390,12 @@ class OntologyExtensionManager:
                 matches=matches[:3]
             )
         
-        # High similarity - use LLM validation
-        elif best_match.similarity_score >= self.similarity_thresholds['high_similarity']:
-            llm_decision = self._llm_validate_similarity(new_concept, best_match, matches[:3])
-            return llm_decision
+        elif best_match.similarity_score >= self.similarity_thresholds['high_similarity'] and self.config.enable_llm_validation:
+            return self._llm_validate_similarity(new_concept, best_match, matches[:3])
         
-        # Medium similarity - potential variant or extension
         elif best_match.similarity_score >= self.similarity_thresholds['medium_similarity']:
             return ExtensionResult(
+                concept_name=concept_name, # <-- ADD THIS
                 decision=ExtensionDecision.UNCERTAIN,
                 target_concept=best_match.existing_concept,
                 confidence=0.5,
@@ -402,21 +403,21 @@ class OntologyExtensionManager:
                 matches=matches[:5]
             )
         
-        # Low similarity - likely new concept
-        else:
+        else: # Low similarity
             return ExtensionResult(
+                concept_name=concept_name, # <-- ADD THIS
                 decision=ExtensionDecision.EXTEND,
                 target_concept=None,
                 confidence=0.8,
                 reasoning="Low similarity to existing concepts suggests new concept",
                 matches=matches[:3]
             )
-    
     def _llm_validate_similarity(self, new_concept: Dict[str, Any], 
-                               best_match: ConceptMatch,
-                               top_matches: List[ConceptMatch]) -> ExtensionResult:
+                                best_match: ConceptMatch,
+                                top_matches: List[ConceptMatch]) -> ExtensionResult:
         """Use LLM to make final decision on high-similarity matches."""
         
+        concept_name = new_concept.get('name', 'Unknown')
         # Get detailed info about existing concept
         existing_concept_info = next(
             (c for c in self._existing_concepts if c['name'] == best_match.existing_concept),
@@ -477,6 +478,7 @@ class OntologyExtensionManager:
                 decision = ExtensionDecision.EXTEND
             
             return ExtensionResult(
+                concept_name=concept_name,
                 decision=decision,
                 target_concept=best_match.existing_concept if decision != ExtensionDecision.EXTEND else None,
                 confidence=result['confidence'],
@@ -488,6 +490,7 @@ class OntologyExtensionManager:
             print(f"   ⚠️ LLM validation failed: {e}")
             # Fallback to conservative decision
             return ExtensionResult(
+                concept_name=concept_name,
                 decision=ExtensionDecision.UNCERTAIN,
                 target_concept=best_match.existing_concept,
                 confidence=0.5,

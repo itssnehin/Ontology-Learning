@@ -9,8 +9,9 @@ from langchain_openai import ChatOpenAI
 from tiktoken import get_encoding
 import logging
 
-from src.config import LLM_MODEL, OPENAI_API_KEY, PROMPTS
+from src.config import LLM_MODEL, OPENAI_API_KEY, PROMPTS, LLM_COST_PER_1K_TOKENS_INPUT, LLM_COST_PER_1K_TOKENS_OUTPUT
 
+logger = logging.getLogger(__name__) # <-- ADD logger
 class SchemaOrgExtractor:
     """Extract Schema.org JSON-LD markup from document chunks for electronic components."""
     
