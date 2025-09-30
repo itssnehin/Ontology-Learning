@@ -14,6 +14,35 @@ from src.config import (
 
 logger = logging.getLogger(__name__)
 
+def _extract_json_from_response(text: str) -> Optional[Dict]:
+    """
+    More robustly extracts a JSON object from a string that might contain other text.
+    Handles markdown code blocks and looks for the first valid JSON object.
+    """
+    # 1. Try to find JSON within markdown code blocks ```json ... ```
+    match = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', text, re.DOTALL)
+    if match:
+        try:
+            return json.loads(match.group(1))
+        except json.JSONDecodeError:
+            logger.warning("Found a JSON code block, but it was malformed.")
+            pass # Fall through to the next method
+
+    # 2. If no code block, look for the first '{' and last '}'
+    try:
+        start = text.find('{')
+        end = text.rfind('}')
+        if start != -1 and end != -1 and end > start:
+            potential_json = text[start:end+1]
+            return json.loads(potential_json)
+    except json.JSONDecodeError as e:
+        # The error from the original traceback would be caught here
+        logger.error(f"JSON parsing failed: {e}. Raw text was: {text}")
+        return None
+        
+    return None
+
+
 def _extract_concepts_from_chunk(chunk: Document, model_name: str) -> Tuple[Optional[List[str]], float]:
     """Processes a single document chunk and returns concepts and the associated cost."""
     cost = 0.0
@@ -38,13 +67,22 @@ def _extract_concepts_from_chunk(chunk: Document, model_name: str) -> Tuple[Opti
         output_tokens_r2 = len(tokenizer.encode(response.content))
         cost += (input_tokens_r2 / 1000 * LLM_COST_PER_1K_TOKENS_INPUT) + (output_tokens_r2 / 1000 * LLM_COST_PER_1K_TOKENS_OUTPUT)
 
-        json_str = response.content.split('```json')[-1].split('```')[0].strip()
-        data = json.loads(json_str)
+        #json_str = response.content.split('```json')[-1].split('```')[0].strip()
+        #data = json.loads(json_str)
         
+        data = _extract_json_from_response(response.content)
+
+        if data is None:
+            # The robust parser failed and already logged the error.
+            return None, cost
+
         chunk_concepts = []
         if "nodes" in data and isinstance(data["nodes"], list):
-            # ... (filtering logic is the same)
-            pass
+            for concept in data["nodes"]:
+                if concept and isinstance(concept, str) and not any(p in concept.lower() for p in ["frequency", "adhesive", "dimensions"]):
+                    chunk_concepts.append(concept)
+        else:
+            logger.warning(f"Valid JSON parsed, but 'nodes' key is missing or not a list. Data: {data}")
         return chunk_concepts, cost
 
     except Exception as e:

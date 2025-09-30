@@ -61,10 +61,10 @@ LOGS_DIR.mkdir(exist_ok=True)
 CACHE_DIR.mkdir(exist_ok=True)
 
 # --- OpenAI API settings ---
-LLM_MODEL = "gpt-5-nano-2025-08-07"
+LLM_MODEL = "gpt-4.1-nano"
 EMBEDDING_MODEL = "text-embedding-ada-002"
-LLM_COST_PER_1K_TOKENS_INPUT = 0.005
-LLM_COST_PER_1K_TOKENS_OUTPUT = 0.015
+LLM_COST_PER_1K_TOKENS_INPUT = 0.0001
+LLM_COST_PER_1K_TOKENS_OUTPUT = 0.0004
 EMBEDDING_COST_PER_1K_TOKENS = 0.0001
 
 # --- Pipeline settings ---

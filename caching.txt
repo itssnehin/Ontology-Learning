@@ -1,6 +1,20 @@
+pip install -e .
+
 # From the 'code/' directory
 python -m src.cached_schema_org_pipeline --resume-from start
 
 # This will load the chunks from cache, clear the downstream caches (concepts, decisions, etc.),
 # and re-run the pipeline starting from the 'concepts' extraction step.
 python -m src.cached_schema_org_pipeline --resume-from concepts
+
+
+python -m src.cached_schema_org_pipeline --resume-from [STEP_NAME]
+
+
+resume-from 	Value	What it SKIPS (Loads from Cache)	What it RUNS	Best Use Case
+start		Nothing	All Steps				A full, clean run on new data.
+chunks		Nothing	All Steps				(Identical to start for this script)
+concepts	Step 1 (Chunks)					Steps 2, 5, 6, 7, 8	You changed the LLM prompts for extraction.
+decisions	Steps 1, 2 (Chunks, Concepts)			Steps 5, 6, 7, 8	You changed the similarity thresholds or logic.
+schema		Steps 1, 2, 5 (Chunks, Concepts, Decisions)	Steps 6, 7, 8	You changed the Schema.org JSON-LD formatting.
+graph		Steps 1, 2, 5, 6, 7				Step 8 only	You only changed the Neo4j graph building logic.
