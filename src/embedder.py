@@ -1,13 +1,14 @@
 import logging
 from pathlib import Path
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Any
 import numpy as np
 from tiktoken import get_encoding
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 from langchain_openai import OpenAIEmbeddings
 
-from src.config import OPENAI_API_KEY, EMBEDDING_MODEL
+# Import centralized configuration
+from src.config import OPENAI_API_KEY, EMBEDDING_MODEL, EMBEDDING_COST_PER_1K_TOKENS
 
 logger = logging.getLogger(__name__)
 
@@ -49,10 +50,11 @@ def visualize_embeddings(
     plt.ylabel("t-SNE Component 2")
     plt.grid(True)
     
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-    plt.savefig(output_path, bbox_inches="tight")
-    logger.info(f"Scatter plot saved to {output_path}")
-    plt.show()
+    output_path_obj = Path(output_path)
+    output_path_obj.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(output_path_obj, bbox_inches="tight")
+    logger.info(f"Scatter plot saved to {output_path_obj}")
+    # plt.show() # Commented out to prevent blocking in an automated pipeline
 
 def embed_data(
     chunks: List,
@@ -60,19 +62,18 @@ def embed_data(
     themes: List[str],
     model_name: str = EMBEDDING_MODEL,
     visualize: bool = True
-) -> Dict[str, Tuple[List[Tuple[str, np.ndarray]], List[Tuple[str, np.ndarray]]]]:
-    """Embed relations and themes per document using OpenAI embeddings."""
-    
+) -> Dict[str, Any]:
+    """
+    Embed relations and themes per document, tracking cost using centralized config.
+    """
     embeddings = OpenAIEmbeddings(model=model_name, openai_api_key=OPENAI_API_KEY)
     tokenizer = get_encoding("cl100k_base")
-    EMBEDDING_COST_PER_1K_TOKENS = 0.0001
     total_tokens = 0
     total_cost = 0.0
     
     embedded_data = {}
-    source = chunks[0].metadata.get("source", "unknown")
-    logger.info(f"Input Relations: {relations}")
-    logger.info(f"Input Themes: {themes}")
+    source = chunks[0].metadata.get("source", "unknown") if chunks else "unknown"
+    logger.info(f"Embedding data for source: {source}")
     
     embedded_relations = []
     if relations:
@@ -83,7 +84,7 @@ def embed_data(
             total_tokens += relation_tokens
             total_cost += relation_cost
             embedded_relations = [(r, np.array(e)) for r, e in zip(relations, relation_embeddings)]
-            logger.info(f"Tokens for relations: {relation_tokens}, Cost: ${relation_cost:.6f}")
+            logger.info(f"Embedded {len(relations)} relations. Tokens: {relation_tokens}, Cost: ${relation_cost:.6f}")
         except Exception as e:
             logger.error(f"Error embedding relations: {e}", exc_info=True)
     
@@ -98,14 +99,13 @@ def embed_data(
                 total_tokens += theme_tokens
                 total_cost += theme_cost
                 embedded_themes = [(t, np.array(e)) for t, e in zip(valid_themes, theme_embeddings)]
-                logger.info(f"Tokens for themes: {theme_tokens}, Cost: ${theme_cost:.6f}")
+                logger.info(f"Embedded {len(valid_themes)} themes. Tokens: {theme_tokens}, Cost: ${theme_cost:.6f}")
             else:
-                logger.warning("No valid themes to embed")
+                logger.warning("No valid themes provided to embed.")
         except Exception as e:
             logger.error(f"Error embedding themes: {e}", exc_info=True)
     
     embedded_data[source] = (embedded_relations, embedded_themes)
-    logger.info(f"Embedded {len(embedded_relations)} relations and {len(embedded_themes)} themes for {source}")
     logger.info(f"Total OpenAI API Usage for Embeddings: Tokens={total_tokens}, Cost=${total_cost:.6f}")
     
     if visualize:
@@ -114,14 +114,22 @@ def embed_data(
     return embedded_data
 
 if __name__ == "__main__":
-    from .data_loader import load_and_split_data
-    from .relation_extractor import extract_relations
-    from .idea_extractor import extract_ideas
-    
+    from src.data_loader import load_and_split_data
+    from src.relation_extractor import extract_relations
+    from src.idea_extractor import extract_ideas
+
+    logger.info("Running embedder.py as a standalone script for demonstration.")
     sample_chunks = load_and_split_data()
+    
     if sample_chunks:
-        sample_relations = extract_relations(sample_chunks[:2])
-        sample_themes = list(set(extract_ideas(sample_chunks[:2])))
-        embedded_results = embed_data(sample_chunks[:2], sample_relations, sample_themes, visualize=True)
+        # Use a small subset for demonstration to manage cost and time
+        demo_chunks = sample_chunks[:2]
+        logger.info(f"Processing {len(demo_chunks)} chunks for the demo.")
+        
+        relations_list = extract_relations(demo_chunks)
+        themes_list = list(set(extract_ideas(demo_chunks)))
+        
+        embedded_results = embed_data(demo_chunks, relations_list, themes_list, visualize=True)
+        logger.info("Embedder demonstration finished.")
     else:
-        logger.warning("No chunks found to run the embedder example.")
+        logger.warning("No markdown files found in the data directory. Cannot run embedder demonstration.")

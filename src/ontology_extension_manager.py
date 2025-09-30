@@ -85,76 +85,37 @@ import logging
 from dataclasses import dataclass, asdict
 
 from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+# We need to import the PipelineConfig to use it as a type hint
+from src.data_models import PipelineConfig, ExtensionDecision, ConceptMatch, ExtensionResult
 
-class ExtensionDecision(Enum):
-    EXTEND = "extend_ontology"
-    MAP_EXACT = "map_to_existing_exact"
-    MAP_SIMILAR = "map_to_existing_similar"
-    MERGE_CONCEPTS = "merge_concepts"
-    UNCERTAIN = "requires_manual_review"
-
-@dataclass
-class ConceptMatch:
-    existing_concept: str
-    similarity_score: float
-    match_type: str
-    confidence: float
-    reasoning: str
-
-    def to_dict(self):
-        return asdict(self)
-
-@dataclass
-class ExtensionResult:
-    concept_name: str
-    decision: ExtensionDecision
-    target_concept: Optional[str]
-    confidence: float
-    reasoning: str
-    matches: List[ConceptMatch]
-
-    def to_dict(self):
-        return {
-            "concept_name": self.concept_name,
-            "decision": self.decision.value,
-            "target_concept": self.target_concept,
-            "confidence": self.confidence,
-            "reasoning": self.reasoning,
-            "matches": [m.to_dict() for m in self.matches]
-        }
+logger = logging.getLogger(__name__)
 
 class OntologyExtensionManager:
     """Intelligent manager for deciding ontology extensions vs mappings."""
     
-    def __init__(self):
+    def __init__(self, config: Optional[PipelineConfig] = None):
+        # Use the provided config, or create a default one if none is given
+        self.config = config or PipelineConfig()
+        
+        # Now, use the thresholds from the config object
+        self.similarity_thresholds = self.config.similarity_thresholds
 
-        # Initialize components
+        # Initialize other components
         self.embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
         self.llm = ChatOpenAI(model_name="gpt-4o", openai_api_key=OPENAI_API_KEY)
         self.driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
         
-        # Configuration
-        self.similarity_thresholds = {
-            'exact_match': 0.95,
-            'high_similarity': 0.85,
-            'medium_similarity': 0.70,
-            'low_similarity': 0.50
-        }
-        
-        # Domain-specific matchers
         self.technical_matchers = {
             'frequency': self._match_frequency_specs,
-            'impedance': self._match_impedance_specs,
-            'voltage': self._match_voltage_specs,
-            'connector': self._match_connector_types,
-            'mounting': self._match_mounting_types
+            'impedance': self._match_impedance_specs
+            # ... add other matchers here
         }
         
-        # Cached ontology data for faster lookup
+        # Cached ontology data
         self._existing_concepts = None
         self._concept_embeddings = {}
         
-        print("🔍 Ontology Extension Manager initialized")
+        logger.info("🔍 Ontology Extension Manager initialized")
     
     def load_existing_ontology(self) -> Dict[str, Any]:
         """Load and cache existing ontology concepts from Neo4j."""

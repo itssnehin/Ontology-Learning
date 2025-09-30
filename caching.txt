@@ -1,0 +1,6 @@
+# From the 'code/' directory
+python -m src.cached_schema_org_pipeline --resume-from start
+
+# This will load the chunks from cache, clear the downstream caches (concepts, decisions, etc.),
+# and re-run the pipeline starting from the 'concepts' extraction step.
+python -m src.cached_schema_org_pipeline --resume-from concepts

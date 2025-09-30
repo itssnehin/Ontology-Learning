@@ -50,17 +50,22 @@ if not NEO4J_URI:
 # --- Base directories ---
 BASE_DIR = PROJECT_ROOT
 DATA_DIR = BASE_DIR / "data"
-LOGS_DIR = BASE_DIR / "logs" # This is still useful to have as a variable
+LOGS_DIR = BASE_DIR / "logs"
 MARKDOWN_DIR = DATA_DIR / "raw_markdown"
+CACHE_DIR = BASE_DIR / "cache"
 
 # --- Create directories if they don't exist ---
 DATA_DIR.mkdir(exist_ok=True)
 MARKDOWN_DIR.mkdir(exist_ok=True)
 LOGS_DIR.mkdir(exist_ok=True)
+CACHE_DIR.mkdir(exist_ok=True)
 
 # --- OpenAI API settings ---
-LLM_MODEL = "gpt-4o"
+LLM_MODEL = "gpt-5-nano-2025-08-07"
 EMBEDDING_MODEL = "text-embedding-ada-002"
+LLM_COST_PER_1K_TOKENS_INPUT = 0.005
+LLM_COST_PER_1K_TOKENS_OUTPUT = 0.015
+EMBEDDING_COST_PER_1K_TOKENS = 0.0001
 
 # --- Pipeline settings ---
 CHUNK_SIZE = 1000
