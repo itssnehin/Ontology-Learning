@@ -11,7 +11,7 @@ import logging
 
 from src.config import LLM_MODEL, OPENAI_API_KEY, PROMPTS, LLM_COST_PER_1K_TOKENS_INPUT, LLM_COST_PER_1K_TOKENS_OUTPUT
 
-logger = logging.getLogger(__name__) # <-- ADD logger
+logger = logging.getLogger(__name__)
 class SchemaOrgExtractor:
     """Extract Schema.org JSON-LD markup from document chunks for electronic components."""
     
@@ -65,8 +65,8 @@ class SchemaOrgExtractor:
             if markup:
                 schema_objects.append(markup)
         
-        print(f"Generated Schema.org markup for {len(schema_objects)} concepts")
-        print(f"Total API cost: ${self.total_cost:.6f}")
+        logger.info(f"Generated Schema.org markup for {len(schema_objects)} concepts")
+        logger.info(f"Total API cost: ${self.total_cost:.6f}")
         
         return schema_objects
     
@@ -114,11 +114,11 @@ class SchemaOrgExtractor:
                 
                 return json_content
             else:
-                print(f"Failed to parse JSON for concept: {concept}")
+                logger.warning(f"Failed to parse JSON for concept: {concept}")
                 return self._create_fallback_markup(concept, context)
                 
         except Exception as e:
-            print(f"Error generating markup for {concept}: {e}")
+            logger.error(f"Error generating markup for {concept}: {e}")
             return self._create_fallback_markup(concept, context)
     
     def _extract_json_from_response(self, response: str) -> Optional[Dict]:

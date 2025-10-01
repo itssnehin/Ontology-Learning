@@ -11,6 +11,8 @@ import logging
 
 from src.config import LLM_MODEL, OPENAI_API_KEY
 
+logger = logging.getLogger(__name__) # <-- ADD logger
+
 class SchemaOrgRelationExtractor:
     """Extract Schema.org relationships and properties from document chunks."""
     
@@ -82,8 +84,8 @@ class SchemaOrgRelationExtractor:
                 "context_source": context[:100] + "..." if len(context) > 100 else context
             }
         
-        print(f"Extracted properties and relations for {len(concept_data)} concepts")
-        print(f"Total API cost: ${self.total_cost:.6f}")
+        logger.info(f"Extracted properties and relations for {len(concept_data)} concepts")
+        logger.info(f"Total API cost: ${self.total_cost:.6f}")
         
         return concept_data
     
@@ -163,7 +165,7 @@ class SchemaOrgRelationExtractor:
             return properties if properties else {}
             
         except Exception as e:
-            print(f"Error extracting properties for {concept}: {e}")
+            logger.error(f"Error extracting properties for {concept}: {e}")
             return {}
     
     def _extract_relations(self, concept: str, context: str, all_concepts: List[str]) -> List[Dict[str, str]]:
@@ -226,7 +228,7 @@ class SchemaOrgRelationExtractor:
             return relations if isinstance(relations, list) else []
             
         except Exception as e:
-            print(f"Error extracting relations for {concept}: {e}")
+            logger.error(f"Error extracting relations for {concept}: {e}")
             return []
     
     def _parse_json_response(self, response: str) -> Optional[Dict]:

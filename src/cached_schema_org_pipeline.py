@@ -5,7 +5,8 @@ from pathlib import Path
 from typing import List, Dict, Any
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
-
+from datetime import datetime
+import json
 # Import necessary components from your project
 from src.data_loader import load_and_split_data
 from src.idea_extractor import extract_ideas
@@ -163,6 +164,29 @@ def run_cached_pipeline(resume_from: str = 'start', clear_downstream: bool = Tru
     else:
         logger.info("\n🗃️ Step 8: Skipping graph update (run with --resume-from graph to execute).")
 
+
+    logger.info("\n🎉 CACHED PIPELINE RUN FINISHED! 🎉")
+
+    if 'new_schema_objects' in locals() and 'mapped_objects' in locals():
+        logger.info("\n💾 Generating final output files from cached run...")
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_dir = Path("data/integrated_output")
+
+        output_dir.mkdir(exist_ok=True)
+
+        # Save new Schema.org objects
+        if new_schema_objects:
+            schema_file = output_dir / f"cached_new_schema_objects_{timestamp}.jsonld"
+            with open(schema_file, 'w', encoding='utf-8') as f:
+                json.dump({"@context": "https://schema.org/", "@graph": new_schema_objects}, f, indent=2, ensure_ascii=False)
+            logger.info(f"   ✅ Saved new Schema.org objects: {schema_file.name}")
+
+        # Save concept mappings
+        if mapped_objects:
+            mappings_file = output_dir / f"cached_concept_mappings_{timestamp}.json"
+            with open(mappings_file, 'w', encoding='utf-8') as f:
+                json.dump(mapped_objects, f, indent=2, ensure_ascii=False)
+            logger.info(f"   ✅ Saved concept mappings: {mappings_file.name}")
 
     logger.info("\n🎉 CACHED PIPELINE RUN FINISHED! 🎉")
 

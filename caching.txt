@@ -18,3 +18,7 @@ concepts	Step 1 (Chunks)					Steps 2, 5, 6, 7, 8	You changed the LLM prompts for
 decisions	Steps 1, 2 (Chunks, Concepts)			Steps 5, 6, 7, 8	You changed the similarity thresholds or logic.
 schema		Steps 1, 2, 5 (Chunks, Concepts, Decisions)	Steps 6, 7, 8	You changed the Schema.org JSON-LD formatting.
 graph		Steps 1, 2, 5, 6, 7				Step 8 only	You only changed the Neo4j graph building logic.
+
+
+# Need to run afterwards
+python -m src.cached_schema_org_pipeline --resume-from graph
