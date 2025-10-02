@@ -1,0 +1,884 @@
+{
+  "concepts": [
+    "Electronic Component",
+    "Active Component",
+    "Passive Component",
+    "Integrated Circuit",
+    "Semiconductor Device",
+    "Sensor",
+    "Connector",
+    "Inductor",
+    "Switch",
+    "Capacitor",
+    "Resistor",
+    "Diode",
+    "Transistor",
+    "Antenna",
+    "Fuse",
+    "Transformer",
+    "Operational Amplifier",
+    "Voltage Regulator",
+    "Photodiode",
+    "LED",
+    "Rectifier",
+    "MOSFET",
+    "Thermistor",
+    "Relay",
+    "Photocoupler",
+    "FPGA",
+    "Bayonet Connector",
+    "SPST Switch",
+    "Dual Operational Amplifier",
+    "Fixed Voltage Regulator",
+    "PIN Photodiode",
+    "Ceramic Antenna",
+    "Motor Control Circuit",
+    "H-bridge",
+    "Encoder",
+    "Thermal Relay",
+    "8-Bit Shift Register",
+    "Power Inductor",
+    "Step-down Transformer",
+    "Adjustable Precision Shunt Regulator",
+    "Adjustable Voltage Regulator",
+    "IR Receiver Module",
+    "Transistor NPN",
+    "JFET-Input Operational Amplifier",
+    "Zener Diode",
+    "Linear Regulator",
+    "Silicon Epitaxial Planar Diode",
+    "General Purpose Plastic Rectifier",
+    "WLAN Antenna",
+    "Chip Ferrite Bead",
+    "Aluminum Electrolytic Capacitor",
+    "Thick Film Chip Resistor",
+    "Digital Thermometer",
+    "Temperature Sensor",
+    "Switching Diode",
+    "Flexible Ultra Wide Band Antenna",
+    "Ceramic Capacitor",
+    "HEXFET Power MOSFET",
+    "Precision Centigrade Temperature Sensor",
+    "RF Transceiver Module",
+    "PTC Resettable Fuse",
+    "NTC Thermistor",
+    "Precision Timer",
+    "SPDT Relay",
+    "Carbon Film Resistor",
+    "Linear Hall Effect Sensor",
+    "Hall Effect Sensor",
+    "High Power Infrared Emitter",
+    "Infrared Emitter",
+    "USB connector",
+    "Terminal block",
+    "Pin header",
+    "D-sub connector",
+    "RJ45",
+    "Organization",
+    "Standard",
+    "ITT Cannon",
+    "Texas Instruments",
+    "Vishay Telefunken",
+    "Johanson Technology, Inc.",
+    "Vishay Semiconductors",
+    "Xilinx",
+    "Vishay General Semiconductor",
+    "Vishay",
+    "Taoglas",
+    "Murata",
+    "International Rectifier",
+    "Kingbright",
+    "National Semiconductor",
+    "Microchip",
+    "Bourns",
+    "TDK",
+    "Sharp Corporation",
+    "OSRAM",
+    "VG95234",
+    "IND-5MH-1A",
+    "2450AT18A100",
+    "SW-SPST-5A",
+    "IC-OPAMP-LM358",
+    "BPW34",
+    "LM340 Series",
+    "LM158 Series",
+    "SN54HC595",
+    "SN74HC595",
+    "SRN4018 SERIES",
+    "TL431",
+    "TSOP38230",
+    "TRANS-NPN-2N3904",
+    "TL071",
+    "XC4000 Series FPGA",
+    "7805 voltage regulator",
+    "1N4148",
+    "1N4001",
+    "2450AT43B100",
+    "CA Bayonet Connector",
+    "BLM18A Series",
+    "CAP-100UF-16V",
+    "CRCW040216K2FKED",
+    "DS18B20",
+    "DIO-1N4148",
+    "FXUB66.01.0150C",
+    "GRM188R71E105KA12D",
+    "IRLZ44N",
+    "L-53SG",
+    "LM35",
+    "LM317",
+    "LM358B",
+    "LM2904B",
+    "MRF24J40MD",
+    "MF-R Series",
+    "NTCG104QH224HT1",
+    "NA555",
+    "NE555",
+    "PC817",
+    "REL-24V-10A",
+    "RES-10K-1W",
+    "SEN-HALL-A1302",
+    "SFH4550"
+  ],
+  "relations": [
+    {
+      "source": "Active Component",
+      "type": "subclass_of",
+      "target": "Electronic Component"
+    },
+    {
+      "source": "Passive Component",
+      "type": "subclass_of",
+      "target": "Electronic Component"
+    },
+    {
+      "source": "Integrated Circuit",
+      "type": "subclass_of",
+      "target": "Active Component"
+    },
+    {
+      "source": "Semiconductor Device",
+      "type": "subclass_of",
+      "target": "Active Component"
+    },
+    {
+      "source": "Sensor",
+      "type": "subclass_of",
+      "target": "Electronic Component"
+    },
+    {
+      "source": "Inductor",
+      "type": "subclass_of",
+      "target": "Passive Component"
+    },
+    {
+      "source": "Switch",
+      "type": "subclass_of",
+      "target": "Passive Component"
+    },
+    {
+      "source": "Capacitor",
+      "type": "subclass_of",
+      "target": "Passive Component"
+    },
+    {
+      "source": "Resistor",
+      "type": "subclass_of",
+      "target": "Passive Component"
+    },
+    {
+      "source": "Connector",
+      "type": "subclass_of",
+      "target": "Passive Component"
+    },
+    {
+      "source": "Antenna",
+      "type": "subclass_of",
+      "target": "Passive Component"
+    },
+    {
+      "source": "Fuse",
+      "type": "subclass_of",
+      "target": "Passive Component"
+    },
+    {
+        "source": "Transformer",
+        "type": "subclass_of",
+        "target": "Passive Component"
+    },
+    {
+        "source": "Diode",
+        "type": "subclass_of",
+        "target": "Semiconductor Device"
+    },
+    {
+        "source": "Transistor",
+        "type": "subclass_of",
+        "target": "Semiconductor Device"
+    },
+    {
+      "source": "Operational Amplifier",
+      "type": "subclass_of",
+      "target": "Integrated Circuit"
+    },
+    {
+      "source": "Voltage Regulator",
+      "type": "subclass_of",
+      "target": "Integrated Circuit"
+    },
+    {
+      "source": "Photodiode",
+      "type": "subclass_of",
+      "target": "Sensor"
+    },
+    {
+      "source": "Photodiode",
+      "type": "subclass_of",
+      "target": "Semiconductor Device"
+    },
+    {
+        "source": "LED",
+        "type": "subclass_of",
+        "target": "Diode"
+    },
+    {
+        "source": "Rectifier",
+        "type": "subclass_of",
+        "target": "Diode"
+    },
+    {
+        "source": "MOSFET",
+        "type": "subclass_of",
+        "target": "Transistor"
+    },
+    {
+        "source": "Thermistor",
+        "type": "subclass_of",
+        "target": "Resistor"
+    },
+    {
+        "source": "Thermistor",
+        "type": "subclass_of",
+        "target": "Sensor"
+    },
+    {
+        "source": "Relay",
+        "type": "subclass_of",
+        "target": "Switch"
+    },
+    {
+        "source": "Photocoupler",
+        "type": "subclass_of",
+        "target": "Semiconductor Device"
+    },
+    {
+        "source": "FPGA",
+        "type": "subclass_of",
+        "target": "Integrated Circuit"
+    },
+    {
+        "source": "Precision Timer",
+        "type": "subclass_of",
+        "target": "Integrated Circuit"
+    },
+    {
+        "source": "RF Transceiver Module",
+        "type": "subclass_of",
+        "target": "Integrated Circuit"
+    },
+    {
+        "source": "8-Bit Shift Register",
+        "type": "subclass_of",
+        "target": "Integrated Circuit"
+    },
+    {
+      "source": "Dual Operational Amplifier",
+      "type": "subclass_of",
+      "target": "Operational Amplifier"
+    },
+    {
+        "source": "JFET-Input Operational Amplifier",
+        "type": "subclass_of",
+        "target": "Operational Amplifier"
+    },
+    {
+      "source": "Fixed Voltage Regulator",
+      "type": "subclass_of",
+      "target": "Voltage Regulator"
+    },
+    {
+        "source": "Adjustable Voltage Regulator",
+        "type": "subclass_of",
+        "target": "Voltage Regulator"
+    },
+    {
+        "source": "Adjustable Precision Shunt Regulator",
+        "type": "subclass_of",
+        "target": "Voltage Regulator"
+    },
+    {
+        "source": "Linear Regulator",
+        "type": "subclass_of",
+        "target": "Voltage Regulator"
+    },
+    {
+      "source": "PIN Photodiode",
+      "type": "subclass_of",
+      "target": "Photodiode"
+    },
+    {
+        "source": "Temperature Sensor",
+        "type": "subclass_of",
+        "target": "Sensor"
+    },
+    {
+        "source": "Hall Effect Sensor",
+        "type": "subclass_of",
+        "target": "Sensor"
+    },
+    {
+        "source": "IR Receiver Module",
+        "type": "subclass_of",
+        "target": "Sensor"
+    },
+    {
+      "source": "Ceramic Antenna",
+      "type": "subclass_of",
+      "target": "Antenna"
+    },
+    {
+        "source": "WLAN Antenna",
+        "type": "subclass_of",
+        "target": "Antenna"
+    },
+    {
+        "source": "Flexible Ultra Wide Band Antenna",
+        "type": "subclass_of",
+        "target": "Antenna"
+    },
+    {
+      "source": "Bayonet Connector",
+      "type": "subclass_of",
+      "target": "Connector"
+    },
+    {
+        "source": "USB connector",
+        "type": "subclass_of",
+        "target": "Connector"
+    },
+    {
+        "source": "Terminal block",
+        "type": "subclass_of",
+        "target": "Connector"
+    },
+    {
+        "source": "Pin header",
+        "type": "subclass_of",
+        "target": "Connector"
+    },
+    {
+        "source": "D-sub connector",
+        "type": "subclass_of",
+        "target": "Connector"
+    },
+    {
+        "source": "RJ45",
+        "type": "subclass_of",
+        "target": "Connector"
+    },
+    {
+      "source": "SPST Switch",
+      "type": "subclass_of",
+      "target": "Switch"
+    },
+    {
+        "source": "SPDT Relay",
+        "type": "subclass_of",
+        "target": "Relay"
+    },
+    {
+        "source": "Power Inductor",
+        "type": "subclass_of",
+        "target": "Inductor"
+    },
+    {
+        "source": "Step-down Transformer",
+        "type": "subclass_of",
+        "target": "Transformer"
+    },
+    {
+        "source": "Transistor NPN",
+        "type": "subclass_of",
+        "target": "Transistor"
+    },
+    {
+        "source": "HEXFET Power MOSFET",
+        "type": "subclass_of",
+        "target": "MOSFET"
+    },
+    {
+        "source": "Silicon Epitaxial Planar Diode",
+        "type": "subclass_of",
+        "target": "Diode"
+    },
+    {
+        "source": "Switching Diode",
+        "type": "subclass_of",
+        "target": "Diode"
+    },
+    {
+        "source": "Zener Diode",
+        "type": "subclass_of",
+        "target": "Diode"
+    },
+    {
+        "source": "General Purpose Plastic Rectifier",
+        "type": "subclass_of",
+        "target": "Rectifier"
+    },
+    {
+        "source": "Infrared Emitter",
+        "type": "subclass_of",
+        "target": "LED"
+    },
+    {
+        "source": "High Power Infrared Emitter",
+        "type": "subclass_of",
+        "target": "Infrared Emitter"
+    },
+    {
+        "source": "PTC Resettable Fuse",
+        "type": "subclass_of",
+        "target": "Fuse"
+    },
+    {
+        "source": "Thick Film Chip Resistor",
+        "type": "subclass_of",
+        "target": "Resistor"
+    },
+    {
+        "source": "Carbon Film Resistor",
+        "type": "subclass_of",
+        "target": "Resistor"
+    },
+    {
+        "source": "NTC Thermistor",
+        "type": "subclass_of",
+        "target": "Thermistor"
+    },
+    {
+        "source": "Ceramic Capacitor",
+        "type": "subclass_of",
+        "target": "Capacitor"
+    },
+    {
+        "source": "Aluminum Electrolytic Capacitor",
+        "type": "subclass_of",
+        "target": "Capacitor"
+    },
+    {
+        "source": "Digital Thermometer",
+        "type": "subclass_of",
+        "target": "Temperature Sensor"
+    },
+    {
+        "source": "Precision Centigrade Temperature Sensor",
+        "type": "subclass_of",
+        "target": "Temperature Sensor"
+    },
+    {
+        "source": "Linear Hall Effect Sensor",
+        "type": "subclass_of",
+        "target": "Hall Effect Sensor"
+    },
+    {
+      "source": "Motor Control Circuit",
+      "type": "hasPart",
+      "target": "H-bridge"
+    },
+    {
+      "source": "Motor Control Circuit",
+      "type": "hasPart",
+      "target": "Encoder"
+    },
+    {
+      "source": "Motor Control Circuit",
+      "type": "hasPart",
+      "target": "Capacitor"
+    },
+    {
+      "source": "Motor Control Circuit",
+      "type": "hasPart",
+      "target": "Thermal Relay"
+    },
+    {
+      "source": "Bayonet Connector",
+      "type": "conformsTo",
+      "target": "VG95234"
+    },
+    {
+      "source": "Bayonet Connector",
+      "type": "manufacturer",
+      "target": "ITT Cannon"
+    },
+    {
+      "source": "LM158 Series",
+      "type": "manufacturer",
+      "target": "Texas Instruments"
+    },
+    {
+      "source": "LM340 Series",
+      "type": "manufacturer",
+      "target": "Texas Instruments"
+    },
+    {
+        "source": "SN54HC595",
+        "type": "manufacturer",
+        "target": "Texas Instruments"
+    },
+    {
+        "source": "SN74HC595",
+        "type": "manufacturer",
+        "target": "Texas Instruments"
+    },
+    {
+        "source": "TL431",
+        "type": "manufacturer",
+        "target": "Texas Instruments"
+    },
+    {
+        "source": "TL071",
+        "type": "manufacturer",
+        "target": "Texas Instruments"
+    },
+    {
+        "source": "LM317",
+        "type": "manufacturer",
+        "target": "Texas Instruments"
+    },
+    {
+        "source": "LM358B",
+        "type": "manufacturer",
+        "target": "Texas Instruments"
+    },
+    {
+        "source": "LM2904B",
+        "type": "manufacturer",
+        "target": "Texas Instruments"
+    },
+    {
+        "source": "NA555",
+        "type": "manufacturer",
+        "target": "Texas Instruments"
+    },
+    {
+        "source": "NE555",
+        "type": "manufacturer",
+        "target": "Texas Instruments"
+    },
+    {
+      "source": "BPW34",
+      "type": "manufacturer",
+      "target": "Vishay Telefunken"
+    },
+    {
+        "source": "1N4148",
+        "type": "manufacturer",
+        "target": "Vishay Telefunken"
+    },
+    {
+        "source": "TSOP38230",
+        "type": "manufacturer",
+        "target": "Vishay Semiconductors"
+    },
+    {
+        "source": "1N4001",
+        "type": "manufacturer",
+        "target": "Vishay General Semiconductor"
+    },
+    {
+        "source": "CRCW040216K2FKED",
+        "type": "manufacturer",
+        "target": "Vishay"
+    },
+    {
+      "source": "2450AT18A100",
+      "type": "manufacturer",
+      "target": "Johanson Technology, Inc."
+    },
+    {
+        "source": "2450AT43B100",
+        "type": "manufacturer",
+        "target": "Johanson Technology, Inc."
+    },
+    {
+        "source": "FXUB66.01.0150C",
+        "type": "manufacturer",
+        "target": "Taoglas"
+    },
+    {
+        "source": "IRLZ44N",
+        "type": "manufacturer",
+        "target": "International Rectifier"
+    },
+    {
+        "source": "L-53SG",
+        "type": "manufacturer",
+        "target": "Kingbright"
+    },
+    {
+        "source": "LM35",
+        "type": "manufacturer",
+        "target": "National Semiconductor"
+    },
+    {
+        "source": "MRF24J40MD",
+        "type": "manufacturer",
+        "target": "Microchip"
+    },
+    {
+        "source": "MF-R Series",
+        "type": "manufacturer",
+        "target": "Bourns"
+    },
+    {
+        "source": "NTCG104QH224HT1",
+        "type": "manufacturer",
+        "target": "TDK"
+    },
+    {
+        "source": "PC817",
+        "type": "manufacturer",
+        "target": "Sharp Corporation"
+    },
+    {
+        "source": "SFH4550",
+        "type": "manufacturer",
+        "target": "OSRAM"
+    },
+    {
+        "source": "GRM188R71E105KA12D",
+        "type": "manufacturer",
+        "target": "Murata"
+    },
+    {
+        "source": "XC4000 Series FPGA",
+        "type": "manufacturer",
+        "target": "Xilinx"
+    },
+    {
+      "source": "IND-5MH-1A",
+      "type": "instance_of",
+      "target": "Inductor"
+    },
+    {
+      "source": "2450AT18A100",
+      "type": "instance_of",
+      "target": "Ceramic Antenna"
+    },
+    {
+      "source": "SW-SPST-5A",
+      "type": "instance_of",
+      "target": "SPST Switch"
+    },
+    {
+      "source": "IC-OPAMP-LM358",
+      "type": "instance_of",
+      "target": "Dual Operational Amplifier"
+    },
+    {
+      "source": "BPW34",
+      "type": "instance_of",
+      "target": "PIN Photodiode"
+    },
+    {
+      "source": "LM340 Series",
+      "type": "instance_of",
+      "target": "Fixed Voltage Regulator"
+    },
+    {
+      "source": "LM158 Series",
+      "type": "instance_of",
+      "target": "Dual Operational Amplifier"
+    },
+    {
+        "source": "SN54HC595",
+        "type": "instance_of",
+        "target": "8-Bit Shift Register"
+    },
+    {
+        "source": "SN74HC595",
+        "type": "instance_of",
+        "target": "8-Bit Shift Register"
+    },
+    {
+        "source": "SRN4018 SERIES",
+        "type": "instance_of",
+        "target": "Power Inductor"
+    },
+    {
+        "source": "TL431",
+        "type": "instance_of",
+        "target": "Adjustable Precision Shunt Regulator"
+    },
+    {
+        "source": "TSOP38230",
+        "type": "instance_of",
+        "target": "IR Receiver Module"
+    },
+    {
+        "source": "TRANS-NPN-2N3904",
+        "type": "instance_of",
+        "target": "Transistor NPN"
+    },
+    {
+        "source": "TL071",
+        "type": "instance_of",
+        "target": "JFET-Input Operational Amplifier"
+    },
+    {
+        "source": "XC4000 Series FPGA",
+        "type": "instance_of",
+        "target": "FPGA"
+    },
+    {
+        "source": "7805 voltage regulator",
+        "type": "instance_of",
+        "target": "Voltage Regulator"
+    },
+    {
+        "source": "1N4148",
+        "type": "instance_of",
+        "target": "Silicon Epitaxial Planar Diode"
+    },
+    {
+        "source": "1N4001",
+        "type": "instance_of",
+        "target": "General Purpose Plastic Rectifier"
+    },
+    {
+        "source": "2450AT43B100",
+        "type": "instance_of",
+        "target": "WLAN Antenna"
+    },
+    {
+        "source": "CA Bayonet Connector",
+        "type": "instance_of",
+        "target": "Bayonet Connector"
+    },
+    {
+        "source": "BLM18A Series",
+        "type": "instance_of",
+        "target": "Chip Ferrite Bead"
+    },
+    {
+        "source": "CAP-100UF-16V",
+        "type": "instance_of",
+        "target": "Aluminum Electrolytic Capacitor"
+    },
+    {
+        "source": "CRCW040216K2FKED",
+        "type": "instance_of",
+        "target": "Thick Film Chip Resistor"
+    },
+    {
+        "source": "DS18B20",
+        "type": "instance_of",
+        "target": "Digital Thermometer"
+    },
+    {
+        "source": "DIO-1N4148",
+        "type": "instance_of",
+        "target": "Switching Diode"
+    },
+    {
+        "source": "FXUB66.01.0150C",
+        "type": "instance_of",
+        "target": "Flexible Ultra Wide Band Antenna"
+    },
+    {
+        "source": "GRM188R71E105KA12D",
+        "type": "instance_of",
+        "target": "Ceramic Capacitor"
+    },
+    {
+        "source": "IRLZ44N",
+        "type": "instance_of",
+        "target": "HEXFET Power MOSFET"
+    },
+    {
+        "source": "L-53SG",
+        "type": "instance_of",
+        "target": "LED"
+    },
+    {
+        "source": "LM35",
+        "type": "instance_of",
+        "target": "Precision Centigrade Temperature Sensor"
+    },
+    {
+        "source": "LM317",
+        "type": "instance_of",
+        "target": "Adjustable Voltage Regulator"
+    },
+    {
+        "source": "LM358B",
+        "type": "instance_of",
+        "target": "Dual Operational Amplifier"
+    },
+    {
+        "source": "LM2904B",
+        "type": "instance_of",
+        "target": "Dual Operational Amplifier"
+    },
+    {
+        "source": "MRF24J40MD",
+        "type": "instance_of",
+        "target": "RF Transceiver Module"
+    },
+    {
+        "source": "MF-R Series",
+        "type": "instance_of",
+        "target": "PTC Resettable Fuse"
+    },
+    {
+        "source": "NTCG104QH224HT1",
+        "type": "instance_of",
+        "target": "NTC Thermistor"
+    },
+    {
+        "source": "NA555",
+        "type": "instance_of",
+        "target": "Precision Timer"
+    },
+    {
+        "source": "NE555",
+        "type": "instance_of",
+        "target": "Precision Timer"
+    },
+    {
+        "source": "PC817",
+        "type": "instance_of",
+        "target": "Photocoupler"
+    },
+    {
+        "source": "REL-24V-10A",
+        "type": "instance_of",
+        "target": "SPDT Relay"
+    },
+    {
+        "source": "RES-10K-1W",
+        "type": "instance_of",
+        "target": "Carbon Film Resistor"
+    },
+    {
+        "source": "SEN-HALL-A1302",
+        "type": "instance_of",
+        "target": "Linear Hall Effect Sensor"
+    },
+    {
+        "source": "SFH4550",
+        "type": "instance_of",
+        "target": "High Power Infrared Emitter"
+    }
+  ]
+}
