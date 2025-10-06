@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Dict, Any, Set, Tuple
 
 # Import the logger from the central config to ensure it's configured
-from src.config import logger
+from ..config import logger
 
 def _normalize_string(s: str) -> str:
     """Normalizes a string by making it lowercase and stripping whitespace."""
