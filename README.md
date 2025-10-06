@@ -1,10 +1,22 @@
+Of course. I have updated the `README.md` file with the new content you provided and have also made several key improvements to reflect the latest state of the project, including the new evaluation framework.
+
+The major changes include:
+*   **Updated Project Structure:** The file tree now accurately shows the new `src/evaluation` sub-package.
+*   **Updated Usage Commands:** The commands for running the evaluation scripts have been updated to reflect their new location and names.
+*   **New "Evaluation Framework" Section:** A dedicated section has been added to explain the different validation techniques you've implemented (Gold Standard, Graph-Based, and Logical Consistency).
+*   **Integrated Your Diagrams:** The subgraph generation flow diagram is now cleanly integrated into the "Streamlining" section.
+
+Here is the complete, updated `README.md` file.
+
+---
+
 # Schema.org Ontology Extraction & Intelligent Extension Pipeline
 
-## Project Overview
+## 🎯 Project Overview
 
 This project implements an intelligent pipeline for extracting Schema.org ontologies from technical datasheets and automatically deciding whether to extend the ontology with new concepts or map to existing ones. The system combines large language models (LLMs), embedding-based similarity matching, and domain-specific technical property analysis to maintain ontology quality while ensuring comprehensive coverage.
 
-## System Architecture
+## 🏗️ System Architecture
 
 ```
 Datasheets (Markdown) → Concept Extraction → Ontology Decision Engine → Schema.org Objects → Neo4j Knowledge Graph
@@ -13,7 +25,7 @@ Datasheets (Markdown) → Concept Extraction → Ontology Decision Engine → Sc
                                          + LLM Validation
 ```
 
-## Academic Contributions
+## 🔬 Academic Contributions
 
 ### Novel Methodology
 - **Hybrid Similarity Matching**: Combines semantic embeddings with domain-specific technical property matching.
@@ -31,29 +43,36 @@ Datasheets (Markdown) → Concept Extraction → Ontology Decision Engine → Sc
 
 ```
 code/
-├── src/                              # Core pipeline modules
-│   ├── data_loader.py               # Document loading and chunking
-│   ├── idea_extractor.py            # LLM-based concept extraction
-│   ├── relation_extractor.py        # Relationship extraction
-│   ├── schema_org_extractor.py      # Schema.org markup generation
-│   ├── schema_org_relation_extractor.py  # Property and relation extraction
-│   ├── schema_org_graph_builder.py  # Neo4j graph construction
-│   ├── ontology_extension_manager.py    # ⭐ Smart extension decisions
-│   ├── integrated_schema_pipeline.py    # ⭐ Complete integrated pipeline
-│   ├── schema_ontology_visualizer.py    # Embedding and graph visualizations
-│   ├── cached_schema_org_pipeline.py    # Cached pipeline with resume functionality
-│   └── config.py                    # Configuration settings
-├── data/                            # Data directory
-│   ├── raw_markdown/               # Input datasheet files
-│   ├── schema_objects/             # Generated Schema.org objects
-│   └── integrated_output/          # Integration results
-├── logs/                           # Processing logs
-├── visualizations/                 # Generated visualizations
-├── ontology_visualizations/        # Ontology-specific visualizations
-└── cache/                          # Cached LLM results
+├── src/                               # Core application package
+│   ├── __init__.py                    # Makes 'src' a package
+│   ├── evaluation/                    # Evaluation scripts sub-package
+│   │   ├── __init__.py                # Makes 'evaluation' a package
+│   │   ├── gold_standard.py           # Precision/Recall/F1 evaluation
+│   │   ├── consistency.py             # Logical consistency (OWL reasoner)
+│   │   └── graph_evaluation.py        # Graph metrics comparison
+│   ├── data_loader.py                 # Document loading and preprocessing
+│   ├── idea_extractor.py              # LLM-based concept extraction
+│   ├── ontology_extension_manager.py  # ⭐ Smart extension decisions
+│   ├── integrated_schema_pipeline.py  # ⭐ Main pipeline orchestrator
+│   ├── cached_schema_org_pipeline.py  # Resumable pipeline for development
+│   └── ... (and other modules)
+│
+├── data/                              # Data directory
+│   ├── raw_markdown/                  # Input datasheet files
+│   ├── gold_standard.json             # Ground truth for evaluation
+│   ├── electronics_schema.owl         # Formal schema for consistency checks
+│   └── integrated_output/             # Timestamped pipeline results
+│
+├── frontend/                          # Web dashboard files
+│   └── templates/
+│       └── dashboard.html
+│
+├── cache/                             # Cached intermediate results
+├── logs/                              # Application and pipeline logs
+└── visualizations/                    # Generated charts and graphs
 ```
 
-## Key Features
+## 🚀 Key Features
 
 ### 1. Intelligent Ontology Extension Management
 - **Multi-Method Similarity**: Embedding, lexical, technical specification, and category-based matching.
@@ -61,256 +80,131 @@ code/
 - **Technical Property Matching**: Specialized matchers for frequency ranges, impedance values, connector types.
 - **LLM Validation**: GPT-4 expert reasoning for complex ontological decisions.
 
-### 2. Comprehensive Schema.org Pipeline
-- **Document Processing**: Markdown datasheet loading and intelligent chunking.
-- **Concept Extraction**: LLM-powered identification of electronic components and their properties.
-- **Relationship Discovery**: Semantic relationship extraction between components.
-- **JSON-LD Generation**: Standards-compliant Schema.org markup with technical namespaces.
-- **Knowledge Graph Integration**: Neo4j storage with relationship mapping.
+### 2. Comprehensive & Parallelized Pipeline
+- **Concurrent Processing**: Employs multithreading for all I/O-bound tasks (LLM calls, database writes) for maximum performance.
+- **Resumable Workflow**: Caching system allows the pipeline to be resumed from any stage, saving time and API costs during development.
+- **Configurable Prompts**: All LLM prompts are centralized in a JSON file for easy tuning and experimentation.
 
-### 3. Advanced Visualization Suite
-- **Embedding Visualizations**: t-SNE and PCA projections of concept semantic space.
-- **Clustering Analysis**: K-means clustering revealing domain structure.
-- **Graph Topology**: Network analysis of concept relationships.
+### 3. Advanced Evaluation & Visualization Suite
+- **Quantitative Metrics**: Calculates precision, recall, and F1-score against a gold standard.
+- **Structural Analysis**: Compares graph-level metrics (density, connectivity) between the generated and gold standard ontologies.
+- **Logical Consistency**: Uses an OWL reasoner (HermiT) to validate the ontology against a formal schema, ensuring no logical contradictions.
 - **Interactive Dashboards**: Explorable visualizations for academic presentation.
 
-### 4. Quality Assurance & Monitoring
-- **Decision Audit Trail**: Complete reasoning and confidence scores for all decisions.
-- **Quality Metrics**: Precision, recall, automation rate, and confidence calibration.
-- **Ontology Growth Tracking**: Monitoring healthy vs. explosive expansion.
-- **Manual Review Queue**: Systematic handling of uncertain decisions.
+## 🚀 Streamlining the Pipeline for Efficiency
 
-## Streamlining the Pipeline for Efficiency
+Ontology extraction, especially with large language models, can be time-consuming and expensive. This project includes several features and best practices to streamline the process.
 
-Ontology extraction, especially with large language models, can be time-consuming and expensive. This project includes several features and best practices to streamline the process for both development and production runs.
- ### Subgraphs:
- [Document Chunks]
+### Subgraph Generation and Merging
+The pipeline processes documents by generating "subgraphs" (in-memory sets of concepts and relations) and then intelligently merging them into the main knowledge graph using Neo4j's `MERGE` functionality to prevent duplication.
+```
+[Document Chunks]
        |
        v
 [Extractors: idea_extractor, relation_extractor]
        |
-       +--> "Subgraph A" (in memory as lists of concepts/relations)
+       +--> "Subgraph A" (in memory)
        +--> "Subgraph B"
-       +--> "Subgraph C"
        |
        v
 [Graph Builder: schema_org_graph_builder]
        |
        |  (Takes Subgraph A)
        v
-[Neo4j Database] --- MERGE node "Concept 1" --> (Node created)
+[Neo4j Database] --- MERGE node "Concept 1" --> (Node is created)
        |
        |  (Takes Subgraph B, which also has "Concept 1")
        v
 [Neo4j Database] --- MERGE node "Concept 1" --> (Node already exists, do nothing)
-       |
-       |  (Takes Subgraph C)
-       v
-[Neo4j Database] --- MERGE edge "C1 -> C2"  --> (Edge created)
+```
 
 ### 1. Caching LLM and Embedding Results
-The most significant bottleneck is repeatedly calling the OpenAI API. The `cached_schema_org_pipeline.py` script implements a caching mechanism to avoid this.
+The `cached_schema_org_pipeline.py` script saves the output of each major stage to the `cache/` directory, allowing you to re-run the pipeline from any point without reprocessing everything. For most development work, **the cached pipeline should be your default**.
 
-- **How it Works**: Each time a result is fetched from the LLM (for concept extraction, relation extraction, etc.), it is saved to the `cache/` directory. On subsequent runs, if the input chunk is unchanged, the result is loaded directly from the cache instead of making a new API call.
-- **Benefit**: This saves enormous amounts of time and money during development and allows you to re-run the pipeline from any point without reprocessing everything.
-- **Usage**: For most development work, **the cached pipeline should be your default**. Use `python -m src.cached_schema_org_pipeline --resume-from <step>` to restart the pipeline from a specific stage (e.g., `concepts`, `schema`, `graph`).
+### 2. Parallel Execution
+Using Python's `concurrent.futures.ThreadPoolExecutor`, all I/O-bound tasks (API calls, database writes) are run in parallel, drastically reducing total runtime. The level of concurrency can be tuned in `config.py`.
 
-### 2. Efficient Database Transactions
-All graph updates for a batch of concepts are wrapped in a single Neo4j transaction.
+### 3. Efficient Database Transactions
+All graph updates for a batch of concepts are wrapped in a single Neo4j transaction, providing a significant performance boost over single-query approaches.
 
-- **Benefit**: Reduces thousands of individual network requests and database commits into one, providing a significant performance boost over single-query approaches.
-- **Best Practice**: This is already implemented in the graph builder modules. Always group related write operations (`MERGE`, `CREATE`) into a single `session.execute_write()` block.
+### 4. Ontology Management Dashboard
+The backend server (`ontology_management_backend.py`) and frontend (`dashboard.html`) provide a UI for managing the pipeline, reviewing uncertain concepts, and visualizing the ontology's state.
 
-### 3. Parallel Execution
-The extraction process for each source document is independent. For very large datasets, this step can be parallelized.
+## 🔬 Evaluation Framework
 
-- **Benefit**: Drastically reduces the total runtime on multi-core machines.
-- **Implementation**: Use Python's `concurrent.futures.ThreadPoolExecutor` to process multiple documents simultaneously, which is especially effective for I/O-bound tasks like making API calls.
+This project includes a multi-faceted evaluation framework located in the `src/evaluation/` package to ensure the quality, accuracy, and consistency of the generated ontology.
 
-### 4. Using the Ontology Management Dashboard
-The backend server (`ontology_management_backend.py`) is designed to support a web dashboard for managing the pipeline.
+### 1. Gold Standard Comparison (`gold_standard.py`)
+- **What it does:** Calculates **Precision, Recall, and F1-Score** for both extracted concepts and relationships.
+- **How it works:** It compares the pipeline's output against a manually created `data/gold_standard.json` file, which represents the "perfect" extraction for a subset of documents.
 
-- **Benefit**: Streamlines the most critical *manual* part of the process: **review and validation**. A dashboard allows you to:
-    -   Visualize the current state of the ontology.
-    -   Review concepts flagged as `UNCERTAIN` for manual approval.
-    -   Track pipeline runs and manage ontology versions.
-    -   Quickly identify and correct errors without needing to inspect raw files or databases.
+### 2. Graph-Based Structural Analysis (`graph_evaluation.py`)
+- **What it does:** Compares the high-level structural properties of the generated graph and the gold standard graph.
+- **How it works:** It uses the `networkx` library to calculate and compare metrics like **node/edge counts, density, and average degree**, providing insight into the overall shape and connectivity of the ontology.
 
-## Pipeline Performance
+### 3. Logical Consistency Validation (`consistency.py`)
+- **What it does:** Checks the generated ontology for logical contradictions using a formal reasoner.
+- **How it works:** It uses the `OwlReady2` library and the HermiT reasoner to validate the extracted facts against a set of rules defined in a formal schema (`data/electronics_schema.owl`), such as class disjointness and property constraints.
 
-### Quantitative Results
-- **255 concepts** extracted from technical datasheets
-- **7,009 relationships** discovered between components
-- **180 categories** automatically classified
-- **1536-dimensional embeddings** for semantic similarity
-- **85%+ automation rate** for extension decisions
-
-### Quality Metrics
-- **High precision** in concept mapping decisions
-- **Comprehensive coverage** of electronic component domain
-- **Schema.org compliance** for web semantic integration
-- **Academic reproducibility** with detailed logging
-
-## Installation & Setup
+## 🔧 Installation & Setup
 
 ### Prerequisites
 - Python 3.9+
+- Java (for the consistency checker)
 - Neo4j Desktop
-- OpenAI API Key
 
 ### Installation
 ```bash
-# Clone repository
+# Clone repository and navigate into the 'code' directory
 git clone <repository-url>
 cd code
 
-# Create virtual environment
+# Create and activate a virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install dependencies
+# Install the project and its dependencies in editable mode
+pip install -e .
 pip install -r requirements.txt
 
-# Configure environment
+# Configure environment by copying the example and editing it
 cp .env.example .env
 # Edit .env with your OpenAI API key and Neo4j credentials
 ```
 
 ### Neo4j Setup
-1. Install Neo4j Desktop.
-2. Create a database with the credentials specified in your `.env` file (default is `neo4j:ontology`).
-3. Start the database service.
-4. Verify the connection at http://localhost:7474.
+1.  Install and run Neo4j Desktop.
+2.  Create a new database with the credentials specified in your `.env` file (default is `neo4j:ontology`).
+3.  Ensure the database is started.
 
-## Usage
+## 🚀 Usage
 
 ### Recommended Development Workflow
-For iterative development, always use the cached pipeline to save on API costs and time.
+Use the cached pipeline to save time and API costs.
 ```bash
 # Run the pipeline, resuming from the concept extraction step
 python -m src.cached_schema_org_pipeline --resume-from concepts
 ```
+See the script's `--help` for all resume options.
 
 ### Running a Full, Clean Pipeline
 ```bash
 # Run the complete integrated pipeline from scratch
-python -m src.integrated_schema_pipeline
+python -m src.integrated_schema_pipeline```
 
-# Run with custom settings
-python -m src.integrated_schema_pipeline --max-chunks 100 --similarity-threshold 0.80
-```
-
-### Visualization and Validation
+### Running Evaluations
 ```bash
-# Create ontology visualizations
-python -m src.schema_ontology_visualizer
+# Run gold standard evaluation (precision/recall)
+python -m src.evaluation.gold_standard "data/integrated_output/YOUR_OUTPUT_FILE.jsonld"
 
-# Generate comprehensive knowledge graph visualizations
-python -m src.knowledge_graph_visualizer
+# Run graph metrics evaluation
+python -m src.evaluation.graph_evaluation "data/integrated_output/YOUR_OUTPUT_FILE.jsonld"
 
-# Validate a generated Schema.org output file
-python -m src.schema_org_validator data/schema_objects/your_output_file.jsonld
+# Run logical consistency evaluation
+python -m src.evaluation.consistency "data/integrated_output/YOUR_OUTPUT_FILE.jsonld"
 ```
 
-## Output Files
-
-### Primary Outputs
-- **`schema_org_objects_TIMESTAMP.jsonld`** - Complete Schema.org ontology in JSON-LD format.
-- **`integration_results_TIMESTAMP.json`** - Detailed decision analysis and statistics.
-- **`concept_mappings_TIMESTAMP.json`** - Mappings from new concepts to existing ones.
-- **`integration_report_TIMESTAMP.md`** - Human-readable summary report.
-
-### Visualizations
-- **`ontology_embeddings_2d.png`** - t-SNE and PCA concept visualization.
-- **`ontology_graph_structure.png`** - Network topology analysis.
-- **`interactive_ontology_embeddings.html`** - Explorable embedding space.
-- **`academic_dashboard.html`** - Comprehensive metrics dashboard.
-
-## Academic Applications
-
-### For Research Papers
-- **Methodology**: Novel hybrid approach to ontology extension.
-- **Evaluation**: Comprehensive metrics with confidence intervals.
-- **Reproducibility**: Full code, data, and configuration provided.
-- **Comparison**: Baseline methods and ablation studies supported.
-
-### For Thesis Work
-- **Literature Review**: Extensive documentation of theoretical foundations.
-- **Implementation**: Production-ready system with academic rigor.
-- **Validation**: Multiple evaluation approaches and quality metrics.
-- **Future Work**: Clear extension points and research directions.
-
-### For Presentations
-- **Interactive Demos**: Live exploration of concept embeddings and relationships.
-- **Quantitative Results**: Precise statistics on ontology quality and coverage.
-- **Visual Evidence**: Publication-ready figures and comprehensive dashboards.
-- **Case Studies**: Specific examples of intelligent extension decisions.
-
-## Key Algorithms
-
-### Ontology Extension Decision Algorithm
-```python
-def decide_extension(new_concept, existing_ontology):
-    # Multi-method similarity computation
-    similarities = {
-        'embedding': compute_embedding_similarity(new_concept, existing_ontology),
-        'lexical': compute_lexical_similarity(new_concept, existing_ontology),
-        'technical': compute_technical_similarity(new_concept, existing_ontology),
-        'category': compute_category_similarity(new_concept, existing_ontology)
-    }
-    
-    # Weighted fusion with domain-specific boosts
-    composite_score = combine_weighted_similarities(similarities)
-    
-    # Threshold-based decision with LLM validation
-    if composite_score >= 0.95:
-        return "MAP_EXACT"
-    elif composite_score >= 0.85:
-        return llm_validate_similarity(new_concept, best_match)
-    elif composite_score >= 0.70:
-        return "MANUAL_REVIEW"
-    else:
-        return "EXTEND_ONTOLOGY"
-```
-
-### Technical Property Matching
-```python
-def match_frequency_ranges(freq1, freq2):
-    # Parse frequency specifications (e.g., "2.4-5.8 GHz")
-    range1 = parse_frequency_range(freq1)
-    range2 = parse_frequency_range(freq2)
-    
-    # Calculate overlap ratio
-    overlap = compute_range_overlap(range1, range2)
-    total_span = compute_total_span(range1, range2)
-    
-    return overlap / total_span if total_span > 0 else 0.0
-```
-
-## Configuration
-
-### Similarity Thresholds (`config.py`)
-```python
-SIMILARITY_THRESHOLDS = {
-    'exact_match': 0.95,      # Automatic mapping
-    'high_similarity': 0.85,  # LLM validation required
-    'medium_similarity': 0.70, # Manual review queue
-    'low_similarity': 0.50     # Extend ontology
-}
-```
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- **OpenAI**: GPT-4 and embedding models for LLM-powered reasoning.
-- **Neo4j**: Graph database for ontology storage and relationship management.
-- **Schema.org**: Structured data vocabulary for web semantic integration.
-- **University of Queensland**: Academic support and research framework.
-
-## Contact
+## 📞 Contact
 
 For questions about this research or collaboration opportunities:
 - **Project Lead**: Snehin Kukreja
