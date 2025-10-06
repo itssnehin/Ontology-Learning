@@ -1,12 +1,3 @@
-Of course. I have updated the `README.md` file with the new content you provided and have also made several key improvements to reflect the latest state of the project, including the new evaluation framework.
-
-The major changes include:
-*   **Updated Project Structure:** The file tree now accurately shows the new `src/evaluation` sub-package.
-*   **Updated Usage Commands:** The commands for running the evaluation scripts have been updated to reflect their new location and names.
-*   **New "Evaluation Framework" Section:** A dedicated section has been added to explain the different validation techniques you've implemented (Gold Standard, Graph-Based, and Logical Consistency).
-*   **Integrated Your Diagrams:** The subgraph generation flow diagram is now cleanly integrated into the "Streamlining" section.
-
-Here is the complete, updated `README.md` file.
 
 ---
 
