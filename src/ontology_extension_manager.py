@@ -84,7 +84,9 @@ from difflib import SequenceMatcher
 import logging
 from dataclasses import dataclass, asdict
 
-from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, PROMPTS
+import re
+
 # We need to import the PipelineConfig to use it as a type hint
 from src.data_models import PipelineConfig, ExtensionDecision, ConceptMatch, ExtensionResult
 
@@ -416,87 +418,57 @@ class OntologyExtensionManager:
                                 best_match: ConceptMatch,
                                 top_matches: List[ConceptMatch]) -> ExtensionResult:
         """Use LLM to make final decision on high-similarity matches."""
-        
         concept_name = new_concept.get('name', 'Unknown')
-        # Get detailed info about existing concept
-        existing_concept_info = next(
-            (c for c in self._existing_concepts if c['name'] == best_match.existing_concept),
-            {}
-        )
         
-        prompt = f"""
-        As an expert in electronic component ontologies, determine if these two concepts represent the same entity or should be separate:
-
-        NEW CONCEPT:
-        Name: {new_concept.get('name', 'N/A')}
-        Category: {new_concept.get('category', 'N/A')}
-        Description: {new_concept.get('description', 'N/A')[:200]}
-        Frequency: {new_concept.get('frequency', 'N/A')}
-        Impedance: {new_concept.get('impedance', 'N/A')}
-        Connector: {new_concept.get('connector', 'N/A')}
-
-        EXISTING CONCEPT:
-        Name: {existing_concept_info.get('name', 'N/A')}
-        Category: {existing_concept_info.get('category', 'N/A')}
-        Description: {existing_concept_info.get('description', 'N/A')[:200]}
-        Frequency: {existing_concept_info.get('frequency', 'N/A')}
-        Impedance: {existing_concept_info.get('impedance', 'N/A')}
-        Connector: {existing_concept_info.get('connector', 'N/A')}
-
-        SIMILARITY ANALYSIS:
-        {best_match.reasoning}
-        Similarity Score: {best_match.similarity_score:.3f}
-
-        OTHER POTENTIAL MATCHES:
-        {chr(10).join([f"- {m.existing_concept}: {m.similarity_score:.3f} ({m.reasoning})" for m in top_matches[1:]])}
-
-        DECISION OPTIONS:
-        1. SAME_ENTITY: These represent the same component (map new to existing)
-        2. SIMILAR_VARIANT: Similar but distinct variants (extend ontology)
-        3. DIFFERENT_ENTITY: Different components despite similarity (extend ontology)
-        4. MERGE_NEEDED: Concepts should be merged with combined information
-
-        Respond in JSON format:
-        {{
-            "decision": "SAME_ENTITY|SIMILAR_VARIANT|DIFFERENT_ENTITY|MERGE_NEEDED",
-            "confidence": 0.0-1.0,
-            "reasoning": "Brief explanation of your decision"
-        }}
-        """
+        existing_concept_info = next((c for c in self._existing_concepts if c['name'] == best_match.existing_concept), {})
+        
+        # --- USE THE NEW, MORE ROBUST PROMPT ---
+        prompt_template = PROMPTS["ontology_extension_manager"]["llm_validation"]
+        prompt = prompt_template.format(
+            new_concept_name=new_concept.get('name', 'N/A'),
+            new_concept_category=new_concept.get('category', 'N/A'),
+            new_concept_description=new_concept.get('description', 'N/A')[:200],
+            existing_concept_name=existing_concept_info.get('name', 'N/A'),
+            existing_concept_category=existing_concept_info.get('category', 'N/A'),
+            existing_concept_description=existing_concept_info.get('description', 'N/A')[:200],
+            match_reasoning=best_match.reasoning,
+            match_score=f"{best_match.similarity_score:.3f}"
+        )
         
         try:
             response = self.llm.invoke(prompt)
-            result = json.loads(response.content)
             
-            # Map LLM decision to our enum
-            llm_decision = result['decision']
-            if llm_decision == "SAME_ENTITY":
-                decision = ExtensionDecision.MAP_EXACT
-            elif llm_decision == "MERGE_NEEDED":
-                decision = ExtensionDecision.MERGE_CONCEPTS
-            else:  # SIMILAR_VARIANT or DIFFERENT_ENTITY
-                decision = ExtensionDecision.EXTEND
+            # --- USE A ROBUST JSON PARSER ---
+            match = re.search(r'\{.*\}', response.content, re.DOTALL)
+            if not match:
+                raise json.JSONDecodeError("No JSON object found in LLM response", response.content, 0)
+            
+            result = json.loads(match.group(0))
+            
+            llm_decision = result.get('decision')
+            decision = ExtensionDecision.MAP_SIMILAR if llm_decision == "SAME_ENTITY" else ExtensionDecision.EXTEND
             
             return ExtensionResult(
                 concept_name=concept_name,
                 decision=decision,
                 target_concept=best_match.existing_concept if decision != ExtensionDecision.EXTEND else None,
-                confidence=result['confidence'],
-                reasoning=f"LLM validation: {result['reasoning']}",
+                confidence=result.get('confidence', 0.85), # Default to high confidence if key is missing
+                reasoning=f"LLM validation: {result.get('reasoning', 'No reasoning provided.')}",
                 matches=top_matches
             )
             
-        except Exception as e:
-            print(f"   ⚠️ LLM validation failed: {e}")
-            # Fallback to conservative decision
+        except (json.JSONDecodeError, AttributeError) as e:
+            # This will now catch the "Expecting value" error
+            logger.warning(f"   ⚠️ LLM validation for '{concept_name}' failed to produce valid JSON. Falling back to UNCERTAIN. Error: {e}")
             return ExtensionResult(
                 concept_name=concept_name,
                 decision=ExtensionDecision.UNCERTAIN,
                 target_concept=best_match.existing_concept,
                 confidence=0.5,
-                reasoning="LLM validation failed, requires manual review",
+                reasoning="LLM validation failed, requires manual review.",
                 matches=top_matches
             )
+
     
     def _deduplicate_matches(self, matches: List[ConceptMatch]) -> List[ConceptMatch]:
         """Remove duplicate matches, keeping the best score for each concept."""

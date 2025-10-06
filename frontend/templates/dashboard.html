@@ -742,11 +742,12 @@
             </div>
         </header>
 
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('pipeline')">Pipeline Configuration</button>
-            <button class="tab" onclick="switchTab('review')">Concept Review</button>
-            <button class="tab" onclick="switchTab('results')">Integration Results</button>
-        </div>
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('pipeline', event)">Pipeline Configuration</button>
+        <button class="tab" onclick="switchTab('review', event)">Concept Review</button>
+        <button class="tab" onclick="switchTab('results', event)">Integration Results</button>
+        <button class="tab" onclick="switchTab('qa', event)">QA System</button>
+    </div>
 
         <div id="pipeline-tab" class="tab-content active">
             <div class="main-grid">
@@ -970,10 +971,10 @@
                             <option>2025-09-08_10:15:33</option>
                         </select>
                         <div class="btn-group">
-                            <button class="btn btn-secondary active" onclick="showResultsView('summary')">Summary</button>
-                            <button class="btn btn-secondary" onclick="showResultsView('accepted')">Accepted</button>
-                            <button class="btn btn-secondary" onclick="showResultsView('discarded')">Discarded</button>
-                            <button class="btn btn-secondary" onclick="showResultsView('similarity')">Similarity Analysis</button>
+                            <button class="btn btn-secondary active" onclick="showResultsView('summary', event)">Summary</button>
+                            <button class="btn btn-secondary" onclick="showResultsView('accepted', event)">Accepted</button>
+                            <button class="btn btn-secondary" onclick="showResultsView('discarded', event)">Discarded</button>
+                            <button class="btn btn-secondary" onclick="showResultsView('similarity', event)">Similarity Analysis</button>
                         </div>
                     </div>
                 </div>
@@ -1316,7 +1317,33 @@
                 </div>
             </div>
         </div>
-    </div>
+
+        <div id="qa-tab" class="tab-content" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">❓ Ask the Knowledge Graph</h2>
+                </div>
+                <form id="qa-form">
+                    <div class="form-section">
+                        <label class="form-label">Enter your question in natural language:</label>
+                        <input type="text" class="form-control" id="qa-question" placeholder="e.g., Who manufactures the BPW34 photodiode?">
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary" id="ask-qa-btn">
+                            <span>💬</span> Ask Question
+                        </button>
+                    </div>
+                </form>
+
+                <div class="form-section" style="margin-top: 24px;">
+                    <label class="form-label">Answer:</label>
+                    <div id="qa-response-area" style="padding: 16px; background-color: var(--lighter); border-radius: 8px; min-height: 100px; line-height: 1.6; color: var(--dark);">
+                        Your answer will appear here.
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- END OF THE NEW BLOCK -->
 
     <script>
         // API Base URL - update this if your backend server runs on a different address
@@ -1329,10 +1356,7 @@
 
         // --- INITIALIZATION ---
         // This runs once the entire HTML page has loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeDashboard();
-            setInterval(updateStatus, 5000); // Poll status every 5 seconds
-        });
+        
 
         /**
         * Initializes the dashboard by loading initial data and setting up event listeners.
@@ -1375,30 +1399,95 @@
                     closeSimilarityModal();
                 }
             });
+            
+            document.getElementById('qa-form').addEventListener('submit', handleQaSubmit);
+
+        }
+
+        async function handleQaSubmit(event) {
+            event.preventDefault(); // Prevent the form from reloading the page
+            
+            const qaInput = document.getElementById('qa-question');
+            const question = qaInput.value.trim();
+
+            if (!question) {
+                showNotification('Please enter a question.', 'warning');
+                return;
+            }
+
+            const askBtn = document.getElementById('ask-qa-btn');
+            const responseArea = document.getElementById('qa-response-area');
+
+            // Update UI to show loading state
+            askBtn.disabled = true;
+            askBtn.innerHTML = `<span><div class="spinner"></div></span> Thinking...`;
+            responseArea.textContent = 'Querying the knowledge graph...';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/qa`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: question })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'The server returned an error.');
+                }
+
+                const data = await response.json();
+                responseArea.textContent = data.answer;
+
+            } catch (error) {
+                console.error("QA request failed:", error);
+                responseArea.textContent = `An error occurred: ${error.message}`;
+                showNotification('Failed to get an answer.', 'error');
+            } finally {
+                // Restore UI to idle state
+                askBtn.disabled = false;
+                askBtn.innerHTML = `<span>💬</span> Ask Question`;
+            }
         }
 
 
         // --- TAB AND VIEW MANAGEMENT ---
 
         /**
-        * Switches between the main tabs (Pipeline, Review, Results).
-        * @param {string} tabName - The name of the tab to switch to.
-        * @param {Event} event - The click event object.
-        */
+         * Switches between the main tabs (Pipeline, Review, Results, QA).
+         * @param {string} tabName - The name of the tab to switch to (e.g., 'pipeline', 'qa').
+         * @param {Event} event - The click event object passed from the HTML.
+         */
         function switchTab(tabName, event) {
-            // Update tab buttons
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            // 1. Update the visual state of the tab buttons
+            document.querySelectorAll('.tabs .tab').forEach(tabButton => {
+                tabButton.classList.remove('active');
+            });
+            // Add 'active' class to the button that was actually clicked
             event.currentTarget.classList.add('active');
 
-            // Update tab content visibility
-            document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
-            document.getElementById(`${tabName}-tab`).style.display = 'block';
+            // 2. Hide ALL tab content sections
+            document.querySelectorAll('.tab-content').forEach(contentDiv => {
+                contentDiv.style.display = 'none';
+            });
 
-            // Load data for the newly activated tab
+            // 3. Find the specific content section we want to show
+            const activeTabContent = document.getElementById(`${tabName}-tab`);
+
+            // 4. Show it (if it exists)
+            if (activeTabContent) {
+                activeTabContent.style.display = 'block';
+                addLogEntry(`Switched to '${tabName}' tab.`, 'info');
+            } else {
+                console.error(`Could not find tab content for id: #${tabName}-tab`);
+                addLogEntry(`Error: Could not find content for tab '${tabName}'.`, 'error');
+            }
+
+            // 5. Load any data needed for the newly visible tab
             if (tabName === 'review') {
                 loadPendingReviews();
             } else if (tabName === 'results') {
-                loadIntegrationResults();
+                // This is a placeholder for when you implement the results tab fully
+                // loadIntegrationResults(); 
             }
         }
 
@@ -1418,8 +1507,10 @@
             }
             
             // Update active state of the view buttons
-            document.querySelectorAll('#results-tab .btn-group .btn').forEach(btn => btn.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            document.querySelectorAll('#results-tab .btn-group .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active'); // Use currentTarget
             
             // Load data specifically for that view if needed
             if (view === 'discarded') {
@@ -1453,20 +1544,34 @@
         /**
         * Fetches and displays the latest ontology statistics.
         */
+        // In frontend/templates/dashboard.html, inside the <script> tag
+
+        // Load statistics
         async function loadStatistics() {
             try {
                 const response = await fetch(`${API_BASE}/api/stats`);
-                if (!response.ok) throw new Error('Failed to fetch stats');
+                if (!response.ok) {
+                    // If the server returns an error (like 500), handle it
+                    throw new Error(`Failed to fetch stats: ${response.statusText}`);
+                }
                 const stats = await response.json();
-                
+                // Update the UI with the data from the API
                 document.getElementById('stat-concepts').textContent = formatNumber(stats.product_nodes || 0);
-                document.getElementById('stat-relations').textContent = formatNumber(stats.total_relationships || 0);
-                // These will be dynamic in a real application
-                // document.getElementById('stat-automated').textContent = `${stats.automation_rate || 0}%`;
-                // document.getElementById('stat-pending').textContent = stats.pending_review || '0';
+                document.getElementById('stat-relations').textContent = formatNumber(stats.total_relations || 0);
+                document.getElementById('stat-automated').textContent = `${stats.automation_rate || 0}%`;
+                document.getElementById('stat-pending').textContent = stats.pending_review || 0;
+                
+                addLogEntry('Successfully loaded ontology statistics.', 'success');
+
             } catch (error) {
                 console.error('Failed to load statistics:', error);
-                addLogEntry('Failed to load statistics', 'error');
+                addLogEntry(error.message, 'error');
+                
+                // Set stats to 'Error' to give user feedback
+                document.getElementById('stat-concepts').textContent = 'Error';
+                document.getElementById('stat-relations').textContent = 'Error';
+                document.getElementById('stat-automated').textContent = 'Error';
+                document.getElementById('stat-pending').textContent = 'Error';
             }
         }
 
@@ -1474,14 +1579,34 @@
         * Fetches and displays the list of concepts pending manual review.
         */
         async function loadPendingReviews() {
-            // In a real application, this would fetch from an API endpoint like /api/reviews
-            const sampleReviews = [
-                { concept: 'Dimensional Characteristics', target: 'Material Specification', confidence: 0.68, reasoning: 'Medium confidence match requires expert validation.' },
-                { concept: 'Metal Plating', target: 'Plating Material', confidence: 0.72, reasoning: 'Lexical similarity is high, but technical context is ambiguous.' },
-                { concept: 'Sure Seal', target: 'Sealing Component', confidence: 0.65, reasoning: 'Potential synonym, but could also be a brand name.' }
-            ];
-            renderReviewTable(sampleReviews);
+            try {
+                // Ensure this URL exactly matches your Flask route
+                const response = await fetch(`${API_BASE}/api/reviews/pending`);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch pending reviews (Status: ${response.status})`);
+                }
+                const reviews = await response.json();
+                
+                renderReviewTable(reviews);
+                
+                // Update the counter on the tab button
+                const reviewCount = reviews.length;
+                const reviewTabButton = document.querySelector('button[onclick*="review"]');
+                if(reviewTabButton) {
+                    reviewTabButton.textContent = `Concept Review (${reviewCount})`;
+                }
+
+            } catch (error) {
+                console.error('Failed to load pending reviews:', error);
+                addLogEntry(error.message, 'error');
+                // Display an error in the table itself
+                const tbody = document.getElementById('review-table-body');
+                if(tbody) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--danger);">Error: Could not load pending reviews.</td></tr>`;
+                }
+            }
         }
+
 
         /**
         * Loads data for the "Discarded Concepts" view.
@@ -1512,8 +1637,14 @@
         /**
         * Starts the ontology pipeline execution via the backend.
         */
+// In frontend/templates/dashboard.html, inside the <script> tag
+
+        // Run pipeline
         async function runPipeline() {
+            // 1. Gather all configuration values from the form inputs
             const config = {
+                // ontology_mode is not used by the backend yet, but good to send
+                ontology_mode: document.querySelector('input[name="ontology-mode"]:checked').value,
                 max_chunks: parseInt(document.getElementById('max-chunks').value),
                 similarity_thresholds: {
                     exact_match: parseFloat(document.getElementById('threshold-exact').value),
@@ -1523,72 +1654,114 @@
                 },
                 enable_llm_validation: document.getElementById('enable-llm').checked,
                 enable_technical_matching: document.getElementById('enable-technical').checked,
+                // run_evaluations is not used by the backend yet, but good to send
+                run_evaluations: document.getElementById('run-evaluations').checked
             };
 
+            // 2. Update UI to show the pipeline is starting
+            addLogEntry('Starting pipeline with new configuration...', 'info');
+            document.getElementById('run-pipeline-btn').disabled = true;
+            document.getElementById('run-pipeline-btn').innerHTML = `<span><div class="spinner"></div></span> Running...`;
+            document.getElementById('cancel-pipeline-btn').disabled = false;
+            updatePipelineStatus('running', 'Initializing...');
+
+
             try {
-                addLogEntry('Starting pipeline with new configuration...', 'info');
+                // 3. Send the configuration to the backend to start the pipeline
                 const response = await fetch(`${API_BASE}/api/pipeline/start`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify(config)
                 });
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+                }
+
                 const result = await response.json();
                 
                 if (result.success) {
-                    updatePipelineStatus('running', 'Pipeline Running');
-                    document.getElementById('run-pipeline-btn').disabled = true;
-                    document.getElementById('cancel-pipeline-btn').disabled = false;
-                    addLogEntry(`Pipeline started with ID: ${result.process.process_id}`, 'success');
+                    addLogEntry(`Pipeline started successfully with ID: ${result.process.process_id}`, 'success');
+                    // 4. Start polling for progress updates
                     monitorPipelineProgress();
                 } else {
-                    addLogEntry(result.message || 'Failed to start pipeline', 'error');
+                    throw new Error(result.message || 'Backend failed to start pipeline.');
                 }
             } catch (error) {
                 console.error('Failed to start pipeline:', error);
-                addLogEntry(`Error starting pipeline: ${error.message}`, 'error');
+                addLogEntry(`Failed to start pipeline: ${error.message}`, 'error');
+                showNotification('Error starting pipeline.', 'error');
+                // Reset UI on failure
+                updatePipelineStatus('error', 'Failed');
+                document.getElementById('run-pipeline-btn').disabled = false;
+                document.getElementById('run-pipeline-btn').innerHTML = `<span>🚀</span> Run Pipeline`;
+                document.getElementById('cancel-pipeline-btn').disabled = true;
             }
         }
 
-        /**
-        * Monitors the progress of a running pipeline.
-        */
+        // Monitor pipeline progress
         function monitorPipelineProgress() {
+            // Create an interval that will call the status endpoint every 2 seconds
             const progressInterval = setInterval(async () => {
+                // Stop polling if the status is no longer 'running'
                 if (currentPipelineStatus !== 'running') {
                     clearInterval(progressInterval);
                     return;
                 }
+
                 try {
                     const response = await fetch(`${API_BASE}/api/pipeline/status`);
                     const status = await response.json();
+                    
+                    // Update the progress bar
+                    const progress = status.progress || 0;
+                    document.getElementById('pipeline-progress').style.width = `${progress}%`;
 
+                    // Update the status text if a new step is reported
+                    if (status.step) {
+                        const statusText = document.getElementById('pipeline-status-text');
+                        if(statusText.textContent !== status.step) {
+                            statusText.textContent = `Running: ${status.step}`;
+                            addLogEntry(`Progress: ${status.step} (${progress.toFixed(0)}%)`, 'info');
+                        }
+                    }
+
+                    // Check if the pipeline has finished, errored, or been cancelled
                     if (status.status !== 'running') {
-                        clearInterval(progressInterval);
-                        updatePipelineStatus(status.status, status.message);
-                        document.getElementById('run-pipeline-btn').disabled = false;
-                        document.getElementById('cancel-pipeline-btn').disabled = true;
+                        clearInterval(progressInterval); // Stop polling
+                        currentPipelineStatus = status.status;
                         
+                        // Reset the UI to its idle state
+                        const runBtn = document.getElementById('run-pipeline-btn');
+                        runBtn.disabled = false;
+                        runBtn.innerHTML = `<span>🚀</span> Run Pipeline`;
+                        document.getElementById('cancel-pipeline-btn').disabled = true;
+
                         if (status.status === 'completed') {
+                            updatePipelineStatus('completed', 'Pipeline Completed');
                             document.getElementById('pipeline-progress').style.width = '100%';
                             addLogEntry('Pipeline completed successfully!', 'success');
                             showNotification('Pipeline completed!', 'success');
-                            await loadStatistics(); // Refresh stats on completion
+                            await loadStatistics(); // Refresh stats to show new data
                         } else if (status.status === 'error') {
+                            updatePipelineStatus('error', 'Error');
                             addLogEntry(`Pipeline failed: ${status.message}`, 'error');
                             showNotification('Pipeline failed!', 'error');
+                        } else if (status.status === 'cancelled') {
+                            updatePipelineStatus('cancelled', 'Cancelled');
+                            addLogEntry('Pipeline was cancelled.', 'warning');
                         }
-                    } else {
-                        const progress = status.progress || 0;
-                        document.getElementById('pipeline-progress').style.width = `${progress}%`;
-                        document.getElementById('pipeline-status-text').textContent = `Running: ${status.step || '...'}`;
                     }
                 } catch (error) {
-                    console.error('Status check failed:', error);
-                    addLogEntry('Could not get pipeline status.', 'error');
-                    clearInterval(progressInterval);
+                    console.error('Failed to check pipeline status:', error);
+                    addLogEntry('Connection to backend lost. Stopping progress monitor.', 'error');
+                    clearInterval(progressInterval); // Stop polling on connection error
+                    updatePipelineStatus('error', 'Connection Lost');
                 }
-            }, 2000);
+            }, 2000); // Poll every 2 seconds
         }
 
         /**
@@ -1612,7 +1785,6 @@
         }
 
         // --- RENDERING FUNCTIONS (Populating Tables) ---
-
         function renderReviewTable(reviews) {
             const tbody = document.getElementById('review-table-body');
             tbody.innerHTML = '';
@@ -1785,5 +1957,140 @@
         function formatNumber(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
+
+        // Load pending reviews from the backend
+        async function loadPendingReviews() {
+            try {
+                const response = await fetch(`${API_BASE}/api/reviews/pending`);
+                if (!response.ok) throw new Error('Failed to fetch pending reviews');
+                const reviews = await response.json();
+                
+                renderReviewTable(reviews);
+                
+                // Update the counter on the tab button
+                const reviewCount = reviews.length;
+                const reviewTabButton = document.querySelector('.tab[onclick*="review"]');
+                reviewTabButton.textContent = `Concept Review (${reviewCount})`;
+
+            } catch (error) {
+                console.error('Failed to load pending reviews:', error);
+                addLogEntry('Failed to load pending reviews.', 'error');
+            }
+        }
+
+        // Render the review table with live data
+        function renderReviewTable(reviews) {
+            const tbody = document.getElementById('review-table-body');
+            tbody.innerHTML = '';
+
+            if (reviews.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 32px;">🎉 No concepts are currently pending review.</td></tr>';
+                return;
+            }
+
+            reviews.forEach(review => {
+                const row = document.createElement('tr');
+                // Use a default confidence if not present
+                const confidence = review.confidence || 0.70; 
+                const confidenceClass = confidence > 0.8 ? 'high' : confidence > 0.5 ? 'medium' : 'low';
+                
+                row.id = `review-row-${review.concept.replace(/\s+/g, '-')}`;
+                
+                row.innerHTML = `
+                    <td><strong>${review.concept}</strong></td>
+                    <td><span class="decision-badge review">Review</span></td>
+                    <td>${review.target || 'N/A'}</td>
+                    <td>
+                        <div class="confidence-meter">
+                            <div class="confidence-bar">
+                                <div class="confidence-fill ${confidenceClass}" style="width: ${confidence * 100}%"></div>
+                            </div>
+                            <span>${confidence.toFixed(2)}</span>
+                        </div>
+                    </td>
+                    <td>${review.reasoning || 'Awaiting review'}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn accept" onclick="acceptConcept('${review.concept}')">Accept</button>
+                            <button class="action-btn reject" onclick="rejectConcept('${review.concept}')">Reject</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Action for the 'Accept' button
+        async function acceptConcept(concept) {
+            try {
+                const response = await fetch(`${API_BASE}/api/reviews/accept/${encodeURIComponent(concept)}`, { method: 'POST' });
+                const result = await response.json();
+
+                if (result.success) {
+                    addLogEntry(`Accepted concept: ${concept}`, 'success');
+                    showNotification(result.message, 'success');
+                    
+                    // Remove the row from the table for immediate feedback
+                    const row = document.getElementById(`review-row-${concept.replace(/\s+/g, '-')}`);
+                    if (row) row.remove();
+                    
+                    // Update counters
+                    await loadStatistics();
+                    
+                } else {
+                    throw new Error(result.message || 'Failed to accept concept.');
+                }
+            } catch (error) {
+                console.error('Accept concept failed:', error);
+                addLogEntry(`Error accepting ${concept}: ${error.message}`, 'error');
+                showNotification(`Error accepting ${concept}`, 'error');
+            }
+        }
+
+        // Action for the 'Reject' button
+        async function rejectConcept(concept) {
+            try {
+                const response = await fetch(`${API_BASE}/api/reviews/reject/${encodeURIComponent(concept)}`, { method: 'POST' });
+                const result = await response.json();
+
+                if (result.success) {
+                    addLogEntry(`Rejected concept: ${concept}`, 'warning');
+                    showNotification(result.message, 'info');
+                    
+                    const row = document.getElementById(`review-row-${concept.replace(/\s+/g, '-')}`);
+                    if (row) row.remove();
+
+                    await loadStatistics();
+
+                } else {
+                    throw new Error(result.message || 'Failed to reject concept.');
+                }
+            } catch (error) {
+                console.error('Reject concept failed:', error);
+                addLogEntry(`Error rejecting ${concept}: ${error.message}`, 'error');
+                showNotification(`Error rejecting ${concept}`, 'error');
+            }
+        }
+
+        async function updateStatus() {
+            await checkNeo4jConnection();
+            if (currentPipelineStatus === 'running') {
+                try {
+                    const response = await fetch(`${API_BASE}/api/pipeline/status`);
+                    const status = await response.json();
+                    if (status.status !== 'running') {
+                        currentPipelineStatus = status.status;
+                        updatePipelineStatus(status.status, status.message);
+                    }
+                } catch (error) {
+                    console.error('Failed to update status:', error);
+                }
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDashboard();
+            setInterval(updateStatus, 5000); // Poll status every 5 seconds
+        });
 
     </script>

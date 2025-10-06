@@ -150,8 +150,22 @@ class IntegratedSchemaOrgPipeline:
                 concepts_for_mapping.append({'concept': concept_dict, 'target': decision.target_concept, 'confidence': decision.confidence})
             else: # UNCERTAIN or MERGE defaults to creation for this pipeline version
                 concepts_for_creation.append(concept_dict)
+        for decision in extension_decisions:
+            concept_dict = {
+                'name': decision.concept_name, 
+                'category': self._infer_category(decision.concept_name)
+            }
+            if decision.decision == ExtensionDecision.EXTEND:
+                concept_dict['status'] = 'new' # Mark as new
+                concepts_for_creation.append(concept_dict)
+            elif decision.decision in [ExtensionDecision.MAP_EXACT, ExtensionDecision.MAP_SIMILAR]:
+                concepts_for_mapping.append({'concept': concept_dict, 'target': decision.target_concept, 'confidence': decision.confidence})
+            else: # UNCERTAIN or MERGE
+                concept_dict['status'] = 'review' # <-- ADD THIS STATUS MARKER
+                concepts_for_creation.append(concept_dict)
+        
         return concepts_for_creation, concepts_for_mapping
-
+    
     def _create_schema_for_single_concept(self, concept_dict: Dict, all_chunks: List[Document]) -> Optional[Dict]:
         """Helper for parallel execution: creates one Schema.org object."""
         try:

@@ -21,10 +21,56 @@ from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from neo4j import GraphDatabase
 import pickle
-import logging
 
-from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
-from src.integrated_schema_pipeline import run_integrated_pipeline, PipelineConfig
+import logging
+from flask import Flask, jsonify, request, render_template
+from flask_cors import CORS
+
+# LangChain and Neo4j imports for the QA System
+from langchain_openai import ChatOpenAI
+from langchain.chains import GraphCypherQAChain
+from langchain_community.graphs import Neo4jGraph
+
+from src.config import (
+    NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD,
+    OPENAI_API_KEY, LLM_MODEL
+)
+from src.data_models import PipelineConfig
+from src.integrated_schema_pipeline import run_integrated_pipeline
+
+logger = logging.getLogger(__name__)
+
+def initialize_qa_chain():
+    """Initializes the GraphCypherQAChain and stores it globally."""
+    global qa_chain
+    logger.info("--- Initializing Knowledge Graph QA System ---")
+    try:
+        graph = Neo4jGraph(
+            url=NEO4J_URI,
+            username=NEO4J_USERNAME,
+            password=NEO4J_PASSWORD
+        )
+        graph.refresh_schema()
+        
+        llm = ChatOpenAI(model=LLM_MODEL, temperature=0, openai_api_key=OPENAI_API_KEY)
+        
+        qa_chain = GraphCypherQAChain.from_llm(
+            graph=graph,
+            llm=llm,
+            verbose=True, # Set to True to see generated Cypher in the terminal
+            allow_dangerous_requests=True
+        )
+        logger.info("✅ QA Chain initialized successfully.")
+        logger.info(f"   Graph Schema Detected:\n{graph.schema}")
+    except Exception as e:
+        logger.error(f"❌ CRITICAL: Failed to initialize QA Chain. The /api/qa endpoint will not work. Error: {e}", exc_info=True)
+        # This can happen if APOC is not installed or Neo4j is down.
+        qa_chain = None
+
+# --- FLASK APP AND MANAGER SETUP ---
+app = Flask(__name__, template_folder='../frontend/templates', static_folder='../frontend/static')
+CORS(app)
+
 class ProcessStatus(Enum):
     IDLE = "idle"
     RUNNING = "running"
@@ -248,58 +294,51 @@ class OntologyManager:
             }
     
     def _run_pipeline_thread(self, config: Dict[str, Any]):
-        """Run pipeline in background thread."""
+        """Run the integrated pipeline in a background thread and update status."""
         try:
-            # Update process status
-            self.current_process.step = "document_loading"
-            self.current_process.progress = 10.0
-            self.current_process.message = "Loading and processing documents..."
-            
-            time.sleep(1)  # Simulate work
-            
-            # Create pipeline config
+            # Create a real PipelineConfig object from the dashboard settings
             pipeline_config = PipelineConfig(
                 max_chunks=config.get('max_chunks'),
                 similarity_thresholds=config.get('similarity_thresholds'),
                 enable_llm_validation=config.get('enable_llm_validation', True),
-                output_dir=config.get('output_dir', '../data/pipeline_output')
+                enable_technical_matching=config.get('enable_technical_matching', True)
             )
             
-            # Update progress
-            self.current_process.step = "concept_extraction"
-            self.current_process.progress = 30.0
-            self.current_process.message = "Extracting concepts and relations..."
+            # Monkey-patch the logger to update our process status
+            # This is a clever way to get progress updates without changing the core pipeline code
+            def get_progress_logger(pipeline_step_name):
+                def log_and_update_progress(message, progress_percent):
+                    logger.info(message)
+                    if self.current_process:
+                        self.current_process.step = pipeline_step_name
+                        self.current_process.progress = progress_percent
+                        self.current_process.message = message
+                return log_and_update_progress
+
+            # For now, we'll just log major steps. This requires more complex integration
+            # to get fine-grained progress from within the pipeline.
+            self.current_process.step = "Loading Documents"
+            self.current_process.progress = 10.0
             
-            time.sleep(2)  # Simulate work
-            
-            # Run the actual pipeline
-            self.current_process.step = "similarity_analysis"
-            self.current_process.progress = 60.0
-            self.current_process.message = "Analyzing similarity and making decisions..."
-            
-            # Here you would call the actual pipeline
-            # results = run_integrated_pipeline(pipeline_config)
-            
-            time.sleep(3)  # Simulate work
-            
-            # Update to completion
-            self.current_process.step = "ontology_integration"
-            self.current_process.progress = 90.0
-            self.current_process.message = "Integrating new concepts into ontology..."
-            
-            time.sleep(1)  # Simulate work
+            # --- RUN THE ACTUAL PIPELINE ---
+            results = run_integrated_pipeline(pipeline_config)
             
             # Complete
-            self.current_process.status = ProcessStatus.COMPLETED
-            self.current_process.progress = 100.0
-            self.current_process.message = "Pipeline execution completed successfully"
+            with self.lock:
+                self.current_process.status = ProcessStatus.COMPLETED
+                self.current_process.progress = 100.0
+                self.current_process.message = "Pipeline execution completed successfully"
+                # You could attach the results to the process if needed
+                # self.current_process.results = results 
             
-            print(f"   ✅ Pipeline {self.current_process.process_id} completed successfully")
+            logger.info(f"✅ Pipeline {self.current_process.process_id} completed successfully")
             
         except Exception as e:
-            self.current_process.status = ProcessStatus.ERROR
-            self.current_process.message = f"Pipeline failed: {str(e)}"
-            print(f"   ❌ Pipeline {self.current_process.process_id} failed: {e}")
+            logger.error(f"❌ Pipeline thread failed: {e}", exc_info=True)
+            with self.lock:
+                if self.current_process:
+                    self.current_process.status = ProcessStatus.ERROR
+                    self.current_process.message = f"Pipeline failed: {str(e)}"
     
     def get_process_status(self) -> Dict[str, Any]:
         """Get current process status."""
@@ -591,11 +630,6 @@ class OntologyManager:
         if self.driver:
             self.driver.close()
 
-# Flask Application
-app = Flask(__name__, 
-           template_folder='../frontend/templates',
-           static_folder='../frontend/static')
-CORS(app)
 
 # Global ontology manager instance
 ontology_manager = OntologyManager()
@@ -606,10 +640,43 @@ def dashboard():
     """Serve the main dashboard using Flask templates."""
     return render_template('dashboard.html')
 
+# In src/ontology_management_backend.py
+
+# ... (imports)
+
 @app.route('/api/stats')
 def get_stats():
-    """Get current ontology statistics."""
-    return jsonify(ontology_manager.get_ontology_stats())
+    """Get current ontology statistics from the Neo4j database."""
+    try:
+        with ontology_manager.driver.session() as session:
+            # Query for the number of Product nodes (concepts)
+            concepts_result = session.run("MATCH (p:Product) RETURN count(p) AS concept_count")
+            total_concepts = concepts_result.single()["concept_count"]
+
+            # Query for the total number of relationships
+            rels_result = session.run("MATCH ()-[r]->() RETURN count(r) AS rel_count")
+            total_relations = rels_result.single()["rel_count"]
+            
+            # Query for concepts needing review (assuming you add a label for this)
+            # review_result = session.run("MATCH (p:Product {status: 'review'}) RETURN count(p) AS review_count")
+            # pending_review = review_result.single()["review_count"]
+            pending_review = 0 # Placeholder for now
+
+            # Automation rate is complex to calculate here, so we'll use a placeholder.
+            # This is better calculated at the end of a pipeline run.
+            automation_rate = 0 # Placeholder
+
+            return jsonify({
+                "product_nodes": total_concepts,
+                "total_relations": total_relations,
+                "pending_review": pending_review,
+                "automation_rate": automation_rate,
+                "success": True
+            })
+            
+    except Exception as e:
+        logger.error(f"Failed to get ontology stats: {e}", exc_info=True)
+        return jsonify({"error": "Could not connect to the database to fetch stats."}), 500
 
 @app.route('/api/graph')
 def get_graph():
@@ -695,19 +762,113 @@ def run_dashboard_server(host='localhost', port=5000, debug=True):
         ontology_manager.close()
         print("🔌 Ontology Manager closed")
 
+# --- ADD THESE NEW ROUTES ---
+
+@app.route('/api/reviews/pending')
+def get_pending_reviews():
+    """Fetches concepts from Neo4j that are labeled as :NeedsReview."""
+    try:
+        with ontology_manager.driver.session() as session:
+            # This query finds all nodes with the NeedsReview label.
+            # We are approximating target and reasoning for the demo.
+            query = """
+            MATCH (p:Product:NeedsReview)
+            RETURN p.name AS concept, 
+                   "Unknown" AS target, 
+                   p.confidence AS confidence, 
+                   "Medium confidence match requires expert validation." AS reasoning
+            LIMIT 100
+            """
+            result = session.run(query)
+            reviews = [record.data() for record in result]
+            return jsonify(reviews)
+    except Exception as e:
+        logger.error(f"Failed to fetch pending reviews: {e}", exc_info=True)
+        return jsonify({"error": "Database query for reviews failed."}), 500
+
+@app.route('/api/reviews/accept/<concept_name>', methods=['POST'])
+def accept_review(concept_name):
+    """Accepts a concept by removing the :NeedsReview label."""
+    try:
+        with ontology_manager.driver.session() as session:
+            # This query finds the node and removes the label.
+            query = """
+            MATCH (p:Product {name: $name})
+            REMOVE p:NeedsReview
+            SET p.status = 'approved'
+            RETURN p.name
+            """
+            result = session.run(query, name=concept_name)
+            if result.single():
+                logger.info(f"User accepted concept: {concept_name}")
+                return jsonify({"success": True, "message": f"'{concept_name}' has been approved."})
+            else:
+                return jsonify({"success": False, "message": "Concept not found."}), 404
+    except Exception as e:
+        logger.error(f"Failed to accept review for {concept_name}: {e}", exc_info=True)
+        return jsonify({"error": "Database update failed."}), 500
+
+@app.route('/api/reviews/reject/<concept_name>', methods=['POST'])
+def reject_review(concept_name):
+    """Rejects a concept by removing the :NeedsReview label and marking as rejected."""
+    try:
+        with ontology_manager.driver.session() as session:
+            # For this demo, we'll mark as rejected. In a real app, you might delete it.
+            query = """
+            MATCH (p:Product {name: $name})
+            REMOVE p:NeedsReview
+            SET p.status = 'rejected'
+            RETURN p.name
+            """
+            result = session.run(query, name=concept_name)
+            if result.single():
+                logger.info(f"User rejected concept: {concept_name}")
+                return jsonify({"success": True, "message": f"'{concept_name}' has been rejected."})
+            else:
+                return jsonify({"success": False, "message": "Concept not found."}), 404
+    except Exception as e:
+        logger.error(f"Failed to reject review for {concept_name}: {e}", exc_info=True)
+        return jsonify({"error": "Database update failed."}), 500
+    
+# --- NEW QA API ENDPOINT ---
+@app.route('/api/qa', methods=['POST'])
+def handle_qa_request():
+    """Receives a question, runs it through the QA chain, and returns the answer."""
+    if not qa_chain:
+        # This happens if the initialization failed
+        return jsonify({"error": "QA system is not available. Check server logs for details."}), 503 # Service Unavailable
+
+    data = request.json
+    question = data.get('question')
+
+    if not question:
+        return jsonify({"error": "No question provided."}), 400 # Bad Request
+
+    logger.info(f"Received question for QA Chain: '{question}'")
+    
+    try:
+        result = qa_chain.invoke({"query": question})
+        answer = result.get('result', "I could not find an answer in the knowledge graph.")
+        return jsonify({"answer": answer})
+    except Exception as e:
+        logger.error(f"Error invoking QA Chain: {e}", exc_info=True)
+        return jsonify({"error": "An error occurred while processing the question."}), 500
+
+# --- MAIN EXECUTION BLOCK ---
 if __name__ == "__main__":
-    import argparse
+    # Create the manager instance first
+    ontology_manager = OntologyManager()
     
-    parser = argparse.ArgumentParser(description="Run Ontology Management Dashboard")
-    parser.add_argument("--host", default="localhost", help="Server host")
-    parser.add_argument("--port", type=int, default=5000, help="Server port")
-    parser.add_argument("--no-debug", action="store_true", help="Disable debug mode")
+    # Then initialize the QA chain which may need the DB connection
+    initialize_qa_chain()
     
-    args = parser.parse_args()
-    
-    run_dashboard_server(
-        host=args.host,
-        port=args.port,
-        debug=not args.no_debug
-    )
-                        
+    try:
+        # Run the Flask web server
+        app.run(host='0.0.0.0', port=5000, debug=True)
+    except KeyboardInterrupt:
+        logger.info("Server shutdown requested.")
+    finally:
+        # Ensure the manager's connection is closed on exit
+        if ontology_manager:
+            ontology_manager.close()
+        logger.info("Ontology Manager connection closed.")

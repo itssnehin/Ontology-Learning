@@ -115,6 +115,19 @@ class SchemaOrgGraphBuilder:
         else:
             logger.warning(f"Skipping node creation for object with no name: {obj}")
 
+        status = obj.get('status')
+        
+        # Build the query with an optional additional label
+        query = f"""
+        MERGE (n:{label} {{name: $name}})
+        SET n += $props
+        """
+        if status == 'review':
+            query += " SET n:NeedsReview" # Add the :NeedsReview label
+        # --- END OF NEW LOGIC ---
+            
+        tx.run(query, name=obj.get("name"), props=node_props)
+
 
     def _create_schema_org_relationships(self, tx: Transaction, obj: Dict):
         """Creates relationships for a given object."""

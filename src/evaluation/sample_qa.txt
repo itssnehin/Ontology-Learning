@@ -1,0 +1,36 @@
+> Who is the manufacturer of the BPW34?
+
+Thinking...
+
+> Entering new GraphCypherQAChain chain...
+Generated Cypher:
+MATCH (p:Product {name: 'BPW34'})-[:MANUFACTURED_BY]->(m:Organization) RETURN m.name
+
+Full Context:
+[{'m.name': 'Vishay Telefunken'}]
+> Finished chain.
+
+---
+Question: Who is the manufacturer of the BPW34?
+Answer: The manufacturer of the BPW34 is Vishay Telefunken.
+---
+
+> What is the impedance of the 2.45 GHz Antenna?
+
+Thinking...
+
+> Entering new GraphCypherQAChain chain...
+Generated Cypher:
+MATCH (p:Product {name: '2.45 GHz Antenna'}) RETURN p.`elec:impedance`
+
+Full Context:
+[{'p.`elec:impedance`': '50 O'}]
+> Finished chain.
+
+---
+Question: What is the impedance of the 2.45 GHz Antenna?
+Answer: The impedance of the 2.45 GHz Antenna is 50 O.
+---
+
+> exit
+Exiting QA system. Goodbye!
