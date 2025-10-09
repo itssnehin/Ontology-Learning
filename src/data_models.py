@@ -3,7 +3,6 @@ from typing import Dict, List, Optional
 from enum import Enum
 import numpy as np
 
-# --- Data Models from ontology_extension_manager.py ---
 
 class ExtensionDecision(Enum):
     EXTEND = "extend_ontology"

@@ -14,7 +14,7 @@ from src.ontology_extension_manager import OntologyExtensionManager
 from src.schema_org_extractor import SchemaOrgExtractor
 from src.schema_org_relation_extractor import extract_schema_org_relations, SchemaOrgRelationExtractor
 from src.schema_org_graph_builder import SchemaOrgGraphBuilder
-from src.config import CACHE_DIR, MAX_WORKERS
+from src.config import CACHE_DIR, MAX_WORKERS, LLM_MODEL
 from src.data_models import PipelineConfig, ExtensionResult, ExtensionDecision
 
 logger = logging.getLogger(__name__)
@@ -39,7 +39,7 @@ def clear_cache(start_step: str):
                 logger.warning(f"Clearing cache for step: '{step_to_clear}' ({CACHE_PATHS[step_to_clear].name})")
                 CACHE_PATHS[step_to_clear].unlink()
 
-def run_cached_pipeline(resume_from: str = 'start', clear_downstream: bool = True):
+def run_cached_pipeline(resume_from: str = 'start', clear_downstream: bool = True, llm_model: str = LLM_MODEL):
     """
     Runs the ontology pipeline with caching, allowing resumption from intermediate steps.
     """
@@ -70,7 +70,7 @@ def run_cached_pipeline(resume_from: str = 'start', clear_downstream: bool = Tru
             extracted_concepts = pickle.load(f)
     else:
         logger.info("\n🧠 Step 2: Extracting concepts (in parallel)...")
-        extracted_concepts = extract_ideas(chunks, max_workers=MAX_WORKERS)
+        extracted_concepts = extract_ideas(chunks, model_name=llm_model, max_workers=MAX_WORKERS)
         with open(CACHE_PATHS["concepts"], "wb") as f:
             pickle.dump(extracted_concepts, f)
     logger.info(f"   ✅ Have {len(extracted_concepts)} unique concepts.")

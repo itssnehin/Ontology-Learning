@@ -24,7 +24,7 @@ from src.schema_org_graph_builder import SchemaOrgGraphBuilder
 from src.ontology_extension_manager import OntologyExtensionManager, ExtensionDecision, ExtensionResult
 from src.data_models import PipelineConfig, IntegrationResults, ExtensionDecision, ExtensionResult
 from src.ontology_extension_manager import OntologyExtensionManager
-from src.config import MAX_WORKERS
+from src.config import MAX_WORKERS, LLM_MODEL
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +46,7 @@ class IntegratedSchemaOrgPipeline:
 
     # --- Main Pipeline Orchestrator ---
     
-    def run_integrated_pipeline(self) -> IntegrationResults:
+    def run_integrated_pipeline(self, llm_model: str = LLM_MODEL) -> IntegrationResults:
         """Executes the complete integrated pipeline and returns structured results."""
         start_time = datetime.now()
         logger.info("🚀" + "="*70)
@@ -55,13 +55,13 @@ class IntegratedSchemaOrgPipeline:
 
         # --- EXECUTE PIPELINE STEPS ---
         chunks = self._step_1_load_documents()
-        extracted_concepts = self._step_2_extract_concepts(chunks)
+        extracted_concepts = self._step_2_extract_concepts(chunks, llm_model=llm_model)
         self._step_3_and_4_load_ontology_and_embed()
         extension_decisions = self._step_5_analyze_concepts_parallel(extracted_concepts)
         
         concepts_for_creation, concepts_for_mapping = self._route_concepts_based_on_decisions(extension_decisions)
         
-        new_schema_objects = self._step_6_create_schema_objects_parallel(concepts_for_creation, chunks)
+        new_schema_objects = self._step_6_create_schema_objects_parallel(concepts_for_creation, chunks, llm_model=llm_model)
         mapped_objects = self._step_7_process_mappings(concepts_for_mapping)
         
         self._step_8_update_knowledge_graph_parallel(new_schema_objects, mapped_objects)
@@ -101,10 +101,10 @@ class IntegratedSchemaOrgPipeline:
         logger.info(f"   ✅ Processed {len(chunks)} document chunks")
         return chunks
 
-    def _step_2_extract_concepts(self, chunks: List[Document]) -> List[str]:
+    def _step_2_extract_concepts(self, chunks: List[Document], llm_model: str) -> List[str]:
         """Extracts key concepts from document chunks in parallel."""
         logger.info("\n🧠 Step 2: Extracting concepts from documents (in parallel)...")
-        extracted_concepts = extract_ideas(chunks, max_workers=MAX_WORKERS)
+        extracted_concepts = extract_ideas(chunks, model_name=llm_model, max_workers=MAX_WORKERS)
         logger.info(f"   ✅ Extracted {len(extracted_concepts)} unique concepts")
         return extracted_concepts
 
@@ -166,12 +166,12 @@ class IntegratedSchemaOrgPipeline:
         
         return concepts_for_creation, concepts_for_mapping
     
-    def _create_schema_for_single_concept(self, concept_dict: Dict, all_chunks: List[Document]) -> Optional[Dict]:
+    def _create_schema_for_single_concept(self, concept_dict: Dict, all_chunks: List[Document], llm_model: str) -> Optional[Dict]:
         """Helper for parallel execution: creates one Schema.org object."""
         try:
             concept_name = concept_dict['name']
             pseudo_chunk = self._create_concept_chunks([concept_dict], all_chunks)
-            schema_extractor = SchemaOrgExtractor() # Instantiate the class
+            schema_extractor = SchemaOrgExtractor(model_name=llm_model) # Instantiate the class
             base_objects = schema_extractor.extract_schema_org_data(pseudo_chunk, [concept_name])
             if not base_objects:
                 return None
@@ -293,10 +293,10 @@ class IntegratedSchemaOrgPipeline:
 
 
 # --- Main execution block ---
-def run_integrated_pipeline(config: Optional[PipelineConfig] = None) -> IntegrationResults:
+def run_integrated_pipeline(config: Optional[PipelineConfig] = None, llm_model: str = LLM_MODEL) -> IntegrationResults:
     """Main function to initialize and run the pipeline."""
     pipeline = IntegratedSchemaOrgPipeline(config)
-    return pipeline.run_integrated_pipeline()
+    return pipeline.run_integrated_pipeline(llm_model=llm_model)
 
 if __name__ == "__main__":
     import argparse

@@ -4,6 +4,12 @@ Ontology Management Backend
 Provides API endpoints and process management for the ontology dashboard.
 """
 
+from src.evaluation.gold_standard import evaluate_ontology
+from src.evaluation.graph import compare_graph_metrics, _load_gold_standard_graph, _load_generated_graph
+from src.evaluation.consistency import evaluate_consistency
+import networkx as nx
+import requests
+
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent))
@@ -37,6 +43,8 @@ from src.config import (
 )
 from src.data_models import PipelineConfig
 from src.integrated_schema_pipeline import run_integrated_pipeline
+
+from src.cached_schema_org_pipeline import run_cached_pipeline, clear_cache
 
 logger = logging.getLogger(__name__)
 
@@ -296,38 +304,41 @@ class OntologyManager:
     def _run_pipeline_thread(self, config: Dict[str, Any]):
         """Run the integrated pipeline in a background thread and update status."""
         try:
-            # Create a real PipelineConfig object from the dashboard settings
-            pipeline_config = PipelineConfig(
-                max_chunks=config.get('max_chunks'),
-                similarity_thresholds=config.get('similarity_thresholds'),
-                enable_llm_validation=config.get('enable_llm_validation', True),
-                enable_technical_matching=config.get('enable_technical_matching', True)
-            )
+            resume_step = config.get('resume_from', 'start')
+            llm_model = config.get('llm_model', LLM_MODEL) 
             
-            # Monkey-patch the logger to update our process status
-            # This is a clever way to get progress updates without changing the core pipeline code
-            def get_progress_logger(pipeline_step_name):
-                def log_and_update_progress(message, progress_percent):
-                    logger.info(message)
-                    if self.current_process:
-                        self.current_process.step = pipeline_step_name
-                        self.current_process.progress = progress_percent
-                        self.current_process.message = message
-                return log_and_update_progress
+            self.current_process.step = f"Initializing"
+            self.current_process.message = f"Initializing pipeline run (Mode: {resume_step})..."
+            self.current_process.progress = 5.0
 
-            # For now, we'll just log major steps. This requires more complex integration
-            # to get fine-grained progress from within the pipeline.
-            self.current_process.step = "Loading Documents"
-            self.current_process.progress = 10.0
-            
-            # --- RUN THE ACTUAL PIPELINE ---
-            results = run_integrated_pipeline(pipeline_config)
-            
+            if resume_step == 'start':
+                logger.info("🚀 Starting a full, clean pipeline run from scratch...")
+                self.current_process.message = "Clearing cache for a full run..."
+                
+                clear_cache('chunks') 
+                
+                
+                pipeline_config = PipelineConfig(
+                    max_chunks=config.get('max_chunks'),
+                    similarity_thresholds=config.get('similarity_thresholds'),
+                    enable_llm_validation=config.get('enable_llm_validation', True),
+                    enable_technical_matching=config.get('enable_technical_matching', True)
+                )
+                
+                self.current_process.message = "Running integrated pipeline from scratch..."
+                run_integrated_pipeline(pipeline_config, llm_model=llm_model)
+
+            else:
+                logger.info(f"🚀 Resuming cached pipeline from step: '{resume_step}'...")
+                self.current_process.message = f"Resuming cached pipeline from step: '{resume_step}'..."
+                run_cached_pipeline(resume_from=resume_step, llm_model=llm_model)
+
             # Complete
             with self.lock:
                 self.current_process.status = ProcessStatus.COMPLETED
                 self.current_process.progress = 100.0
                 self.current_process.message = "Pipeline execution completed successfully"
+                self.current_process.output_file = str(latest_file) if latest_file else None
                 # You could attach the results to the process if needed
                 # self.current_process.results = results 
             
@@ -829,7 +840,8 @@ def reject_review(concept_name):
     except Exception as e:
         logger.error(f"Failed to reject review for {concept_name}: {e}", exc_info=True)
         return jsonify({"error": "Database update failed."}), 500
-    
+
+
 # --- NEW QA API ENDPOINT ---
 @app.route('/api/qa', methods=['POST'])
 def handle_qa_request():
@@ -853,6 +865,85 @@ def handle_qa_request():
     except Exception as e:
         logger.error(f"Error invoking QA Chain: {e}", exc_info=True)
         return jsonify({"error": "An error occurred while processing the question."}), 500
+
+@app.route('/api/evaluate/gold_standard', methods=['POST'])
+def run_gold_standard_evaluation():
+    data = request.json
+    generated_file_path = data.get('generated_file')
+    if not generated_file_path:
+        return jsonify({"error": "Missing 'generated_file' path."}), 400
+    
+    # Assuming the gold standard is always at the same location
+    gold_standard_path = Path("data/gold_standard.json")
+    
+    results = evaluate_ontology(Path(generated_file_path), gold_standard_path)
+    return jsonify(results)
+
+@app.route('/api/evaluate/graph_metrics', methods=['POST'])
+def run_graph_metrics_evaluation():
+    data = request.json
+    generated_file_path = data.get('generated_file')
+    if not generated_file_path:
+        return jsonify({"error": "Missing 'generated_file' path."}), 400
+        
+    gold_standard_path = Path("data/gold_standard.json")
+
+    G_gold = _load_gold_standard_graph(gold_standard_path)
+    G_generated = _load_generated_graph(Path(generated_file_path))
+    
+    results = compare_graph_metrics(G_gold, G_generated)
+    return jsonify(results)
+
+@app.route('/api/evaluate/consistency', methods=['POST'])
+def run_consistency_evaluation():
+    data = request.json
+    generated_file_path = data.get('generated_file')
+    if not generated_file_path:
+        return jsonify({"error": "Missing 'generated_file' path."}), 400
+        
+    schema_path = Path("data/electronics_schema.owl")
+    
+    # Note: evaluate_consistency prints to console, we may want to capture that output later
+    # For now, we'll just run it and return a success message.
+    try:
+        evaluate_consistency(Path(generated_file_path), schema_path)
+        return jsonify({"success": True, "message": "Consistency check completed. See server logs for results."})
+    except Exception as e:
+        logger.error(f"Consistency evaluation failed: {e}", exc_info=True)
+        return jsonify({"error": "Consistency evaluation failed on the server."}), 500
+
+@app.route('/api/openai/models')
+def get_openai_models():
+    """
+    Fetches the list of available GPT models from the OpenAI API.
+    This acts as a secure proxy to avoid exposing the API key on the frontend.
+    """
+    try:
+        headers = {
+            "Authorization": f"Bearer {OPENAI_API_KEY}"
+        }
+        response = requests.get("https://api.openai.com/v1/models", headers=headers)
+        
+        # Check for a successful response
+        response.raise_for_status() 
+        
+        models_data = response.json()
+        
+        # Filter for models that are typically used for chat/completion (e.g., gpt models)
+        # and sort them to have newer ones potentially first.
+        gpt_models = sorted(
+            [model['id'] for model in models_data.get('data', []) if 'gpt' in model['id']],
+            reverse=True
+        )
+        
+        return jsonify(gpt_models)
+
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Failed to fetch models from OpenAI API: {e}", exc_info=True)
+        return jsonify({"error": "Could not connect to OpenAI API."}), 502 # Bad Gateway
+    except Exception as e:
+        logger.error(f"An unexpected error occurred while fetching models: {e}", exc_info=True)
+        return jsonify({"error": "An internal server error occurred."}), 500
 
 # --- MAIN EXECUTION BLOCK ---
 if __name__ == "__main__":

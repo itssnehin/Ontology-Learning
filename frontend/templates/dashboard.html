@@ -758,24 +758,43 @@
                     
                     <form id="pipeline-form">
                         <div class="form-section">
-                            <label class="form-label">Ontology Mode</label>
-                            <div class="radio-group">
-                                <label class="radio-label">
-                                    <input type="radio" name="ontology-mode" value="generate" checked>
-                                    <span>Generate New Ontology</span>
-                                </label>
-                                <label class="radio-label">
-                                    <input type="radio" name="ontology-mode" value="use-existing">
-                                    <span>Use Existing Ontology</span>
+                            <label class="form-label">Maximum Chunks to Process</label>
+                            <div style="display: flex; align-items: center; gap: 16px;">
+                                <input type="number" class="form-control" id="max-chunks" value="100" min="1">
+                                <label class="checkbox-label" style="margin-top: 0; border: none; padding: 0;">
+                                    <input type="checkbox" id="process-all-chunks">
+                                    <span>Process All</span>
                                 </label>
                             </div>
                         </div>
+                        <div class="form-section">
+                            <label class="form-label">Execution Mode</label>
+                            <select class="form-control" id="execution-mode">
+                                <option value="start">Start from Scratch (Full Run)</option>
+                                <option value="chunks">Resume after Loading Chunks</option>
+                                <option value="concepts">Resume after Extracting Concepts</option>
+                                <option value="decisions">Resume after Making Decisions</option>
+                                <option value="schema_objects">Resume after Creating Schemas</option>
+                                <option value="graph">Resume to Update Graph Only</option>
+                            </select>
+                        </div>
+                        <div class="form-section">
+                            <label class="form-label">LLM Model</label>
+                            <select class="form-control" id="llm-model-selector">
+                                <option value="gpt-4o">gpt-4o (Recommended)</option>
+                                <option value="gpt-4.1-nano">gpt-4.1-nano</option>
+                                <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+                                <option value="gpt-5">gpt-5 (Not Recommended)</option>
+                                <option value="gpt-3.5-turbo">gpt-3.5-turbo (Faster, Less Accurate)</option>
+                            </select>
+                        </div>
 
+                        <!--
                         <div class="form-section">
                             <label class="form-label">Maximum Chunks to Process</label>
                             <input type="number" class="form-control" id="max-chunks" value="50" min="1" max="500">
                         </div>
-
+                        -->
                         <div class="form-section">
                             <label class="form-label">Similarity Thresholds</label>
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
@@ -1353,10 +1372,7 @@
         let currentPipelineStatus = 'idle';
         let currentFilter = 'all';
         let reviewedConcepts = new Map();
-
-        // --- INITIALIZATION ---
-        // This runs once the entire HTML page has loaded
-        
+        let lastLogMessage = ''; // <-- ADD THIS LINE
 
         /**
         * Initializes the dashboard by loading initial data and setting up event listeners.
@@ -1365,6 +1381,7 @@
             await checkNeo4jConnection();
             await loadStatistics();
             await loadPendingReviews();
+            await loadLlmModels(); 
             setupEventListeners();
             addLogEntry('Dashboard initialized. Ready for operations.', 'info');
         }
@@ -1401,6 +1418,22 @@
             });
             
             document.getElementById('qa-form').addEventListener('submit', handleQaSubmit);
+            
+            // --- ADD THIS NEW LOGIC ---
+            const maxChunksInput = document.getElementById('max-chunks');
+            const processAllCheckbox = document.getElementById('process-all-chunks');
+
+            // Add a listener to the checkbox
+            processAllCheckbox.addEventListener('change', () => {
+                // If the box is checked, disable the number input. Otherwise, enable it.
+                if (processAllCheckbox.checked) {
+                    maxChunksInput.disabled = true;
+                    maxChunksInput.style.backgroundColor = '#e2e8f0'; // Visual feedback
+                } else {
+                    maxChunksInput.disabled = false;
+                    maxChunksInput.style.backgroundColor = 'var(--white)';
+                }
+            });
 
         }
 
@@ -1642,10 +1675,20 @@
         // Run pipeline
         async function runPipeline() {
             // 1. Gather all configuration values from the form inputs
+            const processAllCheckbox = document.getElementById('process-all-chunks');
+            
+            const maxChunksInput = document.getElementById('max-chunks');
+
+            // --- THIS IS THE KEY CHANGE ---
+            // If 'Process All' is checked, set max_chunks to null (or -1, or another special value).
+            // The Python backend will interpret `None` as "no limit".
+            const maxChunksValue = processAllCheckbox.checked ? null : parseInt(maxChunksInput.value);
             const config = {
                 // ontology_mode is not used by the backend yet, but good to send
-                ontology_mode: document.querySelector('input[name="ontology-mode"]:checked').value,
-                max_chunks: parseInt(document.getElementById('max-chunks').value),
+                // ontology_mode: document.querySelector('input[name="ontology-mode"]:checked').value,
+                resume_from: document.getElementById('execution-mode').value
+                llm_model: document.getElementById('llm-model-selector').value,
+                max_chunks: maxChunksValue,
                 similarity_thresholds: {
                     exact_match: parseFloat(document.getElementById('threshold-exact').value),
                     high_similarity: parseFloat(document.getElementById('threshold-high').value),
@@ -1657,15 +1700,12 @@
                 // run_evaluations is not used by the backend yet, but good to send
                 run_evaluations: document.getElementById('run-evaluations').checked
             };
-
             // 2. Update UI to show the pipeline is starting
             addLogEntry('Starting pipeline with new configuration...', 'info');
             document.getElementById('run-pipeline-btn').disabled = true;
             document.getElementById('run-pipeline-btn').innerHTML = `<span><div class="spinner"></div></span> Running...`;
             document.getElementById('cancel-pipeline-btn').disabled = false;
             updatePipelineStatus('running', 'Initializing...');
-
-
             try {
                 // 3. Send the configuration to the backend to start the pipeline
                 const response = await fetch(`${API_BASE}/api/pipeline/start`, {
@@ -1719,7 +1759,11 @@
                     // Update the progress bar
                     const progress = status.progress || 0;
                     document.getElementById('pipeline-progress').style.width = `${progress}%`;
-
+                    
+                    if (status.message && status.message !== lastLogMessage) {
+                        addLogEntry(status.message, 'info'); // Use the REAL addLogEntry function
+                        lastLogMessage = status.message; // Remember the last message
+                    }
                     // Update the status text if a new step is reported
                     if (status.step) {
                         const statusText = document.getElementById('pipeline-status-text');
@@ -1754,12 +1798,14 @@
                             updatePipelineStatus('cancelled', 'Cancelled');
                             addLogEntry('Pipeline was cancelled.', 'warning');
                         }
+                        lastLogMessage = ''; // Reset for the next run
                     }
                 } catch (error) {
                     console.error('Failed to check pipeline status:', error);
                     addLogEntry('Connection to backend lost. Stopping progress monitor.', 'error');
                     clearInterval(progressInterval); // Stop polling on connection error
                     updatePipelineStatus('error', 'Connection Lost');
+                    lastLogMessage = ''; // Reset for the next run
                 }
             }, 2000); // Poll every 2 seconds
         }
@@ -2092,5 +2138,44 @@
             initializeDashboard();
             setInterval(updateStatus, 5000); // Poll status every 5 seconds
         });
+
+        /**
+        * Fetches the list of available LLM models from the backend and populates the dropdown.
+        */
+        async function loadLlmModels() {
+            const selector = document.getElementById('llm-model-selector');
+            try {
+                const response = await fetch(`${API_BASE}/api/openai/models`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch models from server.');
+                }
+                const models = await response.json();
+                
+                selector.innerHTML = ''; // Clear "Loading..."
+                
+                if (models.length === 0) {
+                    selector.innerHTML = '<option value="">No models found</option>';
+                    return;
+                }
+
+                models.forEach(modelId => {
+                    const option = document.createElement('option');
+                    option.value = modelId;
+                    option.textContent = modelId;
+                    
+                    // Pre-select a recommended default model
+                    if (modelId === 'gpt-4o' || modelId === 'gpt-4.1-nano') {
+                        option.selected = true;
+                    }
+                    
+                    selector.appendChild(option);
+                });
+                addLogEntry('Successfully loaded available LLM models.', 'success');
+            } catch (error) {
+                console.error('Failed to load LLM models:', error);
+                selector.innerHTML = '<option value="">Error loading models</option>';
+                addLogEntry(error.message, 'error');
+            }
+        }
 
     </script>
