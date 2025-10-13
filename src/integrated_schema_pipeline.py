@@ -5,7 +5,7 @@ This version parallelizes all I/O-bound extraction and integration steps for max
 """
 import json
 import logging
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Callable 
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
@@ -46,7 +46,7 @@ class IntegratedSchemaOrgPipeline:
 
     # --- Main Pipeline Orchestrator ---
     
-    def run_integrated_pipeline(self, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS) -> IntegrationResults:
+    def run_integrated_pipeline(self, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS, progress_callback : Optional[Callable] = None) -> IntegrationResults:
         """Executes the complete integrated pipeline and returns structured results."""
         start_time = datetime.now()
         logger.info("🚀" + "="*70)
@@ -64,20 +64,27 @@ class IntegratedSchemaOrgPipeline:
         logger.info(f"💰 Using pricing for model '{llm_model}': Input=${input_cost_per_1k}/1k, Output=${output_cost_per_1k}/1k")
         
         # --- EXECUTE PIPELINE STEPS ---
+        if progress_callback: progress_callback("Loading Documents", 10)
         chunks = self._step_1_load_documents()
 
         # Step 2: Concept Extraction
+        if progress_callback: progress_callback("Extracting Concepts", 25)
         extracted_concepts, in_tokens, out_tokens = self._step_2_extract_concepts(chunks, llm_model, max_workers)
         run_costs["concept_extraction"] = ((in_tokens / 1000) * input_cost_per_1k) + ((out_tokens / 1000) * output_cost_per_1k)
 
-        
+        # Step 3 & 4
+        if progress_callback: progress_callback("Loading Ontology", 50)
         self._step_3_and_4_load_ontology_and_embed()
-        extension_decisions = self._step_5_analyze_concepts_parallel(extracted_concepts, max_workers=max_workers)
         
+        if progress_callback: progress_callback("Analyzing Decisions", 60)
+        extension_decisions = self._step_5_analyze_concepts_parallel(extracted_concepts, max_workers=max_workers)        
         concepts_for_creation, concepts_for_mapping = self._route_concepts_based_on_decisions(extension_decisions)
+        
+        if progress_callback: progress_callback("Creating Schema Objects", 75)
         new_schema_objects = self._step_6_create_schema_objects_parallel(concepts_for_creation, chunks, llm_model, max_workers)
         mapped_objects = self._step_7_process_mappings(concepts_for_mapping)
         
+        if progress_callback: progress_callback("Updating Knowledge Graph", 90)
         self._step_8_update_knowledge_graph_parallel(new_schema_objects, mapped_objects, max_workers=max_workers)
         # --- FINALIZE AND RETURN RESULTS ---
         processing_time = (datetime.now() - start_time).total_seconds()
@@ -87,6 +94,7 @@ class IntegratedSchemaOrgPipeline:
             extension_decisions, processing_time, run_costs
         )
 
+        if progress_callback: progress_callback("Saving Reports", 98)
         self._step_9_save_reports(final_results, new_schema_objects, mapped_objects)
 
         logger.info("\n" + "="*70)
@@ -291,9 +299,9 @@ class IntegratedSchemaOrgPipeline:
 
 
 # --- Main execution block ---
-def run_integrated_pipeline(config: Optional[PipelineConfig] = None, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS):
+def run_integrated_pipeline(config: Optional[PipelineConfig] = None, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS, progress_callback: Optional[Callable] = None):
     pipeline = IntegratedSchemaOrgPipeline(config)
-    return pipeline.run_integrated_pipeline(llm_model=llm_model, max_workers=max_workers)
+    return pipeline.run_integrated_pipeline(llm_model=llm_model, max_workers=max_workers, progress_callback=progress_callback)
 
 if __name__ == "__main__":
     import argparse

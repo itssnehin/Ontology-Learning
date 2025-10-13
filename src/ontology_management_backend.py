@@ -304,6 +304,14 @@ class OntologyManager:
     def _run_pipeline_thread(self, config: Dict[str, Any]):
         """Run the appropriate pipeline in a background thread and update status."""
         try:
+            def update_progress_callback(step_name: str, progress_percent: int):
+                """A function to be called from within the pipeline to report progress."""
+                if self.current_process:
+                    self.current_process.step = step_name
+                    self.current_process.message = f"In progress: {step_name}..."
+                    self.current_process.progress = progress_percent
+                    logger.info(f"[PROGRESS] {step_name} - {progress_percent}%")
+
             resume_step = config.get('resume_from', 'start')
             llm_model = config.get('llm_model', LLM_MODEL)
             max_workers = config.get('max_workers', MAX_WORKERS)
@@ -329,7 +337,13 @@ class OntologyManager:
             else:
                 logger.info(f"🚀 Resuming cached pipeline from step: '{resume_step}'...")
                 self.current_process.message = f"Resuming cached pipeline from step: '{resume_step}'..."
-                run_cached_pipeline(resume_from=resume_step, llm_model=llm_model, max_workers=max_workers)
+                run_cached_pipeline(
+                    resume_from=resume_step, 
+                    llm_model=llm_model, 
+                    max_workers=max_workers,
+                    progress_callback=update_progress_callback  # <-- PASS THE CALLBACK
+                )
+
 
             # --- COMPLETION LOGIC MOVED INSIDE THE 'TRY' BLOCK ---
             output_dir = Path("../data/integrated_output")

@@ -9,8 +9,7 @@ from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from src.config import (
-    LLM_MODEL, OPENAI_API_KEY, PROMPTS, MAX_WORKERS,
-    LLM_COST_PER_1K_TOKENS_INPUT, LLM_COST_PER_1K_TOKENS_OUTPUT
+    LLM_MODEL, OPENAI_API_KEY, PROMPTS, MAX_WORKERS, MODEL_COSTS
 )
 
 logger = logging.getLogger(__name__)
