@@ -70,6 +70,7 @@ class IntegrationResults:
     confidence_scores: List[float]
     processing_time: float
     decisions: List[ExtensionResult]
+    costs: Dict[str, float]  
     
     @property
     def automation_rate(self) -> float:

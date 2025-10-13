@@ -64,15 +64,31 @@ CACHE_DIR.mkdir(exist_ok=True)
 # --- OpenAI API settings ---
 LLM_MODEL = "gpt-4.1-nano"
 EMBEDDING_MODEL = "text-embedding-ada-002"
-LLM_COST_PER_1K_TOKENS_INPUT = 0.0001
-LLM_COST_PER_1K_TOKENS_OUTPUT = 0.0004
-EMBEDDING_COST_PER_1K_TOKENS = 0.0001
+
+# Prices are per 1,000 tokens, converted from per 1M.
+EMBEDDING_COSTS = {
+    "text-embedding-3-small": 0.00002,
+    "text-embedding-3-large": 0.00013,
+    "text-embedding-ada-002": 0.0001,
+    "default": 0.0001
+}
+
+# --- ADD THIS BLOCK TO LOAD THE CHAT MODEL COSTS ---
+MODEL_COSTS = {}
+try:
+    costs_path = Path(__file__).parent / "model_costs.json"
+    with open(costs_path, 'r', encoding='utf-8') as f:
+        MODEL_COSTS = json.load(f)
+    logger.info("✅ Successfully loaded model costs from model_costs.json")
+except (FileNotFoundError, json.JSONDecodeError) as e:
+    logger.error(f"FATAL: Could not load or parse model_costs.json. Error: {e}")
+    MODEL_COSTS = {"default": {"input_cost_per_1k_tokens": 0, "output_cost_per_1k_tokens": 0}}
+# --- END OF BLOCK ---
 
 # --- Pipeline settings ---
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 100
 MAX_WORKERS = 4 #Parallelisation
-
 
 # --- Similarity thresholds ---
 SIMILARITY_THRESHOLDS = {

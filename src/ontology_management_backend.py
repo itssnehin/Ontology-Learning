@@ -39,7 +39,7 @@ from langchain_community.graphs import Neo4jGraph
 
 from src.config import (
     NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD,
-    OPENAI_API_KEY, LLM_MODEL
+    OPENAI_API_KEY, LLM_MODEL, MAX_WORKERS
 )
 from src.data_models import PipelineConfig
 from src.integrated_schema_pipeline import run_integrated_pipeline
@@ -302,21 +302,19 @@ class OntologyManager:
             }
     
     def _run_pipeline_thread(self, config: Dict[str, Any]):
-        """Run the integrated pipeline in a background thread and update status."""
+        """Run the appropriate pipeline in a background thread and update status."""
         try:
             resume_step = config.get('resume_from', 'start')
-            llm_model = config.get('llm_model', LLM_MODEL) 
-            
-            self.current_process.step = f"Initializing"
-            self.current_process.message = f"Initializing pipeline run (Mode: {resume_step})..."
+            llm_model = config.get('llm_model', LLM_MODEL)
+            max_workers = config.get('max_workers', MAX_WORKERS)
+
+            self.current_process.message = f"Initializing pipeline (Workers: {max_workers}, Model: {llm_model}, Mode: {resume_step})..."
             self.current_process.progress = 5.0
 
             if resume_step == 'start':
                 logger.info("🚀 Starting a full, clean pipeline run from scratch...")
                 self.current_process.message = "Clearing cache for a full run..."
-                
-                clear_cache('chunks') 
-                
+                clear_cache('chunks')
                 
                 pipeline_config = PipelineConfig(
                     max_chunks=config.get('max_chunks'),
@@ -326,21 +324,24 @@ class OntologyManager:
                 )
                 
                 self.current_process.message = "Running integrated pipeline from scratch..."
-                run_integrated_pipeline(pipeline_config, llm_model=llm_model)
+                run_integrated_pipeline(pipeline_config, llm_model=llm_model, max_workers=max_workers)
 
             else:
                 logger.info(f"🚀 Resuming cached pipeline from step: '{resume_step}'...")
                 self.current_process.message = f"Resuming cached pipeline from step: '{resume_step}'..."
-                run_cached_pipeline(resume_from=resume_step, llm_model=llm_model)
+                run_cached_pipeline(resume_from=resume_step, llm_model=llm_model, max_workers=max_workers)
 
-            # Complete
+            # --- COMPLETION LOGIC MOVED INSIDE THE 'TRY' BLOCK ---
+            output_dir = Path("../data/integrated_output")
+            list_of_files = list(output_dir.glob('new_schema_objects_*.jsonld')) + \
+                            list(output_dir.glob('cached_new_schema_objects_*.jsonld'))
+            latest_file = max(list_of_files, key=lambda p: p.stat().st_ctime) if list_of_files else None
+            
             with self.lock:
                 self.current_process.status = ProcessStatus.COMPLETED
                 self.current_process.progress = 100.0
-                self.current_process.message = "Pipeline execution completed successfully"
+                self.current_process.message = "Pipeline execution completed successfully."
                 self.current_process.output_file = str(latest_file) if latest_file else None
-                # You could attach the results to the process if needed
-                # self.current_process.results = results 
             
             logger.info(f"✅ Pipeline {self.current_process.process_id} completed successfully")
             

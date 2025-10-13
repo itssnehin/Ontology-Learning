@@ -39,7 +39,7 @@ def clear_cache(start_step: str):
                 logger.warning(f"Clearing cache for step: '{step_to_clear}' ({CACHE_PATHS[step_to_clear].name})")
                 CACHE_PATHS[step_to_clear].unlink()
 
-def run_cached_pipeline(resume_from: str = 'start', clear_downstream: bool = True, llm_model: str = LLM_MODEL):
+def run_cached_pipeline(resume_from: str = 'start', clear_downstream: bool = True, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS):
     """
     Runs the ontology pipeline with caching, allowing resumption from intermediate steps.
     """
@@ -70,7 +70,7 @@ def run_cached_pipeline(resume_from: str = 'start', clear_downstream: bool = Tru
             extracted_concepts = pickle.load(f)
     else:
         logger.info("\n🧠 Step 2: Extracting concepts (in parallel)...")
-        extracted_concepts = extract_ideas(chunks, model_name=llm_model, max_workers=MAX_WORKERS)
+        extracted_concepts = extract_ideas(chunks, model_name=llm_model, max_workers=max_workers)
         with open(CACHE_PATHS["concepts"], "wb") as f:
             pickle.dump(extracted_concepts, f)
     logger.info(f"   ✅ Have {len(extracted_concepts)} unique concepts.")
@@ -89,7 +89,7 @@ def run_cached_pipeline(resume_from: str = 'start', clear_downstream: bool = Tru
             extension_manager.create_concept_embeddings(extension_manager._existing_concepts)
         
         extension_decisions = []
-        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
             future_to_concept = {
                 executor.submit(extension_manager.analyze_new_concept, {'name': name, 'category': 'Unknown'}): name
                 for name in extracted_concepts
@@ -123,7 +123,7 @@ def run_cached_pipeline(resume_from: str = 'start', clear_downstream: bool = Tru
         if concepts_for_creation_dicts:
             # Reusing the parallel logic structure from the main pipeline
             pipeline_instance = IntegratedSchemaOrgPipeline() # Temp instance to access helpers
-            new_schema_objects = pipeline_instance._step_6_create_schema_objects_parallel(concepts_for_creation_dicts, chunks)
+            new_schema_objects = pipeline_instance._step_6_create_schema_objects_parallel(concepts_for_creation_dicts, chunks, max_workers)
             with open(CACHE_PATHS["schema_objects"], "wb") as f:
                 pickle.dump(new_schema_objects, f)
         else:
@@ -154,7 +154,7 @@ def run_cached_pipeline(resume_from: str = 'start', clear_downstream: bool = Tru
             builder = None
             try:
                 builder = SchemaOrgGraphBuilder()
-                builder.build_knowledge_graph_parallel(all_objects, max_workers=MAX_WORKERS)
+                builder.build_knowledge_graph_parallel(all_objects, max_workers=max_workers)
                 logger.info("   ✅ Knowledge graph update complete.")
             finally:
                 if builder:

@@ -24,7 +24,7 @@ from src.schema_org_graph_builder import SchemaOrgGraphBuilder
 from src.ontology_extension_manager import OntologyExtensionManager, ExtensionDecision, ExtensionResult
 from src.data_models import PipelineConfig, IntegrationResults, ExtensionDecision, ExtensionResult
 from src.ontology_extension_manager import OntologyExtensionManager
-from src.config import MAX_WORKERS, LLM_MODEL
+from src.config import MAX_WORKERS, LLM_MODEL, MODEL_COSTS
 
 logger = logging.getLogger(__name__)
 
@@ -46,32 +46,45 @@ class IntegratedSchemaOrgPipeline:
 
     # --- Main Pipeline Orchestrator ---
     
-    def run_integrated_pipeline(self, llm_model: str = LLM_MODEL) -> IntegrationResults:
+    def run_integrated_pipeline(self, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS) -> IntegrationResults:
         """Executes the complete integrated pipeline and returns structured results."""
         start_time = datetime.now()
         logger.info("🚀" + "="*70)
         logger.info("STARTING INTEGRATED PIPELINE RUN (PARALLELIZED)")
         logger.info("="*70)
-
+        run_costs = {
+            "concept_extraction": 0.0,
+            "ontology_decision_analysis": 0.0,
+            "schema_object_creation": 0.0,
+            "total_cost": 0.0
+        }
+        model_pricing = MODEL_COSTS.get(llm_model, MODEL_COSTS['default'])
+        input_cost_per_1k = model_pricing['input_cost_per_1k_tokens']
+        output_cost_per_1k = model_pricing['output_cost_per_1k_tokens']
+        logger.info(f"💰 Using pricing for model '{llm_model}': Input=${input_cost_per_1k}/1k, Output=${output_cost_per_1k}/1k")
+        
         # --- EXECUTE PIPELINE STEPS ---
         chunks = self._step_1_load_documents()
-        extracted_concepts = self._step_2_extract_concepts(chunks, llm_model=llm_model)
+
+        # Step 2: Concept Extraction
+        extracted_concepts, in_tokens, out_tokens = self._step_2_extract_concepts(chunks, llm_model, max_workers)
+        run_costs["concept_extraction"] = ((in_tokens / 1000) * input_cost_per_1k) + ((out_tokens / 1000) * output_cost_per_1k)
+
+        
         self._step_3_and_4_load_ontology_and_embed()
-        extension_decisions = self._step_5_analyze_concepts_parallel(extracted_concepts)
+        extension_decisions = self._step_5_analyze_concepts_parallel(extracted_concepts, max_workers=max_workers)
         
         concepts_for_creation, concepts_for_mapping = self._route_concepts_based_on_decisions(extension_decisions)
-        
-        new_schema_objects = self._step_6_create_schema_objects_parallel(concepts_for_creation, chunks, llm_model=llm_model)
+        new_schema_objects = self._step_6_create_schema_objects_parallel(concepts_for_creation, chunks, llm_model, max_workers)
         mapped_objects = self._step_7_process_mappings(concepts_for_mapping)
         
-        self._step_8_update_knowledge_graph_parallel(new_schema_objects, mapped_objects)
-        
+        self._step_8_update_knowledge_graph_parallel(new_schema_objects, mapped_objects, max_workers=max_workers)
         # --- FINALIZE AND RETURN RESULTS ---
         processing_time = (datetime.now() - start_time).total_seconds()
         
         final_results = self._prepare_final_results(
             extracted_concepts, concepts_for_mapping, concepts_for_creation,
-            extension_decisions, processing_time
+            extension_decisions, processing_time, run_costs
         )
 
         self._step_9_save_reports(final_results, new_schema_objects, mapped_objects)
@@ -101,12 +114,14 @@ class IntegratedSchemaOrgPipeline:
         logger.info(f"   ✅ Processed {len(chunks)} document chunks")
         return chunks
 
-    def _step_2_extract_concepts(self, chunks: List[Document], llm_model: str) -> List[str]:
-        """Extracts key concepts from document chunks in parallel."""
+    def _step_2_extract_concepts(self, chunks: List[Document], llm_model: str, max_workers: int) -> Tuple[List[str], int, int]:
+        """Extracts concepts and returns them along with total token counts."""
         logger.info("\n🧠 Step 2: Extracting concepts from documents (in parallel)...")
-        extracted_concepts = extract_ideas(chunks, model_name=llm_model, max_workers=MAX_WORKERS)
+        # This function now returns a tuple of (concepts, in_tokens, out_tokens)
+        extracted_concepts, total_input, total_output = extract_ideas(chunks, model_name=llm_model, max_workers=max_workers)
         logger.info(f"   ✅ Extracted {len(extracted_concepts)} unique concepts")
-        return extracted_concepts
+        logger.info(f"   📊 Token Usage: {total_input:,} input, {total_output:,} output")
+        return extracted_concepts, total_input, total_output
 
     def _step_3_and_4_load_ontology_and_embed(self):
         """Loads the existing ontology from Neo4j and creates embeddings for comparison."""
@@ -126,11 +141,11 @@ class IntegratedSchemaOrgPipeline:
         }
         return self.extension_manager.analyze_new_concept(concept_dict)
 
-    def _step_5_analyze_concepts_parallel(self, extracted_concepts: List[str]) -> List[ExtensionResult]:
+    def _step_5_analyze_concepts_parallel(self, extracted_concepts: List[str], max_workers: int) -> List[ExtensionResult]:
         """Analyzes all extracted concepts against the existing ontology in parallel."""
         logger.info("\n🔍 Step 5: Analyzing concepts for ontology decisions (in parallel)...")
         extension_decisions = []
-        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
             future_to_concept = {executor.submit(self._analyze_single_concept, name): name for name in extracted_concepts}
             for future in tqdm(as_completed(future_to_concept), total=len(extracted_concepts), desc="Analyzing Concepts"):
                 decision = future.result()
@@ -142,58 +157,39 @@ class IntegratedSchemaOrgPipeline:
         """Sorts concepts into 'create' or 'map' lists based on analysis decisions."""
         concepts_for_creation = []
         concepts_for_mapping = []
-        for decision in extension_decisions:
-            concept_dict = {'name': decision.concept_name, 'category': self._infer_category(decision.concept_name)}
-            if decision.decision == ExtensionDecision.EXTEND:
-                concepts_for_creation.append(concept_dict)
-            elif decision.decision in [ExtensionDecision.MAP_EXACT, ExtensionDecision.MAP_SIMILAR]:
-                concepts_for_mapping.append({'concept': concept_dict, 'target': decision.target_concept, 'confidence': decision.confidence})
-            else: # UNCERTAIN or MERGE defaults to creation for this pipeline version
-                concepts_for_creation.append(concept_dict)
+        
+        # --- THIS IS THE CORRECTED, SINGLE LOOP ---
         for decision in extension_decisions:
             concept_dict = {
                 'name': decision.concept_name, 
                 'category': self._infer_category(decision.concept_name)
             }
             if decision.decision == ExtensionDecision.EXTEND:
-                concept_dict['status'] = 'new' # Mark as new
+                concept_dict['status'] = 'new'
                 concepts_for_creation.append(concept_dict)
             elif decision.decision in [ExtensionDecision.MAP_EXACT, ExtensionDecision.MAP_SIMILAR]:
-                concepts_for_mapping.append({'concept': concept_dict, 'target': decision.target_concept, 'confidence': decision.confidence})
+                # The structure for mapping was slightly different, let's correct it
+                concepts_for_mapping.append({
+                    'concept': concept_dict, 
+                    'target': decision.target_concept, 
+                    'confidence': decision.confidence
+                })
             else: # UNCERTAIN or MERGE
-                concept_dict['status'] = 'review' # <-- ADD THIS STATUS MARKER
+                concept_dict['status'] = 'review'
                 concepts_for_creation.append(concept_dict)
         
         return concepts_for_creation, concepts_for_mapping
-    
-    def _create_schema_for_single_concept(self, concept_dict: Dict, all_chunks: List[Document], llm_model: str) -> Optional[Dict]:
-        """Helper for parallel execution: creates one Schema.org object."""
-        try:
-            concept_name = concept_dict['name']
-            pseudo_chunk = self._create_concept_chunks([concept_dict], all_chunks)
-            schema_extractor = SchemaOrgExtractor(model_name=llm_model) # Instantiate the class
-            base_objects = schema_extractor.extract_schema_org_data(pseudo_chunk, [concept_name])
-            if not base_objects:
-                return None
-            
-            relations_data = extract_schema_org_relations(pseudo_chunk, [concept_name])
-            relation_extractor = SchemaOrgRelationExtractor()
-            enhanced_objects = relation_extractor.generate_enhanced_schema_objects(base_objects, relations_data)
-            return enhanced_objects[0] if enhanced_objects else None
-        except Exception as e:
-            logger.warning(f"Failed to create Schema.org object for {concept_dict.get('name', 'N/A')}: {e}")
-            return None
 
-    def _step_6_create_schema_objects_parallel(self, concepts_for_creation: List[Dict], all_chunks: List[Document]) -> List[Dict]:
+    def _step_6_create_schema_objects_parallel(self, concepts_for_creation: List[Dict], all_chunks: List[Document], llm_model: str, max_workers: int) -> List[Dict]:
         """Generates Schema.org objects for all new concepts in parallel with a progress bar."""
         logger.info(f"\n🌐 Step 6: Creating Schema.org objects for {len(concepts_for_creation)} new concepts (in parallel)...")
         if not concepts_for_creation:
             return []
             
         new_schema_objects = []
-        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-            futures = {executor.submit(self._create_schema_for_single_concept, concept_dict, all_chunks): concept_dict for concept_dict in concepts_for_creation}
-            
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(self._create_schema_for_single_concept, concept_dict, all_chunks, llm_model): concept_dict for concept_dict in concepts_for_creation}
+
             # Wrap the as_completed iterator with tqdm to create a progress bar
             for future in tqdm(as_completed(futures), total=len(concepts_for_creation), desc="Creating Schema Objects"):
                 result = future.result()
@@ -218,7 +214,7 @@ class IntegratedSchemaOrgPipeline:
         logger.info(f"   ✅ Created {len(mapped_objects)} concept mapping objects.")
         return mapped_objects
 
-    def _step_8_update_knowledge_graph_parallel(self, new_schema_objects: List[Dict], mapped_objects: List[Dict]):
+    def _step_8_update_knowledge_graph_parallel(self, new_schema_objects: List[Dict], mapped_objects: List[Dict], max_workers: int):
         """Updates the Neo4j knowledge graph with new and mapped objects in parallel."""
         logger.info("\n🗃️ Step 8: Updating knowledge graph (in parallel)...")
         all_objects = new_schema_objects + mapped_objects
@@ -229,7 +225,7 @@ class IntegratedSchemaOrgPipeline:
         builder = None
         try:
             builder = SchemaOrgGraphBuilder()
-            graph_stats = builder.build_knowledge_graph_parallel(all_objects, max_workers=MAX_WORKERS)
+            graph_stats = builder.build_knowledge_graph_parallel(all_objects, max_workers=max_workers)
             logger.info(f"   ✅ Updated knowledge graph: {graph_stats.get('totals', {}).get('nodes', 0)} total nodes.")
         except Exception as e:
             logger.error(f"   ⚠️ Graph update failed: {e}", exc_info=True)
@@ -237,7 +233,7 @@ class IntegratedSchemaOrgPipeline:
             if builder:
                 builder.close()
 
-    def _prepare_final_results(self, extracted_concepts, concepts_for_mapping, concepts_for_creation, extension_decisions, processing_time) -> IntegrationResults:
+    def _prepare_final_results(self, extracted_concepts, concepts_for_mapping, concepts_for_creation, extension_decisions, processing_time, costs: Dict[str, float]) -> IntegrationResults:
         """Constructs the final IntegrationResults object."""
         uncertain_count = sum(1 for d in extension_decisions if d.decision == ExtensionDecision.UNCERTAIN)
         
@@ -248,8 +244,10 @@ class IntegratedSchemaOrgPipeline:
             concepts_requiring_review=uncertain_count,
             confidence_scores=[d.confidence for d in extension_decisions if d.confidence is not None],
             processing_time=processing_time,
-            decisions=extension_decisions
+            decisions=extension_decisions,
+            costs=costs  # <-- Assign the final costs object here
         )
+
 
     def _step_9_save_reports(self, final_results: IntegrationResults, new_schema_objects: List[Dict], mapped_objects: List[Dict]):
         """Saves all generated artifacts to the output directory."""
@@ -293,10 +291,9 @@ class IntegratedSchemaOrgPipeline:
 
 
 # --- Main execution block ---
-def run_integrated_pipeline(config: Optional[PipelineConfig] = None, llm_model: str = LLM_MODEL) -> IntegrationResults:
-    """Main function to initialize and run the pipeline."""
+def run_integrated_pipeline(config: Optional[PipelineConfig] = None, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS):
     pipeline = IntegratedSchemaOrgPipeline(config)
-    return pipeline.run_integrated_pipeline(llm_model=llm_model)
+    return pipeline.run_integrated_pipeline(llm_model=llm_model, max_workers=max_workers)
 
 if __name__ == "__main__":
     import argparse

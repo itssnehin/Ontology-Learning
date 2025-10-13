@@ -768,6 +768,10 @@
                             </div>
                         </div>
                         <div class="form-section">
+                            <label class="form-label">Max Worker Threads</label>
+                            <input type="number" class="form-control" id="max-workers" value="4" min="1" max="16">
+                        </div>
+                        <div class="form-section">
                             <label class="form-label">Execution Mode</label>
                             <select class="form-control" id="execution-mode">
                                 <option value="start">Start from Scratch (Full Run)</option>
@@ -1686,8 +1690,9 @@
             const config = {
                 // ontology_mode is not used by the backend yet, but good to send
                 // ontology_mode: document.querySelector('input[name="ontology-mode"]:checked').value,
-                resume_from: document.getElementById('execution-mode').value
+                resume_from: document.getElementById('execution-mode').value,
                 llm_model: document.getElementById('llm-model-selector').value,
+                max_workers: parseInt(document.getElementById('max-workers').value),
                 max_chunks: maxChunksValue,
                 similarity_thresholds: {
                     exact_match: parseFloat(document.getElementById('threshold-exact').value),

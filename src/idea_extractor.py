@@ -1,7 +1,7 @@
 import logging
 import json
 import re
-from typing import List, Optional, Tuple, Dict, Any  # <-- THIS IS THE FIX
+from typing import List, Optional, Tuple, Dict, Any
 from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
 from tiktoken import get_encoding
@@ -21,6 +21,7 @@ def _extract_json_from_response(text: str) -> Optional[Dict[str, Any]]:
     More robustly extracts a JSON object from a string that might contain other text.
     Handles markdown code blocks and looks for the first valid JSON object.
     """
+    
     # 1. Try to find JSON within markdown code blocks ```json ... ```
     match = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', text, re.DOTALL)
     if match:
@@ -46,7 +47,7 @@ def _extract_json_from_response(text: str) -> Optional[Dict[str, Any]]:
 
 def _extract_concepts_from_chunk(chunk: Document, model_name: str) -> Tuple[Optional[List[str]], float]:
     """Processes a single document chunk and returns concepts and the associated cost."""
-    cost = 0.0
+    input_tokens, output_tokens = 0, 0
     try:
         llm = ChatOpenAI(model_name=model_name, openai_api_key=OPENAI_API_KEY)
         tokenizer = get_encoding("cl100k_base")
@@ -57,14 +58,11 @@ def _extract_concepts_from_chunk(chunk: Document, model_name: str) -> Tuple[Opti
         input_tokens = len(tokenizer.encode(prompt))
         response = llm.invoke(prompt)
         output_tokens = len(tokenizer.encode(response.content))
-        
-        cost = (input_tokens / 1000 * LLM_COST_PER_1K_TOKENS_INPUT) + \
-               (output_tokens / 1000 * LLM_COST_PER_1K_TOKENS_OUTPUT)
 
         data = _extract_json_from_response(response.content)
         
         if data is None:
-            return None, cost
+            return None, input_tokens, output_tokens
 
         chunk_concepts = []
         if "nodes" in data and isinstance(data["nodes"], list):
@@ -74,27 +72,31 @@ def _extract_concepts_from_chunk(chunk: Document, model_name: str) -> Tuple[Opti
         else:
             logger.warning(f"Valid JSON parsed, but 'nodes' key is missing or not a list. Data: {data}")
             
-        return chunk_concepts, cost
+        return chunk_concepts, input_tokens, output_tokens
 
     except Exception as e:
         logger.error(f"An unhandled error occurred while processing chunk: {e}", exc_info=True)
-        return None, cost
+        return None, input_tokens, output_tokens
 
 
-def extract_ideas(chunks: List[Document], model_name: str = LLM_MODEL, max_workers: int = MAX_WORKERS) -> List[str]:
-    """Extracts concepts concurrently and tracks total cost."""
-    total_cost = 0
+def extract_ideas(chunks: List[Document], model_name: str = LLM_MODEL, max_workers: int = MAX_WORKERS) -> Tuple[List[str], int, int]:
+    """Extracts concepts concurrently and returns concepts and token counts."""
+    total_input_tokens = 0
+    total_output_tokens = 0
     all_concepts = []
     
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {executor.submit(_extract_concepts_from_chunk, chunk, model_name): chunk for chunk in chunks}
         for future in tqdm(as_completed(futures), total=len(chunks), desc="Extracting Concepts (Parallel)"):
-            concepts, cost = future.result()
-            total_cost += cost
+            # Unpack the concepts and two token counts
+            concepts, in_tokens, out_tokens = future.result()
+            total_input_tokens += in_tokens
+            total_output_tokens += out_tokens
             if concepts:
                 all_concepts.extend(concepts)
 
-    logger.info(f"Total cost for concept extraction: ${total_cost:.4f}")
     deduplicated_concepts = sorted(list(set(all_concepts)))
     logger.info(f"Extracted {len(deduplicated_concepts)} unique concepts.")
-    return deduplicated_concepts
+    
+    # Return the concepts and the two aggregated token counts
+    return deduplicated_concepts, total_input_tokens, total_output_tokens
