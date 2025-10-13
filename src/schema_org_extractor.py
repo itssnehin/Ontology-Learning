@@ -9,7 +9,7 @@ from langchain_openai import ChatOpenAI
 from tiktoken import get_encoding
 import logging
 
-from src.config import LLM_MODEL, OPENAI_API_KEY, PROMPTS, LLM_COST_PER_1K_TOKENS_INPUT, LLM_COST_PER_1K_TOKENS_OUTPUT
+from src.config import LLM_MODEL, OPENAI_API_KEY, PROMPTS
 
 logger = logging.getLogger(__name__)
 class SchemaOrgExtractor:
@@ -18,9 +18,7 @@ class SchemaOrgExtractor:
     def __init__(self, model_name: str = LLM_MODEL):
         self.llm = ChatOpenAI(model_name=model_name, openai_api_key=OPENAI_API_KEY)
         self.tokenizer = get_encoding("cl100k_base")
-        self.cost_per_1k_tokens = 0.00336  # GPT-4o cost
-        self.total_tokens = 0
-        self.total_cost = 0.0
+
         
         # Product Types Ontology base URL
         self.product_ontology_base = "http://www.productontology.org/id/"
@@ -43,32 +41,28 @@ class SchemaOrgExtractor:
             "circuit": "Electronic_circuit"
         }
     
-    def extract_schema_org_data(self, chunks: List, concepts: List[str]) -> List[Dict]:
-        """
-        Extract Schema.org JSON-LD markup for concepts found in document chunks.
-        
-        Args:
-            chunks: List of document chunks
-            concepts: List of extracted concepts/ideas
-            
-        Returns:
-            List of Schema.org JSON-LD objects
-        """
+    def extract_schema_org_data(self, chunks: List, concepts: List[str]) -> Tuple[List[Dict], int, int]:
+        """Extracts Schema.org markup and returns objects and token counts."""
         schema_objects = []
-        
+        total_input_tokens = 0
+        total_output_tokens = 0
+
         for concept in concepts:
-            # Find relevant context from chunks
             context = self._find_concept_context(concept, chunks)
             
-            # Generate Schema.org markup
-            markup = self._generate_schema_markup(concept, context)
+            # Unpack the new return values
+            markup, in_tokens, out_tokens = self._generate_schema_markup(concept, context)
+            total_input_tokens += in_tokens
+            total_output_tokens += out_tokens
+            
             if markup:
                 schema_objects.append(markup)
         
         logger.info(f"Generated Schema.org markup for {len(schema_objects)} concepts")
-        logger.info(f"Total API cost: ${self.total_cost:.6f}")
+        # This module no longer logs total cost
         
-        return schema_objects
+        return schema_objects, total_input_tokens, total_output_tokens
+
     
     def _find_concept_context(self, concept: str, chunks: List) -> str:
         """Find chunks that contain context about the concept."""
@@ -88,20 +82,13 @@ class SchemaOrgExtractor:
     def _generate_schema_markup(self, concept: str, context: str) -> Optional[Dict]:
         """Generate Schema.org JSON-LD markup for a concept."""
         
-        prompt_template = PROMPTS["schema_org_extractor"]["main_prompt"]
-
-        prompt = prompt_template.format(concept=concept, context=context)
+        prompt = PROMPTS["schema_org_extractor"]["main_prompt"].format(concept=concept, context=context)
+        input_tokens, output_tokens = 0, 0
         
         try:
             input_tokens = len(self.tokenizer.encode(prompt))
             response = self.llm.invoke(prompt)
             output_tokens = len(self.tokenizer.encode(response.content))
-            
-            # Track costs
-            total_tokens = input_tokens + output_tokens
-            cost = (total_tokens / 1000) * self.cost_per_1k_tokens
-            self.total_tokens += total_tokens
-            self.total_cost += cost
             
             # Parse JSON response
             json_content = self._extract_json_from_response(response.content)
@@ -112,14 +99,14 @@ class SchemaOrgExtractor:
                     if uri:
                         json_content["additionalType"] = uri
                 
-                return json_content
+                return json_content, input_tokens, output_tokens
             else:
                 logger.warning(f"Failed to parse JSON for concept: {concept}")
-                return self._create_fallback_markup(concept, context)
+                return self._create_fallback_markup(concept, context), input_tokens, output_tokens
                 
         except Exception as e:
             logger.error(f"Error generating markup for {concept}: {e}")
-            return self._create_fallback_markup(concept, context)
+            return self._create_fallback_markup(concept, context), input_tokens, output_tokens
     
     def _extract_json_from_response(self, response: str) -> Optional[Dict]:
         """Extract JSON from LLM response, handling various formats."""

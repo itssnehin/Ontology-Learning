@@ -6,14 +6,13 @@ from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 # Import centralized configuration
-from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, MAX_WORKERS
-
+from src.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, MAX_WORKERS, NEO4J_DB_NAME
 logger = logging.getLogger(__name__)
 
 class SchemaOrgGraphBuilder:
     """Builds a Neo4j knowledge graph from Schema.org JSON-LD data, supporting parallel writes."""
     
-    def __init__(self, database: str = "neo4j"):
+    def __init__(self):
         try:
             self.driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
             self.driver.verify_connectivity()
@@ -23,7 +22,7 @@ class SchemaOrgGraphBuilder:
             self.driver = None # Ensure driver is None if connection fails
             raise
             
-        self.database = database
+        self.database = NEO4J_DB_NAME
         self.type_to_label = {"Product": "Product", "Organization": "Organization", "Thing": "Thing"}
         self.relationship_properties = {
             "isAccessoryOrSparePartFor", "isRelatedTo", "hasPart", "worksWith",

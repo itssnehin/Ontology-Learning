@@ -41,6 +41,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 NEO4J_URI = os.getenv("NEO4J_URI", "bolt://127.0.0.1:7687")
 NEO4J_USERNAME = os.getenv("NEO4J_USERNAME", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "ontology")
+NEO4J_DB_NAME = os.getenv("NEO4J_DB_NAME", "neo4j") 
 
 # --- Validation ---
 if not OPENAI_API_KEY:

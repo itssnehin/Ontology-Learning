@@ -39,8 +39,9 @@ from langchain_community.graphs import Neo4jGraph
 
 from src.config import (
     NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD,
-    OPENAI_API_KEY, LLM_MODEL, MAX_WORKERS
+    OPENAI_API_KEY, LLM_MODEL, MAX_WORKERS, NEO4J_DB_NAME #<-- ADD NEO4J_DB_NAME
 )
+
 from src.data_models import PipelineConfig
 from src.integrated_schema_pipeline import run_integrated_pipeline
 
@@ -161,7 +162,7 @@ class OntologyManager:
     def get_ontology_stats(self) -> Dict[str, Any]:
         """Get current ontology statistics from Neo4j."""
         try:
-            with self.driver.session() as session:
+            with self.driver.session(database=NEO4J_DB_NAME) as session:
                 # Get node statistics
                 node_stats = session.run("""
                     MATCH (n)
@@ -214,7 +215,7 @@ class OntologyManager:
     def get_graph_data(self) -> Dict[str, Any]:
         """Get graph data for visualization."""
         try:
-            with self.driver.session() as session:
+            with self.driver.session(database=NEO4J_DB_NAME) as session:
                 # Get nodes
                 nodes_query = """
                     MATCH (n)
@@ -512,7 +513,7 @@ class OntologyManager:
     def reset_to_baseline(self) -> Dict[str, Any]:
         """Reset ontology to Schema.org baseline."""
         try:
-            with self.driver.session() as session:
+            with self.driver.session(database=NEO4J_DB_NAME) as session:
                 # Clear all custom data (keep only baseline Schema.org concepts)
                 print("   🗑️ Clearing custom ontology data...")
                 
@@ -629,7 +630,7 @@ class OntologyManager:
     def check_neo4j_connection(self) -> Dict[str, Any]:
         """Check Neo4j database connection."""
         try:
-            with self.driver.session() as session:
+            with self.driver.session(database=NEO4J_DB_NAME) as session:
                 result = session.run("RETURN 1 as test")
                 test_value = result.single()["test"]
                 
@@ -674,7 +675,7 @@ def dashboard():
 def get_stats():
     """Get current ontology statistics from the Neo4j database."""
     try:
-        with ontology_manager.driver.session() as session:
+        with ontology_manager.driver.session(database=NEO4J_DB_NAME) as session:
             # Query for the number of Product nodes (concepts)
             concepts_result = session.run("MATCH (p:Product) RETURN count(p) AS concept_count")
             total_concepts = concepts_result.single()["concept_count"]
@@ -794,7 +795,7 @@ def run_dashboard_server(host='localhost', port=5000, debug=True):
 def get_pending_reviews():
     """Fetches concepts from Neo4j that are labeled as :NeedsReview."""
     try:
-        with ontology_manager.driver.session() as session:
+        with ontology_manager.driver.session(database=NEO4J_DB_NAME) as session:
             # This query finds all nodes with the NeedsReview label.
             # We are approximating target and reasoning for the demo.
             query = """
@@ -816,7 +817,7 @@ def get_pending_reviews():
 def accept_review(concept_name):
     """Accepts a concept by removing the :NeedsReview label."""
     try:
-        with ontology_manager.driver.session() as session:
+        with ontology_manager.driver.session(database=NEO4J_DB_NAME) as session:
             # This query finds the node and removes the label.
             query = """
             MATCH (p:Product {name: $name})
@@ -838,7 +839,7 @@ def accept_review(concept_name):
 def reject_review(concept_name):
     """Rejects a concept by removing the :NeedsReview label and marking as rejected."""
     try:
-        with ontology_manager.driver.session() as session:
+        with ontology_manager.driver.session(database=NEO4J_DB_NAME) as session:
             # For this demo, we'll mark as rejected. In a real app, you might delete it.
             query = """
             MATCH (p:Product {name: $name})

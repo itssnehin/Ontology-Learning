@@ -1,7 +1,5 @@
 import sys
 from pathlib import Path
-#sys.path.append(str(Path(__file__).parent))
-
 import json
 import re
 from typing import Dict, List, Tuple, Optional
@@ -9,9 +7,9 @@ from langchain_openai import ChatOpenAI
 from tiktoken import get_encoding
 import logging
 
-from src.config import LLM_MODEL, OPENAI_API_KEY
+from src.config import LLM_MODEL, OPENAI_API_KEY, MODEL_COSTS
 
-logger = logging.getLogger(__name__) # <-- ADD logger
+logger = logging.getLogger(__name__)
 
 class SchemaOrgRelationExtractor:
     """Extract Schema.org relationships and properties from document chunks."""
@@ -19,9 +17,6 @@ class SchemaOrgRelationExtractor:
     def __init__(self, model_name: str = LLM_MODEL):
         self.llm = ChatOpenAI(model_name=model_name, openai_api_key=OPENAI_API_KEY)
         self.tokenizer = get_encoding("cl100k_base")
-        self.cost_per_1k_tokens = 0.00336  # GPT-4o cost
-        self.total_tokens = 0
-        self.total_cost = 0.0
         
         # Standard Schema.org properties for products
         self.standard_properties = {
@@ -57,26 +52,23 @@ class SchemaOrgRelationExtractor:
             "elec:standard": "Technical standards compliance"
         }
     
-    def extract_relations_and_properties(self, chunks: List, concepts: List[str]) -> Dict[str, Dict]:
+    def extract_relations_and_properties(self, chunks: List, concepts: List[str], model_name: str) -> Tuple[Dict[str, Dict], int, int]:
         """
-        Extract Schema.org relations and properties for concepts.
-        
-        Args:
-            chunks: Document chunks containing technical information
-            concepts: List of extracted concepts
-            
-        Returns:
-            Dictionary mapping concepts to their properties and relations
+        Extracts Schema.org relations/properties and returns data and token counts.
         """
         concept_data = {}
+        total_input_tokens = 0
+        total_output_tokens = 0
         
         for concept in concepts:
-            # Find context for this concept
             context = self._find_concept_context(concept, chunks)
             
-            # Extract properties and relations
-            properties = self._extract_properties(concept, context)
-            relations = self._extract_relations(concept, context, concepts)
+            # Pass the model_name down and capture token counts from each helper
+            properties, p_in, p_out = self._extract_properties(concept, context, model_name)
+            relations, r_in, r_out = self._extract_relations(concept, context, concepts, model_name)
+            
+            total_input_tokens += (p_in + r_in)
+            total_output_tokens += (p_out + r_out)
             
             concept_data[concept] = {
                 "properties": properties,
@@ -84,10 +76,7 @@ class SchemaOrgRelationExtractor:
                 "context_source": context[:100] + "..." if len(context) > 100 else context
             }
         
-        logger.info(f"Extracted properties and relations for {len(concept_data)} concepts")
-        logger.info(f"Total API cost: ${self.total_cost:.6f}")
-        
-        return concept_data
+        return concept_data, total_input_tokens, total_output_tokens
     
     def _find_concept_context(self, concept: str, chunks: List) -> str:
         """Find chunks containing context about the concept."""
@@ -106,7 +95,7 @@ class SchemaOrgRelationExtractor:
         
         return " ".join(relevant_chunks[:2])  # Limit context size
     
-    def _extract_properties(self, concept: str, context: str) -> Dict[str, str]:
+    def _extract_properties(self, concept: str, context: str, model_name: str) -> Tuple[Dict[str, str], int, int]:
         """Extract Schema.org properties for a concept."""
         
         prompt = f"""
@@ -148,40 +137,26 @@ class SchemaOrgRelationExtractor:
           "elec:impedance": "50 ohms"
         }}
         """
-        
+        in_tokens, out_tokens = 0, 0
         try:
-            input_tokens = len(self.tokenizer.encode(prompt))
+            in_tokens = len(self.tokenizer.encode(prompt))
+            self.llm.model_name = model_name  # Ensure the LLM instance uses the selected model
             response = self.llm.invoke(prompt)
-            output_tokens = len(self.tokenizer.encode(response.content))
+            out_tokens = len(self.tokenizer.encode(response.content))
             
-            # Track costs
-            total_tokens = input_tokens + output_tokens
-            cost = (total_tokens / 1000) * self.cost_per_1k_tokens
-            self.total_tokens += total_tokens
-            self.total_cost += cost
-            
-            # Parse response
-            properties = self._parse_json_response(response.content)
-            return properties if properties else {}
+            properties = self._parse_json_response(response.content) or {}
+            return properties, in_tokens, out_tokens
             
         except Exception as e:
             logger.error(f"Error extracting properties for {concept}: {e}")
-            return {}
+            return {}, in_tokens, out_tokens
+
     
-    def _extract_relations(self, concept: str, context: str, all_concepts: List[str]) -> List[Dict[str, str]]:
-        """Extract relationships between concepts."""
-        
-        # Find other concepts mentioned in the same context
-        related_concepts = []
-        concept_lower = concept.lower()
-        context_lower = context.lower()
-        
-        for other_concept in all_concepts:
-            if other_concept != concept and other_concept.lower() in context_lower:
-                related_concepts.append(other_concept)
-        
+    def _extract_relations(self, concept: str, context: str, all_concepts: List[str], model_name: str) -> Tuple[List[Dict[str, str]], int, int]:
+        """Extracts relationships and returns relations and token counts."""
+        related_concepts = [c for c in all_concepts if c != concept and c.lower() in context.lower()]
         if not related_concepts:
-            return []
+            return [], 0, 0
         
         prompt = f"""
         Identify relationships between this component and related components based on the technical context.
@@ -211,25 +186,19 @@ class SchemaOrgRelationExtractor:
         
         Only include relationships you can clearly infer from the context.
         """
-        
+        in_tokens, out_tokens = 0, 0
         try:
-            input_tokens = len(self.tokenizer.encode(prompt))
+            in_tokens = len(self.tokenizer.encode(prompt))
+            self.llm.model_name = model_name
             response = self.llm.invoke(prompt)
-            output_tokens = len(self.tokenizer.encode(response.content))
+            out_tokens = len(self.tokenizer.encode(response.content))
             
-            # Track costs
-            total_tokens = input_tokens + output_tokens
-            cost = (total_tokens / 1000) * self.cost_per_1k_tokens
-            self.total_tokens += total_tokens
-            self.total_cost += cost
-            
-            # Parse response
             relations = self._parse_json_response(response.content)
-            return relations if isinstance(relations, list) else []
+            return (relations if isinstance(relations, list) else []), in_tokens, out_tokens
             
         except Exception as e:
             logger.error(f"Error extracting relations for {concept}: {e}")
-            return []
+            return [], in_tokens, out_tokens
     
     def _parse_json_response(self, response: str) -> Optional[Dict]:
         """Parse JSON from LLM response."""
@@ -255,7 +224,7 @@ class SchemaOrgRelationExtractor:
         return None
     
     def generate_enhanced_schema_objects(self, base_schema_objects: List[Dict], 
-                                       relations_data: Dict[str, Dict]) -> List[Dict]:
+                                        relations_data: Dict[str, Dict]) -> List[Dict]:
         """
         Enhance base Schema.org objects with extracted properties and relations.
         
@@ -310,31 +279,25 @@ class SchemaOrgRelationExtractor:
         
         return enhanced_objects
 
-def extract_schema_org_relations(chunks: List, concepts: List[str]) -> Dict[str, Dict]:
+def extract_schema_org_relations(chunks: List, concepts: List[str], model_name: str = LLM_MODEL) -> Tuple[Dict[str, Dict], int, int]:
     """
-    Main function to extract Schema.org relations and properties.
-    
-    Args:
-        chunks: Document chunks
-        concepts: Extracted concepts
-        
-    Returns:
-        Dictionary with properties and relations for each concept
+    Main function to extract relations and properties, returning data and token counts.
     """
-    extractor = SchemaOrgRelationExtractor()
-    return extractor.extract_relations_and_properties(chunks, concepts)
+    extractor = SchemaOrgRelationExtractor(model_name=model_name)
+    return extractor.extract_relations_and_properties(chunks, concepts, model_name)
 
 if __name__ == "__main__":
-    from data_loader import load_and_split_data
-    from idea_extractor import extract_ideas
+    # The __main__ block is for standalone testing and doesn't need to return costs
+    from src.data_loader import load_and_split_data
+    from src.idea_extractor import extract_ideas
     
-    # Test with sample data
-    chunks = load_and_split_data()
-    concepts = extract_ideas(chunks[:10])
+    chunks = load_and_split_data()[:5]
+    concepts, _, _ = extract_ideas(chunks)
     
-    relations_data = extract_schema_org_relations(chunks[:10], concepts)
+    relations_data, total_in, total_out = extract_schema_org_relations(chunks, concepts)
     
-    print(f"Extracted data for {len(relations_data)} concepts:")
+    print(f"\nExtracted data for {len(relations_data)} concepts:")
+    print(f"Total Tokens Used: Input={total_in}, Output={total_out}")
     for concept, data in list(relations_data.items())[:2]:
         print(f"\n{concept}:")
         print(f"  Properties: {data['properties']}")

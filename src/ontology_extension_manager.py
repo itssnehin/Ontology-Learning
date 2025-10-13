@@ -84,7 +84,7 @@ from difflib import SequenceMatcher
 import logging
 from dataclasses import dataclass, asdict
 
-from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, PROMPTS
+from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, PROMPTS, NEO4J_DB_NAME
 import re
 
 # We need to import the PipelineConfig to use it as a type hint
@@ -122,43 +122,58 @@ class OntologyExtensionManager:
         logger.info("🔍 Ontology Extension Manager initialized")
     
     def load_existing_ontology(self) -> Dict[str, Any]:
-        """Load and cache existing ontology concepts from Neo4j."""
-        print("📚 Loading existing ontology...")
-        
-        with self.driver.session() as session:
-            # Load concepts with their properties
-            concepts_query = """
+        """
+        Load and cache existing ontology concepts from Neo4j.
+        This version is smarter: it loads both instance data (:Product) AND
+        class definitions (:OntologyClass) to build a comprehensive view of existing knowledge.
+        """
+        logger.info("📚 Loading existing ontology (classes and instances)...")
+        concepts = []
+        concept_names = set() # Use a set to prevent duplicates
+
+        with self.driver.session(database=NEO4J_DB_NAME) as session:
+            # Query 1: Get instance data (nodes created by previous pipeline runs)
+            # This query is designed to not fail if the properties don't exist yet.
+            instance_query = """
             MATCH (n:Product)
-            RETURN n.name as name,
-                   n.category as category,
-                   n.description as description,
-                   n.manufacturer as manufacturer,
-                   n.`elec:frequency` as frequency,
-                   n.`elec:impedance` as impedance,
-                   n.`elec:voltage` as voltage,
-                   n.`elec:connector` as connector,
-                   n.additionalType as additionalType
+            RETURN n.name as name, n.category as category, n.description as description
             """
-            
-            concepts = []
-            for record in session.run(concepts_query):
-                concept_data = {
-                    'name': record['name'] or '',
-                    'category': record['category'] or '',
-                    'description': record['description'] or '',
-                    'manufacturer': record['manufacturer'] or '',
-                    'frequency': record['frequency'] or '',
-                    'impedance': record['impedance'] or '',
-                    'voltage': record['voltage'] or '',
-                    'connector': record['connector'] or '',
-                    'additionalType': record['additionalType'] or ''
-                }
-                concepts.append(concept_data)
-            
-            self._existing_concepts = concepts
-            print(f"   ✅ Loaded {len(concepts)} existing concepts")
-            
-            return {'concepts': concepts}
+            try:
+                for record in session.run(instance_query):
+                    name = record['name']
+                    if name and name not in concept_names:
+                        concepts.append({
+                            'name': name,
+                            'category': record['category'] or '',
+                            'description': record['description'] or ''
+                            # Add other properties here if needed for embedding
+                        })
+                        concept_names.add(name)
+            except Exception as e:
+                logger.warning(f"Could not load instance data (:Product nodes). This is normal on a first run. Error: {e}")
+
+            # Query 2: Get class definitions from the baseline hierarchy
+            class_query = """
+            MATCH (c:OntologyClass)
+            RETURN c.name as name, c.description as description
+            """
+            try:
+                for record in session.run(class_query):
+                    name = record['name']
+                    if name and name not in concept_names:
+                        concepts.append({
+                            'name': name,
+                            'category': 'Ontology Class', # Differentiate classes from instances
+                            'description': record['description'] or f'The ontological class representing {name}.'
+                        })
+                        concept_names.add(name)
+            except Exception as e:
+                logger.warning(f"Could not load class definitions (:OntologyClass nodes). Check baseline. Error: {e}")
+
+        self._existing_concepts = concepts
+        logger.info(f"   ✅ Loaded {len(concepts)} unique existing concepts (instances + classes).")
+        return {'concepts': concepts}
+
     
     def create_concept_embeddings(self, concepts: List[Dict]) -> Dict[str, np.ndarray]:
         """Create embeddings for existing concepts for similarity matching."""

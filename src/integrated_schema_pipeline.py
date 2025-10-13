@@ -5,7 +5,7 @@ This version parallelizes all I/O-bound extraction and integration steps for max
 """
 import json
 import logging
-from typing import Dict, List, Any, Optional, Callable 
+from typing import Dict, List, Any, Optional, Callable, Tuple
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
@@ -81,7 +81,14 @@ class IntegratedSchemaOrgPipeline:
         concepts_for_creation, concepts_for_mapping = self._route_concepts_based_on_decisions(extension_decisions)
         
         if progress_callback: progress_callback("Creating Schema Objects", 75)
-        new_schema_objects = self._step_6_create_schema_objects_parallel(concepts_for_creation, chunks, llm_model, max_workers)
+        concepts_for_creation, concepts_for_mapping = self._route_concepts_based_on_decisions(extension_decisions)
+        
+        # Unpack all three return values
+        new_schema_objects, in_tokens_schema, out_tokens_schema = self._step_6_create_schema_objects_parallel(concepts_for_creation, chunks, llm_model, max_workers)
+        
+        # Calculate the cost for this stage
+        run_costs["schema_object_creation"] = ((in_tokens_schema / 1000) * input_cost_per_1k) + ((out_tokens_schema / 1000) * output_cost_per_1k)
+        
         mapped_objects = self._step_7_process_mappings(concepts_for_mapping)
         
         if progress_callback: progress_callback("Updating Knowledge Graph", 90)
@@ -188,23 +195,62 @@ class IntegratedSchemaOrgPipeline:
         
         return concepts_for_creation, concepts_for_mapping
 
-    def _step_6_create_schema_objects_parallel(self, concepts_for_creation: List[Dict], all_chunks: List[Document], llm_model: str, max_workers: int) -> List[Dict]:
-        """Generates Schema.org objects for all new concepts in parallel with a progress bar."""
-        logger.info(f"\n🌐 Step 6: Creating Schema.org objects for {len(concepts_for_creation)} new concepts (in parallel)...")
+    def _create_schema_for_single_concept(self, concept_dict: Dict, all_chunks: List[Document], llm_model: str) -> Tuple[Optional[Dict], int, int]:
+        """Helper for parallel execution: creates one Schema.org object and returns token counts."""
+        in_tokens, out_tokens = 0, 0
+        try:
+            concept_name = concept_dict['name']
+            pseudo_chunk = self._create_concept_chunks([concept_dict], all_chunks)
+            schema_extractor = SchemaOrgExtractor(model_name=llm_model)
+            
+            # This function now returns (objects, in_tokens, out_tokens)
+            base_objects, in_tokens, out_tokens = schema_extractor.extract_schema_org_data(pseudo_chunk, [concept_name])
+
+            if not base_objects:
+                return None, in_tokens, out_tokens
+            
+            # The relation extractor also needs to be updated to pass the model
+            relations_data, rel_in_tokens, rel_out_tokens = extract_schema_org_relations(pseudo_chunk, [concept_name], model_name=llm_model)
+            
+            # Add the tokens from this step to the total
+            in_tokens += rel_in_tokens
+            out_tokens += rel_out_tokens
+            
+            
+            relation_extractor = SchemaOrgRelationExtractor(model_name=llm_model)
+            enhanced_objects = relation_extractor.generate_enhanced_schema_objects(base_objects, relations_data)
+            
+            obj = enhanced_objects[0] if enhanced_objects else None
+            return obj, in_tokens, out_tokens
+        except Exception as e:
+            logger.warning(f"Failed to create Schema.org object for {concept_dict.get('name', 'N/A')}: {e}")
+            return None, in_tokens, out_tokens
+
+
+    def _step_6_create_schema_objects_parallel(self, concepts_for_creation: List[Dict], all_chunks: List[Document], llm_model: str, max_workers: int) -> Tuple[List[Dict], int, int]:
+        """Generates Schema.org objects in parallel and returns objects and total token counts."""
+        logger.info(f"\n🌐 Creating Schema.org objects for {len(concepts_for_creation)} new concepts...")
         if not concepts_for_creation:
-            return []
+            return [], 0, 0
             
         new_schema_objects = []
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            futures = {executor.submit(self._create_schema_for_single_concept, concept_dict, all_chunks, llm_model): concept_dict for concept_dict in concepts_for_creation}
+        total_input_tokens = 0
+        total_output_tokens = 0
 
-            # Wrap the as_completed iterator with tqdm to create a progress bar
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(self._create_schema_for_single_concept, c, all_chunks, llm_model): c for c in concepts_for_creation}
+            
             for future in tqdm(as_completed(futures), total=len(concepts_for_creation), desc="Creating Schema Objects"):
-                result = future.result()
-                if result:
-                    new_schema_objects.append(result)
+                # Unpack the object and its token counts
+                result_obj, in_tokens, out_tokens = future.result()
+                total_input_tokens += in_tokens
+                total_output_tokens += out_tokens
+                if result_obj:
+                    new_schema_objects.append(result_obj)
+
         logger.info(f"   ✅ Created {len(new_schema_objects)} new Schema.org objects.")
-        return new_schema_objects
+        logger.info(f"   📊 Token Usage: {total_input_tokens:,} input, {total_output_tokens:,} output")
+        return new_schema_objects, total_input_tokens, total_output_tokens
 
 
     def _step_7_process_mappings(self, concepts_for_mapping: List[Dict]) -> List[Dict]:
