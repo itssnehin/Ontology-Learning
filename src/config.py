@@ -41,7 +41,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 NEO4J_URI = os.getenv("NEO4J_URI", "bolt://127.0.0.1:7687")
 NEO4J_USERNAME = os.getenv("NEO4J_USERNAME", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "ontology")
-NEO4J_DB_NAME = os.getenv("NEO4J_DB_NAME", "neo4j") 
+NEO4J_DB_NAME = os.getenv("NEO4J_DB_NAME", "datasheetontology") 
 
 # --- Validation ---
 if not OPENAI_API_KEY:
@@ -89,7 +89,7 @@ except (FileNotFoundError, json.JSONDecodeError) as e:
 # --- Pipeline settings ---
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 100
-MAX_WORKERS = 4 #Parallelisation
+MAX_WORKERS = 10 #Parallelisation
 
 # --- Similarity thresholds ---
 SIMILARITY_THRESHOLDS = {
@@ -119,6 +119,16 @@ except FileNotFoundError:
 except json.JSONDecodeError:
     logger.error(f"FATAL: Could not parse prompts.json. Please check for JSON syntax errors.")
     raise
+
+
+NON_TAXONOMIC_RELATION_PROMPT = ""
+try:
+    non_tax_path = Path(__file__).parent / "prompts" / "non_taxonomic_relation_prompt.txt"
+    NON_TAXONOMIC_RELATION_PROMPT = Path(non_tax_path).read_text(encoding="utf-8")
+    logger.info("Successfully loaded the non-taxonomic relation prompt")
+except Exception as e:
+    logger.error(f"Could not load non taxonomic relation prompt: {e}")
+
 
 # --- Initial configuration logging ---
 if not OWL_FILES:

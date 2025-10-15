@@ -58,7 +58,7 @@ class SchemaOrgExtractor:
             if markup:
                 schema_objects.append(markup)
         
-        logger.info(f"Generated Schema.org markup for {len(schema_objects)} concepts")
+        #logger.info(f"Generated Schema.org markup for {len(schema_objects)} concepts")
         # This module no longer logs total cost
         
         return schema_objects, total_input_tokens, total_output_tokens
@@ -194,6 +194,6 @@ if __name__ == "__main__":
     
     schema_markup = extract_schema_org_markup(chunks[:10], concepts)
     
-    print(f"Generated {len(schema_markup)} Schema.org objects:")
+    #print(f"Generated {len(schema_markup)} Schema.org objects:")
     for i, obj in enumerate(schema_markup[:3]):  # Show first 3
         print(f"\n{i+1}. {json.dumps(obj, indent=2)}")

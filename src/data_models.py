@@ -30,6 +30,7 @@ class ExtensionResult:
     confidence: float
     reasoning: str
     matches: List[ConceptMatch]
+    non_taxonomic_relations: List[Dict[str, str]] = None # <-- ADD THIS FIELD
 
     def to_dict(self):
         return {
@@ -38,9 +39,9 @@ class ExtensionResult:
             "target_concept": self.target_concept,
             "confidence": self.confidence,
             "reasoning": self.reasoning,
-            "matches": [m.to_dict() for m in self.matches]
+            "matches": [m.to_dict() for m in self.matches],
+            "non_taxonomic_relations": self.non_taxonomic_relations  # <-- INCLUDE IN DICT
         }
-
 
 # --- Data Models from integrated_schema_pipeline.py ---
 

@@ -57,7 +57,8 @@ def initialize_qa_chain():
         graph = Neo4jGraph(
             url=NEO4J_URI,
             username=NEO4J_USERNAME,
-            password=NEO4J_PASSWORD
+            password=NEO4J_PASSWORD,
+            database=NEO4J_DB_NAME  # <-- ADD THIS EXPLICIT PARAMETER
         )
         graph.refresh_schema()
         
@@ -306,7 +307,6 @@ class OntologyManager:
         """Run the appropriate pipeline in a background thread and update status."""
         try:
             def update_progress_callback(step_name: str, progress_percent: int):
-                """A function to be called from within the pipeline to report progress."""
                 if self.current_process:
                     self.current_process.step = step_name
                     self.current_process.message = f"In progress: {step_name}..."
@@ -317,33 +317,21 @@ class OntologyManager:
             llm_model = config.get('llm_model', LLM_MODEL)
             max_workers = config.get('max_workers', MAX_WORKERS)
 
-            self.current_process.message = f"Initializing pipeline (Workers: {max_workers}, Model: {llm_model}, Mode: {resume_step})..."
-            self.current_process.progress = 5.0
+            self.current_process.message = f"Initializing pipeline (Mode: {resume_step})..."
+            self.current_process.progress = 5
 
-            if resume_step == 'start':
-                logger.info("🚀 Starting a full, clean pipeline run from scratch...")
-                self.current_process.message = "Clearing cache for a full run..."
-                clear_cache('chunks')
-                
-                pipeline_config = PipelineConfig(
-                    max_chunks=config.get('max_chunks'),
-                    similarity_thresholds=config.get('similarity_thresholds'),
-                    enable_llm_validation=config.get('enable_llm_validation', True),
-                    enable_technical_matching=config.get('enable_technical_matching', True)
-                )
-                
-                self.current_process.message = "Running integrated pipeline from scratch..."
-                run_integrated_pipeline(pipeline_config, llm_model=llm_model, max_workers=max_workers)
+            # We ALWAYS call the cached pipeline now.
+            # If the user selected "Start from Scratch", the resume_step will be 'start',
+            # which the cached pipeline knows how to handle by clearing the cache first.
+            logger.info(f"🚀 Handing off to cached pipeline with resume_from='{resume_step}'...")
+            
+            run_cached_pipeline(
+                resume_from=resume_step,
+                llm_model=llm_model,
+                max_workers=max_workers,
+                progress_callback=update_progress_callback
+            )
 
-            else:
-                logger.info(f"🚀 Resuming cached pipeline from step: '{resume_step}'...")
-                self.current_process.message = f"Resuming cached pipeline from step: '{resume_step}'..."
-                run_cached_pipeline(
-                    resume_from=resume_step, 
-                    llm_model=llm_model, 
-                    max_workers=max_workers,
-                    progress_callback=update_progress_callback  # <-- PASS THE CALLBACK
-                )
 
 
             # --- COMPLETION LOGIC MOVED INSIDE THE 'TRY' BLOCK ---
@@ -961,21 +949,15 @@ def get_openai_models():
         logger.error(f"An unexpected error occurred while fetching models: {e}", exc_info=True)
         return jsonify({"error": "An internal server error occurred."}), 500
 
-# --- MAIN EXECUTION BLOCK ---
 if __name__ == "__main__":
-    # Create the manager instance first
-    ontology_manager = OntologyManager()
-    
-    # Then initialize the QA chain which may need the DB connection
     initialize_qa_chain()
     
     try:
-        # Run the Flask web server
-        app.run(host='0.0.0.0', port=5000, debug=True)
+        app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
+        
     except KeyboardInterrupt:
         logger.info("Server shutdown requested.")
     finally:
-        # Ensure the manager's connection is closed on exit
         if ontology_manager:
             ontology_manager.close()
-        logger.info("Ontology Manager connection closed.")
+        logger.info("Shared Ontology Manager connection closed.")

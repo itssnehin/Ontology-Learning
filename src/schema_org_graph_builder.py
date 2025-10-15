@@ -35,22 +35,73 @@ class SchemaOrgGraphBuilder:
             self.driver.close()
             logger.info("Neo4j connection for Graph Builder has been closed.")
 
-    def _write_single_object_tx(self, tx: Transaction, schema_object: Dict):
-        """Transaction function to write a single Schema.org object (node and its relations)."""
-        if not isinstance(schema_object, dict) or 'name' not in schema_object:
-            logger.warning(f"Skipping invalid schema object: {schema_object}")
+    def _write_single_object_tx(self, tx: Transaction, task: Dict):
+        """
+        Executes a single ontology learning task.
+        1. Creates a new class and links it to its parent (taxonomic).
+        2. Creates any discovered non-taxonomic relationships.
+        """
+        if task.get('action') != 'CREATE_CLASS':
             return
+
+        child_name = task.get('name')
+        parent_name = task.get('parent_class')
+        status = task.get('status')
+
+        if not child_name:
+            logger.warning(f"Skipping task with no name: {task}")
+            return
+
+        # 1. Create the new class node.
+        class_query = """
+            MERGE (c:OntologyClass {name: $name})
+            ON CREATE SET
+                c.source = 'learned_from_dataset',
+                c.uri = 'https://example.org/ontology#' + $name
+        """
+        if status == 'review':
+            class_query += " SET c:NeedsReview"
+        tx.run(class_query, name=child_name)
+
+        # 2. Create the hierarchical (taxonomic) link.
+        if parent_name:
+            link_query = """
+            MATCH (child:OntologyClass {name: $child_name})
+            MATCH (parent:OntologyClass {name: $parent_name})
+            MERGE (child)-[:SUBCLASS_OF]->(parent)
+            """
+            tx.run(link_query, child_name=child_name, parent_name=parent_name)
+            logger.info(f"LEARNED TAXONOMY: [{child_name}] -> IS_A -> [{parent_name}]")
         
-        # Create the main node
-        self._create_schema_org_node(tx, schema_object)
-        
-        # Ensure any referenced organization nodes exist
-        for org_prop in ["manufacturer", "brand"]:
-            if org_name := schema_object.get(org_prop):
-                tx.run("MERGE (o:Organization {name: $org_name})", org_name=org_name)
-        
-        # Create relationships from the object
-        self._create_schema_org_relationships(tx, schema_object)
+        # 3. Create the non-taxonomic relationships.
+        if relationships := task.get("non_taxonomic_relations"):
+            logger.info(f"  Processing {len(relationships)} non-taxonomic relations for [{child_name}]...")
+            for rel in relationships:
+                target_name = rel.get("target")
+                relation_type = rel.get("relation")
+                
+                if not target_name or not relation_type:
+                    logger.warning(f"    - Skipping invalid relation for [{child_name}]: {rel}")
+                    continue
+
+                # Sanitize the relationship type to be a valid Cypher type
+                sanitized_relation_type = re.sub(r'[^a-zA-Z0-9_]', '_', relation_type).upper()
+                if not sanitized_relation_type:
+                    logger.warning(f"    - Skipping relation with invalid type '{relation_type}'")
+                    continue
+                
+                # Ensure the target node exists as a class
+                tx.run("MERGE (c:OntologyClass {name: $name})", name=target_name)
+
+                # Create the non-taxonomic relationship
+                rel_query = f"""
+                MATCH (source:OntologyClass {{name: $source_name}})
+                MATCH (target:OntologyClass {{name: $target_name}})
+                MERGE (source)-[r:{sanitized_relation_type}]->(target)
+                """
+                tx.run(rel_query, source_name=child_name, target_name=target_name)
+                logger.info(f"    + LEARNED RELATION: [{child_name}] -[:{sanitized_relation_type}]-> [{target_name}]")
+
 
     def _write_object_session(self, schema_object: Dict):
         """Manages a session from the connection pool to write a single object."""
@@ -84,72 +135,35 @@ class SchemaOrgGraphBuilder:
         logger.info("Graph update and relationship inference complete.")
         return self.get_graph_statistics()
 
-    def _create_schema_org_node(self, tx: Transaction, obj: Dict):
-        """Creates a node in Neo4j, flattening any nested dictionary properties."""
-        schema_type = obj.get("@type", "Thing")
-        label = self.type_to_label.get(schema_type, "Product")
-        
-        node_props = {}
-        for key, value in obj.items():
-            # Skip metadata and relationship properties
-            if key.startswith('@') or key in self.relationship_properties:
-                continue
-
-            prop_name = self._sanitize_property_name(key)
-            
-            # FLATTENING LOGIC: If the value is a dictionary, convert it to a string.
-            if isinstance(value, dict):
-                # Example: {"length": "10mm", "width": "5mm"} -> "length: 10mm, width: 5mm"
-                node_props[prop_name] = json.dumps(value) 
-            elif isinstance(value, list):
-                # Ensure all items in a list are primitive types
-                node_props[prop_name] = [str(item) for item in value]
-            elif value is not None:
-                # Handle primitive types
-                node_props[prop_name] = value
-
-        if 'name' in obj:
-            query = f"MERGE (n:{label} {{name: $name}}) SET n += $props"
-            tx.run(query, name=obj.get("name"), props=node_props)
-        else:
-            logger.warning(f"Skipping node creation for object with no name: {obj}")
-
-        status = obj.get('status')
-        
-        # Build the query with an optional additional label
-        query = f"""
-        MERGE (n:{label} {{name: $name}})
-        SET n += $props
-        """
-        if status == 'review':
-            query += " SET n:NeedsReview" # Add the :NeedsReview label
-        # --- END OF NEW LOGIC ---
-            
-        tx.run(query, name=obj.get("name"), props=node_props)
-
-
-    def _create_schema_org_relationships(self, tx: Transaction, obj: Dict):
-        """Creates relationships for a given object."""
-        source_name = obj.get("name")
-        if not source_name: return
-
-        if org_name := obj.get("manufacturer"):
-            tx.run("MATCH (p:Product {name: $p_name}) MATCH (o:Organization {name: $o_name}) MERGE (p)-[:MANUFACTURED_BY]->(o)", p_name=source_name, o_name=org_name)
-        if org_name := obj.get("brand"):
-            tx.run("MATCH (p:Product {name: $p_name}) MATCH (o:Organization {name: $o_name}) MERGE (p)-[:BRANDED_BY]->(o)", p_name=source_name, o_name=org_name)
-        
-        # ... Add other relationship types here if needed ...
-
     def _create_inferred_relationships(self, tx: Transaction):
-        """Creates relationships based on shared properties using the modern elementId()."""
-        # Using elementId() instead of the deprecated id()
-        tx.run("""
-            MATCH (p1:Product), (p2:Product)
-            WHERE p1.category = p2.category AND p1.category IS NOT NULL AND elementId(p1) < elementId(p2)
-            MERGE (p1)-[:SAME_CATEGORY]->(p2)
-        """)
-        logger.info("Inferred SAME_CATEGORY relationships.")
+        """
+        Creates relationships based on shared properties in batches to avoid memory issues.
+        This now uses the APOC library, which is a standard requirement for production Neo4j.
+        """
+        logger.info("   (Batching) Inferring SAME_CATEGORY relationships...")
 
+        # This query finds all products, then for each product (p1), it finds all other products (p2)
+        # in the same category and creates the relationship. APOC handles running this in small batches.
+        batching_query = """
+        CALL apoc.periodic.iterate(
+            'MATCH (p:Product) WHERE p.category IS NOT NULL RETURN p',
+            'MATCH (p2:Product) WHERE p2.category = p.category AND elementId(p) < elementId(p2) MERGE (p)-[:SAME_CATEGORY]->(p2)',
+            {batchSize: 1000, parallel: false}
+        )
+        """
+        
+        try:
+            # We don't need to consume the results, just run it.
+            # Use a longer timeout as this can be a long-running query on large datasets.
+            tx.run(batching_query)
+            logger.info("   ✅ Successfully submitted SAME_CATEGORY inference job.")
+        except Exception as e:
+            # This can happen if APOC is not installed.
+            logger.error(
+                "   ⚠️  Failed to run batched relationship inference. "
+                "Please ensure the APOC plugin is installed in your Neo4j database. "
+                f"Error: {e}"
+            )
 
     def _sanitize_property_name(self, name: str) -> str:
         """Sanitizes property names for Neo4j compatibility."""

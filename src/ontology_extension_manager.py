@@ -14,58 +14,6 @@ are extracted from datasheets or technical documentation, the system must decide
 The core challenge is balancing ontology completeness (capturing all domain concepts)
 with ontological consistency (avoiding redundancy and maintaining semantic coherence).
 
-THEORETICAL FOUNDATION:
-======================
-The approach is grounded in several key areas of computer science and knowledge engineering:
-
-1. ONTOLOGY ENGINEERING PRINCIPLES:
-   - Concept Similarity: Measures semantic relatedness between domain entities
-   - Ontological Coherence: Maintains logical consistency and hierarchical structure
-   - Knowledge Base Evolution: Systematic approach to ontology growth and refinement
-
-2. INFORMATION RETRIEVAL THEORY:
-   - Vector Space Models: Embedding-based semantic similarity computation
-   - Similarity Metrics: Cosine similarity, Jaccard coefficients, edit distances
-   - Threshold Optimization: Precision-recall trade-offs in similarity matching
-
-3. MACHINE LEARNING INTEGRATION:
-   - Embedding Models: Dense vector representations of concepts (OpenAI embeddings)
-   - Large Language Models: Context-aware reasoning for ambiguous classification
-   - Active Learning: Human-in-the-loop validation for uncertain decisions
-
-ALGORITHMIC APPROACH:
-====================
-The system employs a multi-stage decision algorithm combining complementary similarity methods:
-
-STAGE 1: RAPID SIMILARITY SCREENING
-- Lexical Similarity: String matching algorithms (SequenceMatcher, substring detection)
-- Embedding Similarity: High-dimensional semantic comparison using pre-trained models
-- Category Filtering: Domain-specific hierarchical classification
-
-STAGE 2: TECHNICAL SPECIFICATION MATCHING
-For electronic components (primary domain), specialized matchers evaluate:
-- Frequency Range Overlap: Quantitative comparison of operating frequencies
-- Impedance Matching: Standard electrical impedance values (50Ω, 75Ω, 300Ω)
-- Connector Type Normalization: SMA, BNC, N-type connector standardization
-- Mounting Classification: Surface mount, through-hole, panel mount categorization
-
-STAGE 3: CONFIDENCE-WEIGHTED DECISION SYNTHESIS
-- Multi-method Score Fusion: Weighted combination of similarity measures
-- Adaptive Thresholds: Dynamic adjustment based on ontology maturity
-- Uncertainty Quantification: Confidence intervals for decision quality
-
-STAGE 4: LLM-POWERED SEMANTIC VALIDATION
-For ambiguous cases (similarity scores 0.70-0.95):
-- Structured Reasoning: GPT-4 evaluation with domain expert persona
-- Context-Aware Analysis: Consideration of technical specifications and relationships
-- Explainable Decisions: Natural language reasoning with confidence scoring
-
-SIMILARITY COMPUTATION DETAILS:
-==============================
-1. EMBEDDING SIMILARITY:
-   - Model: OpenAI text-embedding-ada-002 (1536 dimensions)
-   - Metric: Cosine similarity in high-dimensional space
-   - Text Representation: "Name. Category: X. Description: Y. Frequency: Z..."#!/usr/bin/env python3
 """
 import sys
 from pathlib import Path
@@ -83,8 +31,10 @@ import re
 from difflib import SequenceMatcher
 import logging
 from dataclasses import dataclass, asdict
+from tiktoken import get_encoding
 
-from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, PROMPTS, NEO4J_DB_NAME
+from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, NEO4J_DB_NAME, PROMPTS, MODEL_COSTS, NON_TAXONOMIC_RELATION_PROMPT
+
 import re
 
 # We need to import the PipelineConfig to use it as a type hint
@@ -101,7 +51,7 @@ class OntologyExtensionManager:
         
         # Now, use the thresholds from the config object
         self.similarity_thresholds = self.config.similarity_thresholds
-
+        self.tokenizer = get_encoding("cl100k_base")
         # Initialize other components
         self.embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
         self.llm = ChatOpenAI(model_name="gpt-4o", openai_api_key=OPENAI_API_KEY)
@@ -127,7 +77,7 @@ class OntologyExtensionManager:
         This version is smarter: it loads both instance data (:Product) AND
         class definitions (:OntologyClass) to build a comprehensive view of existing knowledge.
         """
-        logger.info("📚 Loading existing ontology (classes and instances)...")
+        logger.info(f"📚 Loading existing ontology from database '{NEO4J_DB_NAME}'...")
         concepts = []
         concept_names = set() # Use a set to prevent duplicates
 
@@ -177,30 +127,40 @@ class OntologyExtensionManager:
     
     def create_concept_embeddings(self, concepts: List[Dict]) -> Dict[str, np.ndarray]:
         """Create embeddings for existing concepts for similarity matching."""
-        print("🧠 Creating concept embeddings...")
+        logger.info("🧠 Creating concept embeddings...")
         
         concept_texts = []
         concept_names = []
         
         for concept in concepts:
-            # Create rich text representation
-            text_parts = [concept['name']]
+            # Use .get() to safely access keys that might not exist
+            name = concept.get('name', '')
+            if not name:
+                continue # Skip concepts with no name
+
+            text_parts = [name]
             
-            if concept['category']:
+            # Safely get other properties
+            if concept.get('category'):
                 text_parts.append(f"Category: {concept['category']}")
-            if concept['description']:
+            if concept.get('description'):
                 text_parts.append(f"Description: {concept['description'][:200]}")
-            if concept['frequency']:
+            if concept.get('frequency'):
                 text_parts.append(f"Frequency: {concept['frequency']}")
-            if concept['impedance']:
+            if concept.get('impedance'):
                 text_parts.append(f"Impedance: {concept['impedance']}")
-            if concept['connector']:
+            if concept.get('connector'):
                 text_parts.append(f"Connector: {concept['connector']}")
             
             concept_text = ". ".join(text_parts)
             concept_texts.append(concept_text)
-            concept_names.append(concept['name'])
+            concept_names.append(name)
         
+        if not concept_texts:
+            logger.warning("   No valid concepts found to create embeddings for.")
+            self._concept_embeddings = {}
+            return self._concept_embeddings
+
         # Generate embeddings
         embeddings = self.embeddings.embed_documents(concept_texts)
         
@@ -208,11 +168,14 @@ class OntologyExtensionManager:
         for name, embedding in zip(concept_names, embeddings):
             self._concept_embeddings[name] = np.array(embedding)
         
-        print(f"   ✅ Created embeddings for {len(concept_names)} concepts")
+        logger.info(f"   ✅ Created embeddings for {len(concept_names)} concepts.")
         return self._concept_embeddings
+
     
-    def analyze_new_concept(self, new_concept: Dict[str, Any]) -> ExtensionResult:
-        """Analyze whether a new concept should extend the ontology or map to existing."""
+    def analyze_new_concept(self, new_concept: Dict[str, Any]) -> Tuple[ExtensionResult, float]:
+        """
+        Analyze a new concept, returning the decision, any non-taxonomic relations, and the cost.
+        """
         concept_name = new_concept.get('name', 'Unknown')
         logger.debug(f"🔍 Analyzing new concept: {concept_name}")
         
@@ -221,13 +184,30 @@ class OntologyExtensionManager:
             if self._existing_concepts:
                 self.create_concept_embeddings(self._existing_concepts)
         
+        # 1. Find similarity matches
         matches = self._find_concept_matches(new_concept)
-        decision_result = self._make_extension_decision(new_concept, matches) # Pass the full new_concept dict
         
-        logger.debug(f"   🎯 Decision for '{concept_name}': {decision_result.decision.value} (Confidence: {decision_result.confidence:.2f})")
+        # 2. Extract non-taxonomic relations (this can also incur a cost)
+        nontaxonomic_relations, nt_in_tokens, nt_out_tokens = self._extract_non_taxonomic_relations(concept_name, matches)
         
-        return decision_result
-    
+        # 3. Make the final decision, which may incur more cost from LLM validation
+        decision_result, val_in_tokens, val_out_tokens = self._make_extension_decision(new_concept, matches, nontaxonomic_relations)
+        
+        # --- CENTRALIZED COST CALCULATION ---
+        total_input_tokens = nt_in_tokens + val_in_tokens
+        total_output_tokens = nt_out_tokens + val_out_tokens
+        
+        model_name = self.llm.model_name
+        model_pricing = MODEL_COSTS.get(model_name, MODEL_COSTS['default'])
+        input_cost = (total_input_tokens / 1000) * model_pricing['input_cost_per_1k_tokens']
+        output_cost = (total_output_tokens / 1000) * model_pricing['output_cost_per_1k_tokens']
+        total_cost = input_cost + output_cost
+        
+        logger.debug(f"   🎯 Decision for '{concept_name}': {decision_result.decision.value} (Cost: ${total_cost:.5f})")
+        
+        return decision_result, total_cost
+
+        
     def _find_concept_matches(self, new_concept: Dict[str, Any]) -> List[ConceptMatch]:
         """Find potential matches using multiple similarity methods."""
         matches = []
@@ -380,58 +360,75 @@ class OntologyExtensionManager:
         return matches
     
     def _make_extension_decision(self, new_concept: Dict[str, Any], 
-                                matches: List[ConceptMatch]) -> ExtensionResult:
-        """Make the final decision on whether to extend or map."""
-        
+                                matches: List[ConceptMatch],
+                                nontaxonomic_relations: List[Dict[str, str]]) -> Tuple[ExtensionResult, int, int]:
+        """Make the final decision and return the result and any associated validation cost."""
         concept_name = new_concept.get('name', 'Unknown')
 
+        # This path has no validation cost
         if not matches:
-            return ExtensionResult(
-                concept_name=concept_name, # <-- ADD THIS
+            result = ExtensionResult(
+                concept_name=concept_name,
                 decision=ExtensionDecision.EXTEND,
                 target_concept=None,
                 confidence=0.9,
                 reasoning="No similar concepts found in existing ontology",
-                matches=[]
+                matches=[],
+                non_taxonomic_relations=nontaxonomic_relations
             )
-        
+            return result, 0, 0
+
         best_match = matches[0]
-        
+
+        # This path has no validation cost
         if best_match.similarity_score >= self.similarity_thresholds['exact_match']:
-            return ExtensionResult(
-                concept_name=concept_name, # <-- ADD THIS
+            result = ExtensionResult(
+                concept_name=concept_name,
                 decision=ExtensionDecision.MAP_EXACT,
                 target_concept=best_match.existing_concept,
                 confidence=best_match.confidence,
                 reasoning=f"High similarity match: {best_match.reasoning}",
-                matches=matches[:3]
+                matches=matches[:3],
+                non_taxonomic_relations=nontaxonomic_relations
             )
-        
+            return result, 0, 0
+
+        # This path MIGHT have a validation cost
         elif best_match.similarity_score >= self.similarity_thresholds['high_similarity'] and self.config.enable_llm_validation:
-            return self._llm_validate_similarity(new_concept, best_match, matches[:3])
-        
+            decision_result, in_tokens, out_tokens = self._llm_validate_similarity(new_concept, best_match, matches[:3])
+            decision_result.non_taxonomic_relations = nontaxonomic_relations
+            return decision_result, in_tokens, out_tokens
+
+        # This path has no validation cost
         elif best_match.similarity_score >= self.similarity_thresholds['medium_similarity']:
-            return ExtensionResult(
-                concept_name=concept_name, # <-- ADD THIS
+            result = ExtensionResult(
+                concept_name=concept_name,
                 decision=ExtensionDecision.UNCERTAIN,
                 target_concept=best_match.existing_concept,
                 confidence=0.5,
                 reasoning=f"Medium similarity requires review: {best_match.reasoning}",
-                matches=matches[:5]
+                matches=matches[:5],
+                non_taxonomic_relations=nontaxonomic_relations
             )
-        
+            return result, 0, 0
+
+        # This path has no validation cost
         else: # Low similarity
-            return ExtensionResult(
-                concept_name=concept_name, # <-- ADD THIS
+            result = ExtensionResult(
+                concept_name=concept_name,
                 decision=ExtensionDecision.EXTEND,
                 target_concept=None,
                 confidence=0.8,
                 reasoning="Low similarity to existing concepts suggests new concept",
-                matches=matches[:3]
+                matches=matches[:3],
+                non_taxonomic_relations=nontaxonomic_relations
             )
+            return result, 0, 0
+            
     def _llm_validate_similarity(self, new_concept: Dict[str, Any], 
                                 best_match: ConceptMatch,
-                                top_matches: List[ConceptMatch]) -> ExtensionResult:
+                                top_matches: List[ConceptMatch]) -> Tuple[ExtensionResult, int, int]:
+        #You will also need to update this function to pass it when you've acquired it
         """Use LLM to make final decision on high-similarity matches."""
         concept_name = new_concept.get('name', 'Unknown')
         
@@ -450,8 +447,13 @@ class OntologyExtensionManager:
             match_score=f"{best_match.similarity_score:.3f}"
         )
         
+        input_tokens, output_tokens = 0, 0
+        
         try:
+            
+            input_tokens = len(self.tokenizer.encode(prompt))
             response = self.llm.invoke(prompt)
+            output_tokens = len(self.tokenizer.encode(response.content))
             
             # --- USE A ROBUST JSON PARSER ---
             match = re.search(r'\{.*\}', response.content, re.DOTALL)
@@ -462,27 +464,31 @@ class OntologyExtensionManager:
             
             llm_decision = result.get('decision')
             decision = ExtensionDecision.MAP_SIMILAR if llm_decision == "SAME_ENTITY" else ExtensionDecision.EXTEND
-            
+            #FIX ADD nontaxonomic_relations
+            nontaxonomic_relations = self._extract_non_taxonomic_relations(new_concept.get('name', 'Unknown'),top_matches)
             return ExtensionResult(
                 concept_name=concept_name,
                 decision=decision,
                 target_concept=best_match.existing_concept if decision != ExtensionDecision.EXTEND else None,
                 confidence=result.get('confidence', 0.85), # Default to high confidence if key is missing
                 reasoning=f"LLM validation: {result.get('reasoning', 'No reasoning provided.')}",
-                matches=top_matches
-            )
+                matches=top_matches,
+                non_taxonomic_relations = nontaxonomic_relations  # <-- ADD THIS
+            ), input_tokens, output_tokens
             
         except (json.JSONDecodeError, AttributeError) as e:
             # This will now catch the "Expecting value" error
             logger.warning(f"   ⚠️ LLM validation for '{concept_name}' failed to produce valid JSON. Falling back to UNCERTAIN. Error: {e}")
+            nontaxonomic_relations = self._extract_non_taxonomic_relations(new_concept.get('name', 'Unknown'),top_matches)
             return ExtensionResult(
                 concept_name=concept_name,
                 decision=ExtensionDecision.UNCERTAIN,
                 target_concept=best_match.existing_concept,
                 confidence=0.5,
                 reasoning="LLM validation failed, requires manual review.",
-                matches=top_matches
-            )
+                matches=top_matches,
+                non_taxonomic_relations = nontaxonomic_relations  # <-- ADD THIS
+            ), input_tokens, output_tokens
 
     
     def _deduplicate_matches(self, matches: List[ConceptMatch]) -> List[ConceptMatch]:
@@ -647,6 +653,39 @@ class OntologyExtensionManager:
                 return 1.0
         
         return SequenceMatcher(None, mount1_clean, mount2_clean).ratio()
+    
+    def _extract_non_taxonomic_relations(self, concept_name: str, matches: List[ConceptMatch]) -> Tuple[List[Dict[str, str]], int, int]:
+        """
+        Extracts non-taxonomic relations using an LLM and returns the relations and token counts.
+        """
+        if not NON_TAXONOMIC_RELATION_PROMPT:
+            # Return three values, even on failure
+            return [], 0, 0
+        
+        prompt = NON_TAXONOMIC_RELATION_PROMPT.format(
+            concept_name=concept_name,
+            existing_matches_names=[match.existing_concept for match in matches]
+        )
+        input_tokens, output_tokens = 0, 0
+
+        try:
+            # --- CORRECTED LOGIC: ONLY COUNT AND RETURN TOKENS ---
+            input_tokens = len(self.tokenizer.encode(prompt))
+            response = self.llm.invoke(prompt)
+            output_tokens = len(self.tokenizer.encode(response.content))
+            # --- COST CALCULATION IS REMOVED FROM THIS FUNCTION ---
+
+            json_str = response.content.split('```json')[-1].split('```')[0].strip()
+            relations = json.loads(json_str)
+            
+            # Return the relations and the two token counts
+            return (relations if isinstance(relations, list) else []), input_tokens, output_tokens
+
+        except Exception as e:
+            logger.error(f"Error extracting non-taxonomic relations for {concept_name}: {e}")
+            # Still return three values on error
+            return [], input_tokens, output_tokens
+
 
 # Integration with existing pipeline
 def analyze_datasheet_concepts(datasheet_concepts: List[Dict[str, Any]]) -> List[ExtensionResult]:
