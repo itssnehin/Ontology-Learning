@@ -1,7 +1,7 @@
 import logging
 import pickle
 from pathlib import Path
-from typing import Optional, Callable
+from typing import Optional, Callable, List
 from datetime import datetime, date, time
 
 # We only need to import the ONE true pipeline and its config
@@ -29,7 +29,7 @@ def clear_cache(start_step: str):
                 logger.warning(f"Clearing downstream cache for step: '{step_to_clear}'")
                 CACHE_PATHS[step_to_clear].unlink()
 
-def run_cached_pipeline(resume_from: str = 'start', llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS, progress_callback: Optional[Callable] = None):
+def run_cached_pipeline(resume_from: str = 'start', llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS, progress_callback: Optional[Callable] = None, selected_files: Optional[List[str]] = None):
     """
     Orchestrates a resumable ontology learning pipeline by calling steps from the main
     IntegratedSchemaOrgPipeline and caching the results.
@@ -46,9 +46,13 @@ def run_cached_pipeline(resume_from: str = 'start', llm_model: str = LLM_MODEL, 
     pipeline = IntegratedSchemaOrgPipeline(config)
 
     # --- Step 1: Chunks ---
-    if progress_callback: progress_callback("Loading Documents", 10)
-    if resume_from == 'chunks':
-        chunks = pipeline._step_1_load_documents()
+    if resume_from == 'chunks' or selected_files:
+        if selected_files:
+            logger.info("User selected specific files. Re-loading documents and clearing downstream cache.")
+            clear_cache('chunks') # Clear concepts and decisions
+        
+        # Pass the selected files list to the loading step
+        chunks = pipeline._step_1_load_documents(selected_files=selected_files)
         with open(CACHE_PATHS["chunks"], "wb") as f: pickle.dump(chunks, f)
     else:
         with open(CACHE_PATHS["chunks"], "rb") as f: chunks = pickle.load(f)

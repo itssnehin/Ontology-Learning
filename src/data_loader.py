@@ -1,7 +1,7 @@
 import os
 import logging
 import re
-from typing import List
+from typing import List, Optional
 from langchain_community.document_loaders import UnstructuredMarkdownLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
@@ -47,39 +47,50 @@ def _preprocess_text(text: str) -> str:
     return text
 
 
-def load_and_split_data() -> List[Document]:
+def load_and_split_data(files_to_process: Optional[List[str]] = None) -> List[Document]:
     """Load Markdown files, preprocess their content, and split into chunks."""
     logger.info(f"Loading Markdown files from: {DATA_DIR}")
-    logger.info(f"Available Markdown files: {MARKDOWN_FILES}")
-    
+
+    # Determine which files to process
+    if files_to_process:
+        # Create full Path objects from the provided filenames
+        target_files = [file for file in MARKDOWN_FILES if file.name in files_to_process]
+        logger.info(f"Processing user-selected files: {[f.name for f in target_files]}")
+    else:
+        # Default to all files if none are specified
+        target_files = MARKDOWN_FILES
+        logger.info(f"Processing all available Markdown files: {[f.name for f in target_files]}")
+
     all_chunks = []
     splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
     
-    for file in MARKDOWN_FILES:
-        file_path = os.path.join(DATA_DIR, file)
-        if os.path.exists(file_path):
+    # --- MODIFIED LOOP ---
+    for file_path_obj in target_files:
+        # The 'file_path_obj' is already a complete Path object from the config list
+        if file_path_obj.exists():
             try:
-                loader = UnstructuredMarkdownLoader(file_path)
+                loader = UnstructuredMarkdownLoader(str(file_path_obj))
                 docs = loader.load()
-                logger.info(f"Loaded {len(docs)} documents from {file_path}")
+                logger.info(f"Loaded {len(docs)} documents from {file_path_obj.name}")
 
-                # PREPROCESSING STEP
+                # PREPROCESSING STEP (no change here)
                 cleaned_docs = []
                 for doc in docs:
                     cleaned_content = _preprocess_text(doc.page_content)
                     cleaned_docs.append(Document(page_content=cleaned_content, metadata=doc.metadata))
 
-                #CHUNKING
+                # CHUNKING (no change here)
                 chunks = splitter.split_documents(cleaned_docs)
                 all_chunks.extend(chunks)
-                logger.info(f"Split '{file.name}' into {len(chunks)} cleaned chunks.")
+                logger.info(f"Split '{file_path_obj.name}' into {len(chunks)} cleaned chunks.")
             except Exception as e:
-                logger.error(f"Error loading or processing {file_path}: {e}", exc_info=True)
+                logger.error(f"Error loading or processing {file_path_obj}: {e}", exc_info=True)
         else:
-            logger.warning(f"File not found: {file_path}")
+            logger.warning(f"File not found: {file_path_obj}")
     
     logger.info(f"Total chunks loaded and preprocessed: {len(all_chunks)}")
     return all_chunks
+
 
 if __name__ == "__main__":
     loaded_chunks = load_and_split_data()

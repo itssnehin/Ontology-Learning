@@ -39,7 +39,7 @@ from langchain_community.graphs import Neo4jGraph
 
 from src.config import (
     NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD,
-    OPENAI_API_KEY, LLM_MODEL, MAX_WORKERS, NEO4J_DB_NAME #<-- ADD NEO4J_DB_NAME
+    OPENAI_API_KEY, LLM_MODEL, MAX_WORKERS, NEO4J_DB_NAME, MARKDOWN_FILES  
 )
 
 from src.data_models import PipelineConfig
@@ -316,7 +316,8 @@ class OntologyManager:
             resume_step = config.get('resume_from', 'start')
             llm_model = config.get('llm_model', LLM_MODEL)
             max_workers = config.get('max_workers', MAX_WORKERS)
-
+            selected_files = config.get('selected_files') 
+            
             self.current_process.message = f"Initializing pipeline (Mode: {resume_step})..."
             self.current_process.progress = 5
 
@@ -329,7 +330,8 @@ class OntologyManager:
                 resume_from=resume_step,
                 llm_model=llm_model,
                 max_workers=max_workers,
-                progress_callback=update_progress_callback
+                progress_callback=update_progress_callback,
+                selected_files=selected_files
             )
 
 
@@ -655,34 +657,41 @@ def dashboard():
     """Serve the main dashboard using Flask templates."""
     return render_template('dashboard.html')
 
-# In src/ontology_management_backend.py
-
-# ... (imports)
-
 @app.route('/api/stats')
 def get_stats():
-    """Get current ontology statistics from the Neo4j database."""
+    """Get current ontology statistics from the Neo4j database using the new data model."""
     try:
         with ontology_manager.driver.session(database=NEO4J_DB_NAME) as session:
-            # Query for the number of Product nodes (concepts)
-            concepts_result = session.run("MATCH (p:Product) RETURN count(p) AS concept_count")
-            total_concepts = concepts_result.single()["concept_count"]
+            # --- CORRECTED QUERIES ---
 
-            # Query for the total number of relationships
+            # 1. Total Concepts: Count all :OntologyClass nodes that were learned from the dataset.
+            concepts_result = session.run("""
+                MATCH (c:OntologyClass) 
+                WHERE c.source = 'learned_from_dataset' // Only count learned concepts
+                RETURN count(c) AS concept_count
+            """)
+            total_learned_concepts = concepts_result.single()["concept_count"]
+
+            # 2. Total Relations: This query is still correct as it counts all relationship types.
             rels_result = session.run("MATCH ()-[r]->() RETURN count(r) AS rel_count")
-            total_relations = rels_result.single()["rel_count"]
+            total_relations = rels_result.single()["rel_count"] or 0
             
-            # Query for concepts needing review (assuming you add a label for this)
-            # review_result = session.run("MATCH (p:Product {status: 'review'}) RETURN count(p) AS review_count")
-            # pending_review = review_result.single()["review_count"]
-            pending_review = 0 # Placeholder for now
+            # 3. Pending Review: Count all :OntologyClass nodes that also have the :NeedsReview label.
+            # Corrected Query for Pending Review
+            review_result = session.run("MATCH (c:OntologyClass:NeedsReview) RETURN count(c) AS review_count")
+            pending_review = review_result.single()["review_count"]
 
-            # Automation rate is complex to calculate here, so we'll use a placeholder.
-            # This is better calculated at the end of a pipeline run.
-            automation_rate = 0 # Placeholder
+            # 4. Automation Rate: Calculated as (Total Learned - Pending Review) / Total Learned
+            if total_learned_concepts > 0:
+                approved_concepts = total_learned_concepts - pending_review
+                automation_rate = round((approved_concepts / total_learned_concepts) * 100)
+            else:
+                automation_rate = 100 # Default to 100% if nothing has been learned yet
+
+            # --- END OF CORRECTIONS ---
 
             return jsonify({
-                "product_nodes": total_concepts,
+                "product_nodes": total_learned_concepts, # Renamed for consistency with frontend ID
                 "total_relations": total_relations,
                 "pending_review": pending_review,
                 "automation_rate": automation_rate,
@@ -778,21 +787,24 @@ def run_dashboard_server(host='localhost', port=5000, debug=True):
         print("🔌 Ontology Manager closed")
 
 # --- ADD THESE NEW ROUTES ---
-
 @app.route('/api/reviews/pending')
 def get_pending_reviews():
     """Fetches concepts from Neo4j that are labeled as :NeedsReview."""
     try:
         with ontology_manager.driver.session(database=NEO4J_DB_NAME) as session:
-            # This query finds all nodes with the NeedsReview label.
-            # We are approximating target and reasoning for the demo.
+            # --- THIS IS THE CORRECTED QUERY ---
+            # 1. Look for :OntologyClass instead of :Product.
+            # 2. Use OPTIONAL MATCH for the parent to get the 'target'.
+            # 3. Use 'n.confidence' if it exists, otherwise default to a value.
             query = """
-            MATCH (p:Product:NeedsReview)
-            RETURN p.name AS concept, 
-                   "Unknown" AS target, 
-                   p.confidence AS confidence, 
-                   "Medium confidence match requires expert validation." AS reasoning
-            LIMIT 100
+            MATCH (n:OntologyClass:NeedsReview)
+            OPTIONAL MATCH (n)-[:SUBCLASS_OF]->(parent)
+            RETURN 
+                n.name AS concept, 
+                COALESCE(parent.name, "N/A") AS target,
+                COALESCE(n.confidence, 0.75) AS confidence,
+                "Medium confidence match requires expert validation." AS reasoning
+            LIMIT 200
             """
             result = session.run(query)
             reviews = [record.data() for record in result]
@@ -806,12 +818,11 @@ def accept_review(concept_name):
     """Accepts a concept by removing the :NeedsReview label."""
     try:
         with ontology_manager.driver.session(database=NEO4J_DB_NAME) as session:
-            # This query finds the node and removes the label.
             query = """
-            MATCH (p:Product {name: $name})
-            REMOVE p:NeedsReview
-            SET p.status = 'approved'
-            RETURN p.name
+            MATCH (n:OntologyClass {name: $name})
+            REMOVE n:NeedsReview
+            SET n.status = 'approved'
+            RETURN n.name
             """
             result = session.run(query, name=concept_name)
             if result.single():
@@ -830,10 +841,10 @@ def reject_review(concept_name):
         with ontology_manager.driver.session(database=NEO4J_DB_NAME) as session:
             # For this demo, we'll mark as rejected. In a real app, you might delete it.
             query = """
-            MATCH (p:Product {name: $name})
-            REMOVE p:NeedsReview
-            SET p.status = 'rejected'
-            RETURN p.name
+            MATCH (n:OntologyClass {name: $name})
+            REMOVE n:NeedsReview
+            SET n.status = 'rejected'
+            RETURN n.name
             """
             result = session.run(query, name=concept_name)
             if result.single():
@@ -949,6 +960,18 @@ def get_openai_models():
         logger.error(f"An unexpected error occurred while fetching models: {e}", exc_info=True)
         return jsonify({"error": "An internal server error occurred."}), 500
 
+@app.route('/api/documents')
+def list_documents():
+    """Returns a list of available markdown document filenames."""
+    try:
+        # We already have the list of Path objects in the config.
+        # We just need to extract the filenames.
+        filenames = [file.name for file in MARKDOWN_FILES]
+        return jsonify({"documents": filenames})
+    except Exception as e:
+        logger.error(f"Failed to list documents: {e}", exc_info=True)
+        return jsonify({"error": "Could not retrieve document list."}), 500
+    
 if __name__ == "__main__":
     initialize_qa_chain()
     

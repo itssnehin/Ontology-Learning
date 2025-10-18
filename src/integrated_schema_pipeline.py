@@ -44,7 +44,7 @@ class IntegratedSchemaOrgPipeline:
         logger.info(f"📁 Output directory: {self.output_dir}")
         logger.info(f"⚙️ Max concurrent workers: {MAX_WORKERS}")
 
-    def run_integrated_pipeline(self, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS, progress_callback: Optional[Callable] = None) -> IntegrationResults:
+    def run_integrated_pipeline(self, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS, progress_callback: Optional[Callable] = None, selected_files: Optional[List[str]] = None) -> IntegrationResults:
         """Executes the complete ontology learning pipeline and returns structured results."""
         start_time = datetime.now()
         logger.info("🚀" + "="*70)
@@ -64,7 +64,8 @@ class IntegratedSchemaOrgPipeline:
         
         # --- EXECUTE PIPELINE STEPS ---
         if progress_callback: progress_callback("Loading Documents", 10)
-        chunks = self._step_1_load_documents()
+        # Pass the selected_files to the loading step
+        chunks = self._step_1_load_documents(selected_files=selected_files)
 
         if progress_callback: progress_callback("Extracting Concepts", 25)
         extracted_concepts, in_tokens_extract, out_tokens_extract = self._step_2_extract_concepts(chunks, llm_model, max_workers)
@@ -121,10 +122,11 @@ class IntegratedSchemaOrgPipeline:
 
     # --- Step Execution Methods ---
 
-    def _step_1_load_documents(self) -> List[Document]:
+    def _step_1_load_documents(self, selected_files: Optional[List[str]] = None) -> List[Document]:
         """Loads and preprocesses documents from the data directory."""
         logger.info("\n📄 Step 1: Loading and processing documents...")
-        chunks = load_and_split_data()
+        # Pass the file list to the actual data loader function
+        chunks = load_and_split_data(files_to_process=selected_files)
         if self.config.max_chunks:
             chunks = chunks[:self.config.max_chunks]
         logger.info(f"   ✅ Processed {len(chunks)} document chunks")
@@ -375,10 +377,9 @@ class IntegratedSchemaOrgPipeline:
 
 
 # --- Main execution block ---
-def run_integrated_pipeline(config: Optional[PipelineConfig] = None, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS, progress_callback: Optional[Callable] = None):
+def run_integrated_pipeline(config: Optional[PipelineConfig] = None, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS, progress_callback: Optional[Callable] = None, selected_files: Optional[List[str]] = None):
     pipeline = IntegratedSchemaOrgPipeline(config)
-    return pipeline.run_integrated_pipeline(llm_model=llm_model, max_workers=max_workers, progress_callback=progress_callback)
-
+    return pipeline.run_integrated_pipeline(llm_model=llm_model, max_workers=max_workers, progress_callback=progress_callback, selected_files=selected_files)
 if __name__ == "__main__":
     import argparse
     

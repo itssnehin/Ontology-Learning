@@ -150,6 +150,20 @@
             color: var(--dark);
         }
 
+        .file-list {
+            max-height: 150px; /* Adjusted height */
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+        .file-list-item {
+            display: block;
+            margin-bottom: 5px; /* Added spacing */
+        }
+
         .form-section {
             margin-bottom: 20px;
         }
@@ -778,27 +792,28 @@
                                 <option value="chunks">Resume at Loading Chunks</option>
                                 <option value="concepts">Resume at Extracting Concepts</option>
                                 <option value="decisions">Resume at Making Decisions</option>
-                                <option value="schema_objects">Resume at Creating Schemas</option>
-                                <option value="graph">Resume to Update Graph Only</option>
                             </select>
                         </div>
                         <div class="form-section">
                             <label class="form-label">LLM Model</label>
                             <select class="form-control" id="llm-model-selector">
-                                <option value="gpt-4o">gpt-4o (Recommended)</option>
-                                <option value="gpt-4.1-nano">gpt-4.1-nano</option>
-                                <option value="gpt-4.1-mini">gpt-4.1-mini</option>
-                                <option value="gpt-5">gpt-5 (Not Recommended)</option>
-                                <option value="gpt-3.5-turbo">gpt-3.5-turbo (Faster, Less Accurate)</option>
+                                <!-- Models will be dynamically loaded here -->
+                                <option>Loading models...</option>
                             </select>
                         </div>
 
-                        <!--
+                        <!-- NEW: Document Selection Section -->
                         <div class="form-section">
-                            <label class="form-label">Maximum Chunks to Process</label>
-                            <input type="number" class="form-control" id="max-chunks" value="50" min="1" max="500">
+                            <label class="form-label">Select Documents to Process</label>
+                            <div id="file-selection-container" class="file-list">
+                                <p>Loading documents...</p>
+                            </div>
+                            <div class="btn-group" style="margin-top: 10px; justify-content: flex-start;">
+                                <button type="button" class="btn btn-secondary" id="select-all-files">Select All</button>
+                                <button type="button" class="btn btn-secondary" id="deselect-all-files">Deselect All</button>
+                            </div>
                         </div>
-                        -->
+
                         <div class="form-section">
                             <label class="form-label">Similarity Thresholds</label>
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
@@ -820,7 +835,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <div class="form-section">
                             <label class="checkbox-label">
                                 <input type="checkbox" id="enable-llm" checked>
@@ -860,19 +875,19 @@
                     
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <div class="stat-value" id="stat-concepts">224</div>
+                            <div class="stat-value" id="stat-concepts">...</div>
                             <div class="stat-label">Total Concepts</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="stat-relations">7,009</div>
+                            <div class="stat-value" id="stat-relations">...</div>
                             <div class="stat-label">Relations</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="stat-automated">85%</div>
+                            <div class="stat-value" id="stat-automated">...%</div>
                             <div class="stat-label">Automation Rate</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="stat-pending">130</div>
+                            <div class="stat-value" id="stat-pending">...</div>
                             <div class="stat-label">Pending Review</div>
                         </div>
                     </div>
@@ -885,10 +900,7 @@
                     </div>
 
                     <div class="log-container" id="log-container">
-                        <div class="log-entry">
-                            <span class="log-time">15:52:47</span>
-                            <span class="log-message">Pipeline ready. Configure settings and click 'Run Pipeline' to start.</span>
-                        </div>
+                        <!-- Log entries will be added here -->
                     </div>
                 </div>
             </div>
@@ -898,12 +910,6 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">🔍 Concept Review Queue</h2>
-                    <div class="btn-group">
-                        <button class="btn btn-secondary" onclick="filterConcepts('all')">All (130)</button>
-                        <button class="btn btn-secondary" onclick="filterConcepts('uncertain')">Uncertain (130)</button>
-                        <button class="btn btn-secondary" onclick="filterConcepts('approved')">Approved (0)</button>
-                        <button class="btn btn-secondary" onclick="filterConcepts('rejected')">Rejected (0)</button>
-                    </div>
                 </div>
 
                 <table class="results-table">
@@ -918,66 +924,7 @@
                         </tr>
                     </thead>
                     <tbody id="review-table-body">
-                        <tr>
-                            <td><strong>Dimensional Characteristics</strong></td>
-                            <td><span class="decision-badge review">Review</span></td>
-                            <td>Material Specification</td>
-                            <td>
-                                <div class="confidence-meter">
-                                    <div class="confidence-bar">
-                                        <div class="confidence-fill low" style="width: 50%"></div>
-                                    </div>
-                                    <span>0.50</span>
-                                </div>
-                            </td>
-                            <td>LLM validation failed, requires manual review</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn accept">Accept</button>
-                                    <button class="action-btn reject">Reject</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Metal Plating</strong></td>
-                            <td><span class="decision-badge review">Review</span></td>
-                            <td>Plating Material</td>
-                            <td>
-                                <div class="confidence-meter">
-                                    <div class="confidence-bar">
-                                        <div class="confidence-fill low" style="width: 50%"></div>
-                                    </div>
-                                    <span>0.50</span>
-                                </div>
-                            </td>
-                            <td>LLM validation failed, requires manual review</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn accept">Accept</button>
-                                    <button class="action-btn reject">Reject</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Sure Seal</strong></td>
-                            <td><span class="decision-badge review">Review</span></td>
-                            <td>Sealing Component</td>
-                            <td>
-                                <div class="confidence-meter">
-                                    <div class="confidence-bar">
-                                        <div class="confidence-fill low" style="width: 50%"></div>
-                                    </div>
-                                    <span>0.50</span>
-                                </div>
-                            </td>
-                            <td>LLM validation failed, requires manual review</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn accept">Accept</button>
-                                    <button class="action-btn reject">Reject</button>
-                                </div>
-                            </td>
-                        </tr>
+                       <!-- Rows will be dynamically added here -->
                     </tbody>
                 </table>
             </div>
@@ -987,361 +934,15 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">📈 Integration Results</h2>
-                    <div style="display: flex; gap: 16px; align-items: center;">
-                        <select class="form-control" style="width: 200px;" id="results-selector">
-                            <option>2025-09-08_15:52:56</option>
-                            <option>2025-09-08_14:23:12</option>
-                            <option>2025-09-08_10:15:33</option>
-                        </select>
-                        <div class="btn-group">
-                            <button class="btn btn-secondary active" onclick="showResultsView('summary', event)">Summary</button>
-                            <button class="btn btn-secondary" onclick="showResultsView('accepted', event)">Accepted</button>
-                            <button class="btn btn-secondary" onclick="showResultsView('discarded', event)">Discarded</button>
-                            <button class="btn btn-secondary" onclick="showResultsView('similarity', event)">Similarity Analysis</button>
-                        </div>
-                    </div>
                 </div>
-
-                <div class="stats-grid" style="margin-bottom: 24px;">
-                    <div class="stat-card">
-                        <div class="stat-value">224</div>
-                        <div class="stat-label">Concepts Extracted</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">94</div>
-                        <div class="stat-label">Mapped to Existing</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">0</div>
-                        <div class="stat-label">Extended Ontology</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">130</div>
-                        <div class="stat-label">Manual Review</div>
-                    </div>
-                </div>
-
-                <!-- Summary View -->
-                <div id="summary-view" class="results-view">
-                    <h3 style="margin-bottom: 16px; color: var(--dark);">✅ Accepted Mappings</h3>
-                    <table class="results-table">
-                        <thead>
-                            <tr>
-                                <th>Concept</th>
-                                <th>Decision</th>
-                                <th>Target</th>
-                                <th>Confidence</th>
-                                <th>Match Type</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Pin</strong></td>
-                                <td><span class="decision-badge map">Mapped</span></td>
-                                <td>Pin</td>
-                                <td>
-                                    <div class="confidence-meter">
-                                        <div class="confidence-bar">
-                                            <div class="confidence-fill high" style="width: 100%"></div>
-                                        </div>
-                                        <span>1.00</span>
-                                    </div>
-                                </td>
-                                <td>Exact name match</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Metal Shell Bayonet Coupling Circulars</strong></td>
-                                <td><span class="decision-badge map">Mapped</span></td>
-                                <td>Metal Shell Bayonet Coupling Circular</td>
-                                <td>
-                                    <div class="confidence-meter">
-                                        <div class="confidence-bar">
-                                            <div class="confidence-fill high" style="width: 99%"></div>
-                                        </div>
-                                        <span>0.99</span>
-                                    </div>
-                                </td>
-                                <td>High lexical similarity</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Cable</strong></td>
-                                <td><span class="decision-badge map">Mapped</span></td>
-                                <td>Cable</td>
-                                <td>
-                                    <div class="confidence-meter">
-                                        <div class="confidence-bar">
-                                            <div class="confidence-fill high" style="width: 100%"></div>
-                                        </div>
-                                        <span>1.00</span>
-                                    </div>
-                                </td>
-                                <td>Exact name match</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Discarded View -->
-                <div id="discarded-view" class="results-view" style="display: none;">
-                    <h3 style="margin-bottom: 16px; color: var(--danger);">❌ Discarded Due to Low Similarity</h3>
-                    <table class="results-table">
-                        <thead>
-                            <tr>
-                                <th>Discarded Concept</th>
-                                <th>Most Similar Existing</th>
-                                <th>Similarity Score</th>
-                                <th>Similarity Type</th>
-                                <th>Threshold</th>
-                                <th>Reason</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="discarded-table-body">
-                            <tr>
-                                <td><strong>Digital Signal Processing Unit</strong></td>
-                                <td>Digital Circuit Design</td>
-                                <td>
-                                    <div class="confidence-meter">
-                                        <div class="confidence-bar">
-                                            <div class="confidence-fill low" style="width: 45%"></div>
-                                        </div>
-                                        <span>0.45</span>
-                                    </div>
-                                </td>
-                                <td>Semantic embedding</td>
-                                <td>0.50</td>
-                                <td>Below minimum threshold</td>
-                                <td>
-                                    <button class="action-btn" onclick="reviewDiscarded('Digital Signal Processing Unit')">Review</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Thermal Management System</strong></td>
-                                <td>Cooling Component</td>
-                                <td>
-                                    <div class="confidence-meter">
-                                        <div class="confidence-bar">
-                                            <div class="confidence-fill low" style="width: 48%"></div>
-                                        </div>
-                                        <span>0.48</span>
-                                    </div>
-                                </td>
-                                <td>Lexical similarity</td>
-                                <td>0.50</td>
-                                <td>Below minimum threshold</td>
-                                <td>
-                                    <button class="action-btn" onclick="reviewDiscarded('Thermal Management System')">Review</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>RF Shielding Enclosure</strong></td>
-                                <td>EMI Shield</td>
-                                <td>
-                                    <div class="confidence-meter">
-                                        <div class="confidence-bar">
-                                            <div class="confidence-fill low" style="width: 42%"></div>
-                                        </div>
-                                        <span>0.42</span>
-                                    </div>
-                                </td>
-                                <td>Technical property</td>
-                                <td>0.50</td>
-                                <td>Insufficient technical match</td>
-                                <td>
-                                    <button class="action-btn" onclick="reviewDiscarded('RF Shielding Enclosure')">Review</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Similarity Analysis View -->
-                <div id="similarity-view" class="results-view" style="display: none;">
-                    <h3 style="margin-bottom: 16px; color: var(--primary);">🔍 Detailed Similarity Analysis</h3>
-                    
-                    <div class="similarity-filter" style="margin-bottom: 16px;">
-                        <label class="form-label">Filter by Similarity Range:</label>
-                        <div class="btn-group">
-                            <button class="btn btn-secondary active" onclick="filterSimilarity('all')">All</button>
-                            <button class="btn btn-secondary" onclick="filterSimilarity('high')">High (>0.85)</button>
-                            <button class="btn btn-secondary" onclick="filterSimilarity('medium')">Medium (0.70-0.85)</button>
-                            <button class="btn btn-secondary" onclick="filterSimilarity('low')">Low (0.50-0.70)</button>
-                            <button class="btn btn-secondary" onclick="filterSimilarity('rejected')">Rejected (<0.50)</button>
-                        </div>
-                    </div>
-
-                    <table class="results-table">
-                        <thead>
-                            <tr>
-                                <th>New Concept</th>
-                                <th>Top 3 Similar Concepts</th>
-                                <th>Scores</th>
-                                <th>Decision</th>
-                                <th>Details</th>
-                            </tr>
-                        </thead>
-                        <tbody id="similarity-table-body">
-                            <tr>
-                                <td><strong>Power Supply Module</strong></td>
-                                <td>
-                                    <div class="similarity-matches">
-                                        <div>1. Power Supply Unit</div>
-                                        <div>2. Voltage Regulator</div>
-                                        <div>3. Power Management IC</div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="similarity-scores">
-                                        <div class="confidence-meter">
-                                            <div class="confidence-bar">
-                                                <div class="confidence-fill high" style="width: 92%"></div>
-                                            </div>
-                                            <span>0.92</span>
-                                        </div>
-                                        <div class="confidence-meter">
-                                            <div class="confidence-bar">
-                                                <div class="confidence-fill medium" style="width: 78%"></div>
-                                            </div>
-                                            <span>0.78</span>
-                                        </div>
-                                        <div class="confidence-meter">
-                                            <div class="confidence-bar">
-                                                <div class="confidence-fill medium" style="width: 65%"></div>
-                                            </div>
-                                            <span>0.65</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><span class="decision-badge map">Mapped to #1</span></td>
-                                <td>
-                                    <button class="action-btn" onclick="showSimilarityDetails('Power Supply Module')">View Details</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Connector Assembly</strong></td>
-                                <td>
-                                    <div class="similarity-matches">
-                                        <div>1. Electrical Connector</div>
-                                        <div>2. Cable Assembly</div>
-                                        <div>3. Pin Connector</div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="similarity-scores">
-                                        <div class="confidence-meter">
-                                            <div class="confidence-bar">
-                                                <div class="confidence-fill medium" style="width: 68%"></div>
-                                            </div>
-                                            <span>0.68</span>
-                                        </div>
-                                        <div class="confidence-meter">
-                                            <div class="confidence-bar">
-                                                <div class="confidence-fill medium" style="width: 62%"></div>
-                                            </div>
-                                            <span>0.62</span>
-                                        </div>
-                                        <div class="confidence-meter">
-                                            <div class="confidence-bar">
-                                                <div class="confidence-fill low" style="width: 55%"></div>
-                                            </div>
-                                            <span>0.55</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><span class="decision-badge review">Under Review</span></td>
-                                <td>
-                                    <button class="action-btn" onclick="showSimilarityDetails('Connector Assembly')">View Details</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Impedance Matching Network</strong></td>
-                                <td>
-                                    <div class="similarity-matches">
-                                        <div>1. Impedance Controller</div>
-                                        <div>2. RF Matching Circuit</div>
-                                        <div>3. Network Analyzer</div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="similarity-scores">
-                                        <div class="confidence-meter">
-                                            <div class="confidence-bar">
-                                                <div class="confidence-fill low" style="width: 48%"></div>
-                                            </div>
-                                            <span>0.48</span>
-                                        </div>
-                                        <div class="confidence-meter">
-                                            <div class="confidence-bar">
-                                                <div class="confidence-fill low" style="width: 41%"></div>
-                                            </div>
-                                            <span>0.41</span>
-                                        </div>
-                                        <div class="confidence-meter">
-                                            <div class="confidence-bar">
-                                                <div class="confidence-fill low" style="width: 35%"></div>
-                                            </div>
-                                            <span>0.35</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><span class="decision-badge extend">New Concept</span></td>
-                                <td>
-                                    <button class="action-btn" onclick="showSimilarityDetails('Impedance Matching Network')">View Details</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Similarity Details Modal -->
-                <div id="similarity-modal" class="modal" style="display: none;">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 id="modal-concept-name">Concept Similarity Details</h3>
-                            <button class="close-btn" onclick="closeSimilarityModal()">×</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="similarity-breakdown">
-                                <h4>Similarity Score Breakdown</h4>
-                                <table class="breakdown-table">
-                                    <tr>
-                                        <td>Embedding Similarity:</td>
-                                        <td><strong>0.85</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lexical Similarity:</td>
-                                        <td><strong>0.72</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Technical Property Match:</td>
-                                        <td><strong>0.91</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Category Similarity:</td>
-                                        <td><strong>0.88</strong></td>
-                                    </tr>
-                                    <tr class="total-row">
-                                        <td>Weighted Average:</td>
-                                        <td><strong>0.84</strong></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="llm-reasoning">
-                                <h4>LLM Reasoning</h4>
-                                <p id="modal-llm-reasoning">The concepts share similar technical specifications and functional characteristics. Both operate in the same frequency range and have compatible impedance values.</p>
-                            </div>
-                            <div class="modal-actions">
-                                <button class="btn btn-primary" onclick="acceptSimilarityMapping()">Accept Mapping</button>
-                                <button class="btn btn-secondary" onclick="createNewConcept()">Create New Concept</button>
-                                <button class="btn btn-secondary" onclick="requestManualReview()">Request Manual Review</button>
-                            </div>
-                        </div>
-                    </div>
+                 <div class="empty-state">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" /></svg>
+                    <p>Run a pipeline to see the results.</p>
                 </div>
             </div>
         </div>
 
-        <div id="qa-tab" class="tab-content" style="display: none;">
+        <div id="qa-tab" class="tab-content">
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">❓ Ask the Knowledge Graph</h2>
@@ -1366,7 +967,7 @@
                 </div>
             </div>
         </div>
-<!-- END OF THE NEW BLOCK -->
+    </div>
 
     <script>
         // API Base URL - update this if your backend server runs on a different address
@@ -1374,9 +975,7 @@
 
         // --- GLOBAL STATE MANAGEMENT ---
         let currentPipelineStatus = 'idle';
-        let currentFilter = 'all';
-        let reviewedConcepts = new Map();
-        let lastLogMessage = ''; // <-- ADD THIS LINE
+        let lastLogMessage = '';
 
         /**
         * Initializes the dashboard by loading initial data and setting up event listeners.
@@ -1386,6 +985,7 @@
             await loadStatistics();
             await loadPendingReviews();
             await loadLlmModels(); 
+            await loadAvailableDocuments(); // <-- ADD THIS
             setupEventListeners();
             addLogEntry('Dashboard initialized. Ready for operations.', 'info');
         }
@@ -1394,93 +994,68 @@
         * Sets up all the interactive event listeners for the page.
         */
         function setupEventListeners() {
-            // Pipeline form submission
-            document.getElementById('pipeline-form').addEventListener('submit', async (e) => {
+            document.getElementById('pipeline-form').addEventListener('submit', (e) => {
                 e.preventDefault();
-                await runPipeline();
+                runPipeline();
             });
 
-            // Cancel pipeline button
-            document.getElementById('cancel-pipeline-btn').addEventListener('click', async () => {
-                await cancelPipeline();
-            });
-
-            // Results file selector
-            document.getElementById('results-selector').addEventListener('change', async (e) => {
-                await loadResultsFile(e.target.value);
-            });
-            
-            // Close modal button
-            document.querySelector('.close-btn').addEventListener('click', closeSimilarityModal);
-            
-            // Close modal when clicking outside of it
-            window.addEventListener('click', (event) => {
-                const modal = document.getElementById('similarity-modal');
-                if (event.target === modal) {
-                    closeSimilarityModal();
-                }
-            });
+            document.getElementById('cancel-pipeline-btn').addEventListener('click', cancelPipeline);
             
             document.getElementById('qa-form').addEventListener('submit', handleQaSubmit);
             
-            // --- ADD THIS NEW LOGIC ---
             const maxChunksInput = document.getElementById('max-chunks');
             const processAllCheckbox = document.getElementById('process-all-chunks');
 
-            // Add a listener to the checkbox
             processAllCheckbox.addEventListener('change', () => {
-                // If the box is checked, disable the number input. Otherwise, enable it.
                 if (processAllCheckbox.checked) {
                     maxChunksInput.disabled = true;
-                    maxChunksInput.style.backgroundColor = '#e2e8f0'; // Visual feedback
+                    maxChunksInput.style.backgroundColor = '#e2e8f0';
                 } else {
                     maxChunksInput.disabled = false;
                     maxChunksInput.style.backgroundColor = 'var(--white)';
                 }
             });
 
+            // --- NEW: Add event listeners for file selection buttons ---
+            document.getElementById('select-all-files').addEventListener('click', () => {
+                document.querySelectorAll('#file-selection-container input[type="checkbox"]').forEach(cb => cb.checked = true);
+            });
+
+            document.getElementById('deselect-all-files').addEventListener('click', () => {
+                document.querySelectorAll('#file-selection-container input[type="checkbox"]').forEach(cb => cb.checked = false);
+            });
         }
 
         async function handleQaSubmit(event) {
-            event.preventDefault(); // Prevent the form from reloading the page
-            
+            event.preventDefault();
             const qaInput = document.getElementById('qa-question');
             const question = qaInput.value.trim();
-
             if (!question) {
                 showNotification('Please enter a question.', 'warning');
                 return;
             }
-
             const askBtn = document.getElementById('ask-qa-btn');
             const responseArea = document.getElementById('qa-response-area');
-
-            // Update UI to show loading state
             askBtn.disabled = true;
             askBtn.innerHTML = `<span><div class="spinner"></div></span> Thinking...`;
             responseArea.textContent = 'Querying the knowledge graph...';
-
             try {
                 const response = await fetch(`${API_BASE}/api/qa`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ question: question })
                 });
-
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(errorData.error || 'The server returned an error.');
                 }
-
                 const data = await response.json();
                 responseArea.textContent = data.answer;
-
             } catch (error) {
                 console.error("QA request failed:", error);
                 responseArea.textContent = `An error occurred: ${error.message}`;
                 showNotification('Failed to get an answer.', 'error');
             } finally {
-                // Restore UI to idle state
                 askBtn.disabled = false;
                 askBtn.innerHTML = `<span>💬</span> Ask Question`;
             }
@@ -1488,212 +1063,81 @@
 
 
         // --- TAB AND VIEW MANAGEMENT ---
-
-        /**
-         * Switches between the main tabs (Pipeline, Review, Results, QA).
-         * @param {string} tabName - The name of the tab to switch to (e.g., 'pipeline', 'qa').
-         * @param {Event} event - The click event object passed from the HTML.
-         */
         function switchTab(tabName, event) {
-            // 1. Update the visual state of the tab buttons
-            document.querySelectorAll('.tabs .tab').forEach(tabButton => {
-                tabButton.classList.remove('active');
-            });
-            // Add 'active' class to the button that was actually clicked
+            document.querySelectorAll('.tabs .tab').forEach(tabButton => tabButton.classList.remove('active'));
             event.currentTarget.classList.add('active');
-
-            // 2. Hide ALL tab content sections
-            document.querySelectorAll('.tab-content').forEach(contentDiv => {
-                contentDiv.style.display = 'none';
-            });
-
-            // 3. Find the specific content section we want to show
-            const activeTabContent = document.getElementById(`${tabName}-tab`);
-
-            // 4. Show it (if it exists)
-            if (activeTabContent) {
-                activeTabContent.style.display = 'block';
-                addLogEntry(`Switched to '${tabName}' tab.`, 'info');
-            } else {
-                console.error(`Could not find tab content for id: #${tabName}-tab`);
-                addLogEntry(`Error: Could not find content for tab '${tabName}'.`, 'error');
-            }
-
-            // 5. Load any data needed for the newly visible tab
+            document.querySelectorAll('.tab-content').forEach(contentDiv => contentDiv.classList.remove('active'));
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            addLogEntry(`Switched to '${tabName}' tab.`, 'info');
             if (tabName === 'review') {
                 loadPendingReviews();
-            } else if (tabName === 'results') {
-                // This is a placeholder for when you implement the results tab fully
-                // loadIntegrationResults(); 
             }
         }
-
-        /**
-        * Shows a specific view within the "Integration Results" tab.
-        * @param {string} view - The name of the results view to show (e.g., 'summary', 'discarded').
-        * @param {Event} event - The click event object.
-        */
-        function showResultsView(view, event) {
-            // Hide all results views
-            document.querySelectorAll('.results-view').forEach(v => v.style.display = 'none');
-            
-            // Show the selected view
-            const viewElement = document.getElementById(`${view}-view`);
-            if (viewElement) {
-                viewElement.style.display = 'block';
-            }
-            
-            // Update active state of the view buttons
-            document.querySelectorAll('#results-tab .btn-group .btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.currentTarget.classList.add('active'); // Use currentTarget
-            
-            // Load data specifically for that view if needed
-            if (view === 'discarded') {
-                loadDiscardedConcepts();
-            } else if (view === 'similarity') {
-                loadSimilarityAnalysis();
-            }
-        }
-
 
         // --- API CALLS & DATA FETCHING ---
 
-        /**
-        * Checks the connection status of the Neo4j database.
-        */
         async function checkNeo4jConnection() {
             try {
                 const response = await fetch(`${API_BASE}/api/neo4j/status`);
                 const data = await response.json();
                 const indicator = document.getElementById('neo4j-status');
-                
                 indicator.classList.toggle('connected', data.connected);
                 indicator.classList.toggle('disconnected', !data.connected);
-
             } catch (error) {
-                console.error('Failed to check Neo4j connection:', error);
                 document.getElementById('neo4j-status').className = 'status-indicator disconnected';
             }
         }
 
-        /**
-        * Fetches and displays the latest ontology statistics.
-        */
-        // In frontend/templates/dashboard.html, inside the <script> tag
-
-        // Load statistics
         async function loadStatistics() {
             try {
                 const response = await fetch(`${API_BASE}/api/stats`);
-                if (!response.ok) {
-                    // If the server returns an error (like 500), handle it
-                    throw new Error(`Failed to fetch stats: ${response.statusText}`);
-                }
+                if (!response.ok) throw new Error(`Failed to fetch stats: ${response.statusText}`);
                 const stats = await response.json();
-                // Update the UI with the data from the API
                 document.getElementById('stat-concepts').textContent = formatNumber(stats.product_nodes || 0);
                 document.getElementById('stat-relations').textContent = formatNumber(stats.total_relations || 0);
                 document.getElementById('stat-automated').textContent = `${stats.automation_rate || 0}%`;
                 document.getElementById('stat-pending').textContent = stats.pending_review || 0;
-                
-                addLogEntry('Successfully loaded ontology statistics.', 'success');
-
             } catch (error) {
                 console.error('Failed to load statistics:', error);
                 addLogEntry(error.message, 'error');
-                
-                // Set stats to 'Error' to give user feedback
-                document.getElementById('stat-concepts').textContent = 'Error';
-                document.getElementById('stat-relations').textContent = 'Error';
-                document.getElementById('stat-automated').textContent = 'Error';
-                document.getElementById('stat-pending').textContent = 'Error';
             }
         }
 
-        /**
-        * Fetches and displays the list of concepts pending manual review.
-        */
         async function loadPendingReviews() {
             try {
-                // Ensure this URL exactly matches your Flask route
                 const response = await fetch(`${API_BASE}/api/reviews/pending`);
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch pending reviews (Status: ${response.status})`);
-                }
+                if (!response.ok) throw new Error(`Failed to fetch pending reviews (Status: ${response.status})`);
                 const reviews = await response.json();
-                
                 renderReviewTable(reviews);
-                
-                // Update the counter on the tab button
-                const reviewCount = reviews.length;
                 const reviewTabButton = document.querySelector('button[onclick*="review"]');
-                if(reviewTabButton) {
-                    reviewTabButton.textContent = `Concept Review (${reviewCount})`;
-                }
-
+                if(reviewTabButton) reviewTabButton.textContent = `Concept Review (${reviews.length})`;
             } catch (error) {
                 console.error('Failed to load pending reviews:', error);
-                addLogEntry(error.message, 'error');
-                // Display an error in the table itself
                 const tbody = document.getElementById('review-table-body');
-                if(tbody) {
-                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--danger);">Error: Could not load pending reviews.</td></tr>`;
-                }
+                if(tbody) tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--danger);">Error: Could not load pending reviews.</td></tr>`;
             }
         }
 
-
-        /**
-        * Loads data for the "Discarded Concepts" view.
-        */
-        async function loadDiscardedConcepts() {
-            // In a real application, fetch from /api/results/discarded
-            const discardedConcepts = [
-                { concept: 'Digital Signal Processing Unit', most_similar: 'Digital Circuit Design', score: 0.45, similarity_type: 'Semantic', threshold: 0.50, reason: 'Below threshold' },
-                { concept: 'Thermal Management System', most_similar: 'Cooling Component', score: 0.48, similarity_type: 'Lexical', threshold: 0.50, reason: 'Below threshold' },
-                { concept: 'RF Shielding Enclosure', most_similar: 'EMI Shield', score: 0.42, similarity_type: 'Technical', threshold: 0.50, reason: 'Insufficient match' }
-            ];
-            renderDiscardedTable(discardedConcepts);
-        }
-
-        /**
-        * Loads data for the "Similarity Analysis" view.
-        */
-        async function loadSimilarityAnalysis() {
-            // In a real application, fetch from /api/results/similarity
-            const similarityData = [
-                { concept: 'Power Supply Module', similar_concepts: [{ name: 'Power Supply Unit', score: 0.92 }, { name: 'Voltage Regulator', score: 0.78 }], decision: 'mapped' },
-                { concept: 'Connector Assembly', similar_concepts: [{ name: 'Electrical Connector', score: 0.68 }, { name: 'Cable Assembly', score: 0.62 }], decision: 'review' },
-                { concept: 'Impedance Matching Network', similar_concepts: [{ name: 'Impedance Controller', score: 0.48 }, { name: 'RF Matching Circuit', score: 0.41 }], decision: 'extend' }
-            ];
-            renderSimilarityTable(similarityData);
-        }
-
-        /**
-        * Starts the ontology pipeline execution via the backend.
-        */
-// In frontend/templates/dashboard.html, inside the <script> tag
-
-        // Run pipeline
+        // --- MODIFIED: This is your existing runPipeline function, now with file selection logic ---
         async function runPipeline() {
-            // 1. Gather all configuration values from the form inputs
             const processAllCheckbox = document.getElementById('process-all-chunks');
-            
             const maxChunksInput = document.getElementById('max-chunks');
-
-            // --- THIS IS THE KEY CHANGE ---
-            // If 'Process All' is checked, set max_chunks to null (or -1, or another special value).
-            // The Python backend will interpret `None` as "no limit".
             const maxChunksValue = processAllCheckbox.checked ? null : parseInt(maxChunksInput.value);
+            
+            // NEW: Get the list of selected files
+            const selectedFiles = Array.from(document.querySelectorAll('#file-selection-container input:checked')).map(cb => cb.value);
+
+            if (selectedFiles.length === 0) {
+                alert('Please select at least one document to process.');
+                return;
+            }
+
             const config = {
-                // ontology_mode is not used by the backend yet, but good to send
-                // ontology_mode: document.querySelector('input[name="ontology-mode"]:checked').value,
                 resume_from: document.getElementById('execution-mode').value,
                 llm_model: document.getElementById('llm-model-selector').value,
                 max_workers: parseInt(document.getElementById('max-workers').value),
                 max_chunks: maxChunksValue,
+                selected_files: selectedFiles, // ADDED
                 similarity_thresholds: {
                     exact_match: parseFloat(document.getElementById('threshold-exact').value),
                     high_similarity: parseFloat(document.getElementById('threshold-high').value),
@@ -1702,35 +1146,27 @@
                 },
                 enable_llm_validation: document.getElementById('enable-llm').checked,
                 enable_technical_matching: document.getElementById('enable-technical').checked,
-                // run_evaluations is not used by the backend yet, but good to send
                 run_evaluations: document.getElementById('run-evaluations').checked
             };
-            // 2. Update UI to show the pipeline is starting
-            addLogEntry('Starting pipeline with new configuration...', 'info');
+            
+            addLogEntry('Starting pipeline...', 'info');
             document.getElementById('run-pipeline-btn').disabled = true;
             document.getElementById('run-pipeline-btn').innerHTML = `<span><div class="spinner"></div></span> Running...`;
             document.getElementById('cancel-pipeline-btn').disabled = false;
             updatePipelineStatus('running', 'Initializing...');
             try {
-                // 3. Send the configuration to the backend to start the pipeline
                 const response = await fetch(`${API_BASE}/api/pipeline/start`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(config)
                 });
-
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
                 }
-
                 const result = await response.json();
-                
                 if (result.success) {
-                    addLogEntry(`Pipeline started successfully with ID: ${result.process.process_id}`, 'success');
-                    // 4. Start polling for progress updates
+                    addLogEntry(`Pipeline started with ID: ${result.process.process_id}`, 'success');
                     monitorPipelineProgress();
                 } else {
                     throw new Error(result.message || 'Backend failed to start pipeline.');
@@ -1739,7 +1175,6 @@
                 console.error('Failed to start pipeline:', error);
                 addLogEntry(`Failed to start pipeline: ${error.message}`, 'error');
                 showNotification('Error starting pipeline.', 'error');
-                // Reset UI on failure
                 updatePipelineStatus('error', 'Failed');
                 document.getElementById('run-pipeline-btn').disabled = false;
                 document.getElementById('run-pipeline-btn').innerHTML = `<span>🚀</span> Run Pipeline`;
@@ -1747,315 +1182,88 @@
             }
         }
 
-        // Monitor pipeline progress
         function monitorPipelineProgress() {
-            // Create an interval that will call the status endpoint every 2 seconds
             const progressInterval = setInterval(async () => {
-                // Stop polling if the status is no longer 'running'
                 if (currentPipelineStatus !== 'running') {
                     clearInterval(progressInterval);
                     return;
                 }
-
                 try {
                     const response = await fetch(`${API_BASE}/api/pipeline/status`);
                     const status = await response.json();
-                    
-                    // Update the progress bar
                     const progress = status.progress || 0;
                     document.getElementById('pipeline-progress').style.width = `${progress}%`;
-                    
                     if (status.message && status.message !== lastLogMessage) {
-                        addLogEntry(status.message, 'info'); // Use the REAL addLogEntry function
-                        lastLogMessage = status.message; // Remember the last message
+                        addLogEntry(status.message, 'info');
+                        lastLogMessage = status.message;
                     }
-                    // Update the status text if a new step is reported
                     if (status.step) {
                         const statusText = document.getElementById('pipeline-status-text');
                         if(statusText.textContent !== status.step) {
                             statusText.textContent = `Running: ${status.step}`;
-                            addLogEntry(`Progress: ${status.step} (${progress.toFixed(0)}%)`, 'info');
                         }
                     }
-
-                    // Check if the pipeline has finished, errored, or been cancelled
                     if (status.status !== 'running') {
-                        clearInterval(progressInterval); // Stop polling
+                        clearInterval(progressInterval);
                         currentPipelineStatus = status.status;
-                        
-                        // Reset the UI to its idle state
                         const runBtn = document.getElementById('run-pipeline-btn');
                         runBtn.disabled = false;
                         runBtn.innerHTML = `<span>🚀</span> Run Pipeline`;
                         document.getElementById('cancel-pipeline-btn').disabled = true;
-
                         if (status.status === 'completed') {
                             updatePipelineStatus('completed', 'Pipeline Completed');
                             document.getElementById('pipeline-progress').style.width = '100%';
                             addLogEntry('Pipeline completed successfully!', 'success');
-                            showNotification('Pipeline completed!', 'success');
-                            await loadStatistics(); // Refresh stats to show new data
+                            await loadStatistics();
                         } else if (status.status === 'error') {
                             updatePipelineStatus('error', 'Error');
                             addLogEntry(`Pipeline failed: ${status.message}`, 'error');
-                            showNotification('Pipeline failed!', 'error');
                         } else if (status.status === 'cancelled') {
                             updatePipelineStatus('cancelled', 'Cancelled');
-                            addLogEntry('Pipeline was cancelled.', 'warning');
                         }
-                        lastLogMessage = ''; // Reset for the next run
+                        lastLogMessage = '';
                     }
                 } catch (error) {
-                    console.error('Failed to check pipeline status:', error);
-                    addLogEntry('Connection to backend lost. Stopping progress monitor.', 'error');
-                    clearInterval(progressInterval); // Stop polling on connection error
+                    addLogEntry('Connection to backend lost.', 'error');
+                    clearInterval(progressInterval);
                     updatePipelineStatus('error', 'Connection Lost');
-                    lastLogMessage = ''; // Reset for the next run
+                    lastLogMessage = '';
                 }
-            }, 2000); // Poll every 2 seconds
+            }, 2000);
         }
 
-        /**
-        * Cancels a running pipeline.
-        */
         async function cancelPipeline() {
             try {
                 addLogEntry('Attempting to cancel pipeline...', 'warning');
                 const response = await fetch(`${API_BASE}/api/pipeline/cancel`, { method: 'POST' });
                 const result = await response.json();
-                
                 if (result.success) {
                     updatePipelineStatus('cancelled', 'Pipeline Cancelled');
-                    addLogEntry('Pipeline cancelled successfully', 'warning');
-                    showNotification('Pipeline cancelled', 'info');
                 }
             } catch (error) {
-                console.error('Failed to cancel pipeline:', error);
                 addLogEntry('Error cancelling pipeline.', 'error');
             }
         }
 
-        // --- RENDERING FUNCTIONS (Populating Tables) ---
         function renderReviewTable(reviews) {
             const tbody = document.getElementById('review-table-body');
             tbody.innerHTML = '';
             if (reviews.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No items to review.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state">🎉 No concepts are currently pending review.</td></tr>';
                 return;
             }
-            reviews.forEach(item => {
-                const row = document.createElement('tr');
-                const scoreClass = item.confidence > 0.8 ? 'high' : item.confidence > 0.5 ? 'medium' : 'low';
-                row.innerHTML = `
-                    <td><strong>${item.concept}</strong></td>
-                    <td><span class="decision-badge review">Review</span></td>
-                    <td>${item.target}</td>
-                    <td>
-                        <div class="confidence-meter">
-                            <div class="confidence-bar"><div class="confidence-fill ${scoreClass}" style="width: ${item.confidence * 100}%"></div></div>
-                            <span>${item.confidence.toFixed(2)}</span>
-                        </div>
-                    </td>
-                    <td>${item.reasoning}</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="action-btn accept" onclick="acceptConcept('${item.concept}')">Accept</button>
-                            <button class="action-btn reject" onclick="rejectConcept('${item.concept}')">Reject</button>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        function renderDiscardedTable(concepts) {
-            const tbody = document.getElementById('discarded-table-body');
-            tbody.innerHTML = '';
-            concepts.forEach(item => {
-                const row = document.createElement('tr');
-                const scoreClass = item.score > 0.8 ? 'high' : item.score > 0.5 ? 'medium' : 'low';
-                row.innerHTML = `
-                    <td><strong>${item.concept}</strong></td>
-                    <td>${item.most_similar}</td>
-                    <td>
-                        <div class="confidence-meter">
-                            <div class="confidence-bar"><div class="confidence-fill ${scoreClass}" style="width: ${item.score * 100}%"></div></div>
-                            <span>${item.score.toFixed(2)}</span>
-                        </div>
-                    </td>
-                    <td>${item.similarity_type}</td>
-                    <td>${item.threshold.toFixed(2)}</td>
-                    <td>${item.reason}</td>
-                    <td><button class="action-btn" onclick="reviewDiscarded('${item.concept}')">Review</button></td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        function renderSimilarityTable(data) {
-            const tbody = document.getElementById('similarity-table-body');
-            tbody.innerHTML = '';
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                const matchesHtml = item.similar_concepts.map((c, i) => `<div>${i + 1}. ${c.name}</div>`).join('');
-                const scoresHtml = item.similar_concepts.map(c => {
-                    const scoreClass = c.score > 0.8 ? 'high' : c.score > 0.5 ? 'medium' : 'low';
-                    return `<div class="confidence-meter"><div class="confidence-bar"><div class="confidence-fill ${scoreClass}" style="width: ${c.score * 100}%"></div></div><span>${c.score.toFixed(2)}</span></div>`;
-                }).join('');
-                
-                let decisionBadge = '';
-                if (item.decision === 'mapped') {
-                    decisionBadge = `<span class="decision-badge map">Mapped to #1</span>`;
-                } else if (item.decision === 'review') {
-                    decisionBadge = `<span class="decision-badge review">Under Review</span>`;
-                } else if (item.decision === 'extend') {
-                    decisionBadge = `<span class="decision-badge extend">New Concept</span>`;
-                }
-                
-                row.innerHTML = `
-                    <td><strong>${item.concept}</strong></td>
-                    <td><div class="similarity-matches">${matchesHtml}</div></td>
-                    <td><div class="similarity-scores">${scoresHtml}</div></td>
-                    <td>${decisionBadge}</td>
-                    <td><button class="action-btn" onclick="showSimilarityDetails('${item.concept}')">View Details</button></td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        // --- MODAL AND INTERACTIVITY ---
-
-        function showSimilarityDetails(concept, isDiscarded = false) {
-            const modal = document.getElementById('similarity-modal');
-            document.getElementById('modal-concept-name').textContent = `${concept} - Similarity Analysis`;
-
-            const reasoningTexts = {
-                'Power Supply Module': 'The concepts share similar technical specifications. Embedding similarity is very high (0.92) indicating strong semantic relationship.',
-                'Connector Assembly': 'While sharing some similarity, "Electrical Connector" is more general. Medium confidence suggests manual review.',
-                'Impedance Matching Network': 'This appears to be a specialized concept not well represented. Recommend creating as new concept.',
-                'Digital Signal Processing Unit': 'Low similarity. "Digital Circuit Design" is a methodology, not a component. The functional difference is significant.',
-                'default': 'Similarity analysis reflects semantic, lexical, and technical property similarities.'
-            };
-            document.getElementById('modal-llm-reasoning').textContent = reasoningTexts[concept] || reasoningTexts['default'];
-
-            updateSimilarityBreakdown(concept);
-            modal.style.display = 'block';
-            modal.dataset.currentConcept = concept;
-            modal.dataset.isDiscarded = isDiscarded;
-        }
-
-        function updateSimilarityBreakdown(concept) {
-            const breakdowns = {
-                'Power Supply Module': { embedding: 0.92, lexical: 0.88, technical: 0.95, category: 0.90, weighted: 0.91 },
-                'Connector Assembly': { embedding: 0.68, lexical: 0.72, technical: 0.65, category: 0.70, weighted: 0.69 },
-                'Impedance Matching Network': { embedding: 0.48, lexical: 0.42, technical: 0.45, category: 0.50, weighted: 0.46 },
-                'default': { embedding: 0.50, lexical: 0.50, technical: 0.50, category: 0.50, weighted: 0.50 }
-            };
-            const breakdown = breakdowns[concept] || breakdowns['default'];
-            
-            const table = document.querySelector('.breakdown-table');
-            table.innerHTML = `
-                <tr><td>Embedding Similarity:</td><td><strong>${breakdown.embedding.toFixed(2)}</strong></td></tr>
-                <tr><td>Lexical Similarity:</td><td><strong>${breakdown.lexical.toFixed(2)}</strong></td></tr>
-                <tr><td>Technical Property Match:</td><td><strong>${breakdown.technical.toFixed(2)}</strong></td></tr>
-                <tr><td>Category Similarity:</td><td><strong>${breakdown.category.toFixed(2)}</strong></td></tr>
-                <tr class="total-row"><td>Weighted Average:</td><td><strong>${breakdown.weighted.toFixed(2)}</strong></td></tr>
-            `;
-        }
-
-        function closeSimilarityModal() {
-            document.getElementById('similarity-modal').style.display = 'none';
-        }
-
-        // --- UTILITY FUNCTIONS ---
-
-        function updatePipelineStatus(status, text) {
-            const indicator = document.getElementById('pipeline-status');
-            const statusText = document.getElementById('pipeline-status-text');
-            
-            indicator.className = 'status-indicator'; // Reset classes
-            currentPipelineStatus = status;
-
-            if (status === 'running') {
-                indicator.classList.add('running');
-                statusText.textContent = text || 'Pipeline Running';
-            } else {
-                indicator.classList.add('disconnected'); // Default to idle/disconnected
-                statusText.textContent = text || 'Pipeline Idle';
-            }
-        }
-
-        function addLogEntry(message, type = 'info') {
-            const container = document.getElementById('log-container');
-            const time = new Date().toTimeString().split(' ')[0];
-            const entry = document.createElement('div');
-            entry.className = 'log-entry';
-            entry.innerHTML = `<span class="log-time">${time}</span> <span class="log-message ${type}">${message}</span>`;
-            container.appendChild(entry);
-            container.scrollTop = container.scrollHeight;
-            if (container.children.length > 100) container.removeChild(container.firstChild);
-        }
-
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            const color = type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--danger)' : 'var(--info)';
-            notification.style.cssText = `position: fixed; top: 20px; right: 20px; padding: 16px; background: ${color}; color: white; border-radius: 8px; z-index: 1001;`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            setTimeout(() => { document.body.removeChild(notification); }, 3000);
-        }
-
-        function formatNumber(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-
-        // Load pending reviews from the backend
-        async function loadPendingReviews() {
-            try {
-                const response = await fetch(`${API_BASE}/api/reviews/pending`);
-                if (!response.ok) throw new Error('Failed to fetch pending reviews');
-                const reviews = await response.json();
-                
-                renderReviewTable(reviews);
-                
-                // Update the counter on the tab button
-                const reviewCount = reviews.length;
-                const reviewTabButton = document.querySelector('.tab[onclick*="review"]');
-                reviewTabButton.textContent = `Concept Review (${reviewCount})`;
-
-            } catch (error) {
-                console.error('Failed to load pending reviews:', error);
-                addLogEntry('Failed to load pending reviews.', 'error');
-            }
-        }
-
-        // Render the review table with live data
-        function renderReviewTable(reviews) {
-            const tbody = document.getElementById('review-table-body');
-            tbody.innerHTML = '';
-
-            if (reviews.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 32px;">🎉 No concepts are currently pending review.</td></tr>';
-                return;
-            }
-
             reviews.forEach(review => {
                 const row = document.createElement('tr');
-                // Use a default confidence if not present
                 const confidence = review.confidence || 0.70; 
                 const confidenceClass = confidence > 0.8 ? 'high' : confidence > 0.5 ? 'medium' : 'low';
-                
-                row.id = `review-row-${review.concept.replace(/\s+/g, '-')}`;
-                
+                row.id = `review-row-${review.concept.replace(/[\s./]/g, '-')}`;
                 row.innerHTML = `
                     <td><strong>${review.concept}</strong></td>
                     <td><span class="decision-badge review">Review</span></td>
                     <td>${review.target || 'N/A'}</td>
                     <td>
                         <div class="confidence-meter">
-                            <div class="confidence-bar">
-                                <div class="confidence-fill ${confidenceClass}" style="width: ${confidence * 100}%"></div>
-                            </div>
+                            <div class="confidence-bar"><div class="confidence-fill ${confidenceClass}" style="width: ${confidence * 100}%"></div></div>
                             <span>${confidence.toFixed(2)}</span>
                         </div>
                     </td>
@@ -2071,116 +1279,117 @@
             });
         }
 
-        // Action for the 'Accept' button
         async function acceptConcept(concept) {
             try {
                 const response = await fetch(`${API_BASE}/api/reviews/accept/${encodeURIComponent(concept)}`, { method: 'POST' });
                 const result = await response.json();
-
                 if (result.success) {
-                    addLogEntry(`Accepted concept: ${concept}`, 'success');
-                    showNotification(result.message, 'success');
-                    
-                    // Remove the row from the table for immediate feedback
-                    const row = document.getElementById(`review-row-${concept.replace(/\s+/g, '-')}`);
-                    if (row) row.remove();
-                    
-                    // Update counters
+                    document.getElementById(`review-row-${concept.replace(/[\s./]/g, '-')}`).remove();
                     await loadStatistics();
-                    
-                } else {
-                    throw new Error(result.message || 'Failed to accept concept.');
                 }
             } catch (error) {
                 console.error('Accept concept failed:', error);
-                addLogEntry(`Error accepting ${concept}: ${error.message}`, 'error');
-                showNotification(`Error accepting ${concept}`, 'error');
             }
         }
 
-        // Action for the 'Reject' button
         async function rejectConcept(concept) {
             try {
                 const response = await fetch(`${API_BASE}/api/reviews/reject/${encodeURIComponent(concept)}`, { method: 'POST' });
                 const result = await response.json();
-
                 if (result.success) {
-                    addLogEntry(`Rejected concept: ${concept}`, 'warning');
-                    showNotification(result.message, 'info');
-                    
-                    const row = document.getElementById(`review-row-${concept.replace(/\s+/g, '-')}`);
-                    if (row) row.remove();
-
+                    document.getElementById(`review-row-${concept.replace(/[\s./]/g, '-')}`).remove();
                     await loadStatistics();
-
-                } else {
-                    throw new Error(result.message || 'Failed to reject concept.');
                 }
             } catch (error) {
                 console.error('Reject concept failed:', error);
-                addLogEntry(`Error rejecting ${concept}: ${error.message}`, 'error');
-                showNotification(`Error rejecting ${concept}`, 'error');
-            }
-        }
-
-        async function updateStatus() {
-            await checkNeo4jConnection();
-            if (currentPipelineStatus === 'running') {
-                try {
-                    const response = await fetch(`${API_BASE}/api/pipeline/status`);
-                    const status = await response.json();
-                    if (status.status !== 'running') {
-                        currentPipelineStatus = status.status;
-                        updatePipelineStatus(status.status, status.message);
-                    }
-                } catch (error) {
-                    console.error('Failed to update status:', error);
-                }
             }
         }
         
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeDashboard();
-            setInterval(updateStatus, 5000); // Poll status every 5 seconds
-        });
+        function updatePipelineStatus(status, text) {
+            const indicator = document.getElementById('pipeline-status');
+            const statusText = document.getElementById('pipeline-status-text');
+            indicator.className = 'status-indicator';
+            currentPipelineStatus = status;
+            if (status === 'running') {
+                indicator.classList.add('running');
+                statusText.textContent = text || 'Pipeline Running';
+            } else {
+                indicator.classList.add('disconnected');
+                statusText.textContent = text || 'Pipeline Idle';
+            }
+        }
 
-        /**
-        * Fetches the list of available LLM models from the backend and populates the dropdown.
-        */
+        function addLogEntry(message, type = 'info') {
+            const container = document.getElementById('log-container');
+            const time = new Date().toTimeString().split(' ')[0];
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `<span class="log-time">${time}</span> <span class="log-message ${type}">${message}</span>`;
+            container.appendChild(entry);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
         async function loadLlmModels() {
             const selector = document.getElementById('llm-model-selector');
             try {
                 const response = await fetch(`${API_BASE}/api/openai/models`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch models from server.');
-                }
+                if (!response.ok) throw new Error('Failed to fetch models.');
                 const models = await response.json();
-                
-                selector.innerHTML = ''; // Clear "Loading..."
-                
-                if (models.length === 0) {
-                    selector.innerHTML = '<option value="">No models found</option>';
-                    return;
-                }
-
+                selector.innerHTML = '';
                 models.forEach(modelId => {
                     const option = document.createElement('option');
                     option.value = modelId;
                     option.textContent = modelId;
-                    
-                    // Pre-select a recommended default model
-                    if (modelId === 'gpt-4o' || modelId === 'gpt-4.1-nano') {
-                        option.selected = true;
-                    }
-                    
+                    if (modelId === 'gpt-4o') option.selected = true;
                     selector.appendChild(option);
                 });
-                addLogEntry('Successfully loaded available LLM models.', 'success');
             } catch (error) {
-                console.error('Failed to load LLM models:', error);
                 selector.innerHTML = '<option value="">Error loading models</option>';
-                addLogEntry(error.message, 'error');
             }
         }
 
+        // --- NEW: This is the function you had before, now integrated to be called on page load ---
+        async function loadAvailableDocuments() {
+            const container = document.getElementById('file-selection-container');
+            try {
+                // THE FIX IS HERE: Use API_BASE to construct the full URL
+                const response = await fetch(`${API_BASE}/api/documents`);
+                if (!response.ok) {
+                    throw new Error(`Server returned status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                container.innerHTML = ''; // Clear "Loading..." message
+                if (data.documents && data.documents.length > 0) {
+                    data.documents.forEach(docName => {
+                        const label = document.createElement('label');
+                        label.className = 'file-list-item';
+                        
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.name = 'selected_files';
+                        checkbox.value = docName;
+                        checkbox.checked = true; // Default to selected
+
+                        label.appendChild(checkbox);
+                        label.appendChild(document.createTextNode(' ' + docName));
+                        container.appendChild(label);
+                    });
+                } else {
+                    container.innerHTML = '<p>No markdown documents found in the data directory.</p>';
+                }
+            } catch (error) {
+                console.error('Error fetching documents:', error);
+                container.innerHTML = `<p style="color: var(--danger);">Error loading documents: ${error.message}</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeDashboard);
     </script>
+</body>
+</html>
