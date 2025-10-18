@@ -32,6 +32,7 @@ from difflib import SequenceMatcher
 import logging
 from dataclasses import dataclass, asdict
 from tiktoken import get_encoding
+import inflect
 
 from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, NEO4J_DB_NAME, PROMPTS, MODEL_COSTS, NON_TAXONOMIC_RELATION_PROMPT
 
@@ -41,6 +42,16 @@ import re
 from src.data_models import PipelineConfig, ExtensionDecision, ConceptMatch, ExtensionResult
 
 logger = logging.getLogger(__name__)
+
+p = inflect.engine() #Normalisation helper
+
+def _normalize_concept_name(name: str) -> str:
+    """Normalizes a concept name for more consistent matching."""
+    if not name:
+        return ""
+    name = name.lower().strip()
+    singular = p.singular_noun(name)
+    return singular if singular else name
 
 class OntologyExtensionManager:
     """Intelligent manager for deciding ontology extensions vs mappings."""
@@ -176,8 +187,11 @@ class OntologyExtensionManager:
         """
         Analyze a new concept, returning the decision, any non-taxonomic relations, and the cost.
         """
-        concept_name = new_concept.get('name', 'Unknown')
-        logger.debug(f"🔍 Analyzing new concept: {concept_name}")
+        original_name = new_concept.get('name', 'Unknown')
+        normalized_name = _normalize_concept_name(original_name)
+        new_concept['normalized_name'] = normalized_name # Store it for use in matching functions
+        
+        logger.debug(f"🔍 Analyzing new concept: '{original_name}' -> Normalized: '{normalized_name}'")
         
         if self._existing_concepts is None:
             self.load_existing_ontology()
@@ -259,47 +273,39 @@ class OntologyExtensionManager:
         return matches
     
     def _find_lexical_matches(self, new_concept: Dict[str, Any]) -> List[ConceptMatch]:
-        """Find matches using lexical similarity."""
-        new_name = new_concept.get('name', '').lower()
-        matches = []
+        """Find matches using lexical similarity on normalized names."""
         
+        # --- USE NORMALIZED NAME ---
+        new_name_normalized = new_concept.get('normalized_name', '').lower()
+        if not new_name_normalized:
+            return []
+
+        matches = []
         for existing_concept in self._existing_concepts:
-            existing_name = existing_concept.get('name', '').lower()
+            existing_name_original = existing_concept.get('name', '')
+            # --- NORMALIZE THE EXISTING NAME FOR COMPARISON ---
+            existing_name_normalized = _normalize_concept_name(existing_name_original)
             
-            # Exact match
-            if new_name == existing_name:
+            # Now, compare normalized names
+            if new_name_normalized == existing_name_normalized:
                 matches.append(ConceptMatch(
-                    existing_concept=existing_concept['name'],
+                    existing_concept=existing_name_original, # Return the original name
                     similarity_score=1.0,
-                    match_type='lexical_exact',
+                    match_type='lexical_exact_normalized',
                     confidence=1.0,
-                    reasoning="Exact name match"
+                    reasoning="Exact match after normalization (singular/plural)"
                 ))
                 continue
             
-            # Sequence similarity
-            seq_similarity = SequenceMatcher(None, new_name, existing_name).ratio()
+            seq_similarity = SequenceMatcher(None, new_name_normalized, existing_name_normalized).ratio()
             if seq_similarity >= 0.8:
                 matches.append(ConceptMatch(
-                    existing_concept=existing_concept['name'],
+                    existing_concept=existing_name_original,
                     similarity_score=seq_similarity,
-                    match_type='lexical_similar',
+                    match_type='lexical_similar_normalized',
                     confidence=seq_similarity,
-                    reasoning=f"High lexical similarity: {seq_similarity:.3f}"
+                    reasoning=f"High lexical similarity on normalized names: {seq_similarity:.3f}"
                 ))
-            
-            # Substring matching
-            if (new_name in existing_name or existing_name in new_name) and len(new_name) > 3:
-                substring_score = min(len(new_name), len(existing_name)) / max(len(new_name), len(existing_name))
-                if substring_score >= 0.6:
-                    matches.append(ConceptMatch(
-                        existing_concept=existing_concept['name'],
-                        similarity_score=substring_score,
-                        match_type='lexical_substring',
-                        confidence=substring_score * 0.8,  # Lower confidence for substring
-                        reasoning=f"Substring match: {substring_score:.3f}"
-                    ))
-        
         return matches
     
     def _find_technical_matches(self, new_concept: Dict[str, Any]) -> List[ConceptMatch]:
