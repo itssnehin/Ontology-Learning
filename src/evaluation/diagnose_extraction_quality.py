@@ -1,13 +1,13 @@
 import logging
-from typing import List, Set
+from typing import List, Set, Dict
 from langchain_core.documents import Document
 from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib_venn import venn2
+from tqdm import tqdm
 
 # Import the core components needed for this test
-from src.config import OPENAI_API_KEY
+from src.config import OPENAI_API_KEY, MAX_WORKERS
 from src.data_loader import load_and_split_data
 from src.idea_extractor import _extract_concepts_from_chunk # We use the internal function
 
@@ -16,107 +16,109 @@ logger = logging.getLogger(__name__)
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("openai").setLevel(logging.WARNING)
 
-def _save_results(concepts_a: Set[str], concepts_b: Set[str], model_a: str, model_b: str, output_dir: Path):
-    """Saves the comparison results to a CSV file and a Venn diagram."""
+def _save_results(all_results: Dict[str, Set[str]], output_dir: Path):
+    """Saves the multi-model comparison results to CSV files and a bar chart."""
     output_dir.mkdir(exist_ok=True)
-    
-    # --- 1. Save Raw Data to CSV ---
-    common_concepts = sorted(list(concepts_a.intersection(concepts_b)))
-    unique_to_a = sorted(list(concepts_a - concepts_b))
-    unique_to_b = sorted(list(concepts_b - concepts_a))
+    model_names = list(all_results.keys())
 
-    # Pad the lists to the same length for DataFrame creation
-    max_len = max(len(common_concepts), len(unique_to_a), len(unique_to_b))
-    
-    # Create a dictionary for the DataFrame
-    data_dict = {
-        'Common_Concepts': common_concepts + [''] * (max_len - len(common_concepts)),
-        f'Unique_to_{model_a}': unique_to_a + [''] * (max_len - len(unique_to_a)),
-        f'Unique_to_{model_b}': unique_to_b + [''] * (max_len - len(unique_to_b))
-    }
-    
-    df = pd.DataFrame(data_dict)
-    csv_path = output_dir / "model_extraction_comparison.csv"
-    df.to_csv(csv_path, index=False)
-    logger.info(f"✅ Comparison data saved to {csv_path}")
+    # --- 1. Calculate Summary Statistics ---
+    summary_data = []
+    all_concepts_union = set.union(*all_results.values())
 
-    # --- 2. Generate and Save Venn Diagram ---
-    plt.figure(figsize=(10, 8))
+    for model in model_names:
+        concepts = all_results[model]
+        # Find concepts unique to this model compared to all others
+        other_concepts_union = set.union(*(s for m, s in all_results.items() if m != model))
+        unique_to_this_model = concepts - other_concepts_union
+        
+        summary_data.append({
+            "Model": model,
+            "Total_Unique_Concepts": len(concepts),
+            "Concepts_Unique_to_Model": len(unique_to_this_model),
+            "Coverage_of_All_Concepts": f"{len(concepts.intersection(all_concepts_union)) / len(all_concepts_union) * 100:.2f}%"
+        })
+
+    summary_df = pd.DataFrame(summary_data)
+    summary_csv_path = output_dir / "model_comparison_summary.csv"
+    summary_df.to_csv(summary_csv_path, index=False)
+    logger.info(f"✅ Summary comparison data saved to {summary_csv_path}")
+
+    # --- 2. Save Detailed Unique Concepts for Each Model ---
+    for model in model_names:
+        other_concepts_union = set.union(*(s for m, s in all_results.items() if m != model))
+        unique_to_this_model = sorted(list(concepts - other_concepts_union))
+        if unique_to_this_model:
+            df_unique = pd.DataFrame(unique_to_this_model, columns=['Unique_Concepts'])
+            unique_csv_path = output_dir / f"concepts_unique_to_{model.replace('.', '_')}.csv"
+            df_unique.to_csv(unique_csv_path, index=False)
+            logger.info(f"✅ Detailed unique concepts for {model} saved to {unique_csv_path}")
+
+    # --- 3. Generate and Save Bar Chart ---
+    fig, ax = plt.subplots(figsize=(12, 8))
+    summary_df.set_index('Model').plot(kind='bar', ax=ax, rot=45, colormap='viridis')
     
-    venn2(
-        subsets=(len(unique_to_a), len(unique_to_b), len(common_concepts)),
-        set_labels=(f"{model_a}\n({len(concepts_a)} total)", f"{model_b}\n({len(concepts_b)} total)"),
-        set_colors=('skyblue', 'lightgreen'),
-        alpha=0.7
-    )
-    
-    plt.title('Concept Extraction Overlap Between LLM Models', fontsize=16)
-    
-    plot_path = output_dir / "model_extraction_venn_diagram.png"
+    plt.title('Comparison of Concept Extraction Across LLM Models', fontsize=16)
+    plt.ylabel('Number of Concepts', fontsize=12)
+    plt.xlabel('Model Name', fontsize=12)
+    plt.tight_layout()
+
+    plot_path = output_dir / "model_comparison_barchart.png"
     plt.savefig(plot_path, dpi=300)
-    logger.info(f"✅ Venn diagram saved to {plot_path}")
+    logger.info(f"✅ Comparison bar chart saved to {plot_path}")
     plt.close()
 
 
-def compare_model_extraction(chunks: List[Document], model_a: str, model_b: str):
+def compare_model_extraction(chunks: List[Document], models_to_compare: List[str]):
     """
-    Processes the same list of chunks with two different models and compares the results.
+    Processes the same list of chunks with multiple different models and saves the results.
     """
-    logger.info(f"--- Comparing concept extraction quality: '{model_a}' vs. '{model_b}' ---")
+    logger.info(f"--- Comparing concept extraction quality for models: {models_to_compare} ---")
 
-    concepts_a = set()
-    concepts_b = set()
+    all_results: Dict[str, Set[str]] = {model: set() for model in models_to_compare}
 
-    logger.info(f"Processing {len(chunks)} chunks with '{model_a}'...")
-    for chunk in chunks:
-        extracted, _, _ = _extract_concepts_from_chunk(chunk, model_name=model_a)
-        if extracted:
-            concepts_a.update(extracted)
-
-    logger.info(f"Processing {len(chunks)} chunks with '{model_b}'...")
-    for chunk in chunks:
-        extracted, _, _ = _extract_concepts_from_chunk(chunk, model_name=model_b)
-        if extracted:
-            concepts_b.update(extracted)
+    for model in models_to_compare:
+        logger.info(f"Processing {len(chunks)} chunks with '{model}'...")
+        # Use tqdm for a progress bar for each model
+        for chunk in tqdm(chunks, desc=f"Model: {model}"):
+            extracted, _, _ = _extract_concepts_from_chunk(chunk, model_name=model)
+            if extracted:
+                all_results[model].update(extracted)
 
     # --- Analysis & Saving Results ---
     output_dir = Path("visualizations") # Define an output directory
-    _save_results(concepts_a, concepts_b, model_a, model_b, output_dir)
+    _save_results(all_results, output_dir)
     
-    # --- Print Summary to Console ---
-    common_concepts_count = len(concepts_a.intersection(concepts_b))
-    unique_to_a_count = len(concepts_a - concepts_b)
-    unique_to_b_count = len(concepts_b - concepts_a)
-    
+    # --- Print Final Summary to Console ---
     print("\n" + "="*50)
-    print("           EXTRACTION QUALITY DIAGNOSIS")
+    print("      MULTI-MODEL EXTRACTION QUALITY DIAGNOSIS")
     print("="*50)
-    print(f"\nModel A ({model_a}) extracted {len(concepts_a)} unique concepts.")
-    print(f"Model B ({model_b}) extracted {len(concepts_b)} unique concepts.")
-    print(f"Overlap (Common Concepts): {common_concepts_count}")
-    print(f"Unique to '{model_a}': {unique_to_a_count}")
-    print(f"Unique to '{model_b}': {unique_to_b_count}")
-    
-    print("\n" + "="*50)
-    print("ANALYSIS:")
-    print("Check the generated 'visualizations/model_extraction_comparison.csv' file.")
-    print(f"1. Is the 'Unique_to_{model_a}' column filled with more noise (plurals, generic terms)?")
-    print(f"2. Is the 'Unique_to_{model_b}' column filled with more precise, domain-specific concepts?")
-    print("If so, the model choice is the primary cause of the high review count.")
+    summary_df = pd.read_csv(output_dir / "model_comparison_summary.csv")
+    print(summary_df.to_string(index=False))
+    print("\nANALYSIS:")
+    print("Check the generated CSV files in the 'visualizations/' directory.")
+    print("Look for models with a high 'Total_Unique_Concepts' but low 'Concepts_Unique_to_Model'.")
+    print("This often indicates a model that is noisy or inconsistent.")
+    print("A good model will have a reasonable total count and its unique concepts will be high-quality, domain-specific terms.")
     print("="*50)
 
 if __name__ == "__main__":
-    # Ensure you have this dependency installed:
-    # pip install matplotlib-venn
-    
-    print("Loading a sample of 30 chunks for the experiment...")
+    # 1. Load a sample of chunks for the experiment
+    print("Loading a sample of 30 chunks...")
     all_chunks = load_and_split_data()
     sample_chunks = all_chunks[:30] if all_chunks else []
 
     if not sample_chunks:
         logger.error("No chunks found. Cannot run diagnosis.")
     else:
-        nano_model = "gpt-4.1-nano"
-        powerful_model = "gpt-4.1"
+        # 2. Define the list of models you want to compare
+        models_to_test = [
+            "gpt-3.5-turbo",    # The fast, cheap baseline
+            "gpt-4.1-nano",     # Your previous model
+            "gpt-4o-mini",      # A modern, small model
+            "gpt-4o"            # The powerful, recommended model
+        ]
+        # Note: I've excluded "gpt-5" as it's not a real model and would cause an error.
+        # You can add "gpt-4.1" back if you have access to it.
 
-        compare_model_extraction(sample_chunks, nano_model, powerful_model)
+        # 3. Run the comparison
+        compare_model_extraction(sample_chunks, models_to_test)
