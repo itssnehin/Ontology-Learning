@@ -4,9 +4,14 @@ import re
 from typing import List, Optional, Tuple, Dict, Any
 from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
+from langchain_core.messages import SystemMessage, HumanMessage
 from tiktoken import get_encoding
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
+from src.config import (
+    LLM_MODEL, OPENAI_API_KEY, PROMPTS, MAX_WORKERS, MODEL_COSTS
+)
 
 from src.config import (
     LLM_MODEL, OPENAI_API_KEY, PROMPTS, MAX_WORKERS, MODEL_COSTS
@@ -20,7 +25,7 @@ CONCEPT_STOPWORDS = {
     'copyright', 'inc', 'page', 'date', 'january', 'february', 'march', 'april',
     'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december',
     # Add common irrelevant places found in the dataset
-    'california', 'texas', 'germany', 'japan', 'china', 'india'
+    'california', 'texas', 'germany', 'japan', 'china', 'india', 'france'
 }
 
 

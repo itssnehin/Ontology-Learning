@@ -202,7 +202,7 @@ class OntologyExtensionManager:
         matches = self._find_concept_matches(new_concept)
         
         # 2. Extract non-taxonomic relations (this can also incur a cost)
-        nontaxonomic_relations, nt_in_tokens, nt_out_tokens = self._extract_non_taxonomic_relations(concept_name, matches)
+        nontaxonomic_relations, nt_in_tokens, nt_out_tokens = self._extract_non_taxonomic_relations(original_name, matches)
         
         # 3. Make the final decision, which may incur more cost from LLM validation
         decision_result, val_in_tokens, val_out_tokens = self._make_extension_decision(new_concept, matches, nontaxonomic_relations)
@@ -217,7 +217,7 @@ class OntologyExtensionManager:
         output_cost = (total_output_tokens / 1000) * model_pricing['output_cost_per_1k_tokens']
         total_cost = input_cost + output_cost
         
-        logger.debug(f"   🎯 Decision for '{concept_name}': {decision_result.decision.value} (Cost: ${total_cost:.5f})")
+        logger.debug(f"   🎯 Decision for '{original_name}': {decision_result.decision.value} (Cost: ${total_cost:.5f})")
         
         return decision_result, total_cost
 
@@ -366,68 +366,57 @@ class OntologyExtensionManager:
         return matches
     
     def _make_extension_decision(self, new_concept: Dict[str, Any], 
-                                matches: List[ConceptMatch],
-                                nontaxonomic_relations: List[Dict[str, str]]) -> Tuple[ExtensionResult, int, int]:
+                            matches: List[ConceptMatch],
+                            nontaxonomic_relations: List[Dict[str, str]]) -> Tuple[ExtensionResult, int, int]:
         """Make the final decision and return the result and any associated validation cost."""
         concept_name = new_concept.get('name', 'Unknown')
 
-        # This path has no validation cost
         if not matches:
+            # This part is fine.
             result = ExtensionResult(
-                concept_name=concept_name,
-                decision=ExtensionDecision.EXTEND,
-                target_concept=None,
-                confidence=0.9,
-                reasoning="No similar concepts found in existing ontology",
-                matches=[],
+                concept_name=concept_name, decision=ExtensionDecision.EXTEND,
+                target_concept=None, confidence=0.9,
+                reasoning="No similar concepts found", matches=[],
                 non_taxonomic_relations=nontaxonomic_relations
             )
             return result, 0, 0
 
         best_match = matches[0]
 
-        # This path has no validation cost
-        if best_match.similarity_score >= self.similarity_thresholds['exact_match']:
+        # 1. Handle PERFECT matches first. This is now the most common case for your data.
+        if best_match.similarity_score >= 0.999: # Using 0.999 to account for float precision
             result = ExtensionResult(
-                concept_name=concept_name,
-                decision=ExtensionDecision.MAP_EXACT,
-                target_concept=best_match.existing_concept,
-                confidence=best_match.confidence,
-                reasoning=f"High similarity match: {best_match.reasoning}",
-                matches=matches[:3],
-                non_taxonomic_relations=nontaxonomic_relations
+                concept_name=concept_name, decision=ExtensionDecision.MAP_EXACT,
+                target_concept=best_match.existing_concept, confidence=best_match.confidence,
+                reasoning=f"Exact or near-exact match found after normalization: {best_match.reasoning}",
+                matches=matches[:3], non_taxonomic_relations=nontaxonomic_relations
             )
             return result, 0, 0
 
-        # This path MIGHT have a validation cost
+        # 2. Use LLM validation only for the HIGHLY similar but not perfect cases.
+        #    Let's use a slightly wider window here based on your 25th percentile score (0.86).
         elif best_match.similarity_score >= self.similarity_thresholds['high_similarity'] and self.config.enable_llm_validation:
             decision_result, in_tokens, out_tokens = self._llm_validate_similarity(new_concept, best_match, matches[:3])
             decision_result.non_taxonomic_relations = nontaxonomic_relations
             return decision_result, in_tokens, out_tokens
 
-        # This path has no validation cost
+        # 3. Everything else that is a decent match but not high enough for an LLM call goes to review.
         elif best_match.similarity_score >= self.similarity_thresholds['medium_similarity']:
             result = ExtensionResult(
-                concept_name=concept_name,
-                decision=ExtensionDecision.UNCERTAIN,
-                target_concept=best_match.existing_concept,
-                confidence=0.5,
+                concept_name=concept_name, decision=ExtensionDecision.UNCERTAIN,
+                target_concept=best_match.existing_concept, confidence=0.5,
                 reasoning=f"Medium similarity requires review: {best_match.reasoning}",
-                matches=matches[:5],
-                non_taxonomic_relations=nontaxonomic_relations
+                matches=matches[:5], non_taxonomic_relations=nontaxonomic_relations
             )
             return result, 0, 0
 
-        # This path has no validation cost
-        else: # Low similarity
+        # 4. If the score is below the medium threshold, it's a new concept.
+        else:
             result = ExtensionResult(
-                concept_name=concept_name,
-                decision=ExtensionDecision.EXTEND,
-                target_concept=None,
-                confidence=0.8,
-                reasoning="Low similarity to existing concepts suggests new concept",
-                matches=matches[:3],
-                non_taxonomic_relations=nontaxonomic_relations
+                concept_name=concept_name, decision=ExtensionDecision.EXTEND,
+                target_concept=None, confidence=0.8,
+                reasoning="Low similarity to existing concepts suggests a new concept",
+                matches=matches[:3], non_taxonomic_relations=nontaxonomic_relations
             )
             return result, 0, 0
             

@@ -94,9 +94,9 @@ MAX_WORKERS = 10 #Parallelisation
 # --- Similarity thresholds ---
 SIMILARITY_THRESHOLDS = {
     'exact_match': 0.96,
-    'high_similarity': 0.85,
-    'medium_similarity': 0.70,
-    'low_similarity': 0.50
+    'high_similarity': 0.90,
+    'medium_similarity': 0.75,
+    'low_similarity': 0.60
 }
 
 # --- Dynamically find files ---
