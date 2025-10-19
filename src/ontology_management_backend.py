@@ -971,7 +971,35 @@ def list_documents():
     except Exception as e:
         logger.error(f"Failed to list documents: {e}", exc_info=True)
         return jsonify({"error": "Could not retrieve document list."}), 500
-    
+
+@app.route('/api/results/costs')
+def get_latest_costs():
+    """
+    Finds the most recent pipeline result file and returns the cost breakdown.
+    """
+    try:
+        output_dir = Path("data/integrated_output")
+        if not output_dir.exists():
+            return jsonify({"error": "Results directory not found."}), 404
+
+        # Find the latest integration_results_...json file
+        list_of_files = list(output_dir.glob('integration_results_*.json'))
+        if not list_of_files:
+            return jsonify({}), 200 # Return empty if no results yet
+
+        latest_file = max(list_of_files, key=lambda p: p.stat().st_ctime)
+        
+        with open(latest_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        costs = data.get("summary", {}).get("costs", {})
+        return jsonify(costs)
+
+    except Exception as e:
+        logger.error(f"Failed to get latest cost data: {e}", exc_info=True)
+        return jsonify({"error": "Could not read cost data from results file."}), 500
+
+
 if __name__ == "__main__":
     initialize_qa_chain()
     

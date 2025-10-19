@@ -53,30 +53,37 @@ class IntegratedSchemaOrgPipeline:
 
         # --- Cost Tracking Initialization (remains the same) ---
         run_costs = {
-            "concept_extraction": 0.0,
-            "ontology_decision_analysis": 0.0,
-            "total_cost": 0.0 # Simplified for this example
+            "concept_extraction": {"input": 0, "output": 0, "cost": 0.0},
+            "ontology_embedding": {"input": 0, "output": 0, "cost": 0.0},
+            "ontology_decision_analysis": {"input": 0, "output": 0, "cost": 0.0},
+            "total_cost": 0.0
         }
         model_pricing = MODEL_COSTS.get(llm_model, MODEL_COSTS['default'])
         input_cost_per_1k = model_pricing['input_cost_per_1k_tokens']
         output_cost_per_1k = model_pricing['output_cost_per_1k_tokens']
         logger.info(f"💰 Using pricing for model '{llm_model}': Input=${input_cost_per_1k}/1k, Output=${output_cost_per_1k}/1k")
-        
+
         # --- EXECUTE PIPELINE STEPS ---
         if progress_callback: progress_callback("Loading Documents", 10)
         # Pass the selected_files to the loading step
         chunks = self._step_1_load_documents(selected_files=selected_files)
 
         if progress_callback: progress_callback("Extracting Concepts", 25)
-        extracted_concepts, in_tokens_extract, out_tokens_extract = self._step_2_extract_concepts(chunks, llm_model, max_workers)
-        run_costs["concept_extraction"] = ((in_tokens_extract / 1000) * input_cost_per_1k) + ((out_tokens_extract / 1000) * output_cost_per_1k)
+        extracted_concepts, in_tokens, out_tokens = self._step_2_extract_concepts(chunks, llm_model, max_workers)
+        run_costs["concept_extraction"]["input"] = in_tokens
+        run_costs["concept_extraction"]["output"] = out_tokens
+        run_costs["concept_extraction"]["cost"] = ((in_tokens / 1000) * input_cost_per_1k) + ((out_tokens / 1000) * output_cost_per_1k)
         
         if progress_callback: progress_callback("Loading Ontology", 50)
-        self._step_3_and_4_load_ontology_and_embed()
+        embedding_tokens, embedding_cost = self._step_3_and_4_load_ontology_and_embed()
+        run_costs["ontology_embedding"]["input"] = embedding_tokens
+        run_costs["ontology_embedding"]["cost"] = embedding_cost
         
         if progress_callback: progress_callback("Analyzing Decisions", 60)
-        extension_decisions, cost_decision = self._step_5_analyze_concepts_parallel(extracted_concepts, max_workers, llm_model)
-        run_costs["ontology_decision_analysis"] = cost_decision
+        extension_decisions, in_tokens, out_tokens = self._step_5_analyze_concepts_parallel(extracted_concepts, max_workers, llm_model)
+        run_costs["ontology_decision_analysis"]["input"] = in_tokens
+        run_costs["ontology_decision_analysis"]["output"] = out_tokens
+        run_costs["ontology_decision_analysis"]["cost"] = ((in_tokens / 1000) * input_cost_per_1k) + ((out_tokens / 1000) * output_cost_per_1k)
         
         # --- THIS IS THE KEY CHANGED SECTION ---
         
@@ -98,16 +105,14 @@ class IntegratedSchemaOrgPipeline:
         # --- END OF CHANGED SECTION ---
         
         # --- FINALIZE AND RETURN RESULTS ---
-        run_costs["total_cost"] = sum(run_costs.values())
+        run_costs["total_cost"] = sum(stage["cost"] for stage in run_costs.values() if isinstance(stage, dict))
         processing_time = (datetime.now() - start_time).total_seconds()
         
         # This part needs a slight update to reflect the new meaning of the results
         final_results = self._prepare_final_results(
-            extracted_concepts,
-            extension_decisions, # Pass the raw decisions
-            processing_time,
-            run_costs
+            extracted_concepts, extension_decisions, processing_time, run_costs # Pass new costs dict
         )
+
 
         # The saving step now saves tasks, not schema objects
         self._step_9_save_reports(final_results, ontology_extension_tasks)
@@ -141,50 +146,43 @@ class IntegratedSchemaOrgPipeline:
         logger.info(f"   📊 Token Usage: {total_input:,} input, {total_output:,} output")
         return extracted_concepts, total_input, total_output
 
-    def _step_3_and_4_load_ontology_and_embed(self):
-        """Loads the existing ontology from Neo4j and creates embeddings for comparison."""
+    def _step_3_and_4_load_ontology_and_embed(self) -> Tuple[int, float]:
+        """Loads ontology, creates embeddings, and returns embedding cost info."""
         logger.info("\n📚 Step 3 & 4: Loading existing ontology and creating embeddings...")
         self.extension_manager.load_existing_ontology()
         existing_concepts = self.extension_manager._existing_concepts
+        total_tokens, total_cost = 0, 0.0
         if existing_concepts:
-            self.extension_manager.create_concept_embeddings(existing_concepts)
-        logger.info(f"   ✅ Loaded and embedded {len(existing_concepts)} existing concepts.")
+            _, total_tokens, total_cost = self.extension_manager.create_concept_embeddings(existing_concepts)
+        logger.info(f"   ✅ Loaded and embedded {len(existing_concepts)} concepts.")
+        return total_tokens, total_cost
 
-    def _analyze_single_concept(self, concept_name: str) -> Tuple[ExtensionResult, float]: #<-- UPDATE RETURN SIGNATURE
-        """Helper for parallel execution: analyzes one concept and returns its decision and cost."""
-        concept_dict = {
-            'name': concept_name,
-            'category': self._infer_category(concept_name),
-            'description': f"Electronic component: {concept_name}",
-        }
-        # This function now correctly returns a (result, cost) tuple
+    def _analyze_single_concept(self, concept_name: str) -> Tuple[ExtensionResult, int, int]:
+        """Helper for parallel execution: returns decision and token counts."""
+        concept_dict = {'name': concept_name, 'category': 'Unknown', 'description': ''}
         return self.extension_manager.analyze_new_concept(concept_dict)
 
-    def _step_5_analyze_concepts_parallel(self, extracted_concepts: List[str], max_workers: int, llm_model: str) -> Tuple[List[ExtensionResult], float]:
-        """Analyzes concepts in parallel and returns the decisions and the total cost."""
+    def _step_5_analyze_concepts_parallel(self, extracted_concepts: List[str], max_workers: int, llm_model: str) -> Tuple[List[ExtensionResult], int, int]:
         logger.info("\n🔍 Step 5: Analyzing concepts for ontology decisions (in parallel)...")
         extension_decisions = []
-        total_cost = 0.0  # <-- Initialize cost for this stage
-
-        # Ensure the manager is using the correct model for any validation calls
+        total_input_tokens, total_output_tokens = 0, 0
         self.extension_manager.llm.model_name = llm_model
 
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             future_to_concept = {executor.submit(self._analyze_single_concept, name): name for name in extracted_concepts}
             for future in tqdm(as_completed(future_to_concept), total=len(extracted_concepts), desc="Analyzing Concepts"):
                 try:
-                    # This is the line that was crashing silently inside the thread
-                    decision, cost = future.result()
-                    total_cost += cost
+                    decision, in_tokens, out_tokens = future.result()
+                    total_input_tokens += in_tokens
+                    total_output_tokens += out_tokens
                     if decision:
                         extension_decisions.append(decision)
                 except Exception as e:
-                    # If one concept fails, log it and continue with the rest.
                     concept_name = future_to_concept[future]
                     logger.error(f"Failed to analyze concept '{concept_name}': {e}", exc_info=True)
         
-        logger.info(f"   📊 Token Usage for Decision Analysis: Total Cost=${total_cost:.5f}")
-        return extension_decisions, total_cost
+        logger.info(f"   📊 Token Usage for Decision Analysis: IN={total_input_tokens:,}, OUT={total_output_tokens:,}")
+        return extension_decisions, total_input_tokens, total_output_tokens
     
     def _route_concepts_based_on_decisions(self, extension_decisions: List[ExtensionResult]):
         """
@@ -221,8 +219,6 @@ class IntegratedSchemaOrgPipeline:
             ontology_extension_tasks.append(task)
 
         return ontology_extension_tasks, []
-
-
 
     def _create_schema_for_single_concept(self, concept_dict: Dict, all_chunks: List[Document], llm_model: str) -> Tuple[Optional[Dict], int, int]:
         """Helper for parallel execution: creates one Schema.org object and returns token counts."""
@@ -375,11 +371,11 @@ class IntegratedSchemaOrgPipeline:
         # (implementation unchanged)
         return [Document(page_content=f"Component Name: {c['name']}") for c in concepts]
 
-
 # --- Main execution block ---
 def run_integrated_pipeline(config: Optional[PipelineConfig] = None, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS, progress_callback: Optional[Callable] = None, selected_files: Optional[List[str]] = None):
     pipeline = IntegratedSchemaOrgPipeline(config)
     return pipeline.run_integrated_pipeline(llm_model=llm_model, max_workers=max_workers, progress_callback=progress_callback, selected_files=selected_files)
+
 if __name__ == "__main__":
     import argparse
     

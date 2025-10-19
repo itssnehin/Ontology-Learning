@@ -67,24 +67,28 @@ LLM_MODEL = "gpt-4.1-nano"
 EMBEDDING_MODEL = "text-embedding-ada-002"
 
 # Prices are per 1,000 tokens, converted from per 1M.
+# --- NEW: ADD EMBEDDING COSTS ---
 EMBEDDING_COSTS = {
     "text-embedding-3-small": 0.00002,
     "text-embedding-3-large": 0.00013,
     "text-embedding-ada-002": 0.0001,
-    "default": 0.0001
+    "default": 0.0001 # Default to ada-002 price
 }
 
 # --- ADD THIS BLOCK TO LOAD THE CHAT MODEL COSTS ---
 MODEL_COSTS = {}
 try:
-    costs_path = Path(__file__).parent / "model_costs.json"
+    # Assuming model_costs.json is in the root, next to this config file's parent dir
+    costs_path = PROJECT_ROOT / "model_costs.json"
     with open(costs_path, 'r', encoding='utf-8') as f:
         MODEL_COSTS = json.load(f)
     logger.info("✅ Successfully loaded model costs from model_costs.json")
 except (FileNotFoundError, json.JSONDecodeError) as e:
-    logger.error(f"FATAL: Could not load or parse model_costs.json. Error: {e}")
-    MODEL_COSTS = {"default": {"input_cost_per_1k_tokens": 0, "output_cost_per_1k_tokens": 0}}
-# --- END OF BLOCK ---
+    logger.error(f"FATAL: Could not load or parse model_costs.json. Costs will be zero. Error: {e}")
+    # Provide a default structure to prevent crashes
+    MODEL_COSTS = {
+        "default": {"input_cost_per_1k_tokens": 0, "output_cost_per_1k_tokens": 0}
+    }
 
 # --- Pipeline settings ---
 CHUNK_SIZE = 1000

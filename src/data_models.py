@@ -1,5 +1,5 @@
 from dataclasses import dataclass, asdict
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 from enum import Enum
 import numpy as np
 
@@ -71,7 +71,7 @@ class IntegrationResults:
     confidence_scores: List[float]
     processing_time: float
     decisions: List[ExtensionResult]
-    costs: Dict[str, float]  
+    costs: Dict[str, Any]  
     
     @property
     def automation_rate(self) -> float:

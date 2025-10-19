@@ -34,7 +34,10 @@ from dataclasses import dataclass, asdict
 from tiktoken import get_encoding
 import inflect
 
-from src.config import OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, NEO4J_DB_NAME, PROMPTS, MODEL_COSTS, NON_TAXONOMIC_RELATION_PROMPT
+from src.config import ( 
+    OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, NEO4J_DB_NAME, 
+    PROMPTS, MODEL_COSTS, NON_TAXONOMIC_RELATION_PROMPT, EMBEDDING_MODEL, EMBEDDING_COSTS
+)
 
 import re
 
@@ -136,7 +139,7 @@ class OntologyExtensionManager:
         return {'concepts': concepts}
 
     
-    def create_concept_embeddings(self, concepts: List[Dict]) -> Dict[str, np.ndarray]:
+    def create_concept_embeddings(self, concepts: List[Dict]) -> Tuple[Dict[str, np.ndarray], int, float]:
         """Create embeddings for existing concepts for similarity matching."""
         logger.info("🧠 Creating concept embeddings...")
         
@@ -168,22 +171,24 @@ class OntologyExtensionManager:
             concept_names.append(name)
         
         if not concept_texts:
-            logger.warning("   No valid concepts found to create embeddings for.")
-            self._concept_embeddings = {}
-            return self._concept_embeddings
+            return {}, 0, 0.0
 
-        # Generate embeddings
-        embeddings = self.embeddings.embed_documents(concept_texts)
+        # --- NEW: Calculate embedding cost ---
+        total_tokens = sum(len(self.tokenizer.encode(text)) for text in concept_texts)
+        embedding_price = EMBEDDING_COSTS.get(EMBEDDING_MODEL, EMBEDDING_COSTS['default'])
+        total_cost = (total_tokens / 1000) * embedding_price
         
-        # Cache embeddings
+        logger.info(f"   Embedding {len(concept_names)} concepts. Tokens: {total_tokens:,}, Cost: ${total_cost:.5f}")
+        
+        embeddings = self.embeddings.embed_documents(concept_texts)
         for name, embedding in zip(concept_names, embeddings):
             self._concept_embeddings[name] = np.array(embedding)
         
-        logger.info(f"   ✅ Created embeddings for {len(concept_names)} concepts.")
-        return self._concept_embeddings
+        return self._concept_embeddings, total_tokens, total_cost
 
     
-    def analyze_new_concept(self, new_concept: Dict[str, Any]) -> Tuple[ExtensionResult, float]:
+    def analyze_new_concept(self, new_concept: Dict[str, Any]) -> Tuple[ExtensionResult, int, int]:
+
         """
         Analyze a new concept, returning the decision, any non-taxonomic relations, and the cost.
         """
@@ -207,20 +212,13 @@ class OntologyExtensionManager:
         # 3. Make the final decision, which may incur more cost from LLM validation
         decision_result, val_in_tokens, val_out_tokens = self._make_extension_decision(new_concept, matches, nontaxonomic_relations)
         
-        # --- CENTRALIZED COST CALCULATION ---
+        # --- AGGREGATE AND RETURN TOKENS, NOT COST ---
         total_input_tokens = nt_in_tokens + val_in_tokens
         total_output_tokens = nt_out_tokens + val_out_tokens
         
-        model_name = self.llm.model_name
-        model_pricing = MODEL_COSTS.get(model_name, MODEL_COSTS['default'])
-        input_cost = (total_input_tokens / 1000) * model_pricing['input_cost_per_1k_tokens']
-        output_cost = (total_output_tokens / 1000) * model_pricing['output_cost_per_1k_tokens']
-        total_cost = input_cost + output_cost
+        logger.debug(f"   Tokens for '{original_name}': IN={total_input_tokens}, OUT={total_output_tokens}")
         
-        logger.debug(f"   🎯 Decision for '{original_name}': {decision_result.decision.value} (Cost: ${total_cost:.5f})")
-        
-        return decision_result, total_cost
-
+        return decision_result, total_input_tokens, total_output_tokens
         
     def _find_concept_matches(self, new_concept: Dict[str, Any]) -> List[ConceptMatch]:
         """Find potential matches using multiple similarity methods."""

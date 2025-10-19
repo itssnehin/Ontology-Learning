@@ -110,15 +110,13 @@ if __name__ == "__main__":
     if not sample_chunks:
         logger.error("No chunks found. Cannot run diagnosis.")
     else:
-        # 2. Define the list of models you want to compare
+        # 2. Define the list of models
         models_to_test = [
             "gpt-3.5-turbo",    # The fast, cheap baseline
             "gpt-4.1-nano",     # Your previous model
-            "gpt-4o-mini",      # A modern, small model
-            "gpt-4o"            # The powerful, recommended model
+            "gpt-4.1-mini",      # A modern, small model
+            "gpt-4o",
+            "gpt-4.1"            # The powerful, recommended model
         ]
-        # Note: I've excluded "gpt-5" as it's not a real model and would cause an error.
-        # You can add "gpt-4.1" back if you have access to it.
-
         # 3. Run the comparison
         compare_model_extraction(sample_chunks, models_to_test)
