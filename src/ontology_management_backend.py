@@ -318,6 +318,11 @@ class OntologyManager:
             max_workers = config.get('max_workers', MAX_WORKERS)
             selected_files = config.get('selected_files') 
             
+            user_config = PipelineConfig(
+                similarity_thresholds=config.get('similarity_thresholds'),
+                enable_llm_validation=config.get('enable_llm_validation', True),
+                enable_technical_matching=config.get('enable_technical_matching', True)
+            )
             self.current_process.message = f"Initializing pipeline (Mode: {resume_step})..."
             self.current_process.progress = 5
 
@@ -331,7 +336,8 @@ class OntologyManager:
                 llm_model=llm_model,
                 max_workers=max_workers,
                 progress_callback=update_progress_callback,
-                selected_files=selected_files
+                selected_files=selected_files,
+                pipeline_config = user_config
             )
 
 

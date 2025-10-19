@@ -24,7 +24,8 @@ from src.schema_org_graph_builder import SchemaOrgGraphBuilder
 from src.ontology_extension_manager import OntologyExtensionManager, ExtensionDecision, ExtensionResult
 from src.data_models import PipelineConfig, IntegrationResults, ExtensionDecision, ExtensionResult
 from src.ontology_extension_manager import OntologyExtensionManager
-from src.config import MAX_WORKERS, LLM_MODEL, MODEL_COSTS
+from src.config import MAX_WORKERS, LLM_MODEL, MODEL_COSTS, EMBEDDING_MODEL
+from src.utils import cost_logger
 
 logger = logging.getLogger(__name__)
 
@@ -44,14 +45,17 @@ class IntegratedSchemaOrgPipeline:
         logger.info(f"📁 Output directory: {self.output_dir}")
         logger.info(f"⚙️ Max concurrent workers: {MAX_WORKERS}")
 
-    def run_integrated_pipeline(self, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS, progress_callback: Optional[Callable] = None, selected_files: Optional[List[str]] = None) -> IntegrationResults:
+    def run_integrated_pipeline(self, llm_model: str = LLM_MODEL, max_workers: int = MAX_WORKERS, progress_callback: Optional[Callable] = None, selected_files: Optional[List[str]] = None, pipeline_config: Optional[PipelineConfig] = None):
         """Executes the complete ontology learning pipeline and returns structured results."""
         start_time = datetime.now()
-        logger.info("🚀" + "="*70)
-        logger.info("STARTING ONTOLOGY LEARNING PIPELINE (PARALLELIZED)")
-        logger.info("="*70)
+        logger.info("🚀 STARTING ONTOLOGY LEARNING PIPELINE 🚀")
 
-        # --- Cost Tracking Initialization (remains the same) ---
+        if pipeline_config:
+            self.config = pipeline_config
+            self.extension_manager = OntologyExtensionManager(config=self.config)
+            logger.info(f"Pipeline configured with custom settings: {self.config.__dict__}")
+
+        # --- Cost Tracking Initialization ---
         run_costs = {
             "concept_extraction": {"input": 0, "output": 0, "cost": 0.0},
             "ontology_embedding": {"input": 0, "output": 0, "cost": 0.0},
@@ -62,66 +66,57 @@ class IntegratedSchemaOrgPipeline:
         input_cost_per_1k = model_pricing['input_cost_per_1k_tokens']
         output_cost_per_1k = model_pricing['output_cost_per_1k_tokens']
         logger.info(f"💰 Using pricing for model '{llm_model}': Input=${input_cost_per_1k}/1k, Output=${output_cost_per_1k}/1k")
-
+        
         # --- EXECUTE PIPELINE STEPS ---
         if progress_callback: progress_callback("Loading Documents", 10)
-        # Pass the selected_files to the loading step
-        chunks = self._step_1_load_documents(selected_files=selected_files)
+        chunks = self._step_1_load_documents(selected_files)
 
+        # --- STAGE: CONCEPT EXTRACTION ---
         if progress_callback: progress_callback("Extracting Concepts", 25)
         extracted_concepts, in_tokens, out_tokens = self._step_2_extract_concepts(chunks, llm_model, max_workers)
-        run_costs["concept_extraction"]["input"] = in_tokens
-        run_costs["concept_extraction"]["output"] = out_tokens
-        run_costs["concept_extraction"]["cost"] = ((in_tokens / 1000) * input_cost_per_1k) + ((out_tokens / 1000) * output_cost_per_1k)
+        cost = ((in_tokens / 1000) * input_cost_per_1k) + ((out_tokens / 1000) * output_cost_per_1k)
+        run_costs["concept_extraction"].update({"input": in_tokens, "output": out_tokens, "cost": cost})
+        cost_logger.log_cost("Concept Extraction", llm_model, in_tokens, out_tokens, cost)
         
+        # --- STAGE: ONTOLOGY EMBEDDING ---
         if progress_callback: progress_callback("Loading Ontology", 50)
         embedding_tokens, embedding_cost = self._step_3_and_4_load_ontology_and_embed()
-        run_costs["ontology_embedding"]["input"] = embedding_tokens
-        run_costs["ontology_embedding"]["cost"] = embedding_cost
+        run_costs["ontology_embedding"].update({"input": embedding_tokens, "cost": embedding_cost})
+        cost_logger.log_cost("Ontology Embedding", EMBEDDING_MODEL, embedding_tokens, 0, embedding_cost)
         
+        # --- STAGE: DECISION ANALYSIS ---
         if progress_callback: progress_callback("Analyzing Decisions", 60)
         extension_decisions, in_tokens, out_tokens = self._step_5_analyze_concepts_parallel(extracted_concepts, max_workers, llm_model)
-        run_costs["ontology_decision_analysis"]["input"] = in_tokens
-        run_costs["ontology_decision_analysis"]["output"] = out_tokens
-        run_costs["ontology_decision_analysis"]["cost"] = ((in_tokens / 1000) * input_cost_per_1k) + ((out_tokens / 1000) * output_cost_per_1k)
+        cost = ((in_tokens / 1000) * input_cost_per_1k) + ((out_tokens / 1000) * output_cost_per_1k)
+        run_costs["ontology_decision_analysis"].update({"input": in_tokens, "output": out_tokens, "cost": cost})
+        cost_logger.log_cost("Decision Analysis", llm_model, in_tokens, out_tokens, cost)
         
-        # --- THIS IS THE KEY CHANGED SECTION ---
-        
-        # 1. The routing function now returns a list of tasks for the ontology.
-        #    The second variable (for mapped objects) is now empty.
+        # --- ROUTING AND GRAPH BUILDING ---
         if progress_callback: progress_callback("Routing Decisions", 85)
         ontology_extension_tasks, _ = self._route_concepts_based_on_decisions(extension_decisions)
         
-        # 2. We no longer run the schema object creation step, as we are building the ontology directly.
-        #    This entire block can be commented out or deleted.
-        # new_schema_objects, run_costs["schema_object_creation"] = self._step_6_create_schema_objects_parallel(...)
-        # mapped_objects = self._step_7_process_mappings(...)
-        
-        # 3. The graph builder is now called with the list of ontology tasks.
-        #    The second argument is an empty list because there are no separate mapped objects.
         if progress_callback: progress_callback("Extending Ontology Graph", 90)
         self._step_8_update_knowledge_graph_parallel(ontology_extension_tasks, [], max_workers=max_workers)
         
-        # --- END OF CHANGED SECTION ---
-        
         # --- FINALIZE AND RETURN RESULTS ---
-        run_costs["total_cost"] = sum(stage["cost"] for stage in run_costs.values() if isinstance(stage, dict))
+        run_costs["total_cost"] = sum(stage.get("cost", 0.0) for stage in run_costs.values() if isinstance(stage, dict))
         processing_time = (datetime.now() - start_time).total_seconds()
         
-        # This part needs a slight update to reflect the new meaning of the results
         final_results = self._prepare_final_results(
-            extracted_concepts, extension_decisions, processing_time, run_costs # Pass new costs dict
+            extracted_concepts,
+            extension_decisions,
+            processing_time,
+            run_costs
         )
 
-
-        # The saving step now saves tasks, not schema objects
-        self._step_9_save_reports(final_results, ontology_extension_tasks)
+        self._step_9_save_reports(final_results, ontology_extension_tasks, []) # Pass empty list for mapped_objects
 
         logger.info("\n" + "="*70)
         logger.info("🎉 ONTOLOGY LEARNING PIPELINE COMPLETED SUCCESSFULLY!")
         logger.info(f"📊 Total concepts processed: {final_results.total_concepts_extracted}")
         logger.info(f"🔗 Concepts mapped to existing classes: {final_results.concepts_mapped_to_existing}")
         logger.info(f"🆕 New classes learned: {final_results.concepts_extending_ontology}")
+        logger.info(f"💰 Total Estimated Cost: ${run_costs['total_cost']:.4f}")
 
         return final_results
 

@@ -63,7 +63,7 @@ LOGS_DIR.mkdir(exist_ok=True)
 CACHE_DIR.mkdir(exist_ok=True)
 
 # --- OpenAI API settings ---
-LLM_MODEL = "gpt-4.1-nano"
+LLM_MODEL = "gpt-4.1"
 EMBEDDING_MODEL = "text-embedding-ada-002"
 
 # Prices are per 1,000 tokens, converted from per 1M.

@@ -59,19 +59,33 @@ class SchemaOrgGraphBuilder:
                 c.source = 'learned_from_dataset',
                 c.uri = 'https://example.org/ontology#' + $name
         """
-        if status == 'review':
-            class_query += " SET c:NeedsReview"
         tx.run(class_query, name=child_name)
+
+        # Now, apply the :NeedsReview label in a separate, conditional step
+        # ONLY if the status is 'review'.
+        if status == 'review':
+            review_query = """
+                MATCH (c:OntologyClass {name: $name})
+                SET c:NeedsReview
+            """
+            tx.run(review_query, name=child_name)
 
         # 2. Create the hierarchical (taxonomic) link.
         if parent_name:
+        # --- CORRECTED AND MORE ROBUST LINKING QUERY ---
             link_query = """
+            // Anchor on the more specific child node that was just created/merged
             MATCH (child:OntologyClass {name: $child_name})
+            
+            // Anchor on the more general parent node
             MATCH (parent:OntologyClass {name: $parent_name})
+            
+            // A child is a SUBCLASS_OF a parent. The arrow points from specific to general.
             MERGE (child)-[:SUBCLASS_OF]->(parent)
             """
             tx.run(link_query, child_name=child_name, parent_name=parent_name)
             logger.info(f"LEARNED TAXONOMY: [{child_name}] -> IS_A -> [{parent_name}]")
+
         
         # 3. Create the non-taxonomic relationships.
         if relationships := task.get("non_taxonomic_relations"):
