@@ -39,6 +39,7 @@ visualizations/
 # Keep specific files inside the ignored 'data' directory.
 # Add any other data files you want to keep in the repo here.
 !data/gold_standard.json
+!data/lmg158_gold_standard.json
 
 # If you want to keep your input markdown files, add these lines:
 #!data/raw_markdown/

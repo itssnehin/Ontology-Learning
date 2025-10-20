@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 class SchemaOrgGraphBuilder:
     """Builds a Neo4j knowledge graph from Schema.org JSON-LD data, supporting parallel writes."""
     
-    def __init__(self):
+    def __init__(self, database: str = NEO4J_DB_NAME):
         try:
             self.driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
             self.driver.verify_connectivity()
@@ -22,7 +22,7 @@ class SchemaOrgGraphBuilder:
             self.driver = None # Ensure driver is None if connection fails
             raise
             
-        self.database = NEO4J_DB_NAME
+        self.database = database
         self.type_to_label = {"Product": "Product", "Organization": "Organization", "Thing": "Thing"}
         self.relationship_properties = {
             "isAccessoryOrSparePartFor", "isRelatedTo", "hasPart", "worksWith",

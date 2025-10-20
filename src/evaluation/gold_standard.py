@@ -26,32 +26,26 @@ def _calculate_metrics(tp: int, fp: int, fn: int) -> Dict[str, Any]:
         "FN": fn
     }
 
-def _extract_generated_relations(data: Dict) -> Set[Tuple[str, str, str]]:
-    """Extracts relations from the pipeline's final JSON-LD output."""
+def _extract_generated_relations(data: list) -> Set[Tuple[str, str, str]]:
+    """Extracts relations from the pipeline's final 'learned_tasks' JSON file."""
     relations: Set[Tuple[str, str, str]] = set()
-    # These are the keys in your Schema.org objects that represent relationships
-    relation_keys = [
-        "manufacturer", "brand", "isRelatedTo", "worksWith", 
-        "hasPart", "isPartOf", "isAccessoryOrSparePartFor"
-    ]
     
-    for item in data.get('@graph', []):
-        source = _normalize_string(item.get('name', ''))
+    for task in data:
+        source = _normalize_string(task.get('name', ''))
         if not source:
             continue
             
-        for rel_type in relation_keys:
-            target_obj = item.get(rel_type)
-            if not target_obj:
-                continue
-            
-            # The target can be a single string or a list of strings
-            targets = target_obj if isinstance(target_obj, list) else [target_obj]
-            
-            for t in targets:
-                target_name = _normalize_string(t.get('name', '') if isinstance(t, dict) else t)
-                if target_name:
-                    relations.add((source, _normalize_string(rel_type), target_name))
+        parent = _normalize_string(task.get('parent_class'))
+        if parent:
+            relations.add((source, 'subclass_of', parent))
+
+        non_tax_rels = task.get('non_taxonomic_relations', [])
+        if non_tax_rels:
+            for rel in non_tax_rels:
+                target = _normalize_string(rel.get('target'))
+                rel_type = _normalize_string(rel.get('relation'))
+                if target and rel_type:
+                    relations.add((source, rel_type, target))
     return relations
 
 def _extract_gold_relations(data: Dict) -> Set[Tuple[str, str, str]]:
@@ -81,7 +75,7 @@ def evaluate_ontology(generated_path: Path, gold_standard_path: Path) -> Dict[st
         return {}
 
     # --- 1. Evaluate Concepts ---
-    generated_concepts_raw = [item.get('name', '') for item in generated_data.get('@graph', [])]
+    generated_concepts_raw = [task.get('name', '') for task in generated_data]
     generated_concepts: Set[str] = {_normalize_string(c) for c in generated_concepts_raw if c}
     
     gold_concepts_raw = gold_data.get('concepts', [])
@@ -100,7 +94,10 @@ def evaluate_ontology(generated_path: Path, gold_standard_path: Path) -> Dict[st
 
     relation_tp = len(generated_relations.intersection(gold_relations))
     relation_fp = len(generated_relations.difference(gold_relations))
-    relation_fn = len(gold_relations.difference(gold_relations))
+    
+    # --- THIS IS THE FIX ---
+    relation_fn = len(gold_relations.difference(generated_relations))
+    # --- END OF FIX ---
 
     relation_metrics = _calculate_metrics(relation_tp, relation_fp, relation_fn)
     logger.info(f"Relation Evaluation Results: {relation_metrics}")

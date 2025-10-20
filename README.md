@@ -1,113 +1,174 @@
 
----
-# An Intelligent Pipeline for Automated Ontology Learning
+# End-to-End Ontology Learning Pipeline for Technical Documents
 
-## 🎯 Project Goal
+**Author:** Snehin Kukreja
+**Course:** DATA7902 Capstone Project
 
-This project implements an advanced data science pipeline for **ontology learning**. Its primary function is to automatically **generate and extend a formal class hierarchy** (an ontology) by processing a corpus of unstructured technical documents (e.g., component datasheets).
+## 1. Abstract
 
-The system identifies candidate concepts, intelligently decides whether they represent new knowledge, and places them within a coherent, hierarchical structure rooted in Schema.org principles. The entire process is managed and monitored through a web-based dashboard.
-
----
-
-## 🏗️ System Architecture & Learning Workflow
-
-The pipeline operates on a "learning-first" paradigm, where the ontology schema itself is the primary output.
-
-1.  **Input:** A collection of Markdown files in `data/raw_markdown/`.
-2.  **Concept Identification:** A zero-shot LLM prompt (`idea_extractor`) reads document chunks and identifies a "bag of concepts" (potential classes).
-3.  **Ontology Learning Engine (`OntologyExtensionManager`):**
-    *   For each candidate concept, it uses a hybrid similarity model (semantic embeddings, lexical matching) to compare it against all known classes in the Neo4j database.
-    *   **EXTEND Decision:** If the concept is novel, the engine infers the most likely parent class from the existing hierarchy.
-    *   **MAP Decision:** If the concept is a synonym or exact match for an existing class, it is ignored to prevent duplicates.
-    *   **Non-Taxonomic Relations:** A secondary LLM prompt extracts relationships like `hasProperty`, `connectedTo`, etc., enriching the learned structure.
-4.  **Ontology Task Generation:** The engine's decisions are converted into a list of explicit tasks (e.g., `{'action': 'CREATE_CLASS', 'name': 'Varactor Diode', 'parent_class': 'Diode', 'non_taxonomic_relations': [...]}`).
-5.  **Graph Building:** The `SchemaOrgGraphBuilder` connects to Neo4j and executes these tasks, creating new `:OntologyClass` nodes and linking them into the hierarchy with `:SUBCLASS_OF` and other non-taxonomic relationships.
-6.  **Output:** A single, unified, and expanded class hierarchy stored in the target Neo4j database.
+This project implements a complete, end-to-end pipeline for automated ontology learning from unstructured technical documents. The system addresses the "knowledge bottleneck," where valuable domain expertise is locked away in human-readable formats like PDFs and datasheets. By leveraging Large Language Models (LLMs), a hybrid AI decision engine, and a human-in-the-loop web interface, this pipeline transforms raw text into a structured, queryable, and standards-compliant knowledge graph in Neo4j. The final output is a formal ontology that captures not only concepts but also their taxonomic (hierarchical) and non-taxonomic (functional, compositional) relationships.
 
 ---
 
-## 🔧 Installation & Setup
+## 2. Key Features
+
+-   **Automated PDF Processing:** Uses the `marker` library to convert complex, multi-column PDFs into clean Markdown.
+-   **LLM-Powered Extraction:** Employs state-of-the-art models (e.g., GPT-4o) via zero-shot prompting to extract concepts and relationships.
+-   **Hybrid AI Decision Engine:** A sophisticated `OntologyExtensionManager` that uses a multi-factor similarity score (semantic, lexical) and tunable thresholds to decide whether to map, merge, or create new concepts.
+-   **Human-in-the-Loop Dashboard:** A Flask and JavaScript-based web UI that allows users to configure pipeline runs, monitor progress, and, most importantly, review and validate concepts that the AI is uncertain about.
+-   **Graph-Based Knowledge Storage:** Builds and stores the learned ontology in a Neo4j graph database, using the `:OntologyClass` schema.
+-   **Comprehensive Evaluation Suite:** Includes scripts for quantitative and qualitative analysis:
+    -   **Conceptual Saturation:** To measure domain coverage.
+    -   **Gold Standard Comparison:** To calculate Precision, Recall, and F1-score.
+    -   **Model Performance Diagnosis:** To compare the extraction quality of different LLMs.
+-   **Automated Curation:** Includes a post-processing script to programmatically clean the final graph by pruning noisy and disconnected nodes.
+
+---
+
+## 3. Technology Stack
+
+| Category      | Technology                                                                                                                                                                                            |
+| :------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Backend**   | ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) ![Flask](https://img.shields.io/badge/Flask-000000?logo=flask&logoColor=white)                                         |
+| **Database**  | ![Neo4j](https://img.shields.io/badge/Neo4j-008CC1?logo=neo4j&logoColor=white)                                                                                                                           |
+| **AI/ML**     | ![OpenAI](https://img.shields.io/badge/OpenAI-412991?logo=openai&logoColor=white) ![LangChain](https://img.shields.io/badge/LangChain-008664?logo=langchain&logoColor=white)                               |
+| **Frontend**  | ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) |
+| **Tooling**   | ![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white) ![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?logo=powershell&logoColor=white) ![Visual Studio Code](https://img.shields.io/badge/VSCode-007ACC?logo=visualstudiocode&logoColor=white) |
+
+---
+
+## 4. System Architecture
+
+The pipeline follows a four-stage process, transforming unstructured documents into a structured knowledge graph.
+
+![System Architecture](visualizations/system_architecture.png)
+
+---
+
+## 5. Getting Started
 
 ### Prerequisites
--   Python 3.9+
--   Neo4j Desktop (with the APOC plugin installed)
--   Java (for the OWL consistency checker)
 
-### Installation
-1.  **Clone the repository** and navigate into the `code/` directory.
-2.  **Create and activate a virtual environment:**
+-   Python 3.10+
+-   Neo4j Desktop or Server (v5.x recommended)
+-   An OpenAI API Key
+
+### Setup Instructions
+
+1.  **Clone the repository:**
     ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    git clone <your-repo-url>
+    cd <your-repo-directory>
     ```
+
+2.  **Set up the Python virtual environment:**
+    ```powershell
+    # Create the virtual environment
+    python -m venv capstone-venv
+
+    # Activate the environment
+    .\capstone-venv\Scripts\activate
+    ```
+
 3.  **Install dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
-4.  **Configure environment:**
-    *   Copy the example file: `cp .env.example .env`
-    *   Edit the new `.env` file and add your `OPENAI_API_KEY`.
 
-### Neo4j Setup
-1.  Open Neo4j Desktop and create a new project.
-2.  Create a new database instance. The default credentials in `.env` are `neo4j` / `ontology`.
-3.  **Crucially, create the database your pipeline will write to.** The default is `datasheetontology`.
-4.  Install the **APOC** plugin via the "Plugins" tab for your database instance.
-5.  Start the database.
+4.  **Configure environment variables:**
+    *   Create a file named `.env` in the project root directory.
+    *   Add your credentials and configuration. It should look like this:
+    ```env
+    OPENAI_API_KEY="sk-..."
+    NEO4J_URI="bolt://localhost:7687"
+    NEO4J_USERNAME="neo4j"
+    NEO4J_PASSWORD="your_neo4j_password"
+    NEO4J_DB_NAME="datasheetontology"
+    ```
 
 ---
 
-## 🚀 How to Use the System: The Golden Workflow
+## 6. How to Use the Pipeline
 
-Follow these steps in order to run the pipeline and see the results.
+### Step 1: Add Your Data
 
-### Step 1: Initialize the Ontology Database
+-   Convert your source PDFs into Markdown files using a tool like [Marker](https://github.com/VikParuchuri/marker).
+-   Place all `.md` files into the `data/raw_markdown/` directory.
 
-Before the first run, you must create the baseline hierarchy. This command wipes the target database and sets up the root classes (`Thing`, `Product`, etc.).
+### Step 2: Initialize the Database
+
+Before your first run, you must set up the baseline ontology schema in Neo4j.
 
 ```bash
-# Run from the 'code/' directory
-python -m src.initialize_baseline --db-name "datasheetontology"
+# This will wipe the specified database and create the root classes.
+python -m src.initialize_baseline --db-name datasheetontology
 ```
-Type `BUILD` to confirm.
+*(You will be prompted to type `BUILD` to confirm.)*
 
-### Step 2: Start the Backend Server & Dashboard
+### Step 3: Start the Backend Server
 
-This command launches the Flask web server, which provides the API and the user interface.
+This will launch the Flask application that powers the dashboard.
 
 ```bash
-# Run from the 'code/' directory
 python -m src.ontology_management_backend
 ```
-Open your web browser and navigate to **`http://localhost:5000`**.
 
-### Step 3: Run the Pipeline via the Dashboard
+### Step 4: Use the Dashboard
 
-1.  On the "Pipeline Configuration" tab, select your desired settings.
-2.  For the very first run, **always** choose **"Start from Scratch (Full Run)"** from the "Execution Mode" dropdown. This ensures all caches are cleared and the data is processed against the fresh baseline.
-3.  Click the **"🚀 Run Pipeline"** button.
-4.  Monitor the progress in the "Pipeline Progress" section and the log viewer.
+-   Open your web browser and navigate to `http://localhost:5000`.
+-   **Configure a Run:** On the "Pipeline Configuration" tab, select your desired LLM model, execution mode ("Start from Scratch" for the first run), and adjust any other settings.
+-   **Run Pipeline:** Click the "Run Pipeline" button.
+-   **Monitor Progress:** Watch the logs and progress bar for real-time updates.
+-   **Review Concepts:** Navigate to the "Concept Review" tab to validate concepts the AI was uncertain about.
+-   **Query the Graph:** Use the "QA System" tab to ask natural language questions about your newly built ontology.
 
-### Step 4: Review and Curate the Learned Ontology
+### Step 5: Curation and Evaluation
 
-Once the pipeline is complete:
-1.  Navigate to the **"Concept Review"** tab.
-2.  The table will be populated with all the new classes the system learned but was uncertain about (marked with `:NeedsReview`).
-3.  Use the **"Accept"** button for valid, correctly placed concepts to formalize them in the ontology.
-4.  Use the **"Reject"** button for irrelevant or incorrectly extracted terms (e.g., addresses, part numbers) to remove them.
+After a pipeline run, you can use the provided scripts for analysis and cleaning.
 
-### Step 5: Query and Explore the Result
+```bash
+# To run the conceptual saturation analysis
+python -m src.evaluation.conceptual
 
-1.  **Using the QA System:** Go to the "QA System" tab on the dashboard and ask natural language questions about your newly built ontology.
-2.  **Using Neo4j Browser:** Connect to your `datasheetontology` database and run Cypher queries to visualize the learned hierarchy:
-    ```cypher
-    // See the entire learned hierarchy
-    MATCH path = (c:OntologyClass)-[:SUBCLASS_OF*]->(root:Thing)
-    RETURN path
+# To run the multi-model quality comparison
+python -m src.evaluation.diagnose_extraction_quality
 
-    // See both taxonomic and non-taxonomic relations for a specific class
-    MATCH (c:OntologyClass {name: 'Varactor Diode'})-[r]-()
-    RETURN c, r
-    ```
+# To prune and clean the final graph in Neo4j
+python -m src.curation.graph_cleaner
+```
 
+---
+
+## 7. Project Structure
+
+```
+.
+├── data/
+│   ├── raw_markdown/         # Input .md files go here
+│   ├── integrated_output/    # Stores JSON results and cost logs
+│   └── electronics_schema.owl # Formal axioms for consistency checks
+├── src/
+│   ├── curation/             # Scripts for cleaning the graph
+│   │   └── graph_cleaner.py
+│   ├── evaluation/           # Scripts for all evaluation tasks
+│   │   ├── conceptual.py
+│   │   ├── diagnose_extraction_quality.py
+│   │   └── ...
+│   ├── __init__.py
+│   ├── cached_schema_org_pipeline.py # Orchestrates cached runs
+│   ├── config.py             # Central configuration and API keys
+│   ├── data_loader.py        # Loads and chunks documents
+│   ├── idea_extractor.py     # Extracts concepts using an LLM
+│   ├── integrated_schema_pipeline.py # The core pipeline logic
+│   ├── initialize_baseline.py # Wipes and sets up the Neo4j database
+│   ├── ontology_extension_manager.py # The hybrid AI decision engine
+│   ├── ontology_management_backend.py # The Flask server and API
+│   └── ...                   # Other pipeline modules
+├── frontend/
+│   └── templates/
+│       └── dashboard.html    # The single-page web interface
+├── visualizations/           # Output for generated plots and diagrams
+├── capstone-venv/            # Python virtual environment
+├── model_costs.json          # Cost data for different LLM models
+└── requirements.txt          # Project dependencies
+```

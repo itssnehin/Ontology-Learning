@@ -59,9 +59,11 @@ def _normalize_concept_name(name: str) -> str:
 class OntologyExtensionManager:
     """Intelligent manager for deciding ontology extensions vs mappings."""
     
-    def __init__(self, config: Optional[PipelineConfig] = None):
+    def __init__(self, config: Optional[PipelineConfig] = None, db_name_override: Optional[str] = None):
+
         # Use the provided config, or create a default one if none is given
         self.config = config or PipelineConfig()
+        self.db_name = db_name_override or NEO4J_DB_NAME
         
         # Now, use the thresholds from the config object
         self.similarity_thresholds = self.config.similarity_thresholds
@@ -91,11 +93,11 @@ class OntologyExtensionManager:
         This version is smarter: it loads both instance data (:Product) AND
         class definitions (:OntologyClass) to build a comprehensive view of existing knowledge.
         """
-        logger.info(f"📚 Loading existing ontology from database '{NEO4J_DB_NAME}'...")
+        logger.info(f"📚 Loading existing ontology from database '{self.db_name}'...")
         concepts = []
         concept_names = set() # Use a set to prevent duplicates
 
-        with self.driver.session(database=NEO4J_DB_NAME) as session:
+        with self.driver.session(database=self.db_name) as session:
             # Query 1: Get instance data (nodes created by previous pipeline runs)
             # This query is designed to not fail if the properties don't exist yet.
             instance_query = """
