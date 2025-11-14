@@ -3,6 +3,7 @@
 import logging
 from pathlib import Path
 import argparse
+import pandas as pd
 from neo4j import GraphDatabase
 
 # Configure logging
@@ -10,10 +11,10 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] - %(
 logger = logging.getLogger(__name__)
 
 # Import Neo4j connection details from your project config
-from ..config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, NEO4J_DB_NAME
+from ..config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
 
 class OntologyAnalyzer:
-    """Analyzes the final, curated ontology directly from the Neo4j database."""
+    """Analyzes and compares final, curated ontologies directly from multiple Neo4j databases."""
 
     def __init__(self):
         try:
@@ -28,57 +29,81 @@ class OntologyAnalyzer:
         if self.driver:
             self.driver.close()
 
-    def get_graph_statistics(self) -> dict:
-        """Gets basic statistics about the final graph."""
-        if not self.driver: return {}
-        with self.driver.session(database=NEO4J_DB_NAME) as session:
+    def get_graph_statistics(self, db_name: str) -> dict:
+        """Gets basic statistics about a graph."""
+        with self.driver.session(database=db_name) as session:
             stats = session.run("""
                 MATCH (c:OntologyClass)
                 WITH count(c) AS nodes
                 MATCH ()-[r]->()
                 RETURN nodes, count(r) AS relationships
             """).single()
-            return dict(stats) if stats else {"nodes": 0, "relationships": 0}
+            
+            if not stats or stats['nodes'] == 0:
+                return {"nodes": 0, "relationships": 0, "graph_density": 0.0}
 
-    def analyze_hierarchy(self) -> dict:
-        """Analyzes the depth and breadth of the :SUBCLASS_OF hierarchy."""
-        if not self.driver: return {}
-        with self.driver.session(database=NEO4J_DB_NAME) as session:
-            # Query to find the longest path from a leaf node up to the root 'Thing'
-            result = session.run("""
-                MATCH path = (leaf:OntologyClass)-[:SUBCLASS_OF*]->(root:OntologyClass {name: 'Thing'})
-                // Ensure the leaf node has no children to be a true leaf
-                WHERE NOT (()-[:SUBCLASS_OF]->(leaf))
-                RETURN length(path) AS depth
-                ORDER BY depth DESC
-                LIMIT 1
-            """).single()
-            max_depth = result['depth'] if result else 0
-            return {"max_depth": max_depth}
-
-    def analyze_connectivity(self) -> dict:
-        """Analyzes the degree distribution (connectivity) of concepts."""
-        if not self.driver: return {}
-        with self.driver.session(database=NEO4J_DB_NAME) as session:
-            result = session.run("""
-                MATCH (c:OntologyClass)
-                // Using COUNT{} for modern syntax
-                WITH COUNT{(c)--()} AS degree
-                RETURN
-                    avg(degree) AS avg_degree,
-                    max(degree) AS max_degree,
-                    min(degree) AS min_degree
-            """).single()
+            # Calculate graph density
+            nodes = stats['nodes']
+            relationships = stats['relationships']
+            # Density for a directed graph is E / (V * (V - 1))
+            density = relationships / (nodes * (nodes - 1)) if nodes > 1 else 0.0
+            
             return {
-                "avg_degree": round(result['avg_degree'], 2) if result else 0,
-                "max_degree": result['max_degree'] if result else 0
+                "total_concepts": nodes, 
+                "total_relationships": relationships,
+                "graph_density": round(density, 6)
             }
 
-    def check_integrity(self) -> dict:
+    def analyze_hierarchy(self, db_name: str) -> dict:
+        """Analyzes the depth of the :SUBCLASS_OF hierarchy."""
+        with self.driver.session(database=db_name) as session:
+            result = session.run("""
+                MATCH path = (leaf:OntologyClass)-[:SUBCLASS_OF*]->(root:OntologyClass {name: 'Thing'})
+                WHERE NOT (()-[:SUBCLASS_OF]->(leaf))
+                RETURN length(path) AS depth
+                ORDER BY depth DESC LIMIT 1
+            """).single()
+            leaf_result = session.run("""
+                MATCH (leaf:OntologyClass)
+                WHERE NOT (()-[:SUBCLASS_OF]->(leaf))
+                RETURN count(leaf) as leaf_node_count
+            """).single()
+
+            return {
+                "max_hierarchy_depth": result['depth'] if result else 0,
+                "leaf_node_count": leaf_result['leaf_node_count'] if leaf_result else 0
+            }
+
+    def analyze_connectivity(self, db_name: str) -> dict:
+        """Analyzes the degree distribution (connectivity) of concepts."""
+        with self.driver.session(database=db_name) as session:
+            result = session.run("""
+                MATCH (c:OntologyClass)
+                WITH COUNT{(c)--()} AS degree
+                RETURN avg(degree) AS avg_degree, max(degree) AS max_degree
+            """).single()
+            return {
+                "avg_connections_per_node": round(result['avg_degree'], 2) if result else 0,
+                "max_connections_for_hub": result['max_degree'] if result else 0
+            }
+
+    def analyze_relationship_types(self, db_name: str) -> dict:
+        """Counts the number of relationships for each type."""
+        with self.driver.session(database=db_name) as session:
+            results = session.run("""
+                MATCH ()-[r]->()
+                RETURN type(r) AS rel_type, count(r) AS count
+            """)
+            # Return as a dictionary for easy merging, focusing on key types
+            rel_counts = {r['rel_type']: r['count'] for r in results}
+            return {
+                "taxonomic_relations": rel_counts.get("SUBCLASS_OF", 0),
+                "non_taxonomic_relations": sum(v for k, v in rel_counts.items() if k != "SUBCLASS_OF")
+            }
+
+    def check_integrity(self, db_name: str) -> dict:
         """Performs integrity checks, such as finding orphan nodes."""
-        if not self.driver: return {}
-        with self.driver.session(database=NEO4J_DB_NAME) as session:
-            # Find any learned concept that is NOT connected to the main hierarchy root 'Thing'
+        with self.driver.session(database=db_name) as session:
             result = session.run("""
                 MATCH (c:OntologyClass)
                 WHERE c.source = 'learned_from_dataset'
@@ -87,102 +112,78 @@ class OntologyAnalyzer:
             """).single()
             return {"orphan_nodes": result['orphan_count'] if result else 0}
 
-    def run_all_analyses(self) -> dict:
-        """Runs all analysis queries and aggregates the results."""
-        if not self.driver:
-            logger.error("Cannot run analysis, Neo4j driver not available.")
-            return {}
-
-        logger.info("Running all final ontology analyses...")
-        stats = self.get_graph_statistics()
-        hierarchy = self.analyze_hierarchy()
-        connectivity = self.analyze_connectivity()
-        integrity = self.check_integrity()
+    def run_all_analyses(self, db_name: str) -> dict:
+        """Runs all analysis queries for a single database and aggregates the results."""
+        if not self.driver: return {}
+        logger.info(f"--- Analyzing Database: {db_name} ---")
         
-        # Combine all results into one dictionary
-        full_report = {
-            **stats,
-            **hierarchy,
-            **connectivity,
-            **integrity
-        }
+        full_report = {"database": db_name}
+        full_report.update(self.get_graph_statistics(db_name))
+        full_report.update(self.analyze_hierarchy(db_name))
+        full_report.update(self.analyze_connectivity(db_name))
+        full_report.update(self.analyze_relationship_types(db_name))
+        full_report.update(self.check_integrity(db_name))
+        
         return full_report
 
-    @staticmethod
-    def generate_markdown_report(report_data: dict, output_path: Path):
-        """Generates and saves a markdown report from the analysis data."""
-        
-        report = f"""
-# Final Ontology Evaluation Report
+def generate_reports(results_df: pd.DataFrame, output_dir: Path):
+    """Generates and saves both CSV and Markdown reports."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Save CSV
+    csv_path = output_dir / "final_graph_comparison.csv"
+    results_df.to_csv(csv_path, index=False)
+    logger.info(f"✅ Comparative CSV report saved to: {csv_path}")
 
-This report analyzes the final, curated knowledge graph stored in the Neo4j database.
-It assesses the structure, scale, and integrity of the ontology after all extraction,
-mapping, and cleaning processes have been completed.
+    # Save Markdown
+    md_path = output_dir / "final_graph_comparison_report.md"
+    md_content = f"""
+# Final Ontology Graph Comparison Report
 
----
+This report provides a side-by-side structural analysis of the knowledge graphs
+generated by different models, queried directly from their respective Neo4j databases.
 
-## 1. Ontology Scale & Size
-
-| Metric                 | Value    |
-| ---------------------- | -------- |
-| **Total Concepts**     | {report_data.get('nodes', 0):,}     |
-| **Total Relationships**| {report_data.get('relationships', 0):,} |
-
----
-
-## 2. Hierarchical Structure
-
-| Metric                      | Value | Interpretation                                     |
-| --------------------------- | ----- | -------------------------------------------------- |
-| **Maximum Hierarchy Depth** | {report_data.get('max_depth', 0)}   | The longest chain of 'is-a' relationships, showing specialization. |
-
----
-
-## 3. Concept Connectivity
-
-| Metric                     | Value  | Interpretation                                   |
-| -------------------------- | ------ | ------------------------------------------------ |
-| **Average Connections/Node** | {report_data.get('avg_degree', 0.0)} | The average number of relationships per concept. |
-| **Maximum Connections/Node** | {report_data.get('max_degree', 0)}  | The connectivity of the most central 'hub' concept.   |
-
----
-
-## 4. Structural Integrity
-
-| Metric                 | Value | Interpretation                                                              |
-| ---------------------- | ----- | --------------------------------------------------------------------------- |
-| **Orphan Nodes Found** | {report_data.get('orphan_nodes', 0)}  | Number of concepts not connected to the main hierarchy. **Zero is ideal.** |
-
----
-
-## Conclusion
-
-The analysis indicates a knowledge graph of significant scale and complexity. A maximum hierarchy depth of {report_data.get('max_depth', 0)} demonstrates that the pipeline is learning specialized, multi-level taxonomic structures.
-
-Most importantly, the **structural integrity check found {report_data.get('orphan_nodes', 'zero')} orphan nodes**. This confirms that the automated `graph_cleaner` was highly effective, successfully integrating all discovered concepts into a single, coherent taxonomic tree. The resulting ontology is not just a collection of facts, but a well-structured and logically sound knowledge base.
+{results_df.to_markdown(index=False)}
 """
-        with open(output_path, 'w', encoding='utf-8') as f:
-            f.write(report)
-        logger.info(f"✅ Markdown report saved to: {output_path}")
+    with open(md_path, 'w', encoding='utf-8') as f:
+        f.write(md_content)
+    logger.info(f"✅ Comparative Markdown report saved to: {md_path}")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Analyze the final ontology in Neo4j.")
-    parser.add_argument("--output", type=Path, default=Path("visualizations/final_ontology_report.md"), help="Path to save the markdown report.")
+    parser = argparse.ArgumentParser(description="Analyze and compare final ontologies in multiple Neo4j databases.")
+    parser.add_argument(
+        "databases", 
+        nargs='+', 
+        help="A list of Neo4j database names to analyze (e.g., gpt41 gpt35turbo datasheetontology)."
+    )
+    parser.add_argument("--output-dir", type=Path, default=Path("visualizations"), help="Directory to save the reports.")
     args = parser.parse_args()
 
     analyzer = OntologyAnalyzer()
+    all_results = []
     try:
         if analyzer.driver:
-            report_data = analyzer.run_all_analyses()
+            for db_name in args.databases:
+                report_data = analyzer.run_all_analyses(db_name)
+                all_results.append(report_data)
             
-            print("\n--- Final Ontology Analysis Results ---")
-            for key, value in report_data.items():
-                print(f"{key.replace('_', ' ').title():<25}: {value}")
-            print("---------------------------------------")
+            if all_results:
+                results_df = pd.DataFrame(all_results)
+                # Define a logical column order for the report
+                column_order = [
+                    "database", "total_concepts", "total_relationships", "graph_density",
+                    "max_hierarchy_depth", "leaf_node_count", "taxonomic_relations", "non_taxonomic_relations",
+                    "avg_connections_per_node", "max_connections_for_hub", "orphan_nodes"
+                ]
+                results_df = results_df[column_order]
+                
+                print("\n--- Final Graph Comparison Summary ---")
+                print(results_df.to_string(index=False))
+                print("------------------------------------")
+                
+                generate_reports(results_df, args.output_dir)
 
-            args.output.parent.mkdir(parents=True, exist_ok=True)
-            analyzer.generate_markdown_report(report_data, args.output)
     finally:
         analyzer.close()
 

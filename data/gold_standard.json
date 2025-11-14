@@ -141,139 +141,85 @@
   ],
   "relations": [
     {
-      "source": "Active Component",
-      "type": "subclass_of",
-      "target": "Electronic Component"
+      "source": "Active Component", "type": "subclass_of", "target": "Electronic Component"
     },
     {
-      "source": "Passive Component",
-      "type": "subclass_of",
-      "target": "Electronic Component"
+      "source": "Passive Component", "type": "subclass_of", "target": "Electronic Component"
     },
     {
-      "source": "Integrated Circuit",
-      "type": "subclass_of",
-      "target": "Active Component"
+      "source": "Integrated Circuit", "type": "subclass_of", "target": "Active Component"
     },
     {
-      "source": "Semiconductor Device",
-      "type": "subclass_of",
-      "target": "Active Component"
+      "source": "Semiconductor Device", "type": "subclass_of", "target": "Active Component"
     },
     {
-      "source": "Sensor",
-      "type": "subclass_of",
-      "target": "Electronic Component"
+      "source": "Sensor", "type": "subclass_of", "target": "Electronic Component"
     },
     {
-      "source": "Inductor",
-      "type": "subclass_of",
-      "target": "Passive Component"
+      "source": "Inductor", "type": "subclass_of", "target": "Passive Component"
     },
     {
-      "source": "Switch",
-      "type": "subclass_of",
-      "target": "Passive Component"
+      "source": "Switch", "type": "subclass_of", "target": "Passive Component"
     },
     {
-      "source": "Capacitor",
-      "type": "subclass_of",
-      "target": "Passive Component"
+      "source": "Capacitor", "type": "subclass_of", "target": "Passive Component"
     },
     {
-      "source": "Resistor",
-      "type": "subclass_of",
-      "target": "Passive Component"
+      "source": "Resistor", "type": "subclass_of", "target": "Passive Component"
     },
     {
-      "source": "Connector",
-      "type": "subclass_of",
-      "target": "Passive Component"
+      "source": "Connector", "type": "subclass_of", "target": "Passive Component"
     },
     {
-      "source": "Antenna",
-      "type": "subclass_of",
-      "target": "Passive Component"
+      "source": "Antenna", "type": "subclass_of", "target": "Passive Component"
     },
     {
-      "source": "Fuse",
-      "type": "subclass_of",
-      "target": "Passive Component"
+      "source": "Fuse", "type": "subclass_of", "target": "Passive Component"
     },
     {
-        "source": "Transformer",
-        "type": "subclass_of",
-        "target": "Passive Component"
+        "source": "Transformer", "type": "subclass_of", "target": "Passive Component"
     },
     {
-        "source": "Diode",
-        "type": "subclass_of",
-        "target": "Semiconductor Device"
+        "source": "Diode", "type": "subclass_of", "target": "Semiconductor Device"
     },
     {
-        "source": "Transistor",
-        "type": "subclass_of",
-        "target": "Semiconductor Device"
+        "source": "Transistor", "type": "subclass_of", "target": "Semiconductor Device"
     },
     {
-      "source": "Operational Amplifier",
-      "type": "subclass_of",
-      "target": "Integrated Circuit"
+      "source": "Operational Amplifier", "type": "subclass_of", "target": "Integrated Circuit"
     },
     {
-      "source": "Voltage Regulator",
-      "type": "subclass_of",
-      "target": "Integrated Circuit"
+      "source": "Voltage Regulator", "type": "subclass_of", "target": "Integrated Circuit"
     },
     {
-      "source": "Photodiode",
-      "type": "subclass_of",
-      "target": "Sensor"
+      "source": "Photodiode", "type": "subclass_of", "target": "Sensor"
     },
     {
-      "source": "Photodiode",
-      "type": "subclass_of",
-      "target": "Semiconductor Device"
+      "source": "Photodiode", "type": "subclass_of", "target": "Semiconductor Device"
     },
     {
-        "source": "LED",
-        "type": "subclass_of",
-        "target": "Diode"
+        "source": "LED", "type": "subclass_of", "target": "Diode"
     },
     {
-        "source": "Rectifier",
-        "type": "subclass_of",
-        "target": "Diode"
+        "source": "Rectifier", "type": "subclass_of", "target": "Diode"
     },
     {
-        "source": "MOSFET",
-        "type": "subclass_of",
-        "target": "Transistor"
+        "source": "MOSFET", "type": "subclass_of", "target": "Transistor"
     },
     {
-        "source": "Thermistor",
-        "type": "subclass_of",
-        "target": "Resistor"
+        "source": "Thermistor", "type": "subclass_of", "target": "Resistor"
     },
     {
-        "source": "Thermistor",
-        "type": "subclass_of",
-        "target": "Sensor"
+        "source": "Thermistor", "type": "subclass_of", "target": "Sensor"
     },
     {
-        "source": "Relay",
-        "type": "subclass_of",
-        "target": "Switch"
+        "source": "Relay", "type": "subclass_of", "target": "Switch"
     },
     {
-        "source": "Photocoupler",
-        "type": "subclass_of",
-        "target": "Semiconductor Device"
+        "source": "Photocoupler", "type": "subclass_of", "target": "Semiconductor Device"
     },
     {
-        "source": "FPGA",
-        "type": "subclass_of",
-        "target": "Integrated Circuit"
+        "source": "FPGA", "type": "subclass_of", "target": "Integrated Circuit"
     },
     {
         "source": "Precision Timer",
