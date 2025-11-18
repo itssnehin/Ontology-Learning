@@ -79,7 +79,7 @@ The pipeline follows a four-stage process, transforming unstructured documents i
     *   Create a file named `.env` in the project root directory.
     *   Add your credentials and configuration. It should look like this:
     ```env
-    OPENAI_API_KEY="sk-..."
+    OPENAI_API_KEY="..."
     NEO4J_URI="bolt://localhost:7687"
     NEO4J_USERNAME="neo4j"
     NEO4J_PASSWORD="your_neo4j_password"
